@@ -1,0 +1,21 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+
+    position: relative;
+
+    padding: 2rem;
+    height: 10vh;
+    background-color: var(--main-color);
+}
+.header__logo {
+    display: none;
+    position: absolute;
+    align-self: center;
+
+    font-family: Valorax;
+    font-size: 1.3rem;
+    color: var(--secondary-color);
+}

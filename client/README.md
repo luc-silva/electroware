@@ -21,3 +21,4 @@ And then, start your localhost server:
 
 ### Credits:
 - [CSS Reset](https://meyerweb.com/eric/tools/css/reset/)
+- [Valorax Font](https://befonts.com/valorax-font.html)
