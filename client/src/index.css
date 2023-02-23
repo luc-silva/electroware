@@ -48,7 +48,9 @@ table {
 }
 
 *{
-	font-family: Arial, Helvetica, sans-serif;
+	font: Arial, Helvetica, sans-serif;
+	box-sizing: border-box;
+	text-decoration: none;
 }
 
 @font-face {
@@ -61,10 +63,15 @@ table {
 	--secondary-color: #ffffff ;
 	--secondary-color-faded: #f5f5f5 ;
 
+	--title-color: #000000;
+	--text-color: #464646;
+
 	--background: #00000042;
 
 	--confirm: #8fd085;
+	--confirm-clicked: #6eac64 ;
 	--cancel: #f9694d;
+	--cancel-clicked:#d05239;
 
 	--positive-num:#8fd085;
 	--negative-num: #f9694d;
