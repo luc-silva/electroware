@@ -14,7 +14,7 @@ export const Login = () => {
           <input type="password" placeholder="Password" />
           <input type="submit" value="Log In"/>
         </form>
-        <Link to="/register">Create an account</Link>
+        <Link to="/registration">Create an account</Link>
       </div>
     </div>
   )
