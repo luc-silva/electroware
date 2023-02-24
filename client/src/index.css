@@ -51,6 +51,7 @@ table {
 	font: Arial, Helvetica, sans-serif;
 	box-sizing: border-box;
 	text-decoration: none;
+	color: var(--text-color);
 }
 
 @font-face {
@@ -61,7 +62,7 @@ table {
 :root {
 	--main-color: #f3bd1c ;
 	--secondary-color: #ffffff ;
-	--secondary-color-faded: #f5f5f5 ;
+	--secondary-color-faded: #f0f0f0 ;
 
 	--title-color: #000000;
 	--text-color: #464646;
