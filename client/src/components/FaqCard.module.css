@@ -1,0 +1,23 @@
+.faq-item {
+    display: flex;
+    flex-direction: column;
+
+    padding: 0.5rem;
+    background-color: var(--secondary-color);
+}
+.question-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+.item-question{
+    z-index: 1;
+    font-weight: bold;
+}
+.item-answer{
+    z-index: 2;
+    padding: 1rem;
+    width: 100%;
+    border-top: var(--text-color);
+}
