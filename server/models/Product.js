@@ -4,13 +4,14 @@ const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema(
     {
-        productName: { type: String, maxLength: 30, required: true },
-        productPrice: { type: Number, required: true },
-        productQuantity: { type: Number, required: true },
-        productBrand: { type: String, maxLength: 15 },
-        productDescription: { type: String, maxLength: 200 },
-        productOwner: { type: Schema.Types.ObjectId, ref: "User" },
-        productCategory: { type: Schema.Types.ObjectId, required: true },
+        owner: { type: Schema.Types.ObjectId, ref: "User", required:true},
+        category: { type: Schema.Types.ObjectId, required: true },
+        name: { type: String, maxLength: 30, required: true },
+        price: { type: Number, required: true },
+        quantity: { type: Number, required: true },
+        brand: { type: String, maxLength: 15 },
+        description: { type: String, maxLength: 200 },
+        buyers: [{type: Schema.Types.ObjectId, ref: "User"}],
     },
     { timestamps: true }
 );
