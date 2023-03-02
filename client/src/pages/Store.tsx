@@ -3,8 +3,18 @@ import { Truck, Cube, Gauge, Wallet } from "phosphor-react";
 import { ProductCard } from "../components/ProductCard";
 
 import { productsHomepage } from "../testData";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export const Store = () => {
+    let [recentProducts, setRecentProducts] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:6060/api/product/products")
+            .then((response) => setRecentProducts(response.data));
+    }, []);
+
     return (
         <main role={"main"} className={styles["index"]}>
             <div>
@@ -36,26 +46,21 @@ export const Store = () => {
             </section>
             <section className={styles["categories"]}>
                 <h2>Recent products</h2>
-                <ul className={styles["categories-container"]}>
-                    {productsHomepage.map(
-                        ({
-                            productName,
-                            productPrice,
-                            productUrl,
-                            productVendor,
-                        }, index: any, number) => {
-                            return (
-                                <ProductCard
-                                    productName={productName}
-                                    productUrl={productUrl}
-                                    productPrice={productPrice}
-                                    productVendor={productVendor}
-                                    key={index}
-                                />
-                            );
-                        }
-                    )}
-                </ul>
+                {recentProducts.length > 0 ? <ul className={styles["categories-container"]}>
+                    {recentProducts.length > 0
+                        ? recentProducts.map(
+                              ({ name, price, owner }, index: any, number) => {
+                                  return (
+                                      <ProductCard
+                                          name={name}
+                                          price={price}
+                                          key={index}
+                                      />
+                                  );
+                              }
+                          )
+                        : ""}
+                </ul>:"Nothing to show"}
             </section>
         </main>
     );
