@@ -12,14 +12,14 @@ function generateToken(id) {
     });
 }
 const loginUser = asyncHandler(async (request, response) => {
-    let { userEmail, userPassword } = request.body;
-    let user = await User.findOne({ userEmail });
+    let { email, password } = request.body;
+    let user = await User.findOne({ email });
 
     if (!user) {
         response.status(400);
         throw new Error("Usuario nao encontrado");
     }
-    if (user && !(await bcrypt.compare(userPassword, user.userPassword))) {
+    if (user && !(await bcrypt.compare(password, user.password))) {
         response.status(400);
         throw new Error("senha invalida");
     }
@@ -36,14 +36,14 @@ const loginUser = asyncHandler(async (request, response) => {
 
 const registerUser = asyncHandler(async (request, response) => {
     //validates inputs
-    let { userEmail, userPassword, userName } = request.body;
-    if (!userEmail || !userPassword || !userName.first) {
+    let { email, password, name } = request.body;
+    if (!email || !password || !name.first) {
         response.status(400);
         throw new Error("Por favor, insira credenciais validos");
     }
 
     //check if an email has already been used
-    let userExist = await User.findOne({ userEmail });
+    let userExist = await User.findOne({ email });
     if (userExist) {
         response.status(400);
         throw new Error(`Uma conta ja foi criada com esse email: ${userExist}`);
@@ -51,15 +51,16 @@ const registerUser = asyncHandler(async (request, response) => {
 
     //hash password
     let salt = await bcrypt.genSalt(10);
-    let hashedPassword = await bcrypt.hash(userPassword, salt);
+    let hashedPassword = await bcrypt.hash(password, salt);
 
     let newUser = {
         ...request.body,
-        userPassword: hashedPassword,
+        password: hashedPassword,
     };
 
     let user = await User.create(newUser);
     response.json(user);
+    response.redirect("https://localhost:3000/")
 });
 
 const getProfile = asyncHandler(async (request, response) => {
