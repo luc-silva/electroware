@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 const asyncHandler = require("express-async-handler");
 const Product = require("../models/Product");
+const User = require("../models/User");
 
 const getRecentProducts = asyncHandler(async (request, response) => {
-    let products = await Product.find().limit(20).sort({ createdAt: 1 });
+    let products = await Product.find().limit(20).sort({ createdAt: -1 });
     response.status(202);
     if (products.length === 0) {
         response.json({ message: "Sem produtos para exibir" });
@@ -13,7 +14,7 @@ const getRecentProducts = asyncHandler(async (request, response) => {
 
 const searchProduct = asyncHandler(async (request, response) => {
     let { name } = request.body;
-    let possibleProducts = await Product.find({ name: name });
+    let possibleProducts = await Product.find({ name: { $regex: name } });
 
     if (possibleProducts.length === 0) {
         //it may be a truly value (array)
@@ -39,29 +40,58 @@ const getProductDetails = asyncHandler(async (request, response) => {
 
 //private
 const createProduct = asyncHandler(async (request, response) => {
-    let { _id } = request.user;
-    let { name, price, category, quantity, brand, description } = request.body;
+    let { name, price, category, quantity, brand, description, buyers } =
+        request.body;
     if ((!name, !price, !category, !quantity)) {
         response.status(400);
-        response.json({ message: "Por favor, insira os dados necessariso" });
+        response.json({ message: "Por favor, insira os dados necessarios" });
     }
 
     let createdProduct = await Product.create({
-        owner: _id,
+        owner: request.user,
         category,
         name,
         price,
         quantity,
-        brand,
-        buyers,
-        description,
     });
 
-    response.status(202)
-    response.json(createProduct)
+    response.status(202);
+    response.json(createdProduct);
 });
-const updateProduct = asyncHandler(async (request, response) => {});
-const deleteProduct = asyncHandler(async (request, response) => {});
+
+const updateProduct = asyncHandler(async (request, response) => {
+    let product = await Product.findById(request.params.id);
+    if (!product) {
+        throw new Error("Produto nao encontrado");
+    }
+    if (product.owner !== request.user) {
+        throw new Error("Nao autorizado");
+    }
+    let updatedProduct = await Product.findByIdAndUpdate(
+        request.params.id,
+        request.params.body
+    );
+
+    response.status(202).json(updatedProduct);
+});
+
+const deleteProduct = asyncHandler(async (request, response) => {
+    let userId = request.user.id.toString()
+    let product = await Product.findById(request.params.id);
+
+    if (!product) {
+        response.status(404);
+        throw new Error("Produto nao encontrado");
+    }
+
+    if (userId !== product.owner.toString()) {
+        response.status(401);
+        throw new Error("Nao autorizado");
+    }
+
+    let deletedProduct = await Product.findByIdAndDelete(request.params.id);
+    response.status(402).json(deletedProduct);
+});
 
 module.exports = {
     getRecentProducts,
@@ -69,5 +99,5 @@ module.exports = {
     getProductDetails,
     createProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
 };
