@@ -1,34 +1,27 @@
 import styles from "./ProductCard.module.css";
 
 interface productCard {
-    productName: string;
-    productPrice: string;
-    productUrl: string;
-    productVendor: string;
+    name: string;
+    price: string;
 }
 
 export const ProductCard = ({
-    productName,
-    productPrice,
-    productUrl,
-    productVendor
+    name,
+    price,
 }: productCard) => {
+
     return (
         <li className={styles["card-wrapper"]}>
-            <a className={styles["card"]} href={productUrl}>
+            <a className={styles["card"]} href={""}>
                 <div className={styles["card-image"]}>
                     {/* <img src="" alt="" /> */}
                 </div>
                 <div className={styles["card-info"]}>
                     <div className={styles["card-details"]}>
-                        <strong>{productName}</strong>
-                        <div className={styles["details-vendor"]}>
-                            Being sold by:
-                            <p>{productVendor}</p>
-                        </div>
+                        <strong>{name}</strong>
                     </div>
                     <div className={styles["card-info-price"]}>
-                        <p>{productPrice}</p>
+                        <p>{price}</p>
                     </div>
                 </div>
             </a>
