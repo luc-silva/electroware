@@ -1,33 +1,37 @@
 const mongoose = require("mongoose");
 const asyncHandler = require("express-async-handler");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const User = require("../models/User");
+const Product = require("../models/Product")
 
-
-function generateToken(id){
-    return jwt.sign({id}, "123", {
-        expiresIn:"7d"
-    })
+function generateToken(id) {
+    return jwt.sign({ id }, "123", {
+        expiresIn: "7d",
+    });
 }
 const loginUser = asyncHandler(async (request, response) => {
     let { userEmail, userPassword } = request.body;
     let user = await User.findOne({ userEmail });
 
-    if(!user){
-        response.status(400)
-        throw new Error("Usuario nao encontrado")
+    if (!user) {
+        response.status(400);
+        throw new Error("Usuario nao encontrado");
     }
-    if(user && !(await bcrypt.compare(userPassword, user.userPassword))){
-        response.status(400)
-        throw new Error("senha invalida")
+    if (user && !(await bcrypt.compare(userPassword, user.userPassword))) {
+        response.status(400);
+        throw new Error("senha invalida");
     }
 
     //gen token to use in a protected route
-    let token = generateToken(user._id)
+    let token = generateToken(user._id);
 
-    response.json({id: user._id, token: token, auth: request.headers.authorization});
+    response.json({
+        id: user._id,
+        token: token,
+        auth: request.headers.authorization,
+    });
 });
 
 const registerUser = asyncHandler(async (request, response) => {
@@ -42,7 +46,7 @@ const registerUser = asyncHandler(async (request, response) => {
     let userExist = await User.findOne({ userEmail });
     if (userExist) {
         response.status(400);
-        throw new Error(`Uma conta ja foi criada com esse email: ${userExist}` );
+        throw new Error(`Uma conta ja foi criada com esse email: ${userExist}`);
     }
 
     //hash password
@@ -58,22 +62,34 @@ const registerUser = asyncHandler(async (request, response) => {
     response.json(user);
 });
 
-const getProfile = asyncHandler(async(request, response, next) => {
-    let user = await User.findById(request.id)
-    if(!user){
-        response.status(404).json({message:"User not found"})
-        next()
+const getProfile = asyncHandler(async (request, response) => {
+    let user = await User.findById(request.params.id);
+    if (!user) {
+        response.status(404).json({ message: "User not found" });
     }
-    response.json(user)
-})
+    response.json(user);
+});
+
+const getUserProducts = asyncHandler(async (request, response) => {
+    let { id } = request.params;
+    let user = await User.findById(id);
+
+    if (!user) {
+        response
+            .status(404)
+            .json({ message: "Usuario nao encontrado", id: id });
+    }
+
+    let userProducts = await Product.find({owner: user._id})
+    response.status(202).json(userProducts)
+});
 
 //private
-const getMyOrders = (request,response) => {
-    
-}
+const getMyOrders = (request, response) => {};
 
 module.exports = {
     registerUser,
     loginUser,
-    getProfile
+    getProfile,
+    getUserProducts,
 };
