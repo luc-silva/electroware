@@ -1,13 +1,23 @@
-const express = require("express")
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
-const {protected} = require("../middleware/auth")
-const { getRecentProducts,getProductDetails, searchProduct, createProduct } = require("../controllers/productController")
+const { protected } = require("../middleware/auth");
+const {
+    getRecentProducts,
+    getProductDetails,
+    searchProduct,
+    createProduct,
+    updateProduct, deleteProduct
+} = require("../controllers/productController");
 
-router.get("/products", getRecentProducts)
-router.get("/search", searchProduct)
-router.get("/:id", getProductDetails)
+//localhost:6060/products/
 
-router.post("/create", protected, createProduct)
+// router.get("/:id", getProductDetails); //get a specific product
+router.put("/:id", protected, updateProduct);
+router.delete("/:id", protected, deleteProduct);
 
-module.exports = router
+router.get("/search", searchProduct);
+router.get("/products", getRecentProducts); //change later
+router.post("/create", protected, createProduct);
+
+module.exports = router;
