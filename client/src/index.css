@@ -28,56 +28,65 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
-	line-height: 1;
+    line-height: 1;
 }
-ol, ul {
-	list-style: none;
+ol,
+ul {
+    list-style: none;
 }
-blockquote, q {
-	quotes: none;
+blockquote,
+q {
+    quotes: none;
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: "";
+    content: none;
 }
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
-*{
-	font-family: Arial, Helvetica, sans-serif;
-	box-sizing: border-box;
-	text-decoration: none;
-	color: var(--text-color);
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    text-decoration: none;
+	border: none;
+	outline: none;
+}
+a {
+	color: inherit;
 }
 
 @font-face {
-	font-family: "Valorax";
-	src: url("./assets/valorax.otf");
+    font-family: "Valorax";
+    src: url("./assets/valorax.otf");
 }
 
 :root {
-	--main-color: #f3bd1c ;
-	--secondary-color: #ffffff ;
-	--secondary-color-faded: #f0f0f0 ;
+    --main-color: #f3bd1c;
+    --main-color-faded: #fdf4d7;
+    --background-color: #ffffff;
+    --background-color-faded: #f0f0f0;
 
-	--title-color: #000000;
-	--text-color: #464646;
+    --title-color: #000000;
+    --text-color: #464646;
 
-	--background: #00000042;
+    --modal-background: #00000042;
 
-	--confirm: #8fd085;
-	--confirm-clicked: #6eac64 ;
-	--cancel: #f9694d;
-	--cancel-clicked:#d05239;
+    --confirm: #8fd085;
+    --confirm-clicked: #6eac64;
+    --cancel: #f9694d;
+    --cancel-clicked: #d05239;
 
-	--positive-num:#8fd085;
-	--negative-num: #f9694d;
+    --positive-num: #8fd085;
+    --negative-num: #f9694d;
 
-	--concluded: #8fd085 ;
-	--warning: #ffda53;
-	--error: #f9694d;
-	--info: #299ed8;
+    --concluded: #8fd085;
+    --warning: #ffda53;
+    --error: #f9694d;
+    --info: #299ed8;
 }
