@@ -1,30 +1,44 @@
 import { Link } from "react-router-dom";
-import { ArrowDown, CaretDown, List, MagnifyingGlass, UserList } from "phosphor-react";
+import { MagnifyingGlass, ShoppingCart } from "phosphor-react";
 
 import styles from "./Header.module.css";
 
 export const Header = () => {
+    let isLogged = true;
+
     return (
         <header className={styles["header"]}>
-            <div className={styles["header-main"]}>
-                {/* <List
-                    size={38}
-                    weight="bold"
-                    color={"var(--secondary-color)"}
-                /> */}
+            <div className={styles["header__main"]}>
                 <h1 className={styles["header-logo"]}>
-                    <Link to={"/"}>Electroware</Link>
+                    <Link to={"/home"}>Electroware</Link>
                 </h1>
             </div>
-            <div className={styles["header-form"]}>
+            <div className={styles["header__form"]}>
                 <form action="GET" name="search-input">
                     <input type="text" />
-                    <input type="submit"/>
+                    {/* <input type="submit" value={"Pesquisar"} /> */}
+                    <button>
+                        <MagnifyingGlass
+                            size={20}
+                            color="white"
+                            weight="bold"
+                        />
+                    </button>
                 </form>
             </div>
-            <div className={styles["header-user-panel"]}>
-                <UserList size={30}/>
-                <CaretDown size={30}/>
+            <div className={styles["header__user-panel"]}>
+                {(isLogged && (
+                    <div className={styles["header__user-panel__main--logged"]}>
+                        <strong>Ola, Lucas</strong>
+                        <a href="">Ver perfil</a>
+                    </div>
+                )) || (
+                    <div className={styles["header__user-panel__main"]}>
+                        <a href="">Entre em sua conta</a>
+                    </div>
+                )}
+
+                <ShoppingCart size={30} color="white" />
             </div>
         </header>
     );
