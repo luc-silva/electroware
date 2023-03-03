@@ -1,5 +1,5 @@
-import { FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { FormEvent, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Registration.module.css";
 
 import axios from "axios";
@@ -12,6 +12,7 @@ export const Registration = () => {
         password: "",
     };
     let [form, setForm] = useState(formInitialValues);
+    const navigate = useNavigate()
 
     function handleChange(event: FormEvent<HTMLFormElement>) {
         let target = event.target;
@@ -21,13 +22,17 @@ export const Registration = () => {
     }
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
-      
         event.preventDefault();
         axios.post("http://localhost:6060/api/register", {
             ...form,
             name: { first: form.first, last: form.last },
-        });
+        }).catch(alert)
+        navigate("/login")
     }
+
+    useEffect(() => {
+        
+    })
 
     return (
         <div className={styles["registration"]}>
