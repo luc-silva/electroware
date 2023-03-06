@@ -8,15 +8,13 @@ import axios from "axios";
 
 export const Store = () => {
     let [recentProducts, setRecentProducts] = useState([]);
-
     useEffect(() => {
         axios
-            .get("http://localhost:6060/api/product/products")
+            .get("http://localhost:6060/api/products")
             .then((response) => setRecentProducts(response.data));
     }, []);
-
     return (
-        <main role={"main"} className={styles["index"]}>
+        <main role={"main"} className={styles["index"]}> 
             <div>
                 <section className={styles["activepromos"]}></section>
             </div>
@@ -44,23 +42,31 @@ export const Store = () => {
             <section className={styles["products"]}>
                 <div className={styles["products-container"]}></div>
             </section>
-            <section className={styles["categories"]}>
+            <section className={styles["recent-products"]}>
                 <h2>Recent products</h2>
-                {recentProducts.length > 0 ? <ul className={styles["categories-container"]}>
-                    {recentProducts.length > 0
-                        ? recentProducts.map(
-                              ({ name, price, owner }, index: any, number) => {
-                                  return (
-                                      <ProductCard
-                                          name={name}
-                                          price={price}
-                                          key={index}
-                                      />
-                                  );
-                              }
-                          )
-                        : ""}
-                </ul>:"Nothing to show"}
+                {recentProducts.length > 0 ? (
+                    <ul className={styles["products-container"]}>
+                        {recentProducts.length > 0
+                            ? recentProducts.map(
+                                  (
+                                      { name, price, owner },
+                                      index: any,
+                                      number
+                                  ) => {
+                                      return (
+                                          <ProductCard
+                                              name={name}
+                                              price={price}
+                                              key={index}
+                                          />
+                                      );
+                                  }
+                              )
+                            : ""}
+                    </ul>
+                ) : (
+                    "Nothing to show"
+                )}
             </section>
         </main>
     );

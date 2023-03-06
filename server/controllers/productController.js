@@ -28,7 +28,7 @@ const searchProduct = asyncHandler(async (request, response) => {
 });
 
 const getProductDetails = asyncHandler(async (request, response) => {
-    let { id } = request.body;
+    let { id } = request.params;
     let product = await Product.findById(id);
     if (!product) {
         response.status(404);

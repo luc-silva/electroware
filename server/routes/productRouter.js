@@ -12,12 +12,11 @@ const {
 
 //localhost:6060/products/
 
-// router.get("/:id", getProductDetails); //get a specific product
+router.get("/:id", getProductDetails); //get a specific product
 router.put("/:id", protected, updateProduct);
 router.delete("/:id", protected, deleteProduct);
 
-router.get("/search", searchProduct);
-router.get("/products", getRecentProducts); //change later
+router.post("/search", searchProduct);
 router.post("/create", protected, createProduct);
 
 module.exports = router;

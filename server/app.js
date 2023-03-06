@@ -4,6 +4,7 @@ const cors = require("cors")
 
 const userRouter = require("./routes/userRouter")
 const productRouter = require("./routes/productRouter")
+const productsRouter = require("./routes/productsRouter")
 const categoryRouter = require("./routes/categoryRouter")
 
 let app = express();
@@ -20,5 +21,6 @@ app.use("/api", userRouter)
 
 //
 app.use("/api/product", productRouter)
+app.use("/api/products", productsRouter)
 app.use("/api/category", categoryRouter)
 // app.use(errorMiddleware)
