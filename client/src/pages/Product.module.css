@@ -1,15 +1,15 @@
 .product {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: var(--secondary-color-faded);
 }
 .product-about {
     display: flex;
     flex-direction: column;
-    background-color: var(--secondary-color);
+    background-color: var(--background-color-faded);
 }
 .product-details {
     display: flex;
     flex-direction: column;
+    background-color: var(--background-color);
     gap: 1rem;
     padding: 1rem;
 }
@@ -56,7 +56,16 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: 2rem 5rem;
+    padding: 2rem 2rem;
+    border-top: 1px solid var(--background-color-faded);
+    background-color: var(--background-color);
+}
+.ratings-title{
+    color: var(--text-color);
+}
+.ratings-title h2{
+    color: var(--title-color);
+    font-size: 1.5rem;
 }
 .ratings-container{
     display: flex;
@@ -68,7 +77,7 @@
     flex-direction: row;
     gap: 1rem;
     padding: 1rem;
-    background-color: var(--secondary-color);
+    background-color: var(--background-color-faded);
     border-radius: 5px;
 }
 .card-userinfo{
@@ -85,10 +94,25 @@
 .user-review{
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
 }
 .review-detail{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+.review-detail strong{
+    color: var(--title-color);
+    font-size: 1.1rem;
+}
+.review-detail p{
+    color: var(--text-color);
+    font-size: 0.8rem;
+}
+.user-review-text{
+    color: var(--text-color);
+    text-align: justify;
+    font-size: 0.9rem;
 }
 
 
@@ -100,21 +124,31 @@
     }
     .product-about {
         flex-direction: row;
+        height: 90vh;
         padding: 3rem;
     }
     .product-details {
         width: 45vw;
+        height: 100%;
         justify-content: space-between;
+    }
+    .details-info{
+        height: 100%;
     }
     
     .details-misc{
         width: 100%;
-
     }
     .product-image {
         background-color: black;
         width: 55vw;
-        height: 60vh;
+        height: 100%;
+    }
+    .ratings{
+        border-top: none;
+    }
+    .ratings-title h2{
+        font-size: 1.6rem;
     }
 }
 @media (min-width: 1025px) {
@@ -123,12 +157,16 @@
     }
     .product-about {
         flex-direction: row;
-        min-height: 90vh;
+        height: 90vh;
         padding: 2rem 5rem;
     }
     .product-details {
         width: 55vw;
+        height: 100%;
         justify-content: space-between;
+    }
+    .details-info{
+        height: 100%;
     }
     .details-misc{
         width: 100%;
@@ -137,6 +175,12 @@
     .product-image {
         background-color: black;
         width: 45vw;
-        height: 70vh;
+        height: 100%;
+    }
+    .ratings{
+        border-top: none;
+    }
+    .ratings-title h2{
+        font-size: 1.6rem;
     }
 }

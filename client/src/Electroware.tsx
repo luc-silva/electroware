@@ -18,10 +18,10 @@ function Electroware() {
                     <Route path="/home" element={<Store />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/registration" element={<Registration />} />
-                    <Route path="/product" element={<Product />} />
-                    <Route path="/search/:search" element={<SearchResults />} />
-
                     <Route path="/faq" element={<Faq />} />
+
+                    <Route path="/product/:id" element={<Product />} />
+                    <Route path="/search/:search" element={<SearchResults />} />
                 </Routes>
             </Router>
         </div>
