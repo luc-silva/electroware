@@ -51,6 +51,7 @@ const createProduct = asyncHandler(async (request, response) => {
         owner: request.user,
         category,
         name,
+        description,
         price,
         quantity,
     });

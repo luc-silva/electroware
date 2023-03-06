@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const User = require("../models/User");
-const Product = require("../models/Product")
+const Product = require("../models/Product");
 
 function generateToken(id) {
     return jwt.sign({ id }, "123", {
@@ -29,8 +29,9 @@ const loginUser = asyncHandler(async (request, response) => {
 
     response.json({
         id: user._id,
+        username: user.username,
+        saldo: user.credit,
         token: token,
-        auth: request.headers.authorization,
     });
 });
 
@@ -60,11 +61,11 @@ const registerUser = asyncHandler(async (request, response) => {
 
     let user = await User.create(newUser);
     response.json(user);
-    response.redirect("https://localhost:3000/")
+    response.redirect("https://localhost:3000/");
 });
 
 const getProfile = asyncHandler(async (request, response) => {
-    let user = await User.findById(request.params.id);
+    let user = await User.findById(request.params.id).select({ password: 0 });
     if (!user) {
         response.status(404).json({ message: "User not found" });
     }
@@ -81,8 +82,8 @@ const getUserProducts = asyncHandler(async (request, response) => {
             .json({ message: "Usuario nao encontrado", id: id });
     }
 
-    let userProducts = await Product.find({owner: user._id})
-    response.status(202).json(userProducts)
+    let userProducts = await Product.find({ owner: user._id });
+    response.status(202).json(userProducts);
 });
 
 //private
