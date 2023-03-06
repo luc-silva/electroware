@@ -1,11 +1,7 @@
 .header {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
+    display: flex;
     justify-content: space-between;
     gap: 1rem;
-    /* position: sticky;
-    top: 0; */
-
     padding: 0 2rem;
     height: 10vh;
     width: 100%;
@@ -28,10 +24,9 @@
 }
 
 .header__form {
-    display: flex;
+    display: none;
     align-items: center;
     gap: 1rem;
-    width: 40vw;
     height: 100%;
 }
 .header__form form {
@@ -62,7 +57,7 @@
     cursor: pointer;
 }
 .header__user-panel {
-    display: flex;
+    display: none;
     flex-direction: row;
     align-items: center;
     gap: 1rem;
@@ -80,4 +75,36 @@
 .header__user-panel__main--logged {
     font-size: 0.9rem;
     color: var(--background-color);
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+    .header{
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        justify-content: space-between;
+    }
+    .header__form{
+        display: flex;
+    }
+    .header__user-panel{
+        display: flex;
+    }
+    .header__form{
+        width: 40vw;
+    }
+}
+@media (min-width: 1025px){
+    .header{
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        justify-content: space-between;
+    }
+    .header__form{
+        display: flex;
+    }
+    .header__user-panel{
+        display: flex;
+    }
+    .header__form{
+        width: 40vw;
+    }
 }
