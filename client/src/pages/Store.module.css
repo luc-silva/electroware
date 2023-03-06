@@ -1,5 +1,5 @@
 .index{
-  background-color: var(--secondary-color-faded);
+  background-color: var(--background-color-faded);
   font-family: Arial, Helvetica, sans-serif;
 }
 .activepromos{
@@ -31,7 +31,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--secondary-color);
+  background-color: var(--background-color-faded);
   
   text-align: center;
   border-radius: 5px;
@@ -39,7 +39,7 @@
   height: 20vh;
   padding: 1rem;
 }
-.categories{
+.recent-products{
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -48,7 +48,7 @@
 .categories h2{
   font-size: 1.5rem;
 }
-.categories-container{
+.products-container{
   display: grid;
   grid-template-columns: repeat(1, auto);
   grid-template-rows: repeat(auto, auto);
@@ -75,14 +75,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--secondary-color);
+    background-color: var(--background-color-faded);
     
     text-align: center;
     border-radius: 5px;
     width: 20%;
     padding: 1rem;
   }
-  .categories-container{
+  .recent-products-container{
     grid-template-columns: repeat(3, auto);
   }
 }
@@ -103,7 +103,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--secondary-color);
+    background-color: var(--background-color-faded);
     
     text-align: center;
     border-radius: 5px;
@@ -111,7 +111,7 @@
     height: 20vh;
     padding: 1rem;
   }
-  .categories-container{
+  .products-container{
     grid-template-columns: repeat(4, auto);
   }
 }
