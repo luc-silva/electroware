@@ -21,10 +21,10 @@ export const FaqCard = ({
             <div className={styles["question-container"]}>
                 <div className={styles["item-icon"]}>
                     {(isCardActive && <CaretDown size={30} />) || (
-                        <CaretRight size={30} />
+                        <CaretRight size={30} color="var(--main-color)"/>
                     )}
                 </div>
-                <div className={styles["item-question"]}>{faqQuestion}</div>
+                <div className={styles["item-question"]}><strong>{faqQuestion}</strong></div>
             </div>
             {isCardActive && (
                 <div className={styles["item-answer"]}>{faqAnswer}</div>
