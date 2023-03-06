@@ -10,9 +10,13 @@ const UserSchema = new Schema(
         },
         email: { required: true, unique: true, type: String },
         password: { required: true, type: String },
-        credit: { type: Number },
+        credit: { type: Number, default: 0},
     },
     { timestamps: true }
 );
+
+UserSchema.virtual("username").get(function () {
+    return this.name.last ? `${this.name.first} ${this.name.last}` : this.name.first;
+});
 
 module.exports = mongoose.model("User", UserSchema);
