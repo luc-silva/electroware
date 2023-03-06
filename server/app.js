@@ -21,3 +21,4 @@ app.use("/api", userRouter)
 //
 app.use("/api/product", productRouter)
 app.use("/api/category", categoryRouter)
+// app.use(errorMiddleware)
