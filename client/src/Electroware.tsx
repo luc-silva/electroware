@@ -8,6 +8,7 @@ import { Registration } from "./pages/Registration";
 import { Product } from "./pages/Product";
 import { Faq } from "./pages/Faq";
 import { SearchResults } from "./pages/SearchResults";
+import { NotFound } from "./pages/NotFound";
 
 function Electroware() {
     return (
@@ -22,6 +23,8 @@ function Electroware() {
 
                     <Route path="/product/:id" element={<Product />} />
                     <Route path="/search/:search" element={<SearchResults />} />
+
+                    <Route path="/*" element={<NotFound />} />
                 </Routes>
             </Router>
         </div>

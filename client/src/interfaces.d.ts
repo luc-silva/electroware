@@ -12,16 +12,17 @@ interface HeaderProps {
     user: UserProps | null;
 }
 interface PageProps {
-    user: UserProps | null
-    isLogged: Boolean
+    user: UserProps | null;
+    isLogged: Boolean;
 }
 
-interface Product{
-    name: String
-    owner: String
-    category: String
-    _id: String
-    price: Number
-    quantity: Number
-    reviews: Number
+interface Product {
+    name: String;
+    owner: String;
+    category: String;
+    description: String;
+    _id: String;
+    price: Number;
+    quantity: Number;
+    reviews: Number;
 }
