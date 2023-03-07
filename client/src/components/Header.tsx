@@ -51,7 +51,9 @@ export const Header = () => {
                     </div>
                 )}
 
-                <ShoppingCart size={30} color="white" />
+                <Link to={"/shopping-cart"}>
+                    <ShoppingCart size={30} color="white" />
+                </Link>
             </div>
         </header>
     );

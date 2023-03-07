@@ -9,6 +9,7 @@ import { Product } from "./pages/Product";
 import { Faq } from "./pages/Faq";
 import { SearchResults } from "./pages/SearchResults";
 import { NotFound } from "./pages/NotFound";
+import { ShoppingCart } from "./pages/ShoppingCart";
 
 function Electroware() {
     return (
@@ -23,6 +24,7 @@ function Electroware() {
 
                     <Route path="/product/:id" element={<Product />} />
                     <Route path="/search/:search" element={<SearchResults />} />
+                    <Route path="/shopping-cart" element={<ShoppingCart />} />
 
                     <Route path="/*" element={<NotFound />} />
                 </Routes>
