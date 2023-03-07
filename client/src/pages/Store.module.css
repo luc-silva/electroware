@@ -1,6 +1,8 @@
 .index{
-  background-color: var(--background-color-faded);
   font-family: Arial, Helvetica, sans-serif;
+}
+.index h2, .index strong{
+  color: var(--title-color);
 }
 .activepromos{
   width: 100%;
@@ -12,6 +14,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: var(--background-color-faded);
 }
 .featured h2{
   margin-top: 2rem;
@@ -26,12 +29,15 @@
   padding: 2rem 0;
   gap: 1rem;
 }
+.container-item{
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
 .featured-container .container-item{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--background-color-faded);
   
   text-align: center;
   border-radius: 5px;
@@ -45,7 +51,7 @@
   gap: 1rem;
   padding: 2rem 2rem;
 }
-.categories h2{
+.recent-products h2{
   font-size: 1.5rem;
 }
 .products-container{
@@ -59,12 +65,6 @@
   .activepromos{
     height: 60vh;
   }
-  .featured{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  
-  }
   .featured-container{
     display: flex;
     flex-direction: row;
@@ -75,18 +75,20 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--background-color-faded);
     
     text-align: center;
     border-radius: 5px;
     width: 20%;
     padding: 1rem;
   }
-  .recent-products-container{
+  .products-container{
     grid-template-columns: repeat(3, auto);
   }
 }
 @media (min-width: 1025px) {
+  .activepromos{
+    height: 65vh;
+  }
   .featured{
     display: flex;
     align-items: center;
@@ -99,13 +101,6 @@
     justify-content: space-between;
   }
   .featured-container .container-item{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    background-color: var(--background-color-faded);
-    
-    text-align: center;
     border-radius: 5px;
     width: 20%;
     height: 20vh;
