@@ -3,7 +3,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 
-export const Login = () => {
+export const Login = ({user, setUser}: {user: UserProps, setUser: Function}) => {
     let formInitialValue = {
         email: "",
         password: "",
@@ -23,12 +23,19 @@ export const Login = () => {
         axios
             .post("http://localhost:6060/api/login", form)
             .then(setLocalstorageToken)
+            .then(setCurrentUser)
             .catch(alert);
         navigate("/home");
     }
-
     function setLocalstorageToken(response: AxiosResponse) {
         localStorage.setItem("user", JSON.stringify(response.data));
+        return response
+    }
+    function setCurrentUser({data}: AxiosResponse){
+        setUser(() => {
+            return {...data}
+        })
+        console.log(user)
     }
     return (
         <main className={styles["login"]}>

@@ -1,6 +1,6 @@
 import styles from "./SearchResults.module.css";
 import { categories } from "../testData";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -48,7 +48,7 @@ export const SearchResults = () => {
                 <div className={styles["results-container"]}>
                     {searchResults.map((product: Product, index: React.Key) => (
                         <div key={index} className={styles["result-product"]}>
-                            <a href={`/product/${product._id}`}>
+                            <Link to={`/product/${product._id}`}>
                                 <div className={styles["product-image"]}>
                                     <img src="a" alt="" />
                                 </div>
@@ -66,7 +66,7 @@ export const SearchResults = () => {
                                         <p>{`Reviews: ${product.reviews}`}</p>
                                     </div>
                                 </div>
-                            </a>
+                            </Link>
                         </div>
                     ))}
                 </div>

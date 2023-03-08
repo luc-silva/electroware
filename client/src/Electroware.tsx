@@ -10,22 +10,48 @@ import { Faq } from "./pages/Faq";
 import { SearchResults } from "./pages/SearchResults";
 import { NotFound } from "./pages/NotFound";
 import { ShoppingCart } from "./pages/ShoppingCart";
+import { UserProfile } from "./pages/UserProfile";
 
 function Electroware() {
+    let initialState = {
+        id: "",
+        saldo: 0,
+        username:"",
+        token:""
+
+    }
+    let [user, setUser] = useState(initialState)
+    // useEffect(() => {
+    //     let storageInfo = localStorage.getItem("user")
+    //     if(storageInfo){
+    //         console.log(storageInfo)
+    //         setUser(JSON.parse(storageInfo))
+    //     }
+    // }, [])
+    let [infoModalActive, toggleInfoModal] = useState(false)
+    function handleInfoModal(){
+        toggleInfoModal(!infoModalActive)
+    }
+
     return (
         <div className="electroware">
             <Router>
-                <Header />
+                <Header user={user} setUser={setUser} handleInfoModal={handleInfoModal}/>
                 <Routes>
-                    <Route path="/home" element={<Store />} />
-                    <Route path="/login" element={<Login />} />
+                    <Route path="/home" element={<Store user={user} setUser={setUser} />} />
+                    <Route path="/login" element={<Login user={user} setUser={setUser}/>} />
                     <Route path="/registration" element={<Registration />} />
                     <Route path="/faq" element={<Faq />} />
 
-                    <Route path="/product/:id" element={<Product />} />
+                    {/* need params */}
+                    <Route path="/user" element={<UserProfile />} />
+                    <Route path="/product/:id" element={<Product user={user} setUser={setUser}/>} />
                     <Route path="/search/:search" element={<SearchResults />} />
+
+                    {/* protected */}
                     <Route path="/shopping-cart" element={<ShoppingCart />} />
 
+                    {/* misc */}
                     <Route path="/*" element={<NotFound />} />
                 </Routes>
             </Router>

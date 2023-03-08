@@ -6,7 +6,7 @@ import { productsHomepage } from "../testData";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export const Store = () => {
+export const Store = ({user, setUser}:{user:UserProps, setUser:Function}) => {
     let [recentProducts, setRecentProducts] = useState([]);
     useEffect(() => {
         axios

@@ -6,23 +6,25 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export const Product = () => {
+export const Product = ({user, setUser}: { user: UserProps; setUser: Function }) => {
     let { id } = useParams();
     let productInitialState: Product = {
         _id: "",
         category: "",
         name: "",
-        description:"",
+        description: "",
         owner: "",
         price: 0,
         quantity: 0,
         reviews: 0,
     };
-    let [productDetails, setProductDetails] = useState(productInitialState)
+    let [productDetails, setProductDetails] = useState(productInitialState);
     useEffect(() => {
-        axios.get(`http://localhost:6060/api/product/${id}`).then(({data}) => {
-            setProductDetails(data)
-        });
+        axios
+            .get(`http://localhost:6060/api/product/${id}`)
+            .then(({ data }) => {
+                setProductDetails(data);
+            });
     }, [id]);
     return (
         <main className={styles["product"]}>
@@ -44,7 +46,8 @@ export const Product = () => {
                             <h2>{`${productDetails.price}$`}</h2>
                         </div>
                         <div className={styles["details-description"]}>
-                            {productDetails.description || "Nenhuma descricao disponivel"}
+                            {productDetails.description ||
+                                "Nenhuma descricao disponivel"}
                         </div>
                     </div>
                     <div className={styles["details-misc"]}>
@@ -62,7 +65,10 @@ export const Product = () => {
                     {productsReviews.map(
                         ({ rating, reviewText, user, reviewDate }, index) => {
                             return (
-                                <div className={styles["rating-card"]} key={index}>
+                                <div
+                                    className={styles["rating-card"]}
+                                    key={index}
+                                >
                                     <div className={styles["card-userinfo"]}>
                                         <div className={styles["user-photo"]}>
                                             {/* <img src="" alt="" /> */}
@@ -84,7 +90,13 @@ export const Product = () => {
                                                 )}
                                             </p>
                                         </div>
-                                        <div className={styles["user-review-text"]}>{reviewText}</div>
+                                        <div
+                                            className={
+                                                styles["user-review-text"]
+                                            }
+                                        >
+                                            {reviewText}
+                                        </div>
                                     </div>
                                 </div>
                             );

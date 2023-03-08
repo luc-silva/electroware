@@ -4,10 +4,18 @@ import { MagnifyingGlass, ShoppingCart } from "phosphor-react";
 import styles from "./Header.module.css";
 import { ChangeEvent, FormEvent, useState } from "react";
 
-export const Header = () => {
-    let isLogged = true;
-    let navigate = useNavigate()
+export const Header = ({
+    user,
+    setUser,
+    handleInfoModal
+}: {
+    user: UserProps;
+    setUser: Function;
+    handleInfoModal: Function
+}) => {
+    let navigate = useNavigate();
     let [searchInput, setSearchInput] = useState("");
+    
     const handleSearchInput = (event: ChangeEvent<HTMLInputElement>) => {
         let target = event.target;
         if (target) {
@@ -15,10 +23,12 @@ export const Header = () => {
         }
     };
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-        navigate(`/search/${searchInput}`)
+        event.preventDefault();
+        navigate(`/search/${searchInput}`);
+    };
+    const showModal = (event: React.MouseEvent<HTMLDivElement>) => {
+        handleInfoModal()
     }
-
     return (
         <header className={styles["header"]}>
             <div className={styles["header__main"]}>
@@ -28,26 +38,33 @@ export const Header = () => {
             </div>
             <div className={styles["header__form"]}>
                 <form action="POST" name="search-input" onSubmit={handleSubmit}>
-                    <input type="text"  value={searchInput} onChange={handleSearchInput} />
+                    <input
+                        type="text"
+                        value={searchInput}
+                        onChange={handleSearchInput}
+                    />
                     <label className={styles["search-icon"]}>
                         <input type="submit" value={"Pesquisar"} />
                         <MagnifyingGlass
-                                size={20}
-                                color="white"
-                                weight="bold"
-                            />
+                            size={20}
+                            color="white"
+                            weight="bold"
+                        />
                     </label>
                 </form>
             </div>
             <div className={styles["header__user-panel"]}>
-                {(isLogged && (
-                    <div className={styles["header__user-panel__main--logged"]}>
-                        <strong>Ola, Lucas</strong>
-                        <a href="/user/me">Ver perfil</a>
+                {(user.id && (
+                    <div
+                        className={styles["header__user-panel__main--logged"]}
+                        onMouseOver={showModal}
+                    >
+                        <strong>{`Ola, ${user.username}`}</strong>
+                        <Link to="/user/me">Ver infos</Link>
                     </div>
                 )) || (
                     <div className={styles["header__user-panel__main"]}>
-                        <a href="">Entre em sua conta</a>
+                        <Link to="/login">Entre em sua conta</Link>
                     </div>
                 )}
 

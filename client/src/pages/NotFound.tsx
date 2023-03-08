@@ -1,4 +1,5 @@
 import { Warning } from "phosphor-react";
+import { Link } from "react-router-dom";
 import styles from "./NotFound.module.css";
 
 export const NotFound = () => {
@@ -19,13 +20,13 @@ export const NotFound = () => {
                 <nav className={styles["footer__navigation"]}>
                     <ul>
                         <li>
-                            <a href="/home">Home</a>
+                            <Link to="/home">Home</Link>
                         </li>
                         <li>
-                            <a href="/Faq">FAQ</a>
+                            <Link to="/Faq">FAQ</Link>
                         </li>
                         <li>
-                            <a href="/user/me">Seu Perfil</a>
+                            <Link to="/user/me">Seu Perfil</Link>
                         </li>
                         <li>
                             <a
