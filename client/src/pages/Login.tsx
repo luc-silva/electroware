@@ -34,7 +34,7 @@ export const Login = () => {
         <main className={styles["login"]}>
             <div className={styles["login-text"]}>
                 <h1>Login</h1>
-                <p>Log in to your account and start spending your money!</p>
+                <p>Entre em sua conta e comece a gastar o seu dinheiro!</p>
             </div>
             <section className={styles["login-form"]}>
                 <form
@@ -51,12 +51,12 @@ export const Login = () => {
                     <input
                         name="password"
                         type="password"
-                        placeholder="Password"
+                        placeholder="Senha"
                         required
                     />
-                    <input type="submit" value="Log In" />
+                    <input type="submit" value="Entrar" />
                 </form>
-                <Link to="/registration">Create an account</Link>
+                <Link to="/registration">Crie uma conta</Link>
             </section>
         </main>
     );

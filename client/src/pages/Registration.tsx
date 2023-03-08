@@ -37,8 +37,8 @@ export const Registration = () => {
     return (
         <div className={styles["registration"]}>
             <div className={styles["registration-text"]}>
-                <h1>Create an account</h1>
-                <p>Don't waste your money on other marketplaces anymore!</p>
+                <h1>Crie uma conta</h1>
+                <p>Não gaste o seu dinheiro em outros sites!</p>
             </div>
             <div className={styles["registration-form"]}>
                 <form action="POST" onChange={handleChange} onSubmit={handleSubmit}>
@@ -46,14 +46,14 @@ export const Registration = () => {
                         name="first"
                         value={form.first}
                         type="text"
-                        placeholder="First Name"
+                        placeholder="Nome"
                         required
                     />
                     <input
                         name="last"
                         value={form.last}
                         type="text"
-                        placeholder="Last Name" 
+                        placeholder="Sobrenome" 
                     />
                     <input
                         name="email"
@@ -66,7 +66,7 @@ export const Registration = () => {
                         name="password"
                         value={form.password}
                         type="password"
-                        placeholder="Password"
+                        placeholder="Senha"
                         required
                     />
                     <input
@@ -74,7 +74,7 @@ export const Registration = () => {
                         value="Crie uma conta"
                     />
                 </form>
-                <Link to="/login">Already have an account? Sign in </Link>
+                <Link to="/login">Já possui uma conta? Entre </Link>
             </div>
         </div>
     );
