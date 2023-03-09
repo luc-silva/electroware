@@ -1,3 +1,4 @@
+import { ProductCardSmall } from "../components/ProductCardSmall"
 import styles from "./ShoppingCart.module.css"
 
 export const ShoppingCart = () => {
@@ -8,42 +9,9 @@ export const ShoppingCart = () => {
                     <h2>Carrinho de Compras</h2>
                 </div>
                 <div className={styles["shopping-cart__container"]}>
-                    <div className={styles["container__item"]}>
-                        <div className={styles["container-picture"]}>
-                            <img src="" alt="" />
-                        </div>
-                        <div className={styles["container-details"]}>
-                            <div>
-                                <p>PC GAMER</p>
-                                <strong>4000 R$</strong>
-                            </div>
-                            <p>Vendendor: Gabe Newell</p>
-                        </div>
-                    </div>
-                    <div className={styles["container__item"]}>
-                        <div className={styles["container-picture"]}>
-                            <img src="" alt="" />
-                        </div>
-                        <div className={styles["container-details"]}>
-                            <div>
-                                <p>PC GAMER</p>
-                                <strong>4000 R$</strong>
-                            </div>
-                            <p>Vendendor: Gabe Newell</p>
-                        </div>
-                    </div>
-                    <div className={styles["container__item"]}>
-                        <div className={styles["container-picture"]}>
-                            <img src="" alt="" />
-                        </div>
-                        <div className={styles["container-details"]}>
-                            <div>
-                                <p>PC GAMER</p>
-                                <strong>4000 R$</strong>
-                            </div>
-                            <p>Vendendor: Gabe Newell</p>
-                        </div>
-                    </div>
+                   <ProductCardSmall />
+                   <ProductCardSmall />
+                   <ProductCardSmall />
                 </div>
             </section>
             <aside className={styles["shopping-cart__panel"]}>
