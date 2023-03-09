@@ -25,3 +25,9 @@ interface Product {
     quantity: Number;
     reviews: Number;
 }
+interface Review{
+    author: String;
+    product: String;
+    productOwner: String;
+    score: number;
+}
