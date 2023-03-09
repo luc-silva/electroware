@@ -1,4 +1,4 @@
-const productsHomepage = [
+export const productsHomepage = [
     {
         productName: "Eletrical Wire",
         productPrice: "40.40",
@@ -67,7 +67,7 @@ const productsHomepage = [
     },
 ];
 
-const productProductPage = {
+export const productProductPage = {
     productName: "Eletrical Wire",
     productPrice: "40.40",
     productUrl: "asdsa",
@@ -76,22 +76,22 @@ const productProductPage = {
 
 export const questions = [
     {
-        faqQuestion: "Is this real?",
+        faqQuestion: "Isso é real?",
         faqAnswer:
             "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium nihil tempore minima quia, impedit ea pariatur, soluta quo iste consequuntur rem ipsa excepturi quaerat similique commodi? Nesciunt animi dicta hic.",
     },
     {
-        faqQuestion: "Can I pay someone using bitcoins?",
+        faqQuestion: "Posso pagar alguém usando bitcoins?",
         faqAnswer:
             "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium nihil tempore minima quia, impedit ea pariatur, soluta quo iste consequuntur rem ipsa excepturi quaerat similique commodi? Nesciunt animi dicta hic.",
     },
     {
-        faqQuestion: "How to delete my account",
+        faqQuestion: "Como posso deletar a minha conta?",
         faqAnswer:
             "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium nihil tempore minima quia, impedit ea pariatur, soluta quo iste consequuntur rem ipsa excepturi quaerat similique commodi? Nesciunt animi dicta hic.",
     },
     {
-        faqQuestion: "Is this real?",
+        faqQuestion: "Oi, como vai?",
         faqAnswer:
             "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium nihil tempore minima quia, impedit ea pariatur, soluta quo iste consequuntur rem ipsa excepturi quaerat similique commodi? Nesciunt animi dicta hic.",
     },
@@ -120,4 +120,74 @@ export const productsReviews = [
             "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium nihil tempore minima quia, impedit ea pariatur, soluta quo iste consequuntur rem ipsa excepturi quaerat similique commodi? Nesciunt animi dicta hic.",
     },
 ];
-export { productsHomepage, productProductPage };
+
+export const seachResults = [
+    {
+        name: "Something Expensive",
+        owner: "Someone",
+        price: 40000,
+        reviews: 4.5,
+    },
+    {
+        name: "Something Expensive",
+        owner: "Someone",
+        price: 40000,
+        reviews: 4.5,
+    },
+    {
+        name: "Something Expensive",
+        owner: "Someone",
+        price: 40000,
+        reviews: 4.5,
+    },
+    {
+        name: "Something Expensive",
+        owner: "Someone",
+        price: 40000,
+        reviews: 4.5,
+    },
+    {
+        name: "Something Expensive",
+        owner: "Someone",
+        price: 40000,
+        reviews: 4.5,
+    },
+    {
+        name: "Something Expensive",
+        owner: "Someone",
+        price: 40000,
+        reviews: 4.5,
+    },
+    {
+        name: "Something Expensive",
+        owner: "Someone",
+        price: 40000,
+        reviews: 4.5,
+    },
+    {
+        name: "Something Expensive",
+        owner: "Someone",
+        price: 40000,
+        reviews: 4.5,
+    },
+    {
+        name: "Something Expensive",
+        owner: "Someone",
+        price: 40000,
+        reviews: 4.5,
+    },
+    {
+        name: "Something Expensive",
+        owner: "Someone",
+        price: 40000,
+        reviews: 4.5,
+    },
+    {
+        name: "Something Expensive",
+        owner: "Someone",
+        price: 40000,
+        reviews: 4.5,
+    },
+]
+
+export const categories = ["Eletronics", "Misc", "Food", "Drinks"]

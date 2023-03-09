@@ -1,5 +1,4 @@
 interface UserProps {
-    logged: Boolean;
     username: String;
     id: String;
     token: String;

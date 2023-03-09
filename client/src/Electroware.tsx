@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Header } from "./components/Header";
-import { createContext, useContext, useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Store } from "./pages/Store";
 import { Login } from "./pages/Login";
@@ -11,16 +11,16 @@ import { SearchResults } from "./pages/SearchResults";
 import { NotFound } from "./pages/NotFound";
 import { ShoppingCart } from "./pages/ShoppingCart";
 import { UserProfile } from "./pages/UserProfile";
+import { ProfileMenu } from "./components/ProfileMenu";
 
 function Electroware() {
     let initialState = {
         id: "",
         saldo: 0,
-        username:"",
-        token:""
-
-    }
-    let [user, setUser] = useState(initialState)
+        username: "",
+        token: "",
+    };
+    let [user, setUser] = useState(initialState);
     // useEffect(() => {
     //     let storageInfo = localStorage.getItem("user")
     //     if(storageInfo){
@@ -28,24 +28,42 @@ function Electroware() {
     //         setUser(JSON.parse(storageInfo))
     //     }
     // }, [])
-    let [infoModalActive, toggleInfoModal] = useState(false)
-    function handleInfoModal(){
-        toggleInfoModal(!infoModalActive)
+    let [infoMenuActive, toggleInfoMenu] = useState(false);
+    function handleInfoMenu() {
+        toggleInfoMenu(!infoMenuActive);
     }
-
     return (
         <div className="electroware">
             <Router>
-                <Header user={user} setUser={setUser} handleInfoModal={handleInfoModal}/>
+                <Header
+                    user={user}
+                    setUser={setUser}
+                    handleInfoMenu={handleInfoMenu}
+                    isMenuActive={infoMenuActive}
+                />
+                <ProfileMenu
+                    isActive={infoMenuActive}
+                    toggleMenu={toggleInfoMenu}
+                    user={user}
+                />
                 <Routes>
-                    <Route path="/home" element={<Store user={user} setUser={setUser} />} />
-                    <Route path="/login" element={<Login user={user} setUser={setUser}/>} />
+                    <Route
+                        path="/home"
+                        element={<Store user={user} setUser={setUser} />}
+                    />
+                    <Route
+                        path="/login"
+                        element={<Login user={user} setUser={setUser} />}
+                    />
                     <Route path="/registration" element={<Registration />} />
                     <Route path="/faq" element={<Faq />} />
 
                     {/* need params */}
                     <Route path="/user" element={<UserProfile />} />
-                    <Route path="/product/:id" element={<Product user={user} setUser={setUser}/>} />
+                    <Route
+                        path="/product/:id"
+                        element={<Product user={user} setUser={setUser} />}
+                    />
                     <Route path="/search/:search" element={<SearchResults />} />
 
                     {/* protected */}

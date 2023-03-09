@@ -1,5 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
-import { MagnifyingGlass, ShoppingCart } from "phosphor-react";
+import {
+    Bookmarks,
+    CaretDown,
+    CaretUp,
+    Heart,
+    MagnifyingGlass,
+    Plus,
+    ShoppingCart,
+} from "phosphor-react";
 
 import styles from "./Header.module.css";
 import { ChangeEvent, FormEvent, useState } from "react";
@@ -7,15 +15,17 @@ import { ChangeEvent, FormEvent, useState } from "react";
 export const Header = ({
     user,
     setUser,
-    handleInfoModal
+    handleInfoMenu,
+    isMenuActive,
 }: {
     user: UserProps;
     setUser: Function;
-    handleInfoModal: Function
+    handleInfoMenu: Function;
+    isMenuActive: Boolean;
 }) => {
     let navigate = useNavigate();
     let [searchInput, setSearchInput] = useState("");
-    
+
     const handleSearchInput = (event: ChangeEvent<HTMLInputElement>) => {
         let target = event.target;
         if (target) {
@@ -27,8 +37,8 @@ export const Header = ({
         navigate(`/search/${searchInput}`);
     };
     const showModal = (event: React.MouseEvent<HTMLDivElement>) => {
-        handleInfoModal()
-    }
+        handleInfoMenu();
+    };
     return (
         <header className={styles["header"]}>
             <div className={styles["header__main"]}>
@@ -55,22 +65,31 @@ export const Header = ({
             </div>
             <div className={styles["header__user-panel"]}>
                 {(user.id && (
-                    <div
-                        className={styles["header__user-panel__main--logged"]}
-                        onMouseOver={showModal}
-                    >
-                        <strong>{`Ola, ${user.username}`}</strong>
-                        <Link to="/user/me">Ver infos</Link>
+                    <div className={styles["header__user-panel__main--logged"]}>
+                        <Link to={"/shopping-cart"}>
+                            <ShoppingCart size={30} color="white" />
+                        </Link>
+                        <Link to={"/wishlist"}>
+                            <Bookmarks size={30} color="white" />
+                        </Link>
+                        <div
+                            className={styles["header__user-panel__user"]}
+                            onClick={showModal}
+                        >
+                            <div>
+                                <strong>{`Olá, ${user.username}`}</strong>
+                                <p>Ver infos</p>
+                            </div>
+                            {(isMenuActive && (
+                                <CaretUp size={30} color="white" />
+                            )) || <CaretDown size={30} color="white" />}
+                        </div>
                     </div>
                 )) || (
                     <div className={styles["header__user-panel__main"]}>
                         <Link to="/login">Entre em sua conta</Link>
                     </div>
                 )}
-
-                <Link to={"/shopping-cart"}>
-                    <ShoppingCart size={30} color="white" />
-                </Link>
             </div>
         </header>
     );

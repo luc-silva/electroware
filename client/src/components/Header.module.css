@@ -61,20 +61,32 @@
     flex-direction: row;
     align-items: center;
     gap: 1rem;
-
     color: white;
 }
 .header__user-panel__main--logged{
     display: flex;
-    flex-direction: column;
-}
-.header__user-panel__main--logged a {
-    font-size: 0.8rem;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
 }
 .header__user-panel__main,
 .header__user-panel__main--logged {
     font-size: 0.9rem;
     color: var(--background-color);
+}
+.header__user-panel__user{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 1rem;
+}
+.header__user-panel__user > div{
+    display: flex;
+    flex-direction: column;
+}
+.header__user-panel__user p{
+    font-size: 0.8rem;
 }
 @media (min-width: 769px) and (max-width: 1024px) {
     .header{
