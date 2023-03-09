@@ -35,7 +35,7 @@ const getProductDetails = asyncHandler(async (request, response) => {
         response.json({ message: "Product not found" });
     }
 
-    response.json(product);
+    response.status(202).json(product);
 });
 
 //private
