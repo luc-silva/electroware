@@ -48,11 +48,6 @@
     flex-direction: row;
     align-items: center;
 }
-.stars-container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
 .user-profile__products {
     padding: 2rem 2rem;
 }

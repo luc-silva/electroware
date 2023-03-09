@@ -1,4 +1,5 @@
 import { Star } from "phosphor-react";
+import { StarsContainer } from "../components/StarsContainer";
 import styles from "./UserProfile.module.css"
 
 export const UserProfile = () => {
@@ -22,12 +23,8 @@ export const UserProfile = () => {
                         <p>Reputacao</p>
                         <div>
                             <strong>4.5</strong>
-                            <div className={[styles["user-profile__details__reputation"], styles["stars-container"]].join("")}>
-                                <Star size={20} weight="duotone"  color="var(--main-color)"/>
-                                <Star size={20} weight="duotone" color="var(--main-color)" />
-                                <Star size={20} weight="duotone" color="var(--main-color)"/>
-                                <Star size={20} weight="duotone" color="var(--main-color)" />
-                                <Star size={15} color="var(--main-color)"/>
+                            <div className={styles["user-profile__details__reputation"]}>
+                                <StarsContainer size={20} stars={4.6} />
                             </div>
                         </div>
                     </div>
