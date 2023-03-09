@@ -4,10 +4,11 @@ const Schema = mongoose.Schema;
 
 const ReviewSchema = new Schema(
     {
-        reviewAuthor: { type: Schema.Types.ObjectId, ref: "User" },
-        reviewProduct: { type: Schema.Types.ObjectId, ref: "Product" },
-        reviewText: { type: String, maxLength: 150 },
-        reviewScore: { type: Number, min: 1, max: 5 },
+        author: { type: Schema.Types.ObjectId, ref: "User", required: true },
+        product: { type: Schema.Types.ObjectId, ref: "Product", required: true },
+        productOwner: { type: Schema.Types.ObjectId, ref: "User", required: true },
+        score: { type: Number, min: 1, max: 5, required: true },
+        text: { type: String, maxLength: 150 },
     },
     { timestamps: true }
 );

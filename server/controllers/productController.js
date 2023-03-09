@@ -4,7 +4,7 @@ const Product = require("../models/Product");
 const User = require("../models/User");
 
 const getRecentProducts = asyncHandler(async (request, response) => {
-    let products = await Product.find().limit(20).sort({ createdAt: -1 });
+    let products = await Product.find().limit(12).sort({ createdAt: -1 });
     response.status(202);
     if (products.length === 0) {
         response.json({ message: "Sem produtos para exibir" });
