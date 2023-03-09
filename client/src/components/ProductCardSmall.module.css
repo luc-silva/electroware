@@ -1,0 +1,31 @@
+.container__item {
+    border-top: 1px solid var(--background-color-faded);
+    padding: 0.5rem;
+    height: 15vh;
+}
+.container__item a{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    height: 100%;
+}
+.container-picture {
+    width: 100px;
+    height: 100%;
+    background-color: black;
+}
+.container-details {
+    width: 80%;
+    height: 100%;
+}
+.container-details > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.container-details > p {
+    font-size: 0.8rem;
+    color: var(--text-color);
+}
+@media (min-width: 769px) and (max-width: 1024px) {}
+@media (min-width: 1025px) {}

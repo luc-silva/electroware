@@ -1,5 +1,6 @@
 .card-wrapper{
     height: 50vh;
+    border: 1px solid var(--background-color-faded);
 }
 .card{
     display: flex;
@@ -15,18 +16,26 @@
 .card-info{
     height: 40%;
     padding: 1rem;
-    background-color: var(--secondary-color);
 }
 .card-details{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
+.card-details p{
+    color: var(--text-color);
+}
 .details-vendor{
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     font-size: 0.8rem;
+}
+.card-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-top: 1px solid var(--background-color-faded);
 }
 .card-info strong{
     font-size: 1.5rem;

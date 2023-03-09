@@ -1,30 +1,28 @@
+import { Link } from "react-router-dom";
 import styles from "./ProductCard.module.css";
 
 interface productCard {
-    name: string;
-    price: string;
+    name: String;
+    price: Number;
+    id: String;
 }
 
-export const ProductCard = ({
-    name,
-    price,
-}: productCard) => {
-
+export const ProductCard = ({ name, price, id }: productCard) => {
     return (
         <li className={styles["card-wrapper"]}>
-            <a className={styles["card"]} href={""}>
+            <Link className={styles["card"]} to={`/product/${id}`}>
                 <div className={styles["card-image"]}>
                     {/* <img src="" alt="" /> */}
                 </div>
                 <div className={styles["card-info"]}>
-                    <div className={styles["card-details"]}>
-                        <strong>{name}</strong>
-                    </div>
                     <div className={styles["card-info-price"]}>
-                        <p>{price}</p>
+                        <strong>{`R$ ${price}`}</strong>
+                    </div>
+                    <div className={styles["card-details"]}>
+                        <p>{name}</p>
                     </div>
                 </div>
-            </a>
+            </Link>
         </li>
     );
 };
