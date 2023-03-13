@@ -5,13 +5,15 @@ const Product = require("../models/Product");
 
 //private
 const submitReview = asyncHandler(async (request, response) => {
-    let reviewer = request.user;
+    let reviewer = await User.findById(request.user);
     let { product, text, score, productOwner } = request.body;
     if (!reviewer || !(product, score, productOwner)) {
         response.status(402).json({ message: "Insira credenciais validos" });
     }
     let review = await Review.create({
-        author: reviewer,
+
+        author: reviewer.id,
+        authorUsername: reviewer.username,
         product,
         text,
         score,
@@ -65,7 +67,7 @@ const getProductReviews = asyncHandler(async (request, response) => {
         response.status(404).json({ message: "Produto nao encontrado" });
     }
 
-    let reviews = await Review.find({ product: product.id });
+    let reviews = await Review.find({ product: product.id }).sort({createdAt: -1});
     if (!reviews) {
         response.status(404).json({ message: "Sem reviews para esse produto" });
     }
