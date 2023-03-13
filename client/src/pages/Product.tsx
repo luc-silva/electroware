@@ -2,9 +2,11 @@ import styles from "./Product.module.css";
 import { Star } from "phosphor-react";
 import { format } from "date-fns";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { StarsContainer } from "../components/StarsContainer";
+import { ReviewCard } from "../components/ReviewCard";
+import { ReviewsContainer } from "../components/ReviewsContainer";
 
 export const Product = ({
     user,
@@ -24,7 +26,7 @@ export const Product = ({
         quantity: 0,
         reviews: 0,
     };
-    let [owner, setOwner] = useState({first:"", last:""})
+    let [owner, setOwner] = useState({ first: "", last: "" });
     let [productDetails, setProductDetails] = useState(productInitialState);
     let [productReviews, setProductReviews] = useState([]);
     useEffect(() => {
@@ -43,18 +45,18 @@ export const Product = ({
     }, [id]);
     useEffect(() => {
         axios
-        .get(`http://localhost:6060/api/user/${productDetails.owner}`)
-        .then(({data}) => {
-            setOwner(data.name)
-        })
-    }, [productDetails])
+            .get(`http://localhost:6060/api/user/${productDetails.owner}`)
+            .then(({ data }) => {
+                setOwner(data.name);
+            });
+    }, [productDetails]);
 
     function getRatingAverage() {
         let total = 0;
         productReviews.forEach((review: Review) => {
             total += review.score;
         });
-        return (total === 0)
+        return total === 0
             ? 0
             : Number((total / productReviews.length).toFixed(1));
     }
@@ -97,52 +99,14 @@ export const Product = ({
                     <div className={styles["ratings__score"]}>
                         <strong>{getRatingAverage()}/5</strong>
                         <div>
-                            <StarsContainer  size={20} stars={getRatingAverage()}/>
+                            <StarsContainer
+                                size={20}
+                                stars={getRatingAverage()}
+                            />
                         </div>
                     </div>
                 </div>
-                <div className={styles["ratings-container"]}>
-                    {productReviews.map(
-                        ({ score, text, author, createdAt }, index) => {
-                            return (
-                                <div
-                                    className={styles["rating-card"]}
-                                    key={index}
-                                >
-                                    <div className={styles["card-userinfo"]}>
-                                        <div className={styles["user-photo"]}>
-                                            {/* <img src="" alt="" /> */}
-                                        </div>
-                                        <div>
-                                            Rating:
-                                            {score}
-                                        </div>
-                                    </div>
-                                    <div className={styles["user-review"]}>
-                                        <div
-                                            className={styles["review-detail"]}
-                                        >
-                                            <strong>{author}</strong>
-                                            <p>
-                                                {format(
-                                                    new Date(createdAt),
-                                                    "dd/MM/yyyy"
-                                                )}
-                                            </p>
-                                        </div>
-                                        <div
-                                            className={
-                                                styles["user-review-text"]
-                                            }
-                                        >
-                                            {text}
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        }
-                    )}
-                </div>
+                <ReviewsContainer productId={id} />
             </section>
         </main>
     );

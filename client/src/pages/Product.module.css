@@ -78,54 +78,6 @@
     font-size: 4rem;
     color: var(--title-color);
 }
-.ratings-container{
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-.rating-card{
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    padding: 1rem;
-    background-color: var(--background-color-faded);
-    border-radius: 5px;
-}
-.card-userinfo{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.user-photo{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: black;
-}
-.user-review{
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-.review-detail{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-.review-detail strong{
-    color: var(--title-color);
-    font-size: 1.1rem;
-}
-.review-detail p{
-    color: var(--text-color);
-    font-size: 0.8rem;
-}
-.user-review-text{
-    color: var(--text-color);
-    text-align: justify;
-    font-size: 0.9rem;
-}
-
 
 
 
