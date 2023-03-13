@@ -2,9 +2,9 @@ import styles from "./Checkout.module.css"
 import axios from "axios"
 
 export const Checkout = () => {
-    function handleCheckout(){
-        axios.
-    }
+    // function handleCheckout(){
+    //     axios.
+    // }
 
     return (
         <main className={styles["checkout"]}>
@@ -18,7 +18,7 @@ export const Checkout = () => {
                         <p>FORMA DE PAGAMENTO: BOLETO</p>
                     </div>
                     <div>
-                        <button onClick={handleCheckout}>FINALIZAR COMPRA</button>
+                        <button >FINALIZAR COMPRA</button>
                     </div>
                 </div>
             </article>

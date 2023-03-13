@@ -31,7 +31,6 @@ export const Product = ({
         axios
             .get(`http://localhost:6060/api/product/${id}`)
             .then(({ data }) => {
-                console.log(data.owner.name)
                 setProductDetails(data);
             });
     }, [id]);
@@ -48,7 +47,7 @@ export const Product = ({
         .then(({data}) => {
             setOwner(data.name)
         })
-    }, [id])
+    }, [productDetails])
 
     function getRatingAverage() {
         let total = 0;

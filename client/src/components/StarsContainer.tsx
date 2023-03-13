@@ -9,11 +9,11 @@ export const StarsContainer = ({
     size: number;
 }) => {
     let starsArr = [
-        <Star size={size} color="var(--main-color)" />,
-        <Star size={size} color="var(--main-color)" />,
-        <Star size={size} color="var(--main-color)" />,
-        <Star size={size} color="var(--main-color)" />,
-        <Star size={size} color="var(--main-color)" />,
+        <Star size={size} color="var(--main-color)" key={0} />,
+        <Star size={size} color="var(--main-color)" key={1} />,
+        <Star size={size} color="var(--main-color)" key={2} />,
+        <Star size={size} color="var(--main-color)" key={3} />,
+        <Star size={size} color="var(--main-color)" key={4} />,
     ];
     return (
         <div className={styles["stars-container"]}>
@@ -25,6 +25,7 @@ export const StarsContainer = ({
                         size={size}
                         color="var(--main-color)"
                         weight="duotone"
+                        key={index}
                     />
                 );
             })}
