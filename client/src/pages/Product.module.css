@@ -17,7 +17,7 @@
     font-size: 2rem;
     color: var(--title-color);
 }
-.details-info{
+.details-info {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -52,7 +52,7 @@
     width: 100%;
     height: 50vh;
 }
-.product__ratings{
+.product__ratings {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -60,26 +60,64 @@
     border-top: 1px solid var(--background-color-faded);
     background-color: var(--background-color);
 }
-.ratings__title{
+.ratings__title {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 .ratings__title h2 {
     font-size: 1.6rem;
     color: var(--title-color);
 }
-.ratings__score{
+.ratings__score {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 1rem;
 }
-.ratings__score strong{
+.ratings__score strong {
     font-size: 4rem;
     color: var(--title-color);
 }
-
-
+.ratings__form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 3rem;
+}
+.ratings__form label{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}.ratings__form form{
+    width: 100%;
+}
+.ratings__form form > textarea {
+    padding: 1rem;
+    min-height: 4rem;
+    width: 100%;
+    resize: none;
+    border-radius: 5px;
+    background-color: var(--background-color-faded);
+}
+.ratings__form form > textarea::placeholder {
+    color: var(--text-color);
+}
+.ratings__form div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.ratings__form input[type="submit"] {
+    padding: 0.5rem 1rem;
+    color: white;
+    background-color: var(--main-color);
+}
+.ratings__form select {
+    padding: 0.5rem 1rem;
+}
 
 @media (min-width: 769px) and (max-width: 1024px) {
     .product {
@@ -95,11 +133,11 @@
         height: 100%;
         justify-content: space-between;
     }
-    .details-info{
+    .details-info {
         height: 100%;
     }
-    
-    .details-misc{
+
+    .details-misc {
         width: 100%;
     }
     .product-image {
@@ -107,10 +145,9 @@
         width: 55vw;
         height: 100%;
     }
-    .product__ratings{
+    .product__ratings {
         border-top: none;
     }
-
 }
 @media (min-width: 1025px) {
     .product {
@@ -126,36 +163,39 @@
         height: 100%;
         justify-content: space-between;
     }
-    .details-info{
+    .details-info {
         height: 100%;
     }
-    .details-misc{
+    .details-misc {
         width: 100%;
-
     }
     .product-image {
         background-color: black;
         width: 45vw;
         height: 100%;
     }
-    .product__ratings{
+    .product__ratings {
         border-top: none;
     }
-    .ratings__title{
+    .ratings__title {
         justify-content: flex-start;
     }
     .ratings__title h2 {
         font-size: 1.6rem;
         color: var(--title-color);
     }
-    .ratings__score{
+    .ratings__score {
         display: flex;
         flex-direction: row;
         align-items: center;
+        gap: 1rem;
         padding: 1rem;
     }
-    .ratings__score strong{
+    .ratings__score strong {
         font-size: 4rem;
         color: var(--title-color);
+    }
+    .ratings__form {
+        width: 50%;
     }
 }

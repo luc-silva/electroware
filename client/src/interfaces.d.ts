@@ -3,6 +3,7 @@ interface UserProps {
     id: String;
     token: String;
     saldo: Number;
+    logged: boolean;
 }
 
 interface HeaderProps {
@@ -26,8 +27,11 @@ interface Product {
     reviews: Number;
 }
 interface Review{
-    author: String;
-    product: String;
-    productOwner: String;
+    author: string;
+    authorUsername: string;
+    product: string;
+    productOwner: string;
     score: number;
+    text: string;
+    createdAt: string;
 }

@@ -16,11 +16,17 @@
   justify-content: center;
   background-color: var(--background-color-faded);
 }
-.featured h2{
+.featured__title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.featured__title h2{
   margin-top: 2rem;
   font-size: 1.5rem;
+  text-align: center;
 }
-.featured-container{
+.featured__container{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,7 +39,7 @@
   background-color: var(--background-color);
   color: var(--text-color);
 }
-.featured-container .container-item{
+.featured__container .container-item{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,12 +71,12 @@
   .activepromos{
     height: 60vh;
   }
-  .featured-container{
+  .featured__container{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
-  .featured-container .container-item{
+  .featured__container .container-item{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -95,12 +101,12 @@
     justify-content: center;
   
   }
-  .featured-container{
+  .featured__container{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
-  .featured-container .container-item{
+  .featured__container .container-item{
     border-radius: 5px;
     width: 20%;
     height: 20vh;

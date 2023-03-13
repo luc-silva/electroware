@@ -1,11 +1,8 @@
 import styles from "./Product.module.css";
-import { Star } from "phosphor-react";
-import { format } from "date-fns";
-import { useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import axios from "axios";
 import { StarsContainer } from "../components/StarsContainer";
-import { ReviewCard } from "../components/ReviewCard";
 import { ReviewsContainer } from "../components/ReviewsContainer";
 
 export const Product = ({
@@ -16,6 +13,7 @@ export const Product = ({
     setUser: Function;
 }) => {
     let { id } = useParams();
+    let navigate = useNavigate();
     let productInitialState: Product = {
         _id: "",
         category: "",
@@ -35,14 +33,13 @@ export const Product = ({
             .then(({ data }) => {
                 setProductDetails(data);
             });
-    }, [id]);
-    useEffect(() => {
         axios
             .get(`http://localhost:6060/api/product/${id}/reviews`)
             .then(({ data }) => {
                 setProductReviews(data);
             });
     }, [id]);
+
     useEffect(() => {
         axios
             .get(`http://localhost:6060/api/user/${productDetails.owner}`)
@@ -59,6 +56,37 @@ export const Product = ({
         return total === 0
             ? 0
             : Number((total / productReviews.length).toFixed(1));
+    }
+
+    let [selectValue, setSelectValue] = useState(1);
+    function handleSelect(event: ChangeEvent<HTMLSelectElement>) {
+        setSelectValue(Number(event.target.value));
+    }
+
+    let [textareaValue, setTextareaValue] = useState("");
+    function handleTextarea(event: ChangeEvent<HTMLTextAreaElement>) {
+        setTextareaValue(event.target.value);
+    }
+
+    function handleReviewSubmit(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        axios.post(
+            `http://localhost:6060/api/review/`,
+            {
+                author: user.id,
+                authorUsername: user.username,
+                product: id,
+                productOwner: productDetails.owner,
+                text: textareaValue,
+                score: selectValue,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            }
+        );
+        navigate(`/product/${id}`);
     }
 
     return (
@@ -94,19 +122,47 @@ export const Product = ({
             <section className={styles["product__ratings"]}>
                 <div className={styles["ratings-main"]}>
                     <div className={styles["ratings__title"]}>
-                        <h2>Avaliacoes do produto</h2>
+                        <h2>Avaliações do produto</h2>
                     </div>
                     <div className={styles["ratings__score"]}>
                         <strong>{getRatingAverage()}/5</strong>
                         <div>
                             <StarsContainer
-                                size={20}
+                                size={30}
                                 stars={getRatingAverage()}
                             />
                         </div>
                     </div>
                 </div>
                 <ReviewsContainer productId={id} />
+                {user.logged && (
+                    <div className={styles["ratings__form"]}>
+                        <form action="POST" onSubmit={handleReviewSubmit}>
+                            <textarea
+                                name="text"
+                                defaultValue={textareaValue}
+                                onChange={handleTextarea}
+                            />
+                            <div>
+                                <label htmlFor="score">
+                                    <p>Nota:</p>
+                                    <select
+                                        name="score"
+                                        onChange={handleSelect}
+                                        value={selectValue}
+                                    >
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </label>
+                                <input type="submit" />
+                            </div>
+                        </form>
+                    </div>
+                )}
             </section>
         </main>
     );

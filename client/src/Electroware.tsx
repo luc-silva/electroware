@@ -12,6 +12,7 @@ import { NotFound } from "./pages/NotFound";
 import { ShoppingCart } from "./pages/ShoppingCart";
 import { UserProfile } from "./pages/UserProfile";
 import { ProfileMenu } from "./components/ProfileMenu";
+import { Checkout } from "./pages/Checkout";
 
 function Electroware() {
     let initialState = {
@@ -19,6 +20,7 @@ function Electroware() {
         saldo: 0,
         username: "",
         token: "",
+        logged: false,
     };
     let [user, setUser] = useState(initialState);
     // useEffect(() => {
@@ -68,6 +70,7 @@ function Electroware() {
 
                     {/* protected */}
                     <Route path="/shopping-cart" element={<ShoppingCart />} />
+                    <Route path="/checkout" element={<Checkout />} />
 
                     {/* misc */}
                     <Route path="/*" element={<NotFound />} />

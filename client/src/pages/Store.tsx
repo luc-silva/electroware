@@ -6,7 +6,13 @@ import { productsHomepage } from "../testData";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export const Store = ({user, setUser}:{user:UserProps, setUser:Function}) => {
+export const Store = ({
+    user,
+    setUser,
+}: {
+    user: UserProps;
+    setUser: Function;
+}) => {
     let [recentProducts, setRecentProducts] = useState([]);
     useEffect(() => {
         axios
@@ -21,10 +27,10 @@ export const Store = ({user, setUser}:{user:UserProps, setUser:Function}) => {
                 </section>
             </div>
             <section className={styles["featured"]}>
-                <div>
+                <div className={styles["featured__title"]}>
                     <h2>Por que você deveria comprar conosco?</h2>
                 </div>
-                <div className={styles["featured-container"]}>
+                <div className={styles["featured__container"]}>
                     <div className={styles["container-item"]}>
                         Entrega para o mundo inteiro.
                         <Truck size={45} color={"var(--main-color)"} />

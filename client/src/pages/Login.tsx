@@ -3,7 +3,13 @@ import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 
-export const Login = ({user, setUser}: {user: UserProps, setUser: Function}) => {
+export const Login = ({
+    user,
+    setUser,
+}: {
+    user: UserProps;
+    setUser: Function;
+}) => {
     let formInitialValue = {
         email: "",
         password: "",
@@ -20,22 +26,25 @@ export const Login = ({user, setUser}: {user: UserProps, setUser: Function}) => 
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        axios
-            .post("http://localhost:6060/api/login", form)
-            .then(setLocalstorageToken)
-            .then(setCurrentUser)
-            .catch(alert);
-        navigate("/home");
+        try {
+            axios
+                .post("http://localhost:6060/api/login", form)
+                .then(setLocalstorageToken)
+                .then(setCurrentUser)
+                .catch(alert);
+            navigate("/home");
+        } catch (error) {
+            alert(error);
+        }
     }
     function setLocalstorageToken(response: AxiosResponse) {
         localStorage.setItem("user", JSON.stringify(response.data));
-        return response
+        return response;
     }
-    function setCurrentUser({data}: AxiosResponse){
+    function setCurrentUser({ data }: AxiosResponse) {
         setUser(() => {
-            return {...data}
-        })
-        console.log(user)
+            return { ...data, logged: true };
+        });
     }
     return (
         <main className={styles["login"]}>

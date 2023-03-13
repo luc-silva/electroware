@@ -64,7 +64,7 @@ export const Header = ({
                 </form>
             </div>
             <div className={styles["header__user-panel"]}>
-                {(user.id && (
+                {(user.logged && (
                     <div className={styles["header__user-panel__main--logged"]}>
                         <Link to={"/shopping-cart"}>
                             <ShoppingCart size={30} color="white" />

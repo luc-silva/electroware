@@ -14,7 +14,7 @@ export const ReviewsContainer = ({ productId }: { productId?: string }) => {
     }, [productId]);
     return (
         <div className={styles["ratings-container"]}>
-            {productReviews.map(
+            {productReviews.length > 0 && productReviews.map(
                 (
                     {
                         score,
@@ -40,7 +40,7 @@ export const ReviewsContainer = ({ productId }: { productId?: string }) => {
                         />
                     );
                 }
-            )}
+            ) || <p>Sem avaliações para exibir</p> }
         </div>
     );
 };
