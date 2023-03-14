@@ -35,3 +35,11 @@ interface Review{
     text: string;
     createdAt: string;
 }
+interface ShoppingCartCardProps {
+    id: string;
+    owner: string;
+    product: string;
+    shoppingCart: string;
+    price: number;
+    quantity: number;
+}

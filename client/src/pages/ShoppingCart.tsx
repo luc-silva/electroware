@@ -5,15 +5,6 @@ import { ProductCard } from "../components/ProductCard";
 import { ProductCardSmall } from "../components/ProductCardSmall";
 import styles from "./ShoppingCart.module.css";
 
-interface ShoppingCartCardProps {
-    id: string;
-    owner: string;
-    product: string;
-    shoppingCart: string;
-    price: number;
-    quantity: number;
-}
-
 export const ShoppingCart = ({
     user,
     setUser,
@@ -44,6 +35,9 @@ export const ShoppingCart = ({
         });
         return total;
     }
+    function handleCheckout(){
+        navigate("/checkout")
+    }
     return (
         <main role={"main"} className={styles["shopping-cart"]}>
             <section className={styles["shopping-cart__main"]}>
@@ -51,9 +45,11 @@ export const ShoppingCart = ({
                     <h2>Carrinho de Compras</h2>
                 </div>
                 <div className={styles["shopping-cart__container"]}>
-                    {items.map(({ product, price, quantity }, index) => {
+                    {items.map(({ product, price, quantity, _id }, index) => {
                         return (
                             <ProductCardSmall
+                                userToken={user.token}
+                                instanceID={_id}
                                 productID={product}
                                 productPrice={price}
                                 productQNT={quantity}
@@ -68,7 +64,7 @@ export const ShoppingCart = ({
                     <p>Valor total:</p>
                     <strong>{`${getTotalValue()} R$`}</strong>
                 </div>
-                <button>Finalizar Compra</button>
+                <button onClick={handleCheckout}>Finalizar Compra</button>
             </aside>
         </main>
     );
