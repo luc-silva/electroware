@@ -3,29 +3,45 @@
     padding: 0.5rem;
     height: 15vh;
 }
-.container__item a{
+.container__item a {
     display: flex;
     flex-direction: row;
     gap: 1rem;
     height: 100%;
 }
-.container-picture {
+.container__picture {
     width: 100px;
     height: 100%;
     background-color: black;
 }
-.container-details {
+.container__details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.5rem;
     width: 80%;
     height: 100%;
 }
-.container-details > div {
+.container__details > div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-.container-details > p {
+.container__details > p {
     font-size: 0.8rem;
     color: var(--text-color);
 }
-@media (min-width: 769px) and (max-width: 1024px) {}
-@media (min-width: 1025px) {}
+.container__pricing {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    /* gap: 1rem; */
+}
+.container__pricing p {
+    color: var(--text-color);
+    font-size: 0.7rem;
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+}
+@media (min-width: 1025px) {
+}
