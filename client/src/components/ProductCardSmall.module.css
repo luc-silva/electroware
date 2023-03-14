@@ -2,12 +2,9 @@
     border-top: 1px solid var(--background-color-faded);
     padding: 0.5rem;
     height: 15vh;
-}
-.container__item a {
     display: flex;
     flex-direction: row;
     gap: 1rem;
-    height: 100%;
 }
 .container__picture {
     width: 100px;
@@ -27,10 +24,6 @@
     flex-direction: row;
     justify-content: space-between;
 }
-.container__details > p {
-    font-size: 0.8rem;
-    color: var(--text-color);
-}
 .container__pricing {
     display: flex;
     flex-direction: column;
@@ -40,6 +33,15 @@
 .container__pricing p {
     color: var(--text-color);
     font-size: 0.7rem;
+}
+.container__footer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.container__footer > p {
+    font-size: 0.8rem;
+    color: var(--text-color);
 }
 @media (min-width: 769px) and (max-width: 1024px) {
 }
