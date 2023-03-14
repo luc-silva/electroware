@@ -4,10 +4,17 @@
 .index h2, .index strong{
   color: var(--title-color);
 }
-.activepromos{
-  width: 100%;
-  height: 55vh;
-  background-color: black;
+.active-promos{
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  height: 50vh;
+  background-color: white;
+  overflow: hidden;
+}
+.active-promos img{
+  object-fit: contain;
+  object-position: -15rem;
 }
 .featured{
   display: flex;
@@ -68,8 +75,9 @@
   
 }
 @media (min-width: 769px) and (max-width: 1024px) {
-  .activepromos{
-    height: 60vh;
+  .active-promos img{
+    object-fit: contain;
+    object-position: center;
   }
   .featured__container{
     display: flex;
@@ -92,8 +100,9 @@
   }
 }
 @media (min-width: 1025px) {
-  .activepromos{
-    height: 65vh;
+  .active-promos img{
+    object-fit: contain;
+    object-position: center;
   }
   .featured{
     display: flex;

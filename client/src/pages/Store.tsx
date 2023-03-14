@@ -21,11 +21,12 @@ export const Store = ({
     }, []);
     return (
         <main role={"main"} className={styles["index"]}>
-            <div>
-                <section className={styles["activepromos"]}>
-                    <img src="" alt="" />
-                </section>
-            </div>
+            <section className={styles["active-promos"]}>
+                <img
+                    src={require("../assets/electroware-banner-1.jpg")}
+                    alt="homepage banner"
+                />
+            </section>
             <section className={styles["featured"]}>
                 <div className={styles["featured__title"]}>
                     <h2>Por que você deveria comprar conosco?</h2>
