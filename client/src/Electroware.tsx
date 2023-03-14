@@ -42,11 +42,12 @@ function Electroware() {
                     setUser={setUser}
                     handleInfoMenu={handleInfoMenu}
                     isMenuActive={infoMenuActive}
-                />
+                    />
                 <ProfileMenu
                     isActive={infoMenuActive}
                     toggleMenu={toggleInfoMenu}
                     user={user}
+                    setUser={setUser}
                 />
                 <Routes>
                     <Route
