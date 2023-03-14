@@ -1,7 +1,33 @@
-import { ProductCardSmall } from "../components/ProductCardSmall"
-import styles from "./ShoppingCart.module.css"
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ProductCard } from "../components/ProductCard";
+import { ProductCardSmall } from "../components/ProductCardSmall";
+import styles from "./ShoppingCart.module.css";
 
-export const ShoppingCart = () => {
+export const ShoppingCart = ({
+    user,
+    setUser,
+}: {
+    user: UserProps;
+    setUser: Function;
+}) => {
+    let navigate = useNavigate();
+    let [items, setItems] = useState([]);
+    useEffect(() => {
+        if (!user.logged) {
+            navigate("/login");
+        }
+        axios
+            .get(`http://localhost:6060/api/shoppingcart`, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            })
+            .then(({ data }) => {
+                setItems(data);
+            });
+    });
     return (
         <main role={"main"} className={styles["shopping-cart"]}>
             <section className={styles["shopping-cart__main"]}>
@@ -9,9 +35,9 @@ export const ShoppingCart = () => {
                     <h2>Carrinho de Compras</h2>
                 </div>
                 <div className={styles["shopping-cart__container"]}>
-                   <ProductCardSmall />
-                   <ProductCardSmall />
-                   <ProductCardSmall />
+                    {items.map((item) => {
+                        return <ProductCardSmall />;
+                    })}
                 </div>
             </section>
             <aside className={styles["shopping-cart__panel"]}>
@@ -22,5 +48,5 @@ export const ShoppingCart = () => {
                 <button>Finalizar Compra</button>
             </aside>
         </main>
-    )
-}
+    );
+};

@@ -3,6 +3,8 @@
     flex-direction: column-reverse;
 }
 .shopping-cart__main {
+    height: 90vh;
+    overflow-y: scroll;
 }
 .shopping-cart__main__title {
     color: var(--title-color);
@@ -52,6 +54,8 @@
     .shopping-cart__main {
         width: 60%;
         padding: 2rem 3rem;
+        height: 90vh;
+        overflow-y: scroll;
     }
     .shopping-cart__main__title {
         display: flex;
@@ -84,6 +88,8 @@
     .shopping-cart__main {
         width: 60%;
         padding: 2rem 5rem;
+        height: 90vh;
+        overflow-y: scroll;
     }
     .shopping-cart__main__title {
         display: flex;

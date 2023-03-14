@@ -69,7 +69,10 @@ function Electroware() {
                     <Route path="/search/:search" element={<SearchResults />} />
 
                     {/* protected */}
-                    <Route path="/shopping-cart" element={<ShoppingCart />} />
+                    <Route
+                        path="/shopping-cart"
+                        element={<ShoppingCart user={user} setUser={setUser} />}
+                    />
                     <Route path="/checkout" element={<Checkout />} />
 
                     {/* misc */}

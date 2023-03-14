@@ -1,13 +1,17 @@
 const express = require("express");
+const router = express.Router();
+
 const { getEveryUserReviews } = require("../controllers/reviewsController");
+const {
+    getShoppingCartDetails,
+} = require("../controllers/shoppingCartController");
 const {
     registerUser,
     loginUser,
     getProfile,
     getUserProducts,
 } = require("../controllers/userController");
-
-const router = express.Router();
+const { protected } = require("../middleware/auth");
 
 router.post("/login", loginUser);
 router.post("/register", registerUser);
