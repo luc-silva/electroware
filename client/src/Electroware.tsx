@@ -23,13 +23,6 @@ function Electroware() {
         logged: false,
     };
     let [user, setUser] = useState(initialState);
-    // useEffect(() => {
-    //     let storageInfo = localStorage.getItem("user")
-    //     if(storageInfo){
-    //         console.log(storageInfo)
-    //         setUser(JSON.parse(storageInfo))
-    //     }
-    // }, [])
     let [infoMenuActive, toggleInfoMenu] = useState(false);
     function handleInfoMenu() {
         toggleInfoMenu(!infoMenuActive);
@@ -74,7 +67,7 @@ function Electroware() {
                         path="/shopping-cart"
                         element={<ShoppingCart user={user} setUser={setUser} />}
                     />
-                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/checkout" element={<Checkout user={user} setUser={setUser} />} />
 
                     {/* misc */}
                     <Route path="/*" element={<NotFound />} />

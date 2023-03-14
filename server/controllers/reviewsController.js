@@ -8,10 +8,11 @@ const submitReview = asyncHandler(async (request, response) => {
     let reviewer = await User.findById(request.user);
     let { product, text, score, productOwner } = request.body;
     if (!reviewer || !(product, score, productOwner)) {
-        response.status(402).json({ message: "Insira credenciais validos" });
+        response.status(401);
+        throw new Error("Insira credenciais validos");
     }
-    let review = await Review.create({
 
+    let review = await Review.create({
         author: reviewer.id,
         authorUsername: reviewer.username,
         product,
@@ -25,15 +26,18 @@ const submitReview = asyncHandler(async (request, response) => {
 const deleteReview = asyncHandler(async (request, response) => {
     let review = await Review.findById(request.params.id);
     if (!review) {
-        response.status(404).json({ message: "Review nao encontrada" });
+        response.status(404);
+        throw new Error("Review não encontrada");
     }
 
     let user = await User.findById(request.user);
     if (!user) {
-        response.status(404).json({ message: "Usuario nao encontrado" });
+        response.status(404);
+        throw new Error("Usuario não encontrado");
     }
     if (user.id !== review.author.toString()) {
-        response.status(404).json({ message: "Voce nao tem autorizacao" });
+        response.status(401);
+        throw new Error("Não autorizado");
     }
 
     let deletedReview = await Review.findByIdAndDelete(review.id);
@@ -43,12 +47,14 @@ const deleteReview = asyncHandler(async (request, response) => {
 const updateReview = asyncHandler(async (request, response) => {
     let review = await Review.findById(request.params.id);
     if (!review) {
-        response.status(404).json({ message: "Review nao encontrada" });
+        response.status(404);
+        throw new Error("Review não encontrada");
     }
 
     let user = await User.findById(request.user);
     if (user.id !== review.author.toString()) {
-        response.status(402).json({ message: "Nao autorizado" });
+        response.status(401);
+        throw new Error("Não autorizado");
     }
 
     let { text, score } = request.body;
@@ -64,35 +70,43 @@ const getProductReviews = asyncHandler(async (request, response) => {
     //move this one to product controller later
     let product = await Product.findById(request.params.id);
     if (!product) {
-        response.status(404).json({ message: "Produto nao encontrado" });
+        response.status(404);
+        throw new Error("Produto não encontrado");
     }
 
-    let reviews = await Review.find({ product: product.id }).sort({createdAt: -1});
+    let reviews = await Review.find({ product: product.id }).sort({
+        createdAt: -1,
+    });
     if (!reviews) {
-        response.status(404).json({ message: "Sem reviews para esse produto" });
+        response
+            .status(404)
+            .json({ message: "Sem reviews encontradas para esse produto" });
     }
 
     response.status(202).json(reviews);
 });
 
 const getEveryUserReviews = asyncHandler(async (request, response) => {
-    let user = await User.findById(request.params.id)
-    if(!user){
-        response.status(404).json({message: "Usuario nao encontrado"})
+    let user = await User.findById(request.params.id);
+    if (!user) {
+        response.status(404);
+        throw new Error("Usuario não encontrado");
     }
 
-    let reviews = await Review.find({author: user.id})
-    if(reviews.length === 0){
-        response.status(404).json({message: "esse usuario ainda nao avaliou algum produto"})
+    let reviews = await Review.find({ author: user.id });
+    if (reviews.length === 0) {
+        response
+            .status(404)
+            .json({ message: "Sem reviews por parte desse usuario" });
     }
 
-    response.status(202).json(reviews)
-})
+    response.status(202).json(reviews);
+});
 
 module.exports = {
     deleteReview,
     updateReview,
     submitReview,
     getProductReviews,
-    getEveryUserReviews
+    getEveryUserReviews,
 };

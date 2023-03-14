@@ -17,12 +17,12 @@ const loginUser = asyncHandler(async (request, response) => {
     let user = await User.findOne({ email });
 
     if (!user) {
-        response.status(400);
-        throw new Error("Usuario nao encontrado");
+        response.status(404);
+        throw new Error("Usuario não encontrado");
     }
     if (user && !(await bcrypt.compare(password, user.password))) {
-        response.status(400);
-        throw new Error("senha invalida");
+        response.status(401);
+        throw new Error("Senha invalida");
     }
 
     //gen token to use in a protected route
@@ -40,14 +40,14 @@ const registerUser = asyncHandler(async (request, response) => {
     //validates inputs
     let { email, password, name } = request.body;
     if (!email || !password || !name.first) {
-        response.status(400);
+        response.status(401);
         throw new Error("Por favor, insira credenciais validos");
     }
 
     //check if an email has already been used
     let userExist = await User.findOne({ email });
     if (userExist) {
-        response.status(400);
+        response.status(401);
         throw new Error(`Uma conta ja foi criada com esse email: ${userExist}`);
     }
 
@@ -63,13 +63,14 @@ const registerUser = asyncHandler(async (request, response) => {
     let user = await User.create(newUser);
     let shoppingCart = await ShoppingCart.create({ cartOwner: user.id });
 
-    response.status(202).json({user});
+    response.status(202).json({ user });
 });
 
 const getProfile = asyncHandler(async (request, response) => {
     let user = await User.findById(request.params.id).select({ password: 0 });
     if (!user) {
-        response.status(404).json({ message: "User not found" });
+        response.status(404);
+        throw new Error("Usuario não encontrado");
     }
     response.json(user);
 });
@@ -79,9 +80,8 @@ const getUserProducts = asyncHandler(async (request, response) => {
     let user = await User.findById(id);
 
     if (!user) {
-        response
-            .status(404)
-            .json({ message: "Usuario nao encontrado", id: id });
+        response.status(404);
+        throw new Error("Usuario nao encontrado");
     }
 
     let userProducts = await Product.find({ owner: user._id });

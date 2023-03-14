@@ -13,27 +13,25 @@ const createInstance = asyncHandler(async (request, response) => {
         !instance.price,
         !instance.quantity)
     ) {
-        response.status(400).json({ message: "Algo deu errado" });
+        response.status(400);
+        throw new Error("Algo deu errado");
     }
 
     let user = await User.findById(request.user);
     if (!user) {
-        response.status(404).json({ message: "Usuario nao encontrado" });
+        response.status(404).json({ message: "Usuario não encontrado" });
     }
 
     let shoppingCart = await ShoppingCart.findOne({ cartOwner: user.id });
     if (!shoppingCart) {
         response
             .status(404)
-            .json({ message: "usuario nao possui carrinho de compras" });
+            .json({ message: "Usuario não possui carrinho de compras" });
     }
 
     if (shoppingCart.cartOwner.toString() !== user.id) {
-        response.status(404).json({
-            message: "Nao autorizado",
-            cartOwner: shoppingCart.cartOwner,
-            user: user.id,
-        });
+        response.status(404);
+        throw new Error("Não autorizado");
     }
 
     let createdInstance = await ProductInstance.create({
@@ -47,28 +45,28 @@ const createInstance = asyncHandler(async (request, response) => {
 const removeInstance = asyncHandler(async (request, response) => {
     let instance = await ProductInstance.findById(request.params.id);
     if (!instance) {
-        response
-            .status(404)
-            .json({ message: "Produto nao encontrado ou solicitado" });
+        response.status(404);
+        throw new Error("Produto não encontrado ou solicitado");
     }
     let user = await User.findById(request.user);
-
-    if (instance.id !== user.id) {
-        response.status(402).json({ messsage: "Nao autorizado" });
+    if (instance.owner.toString() !== user.id) {
+        response.status(401);
+        throw new Error("Não autorizado");
     }
 
-    let deletedInstace = await ProductInstance.findByIdAndDelete(instance.id);
-    response.status(202).json(deletedInstace);
+    let deletedInstance = await ProductInstance.findByIdAndDelete(instance.id);
+    response.status(202).json(deletedInstance);
 });
 
 const getInstances = asyncHandler(async (request, response) => {
     let user = await User.findById(request.user);
-    if(!user){
-        response.status(202).json({message: "usuario nao encontrado"});
+    if (!user) {
+        response.status(202);
+        throw new Error("Usuario não encontrado");
     }
-    let cartInstances = await ProductInstance.find({owner: user.id})
-    response.status(202).json(cartInstances)
-})
+    let cartInstances = await ProductInstance.find({ owner: user.id });
+    response.status(202).json(cartInstances);
+});
 
 module.exports = {
     getInstances,

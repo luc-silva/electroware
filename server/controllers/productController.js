@@ -17,10 +17,8 @@ const searchProduct = asyncHandler(async (request, response) => {
     let possibleProducts = await Product.find({ name: { $regex: name } });
 
     if (possibleProducts.length === 0) {
-        //it may be a truly value (array)
-        response.status(404);
-        response.json({
-            message: "Nao ha nenhum produto com palavra chaves similares",
+        response.status(404).json({
+            message: "Nenhum produto com as palavras chaves especificadas foi encontrado",
         });
     }
 
@@ -31,8 +29,8 @@ const getProductDetails = asyncHandler(async (request, response) => {
     let { id } = request.params;
     let product = await Product.findById(id);
     if (!product) {
-        response.status(404);
-        response.json({ message: "Product not found" });
+        response.status(404)
+        throw new Error("Produto não encontrado");
     }
 
     response.status(202).json(product);
@@ -44,7 +42,7 @@ const createProduct = asyncHandler(async (request, response) => {
         request.body;
     if ((!name, !price, !category, !quantity)) {
         response.status(400);
-        response.json({ message: "Por favor, insira os dados necessarios" });
+        throw new Error("Por favor, insira os dados necessarios" );
     }
 
     let createdProduct = await Product.create({
@@ -63,10 +61,12 @@ const createProduct = asyncHandler(async (request, response) => {
 const updateProduct = asyncHandler(async (request, response) => {
     let product = await Product.findById(request.params.id);
     if (!product) {
-        throw new Error("Produto nao encontrado");
+        response.status(404);
+        throw new Error("Produto não encontrado");
     }
     if (product.owner !== request.user) {
-        throw new Error("Nao autorizado");
+        response.status(404);
+        throw new Error("Não autorizado");
     }
     let updatedProduct = await Product.findByIdAndUpdate(
         request.params.id,
@@ -77,17 +77,17 @@ const updateProduct = asyncHandler(async (request, response) => {
 });
 
 const deleteProduct = asyncHandler(async (request, response) => {
-    let userId = request.user.id.toString()
+    let userId = request.user.id.toString();
     let product = await Product.findById(request.params.id);
 
     if (!product) {
         response.status(404);
-        throw new Error("Produto nao encontrado");
+        throw new Error("Produto não encontrado");
     }
 
     if (userId !== product.owner.toString()) {
         response.status(401);
-        throw new Error("Nao autorizado");
+        throw new Error("Não autorizado");
     }
 
     let deletedProduct = await Product.findByIdAndDelete(request.params.id);
