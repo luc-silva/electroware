@@ -29,7 +29,8 @@ export const CreateOffer = ({
         let target = event.target;
         if (
             target instanceof HTMLInputElement ||
-            target instanceof HTMLTextAreaElement
+            target instanceof HTMLTextAreaElement ||
+            target instanceof HTMLSelectElement
         ) {
             setForm({ ...form, [target.name]: target.value });
         }
@@ -38,13 +39,16 @@ export const CreateOffer = ({
         event.preventDefault();
         axios.post(
             "http://localhost:6060/api/product/create",
-            { ...form },
+            form,
             {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },
             }
-        );
+        ).then(({data}) => {
+            navigate(`/product/${data._id}`)
+        })
+        
     }
     return (
         <main role={"main"} className={styles["create-offer"]}>
@@ -92,9 +96,9 @@ export const CreateOffer = ({
                             </div>
                             <div className={styles["input-container"]}>
                                 <label htmlFor="category">Categoria</label>
-                                <select name="category" required>
-                                    <option value="640126c1eb64172330a83a22">
-                                        Novo Teste
+                                <select name="category"  required>
+                                    <option selected value="">
+                                        -----
                                     </option>
                                     <option value="640126c1eb64172330a83a22">
                                         Novo Teste

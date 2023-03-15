@@ -42,6 +42,7 @@ const createProduct = asyncHandler(async (request, response) => {
     let { name, price, category, quantity, description, brand } = request.body;
     if (!name || !price || !quantity || !category || !brand) {
         response.status(400);
+        console.log(name, price, category, quantity, description, brand)
         throw new Error("Por favor, insira os dados necessarios");
     }
 
