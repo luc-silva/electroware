@@ -33,7 +33,7 @@ export const ProfileMenu = ({
                     <Money size={20} color="var(--text-color)" />
                     <p>{`Saldo: ${user.saldo} R$`}</p>
                 </Link>
-                <Link to={"/make-offer"}>
+                <Link to={"/create-offer"}>
                     <Note  size={20} color="var(--text-color)" />
                     <p>Anunciar Produto</p>
                 </Link>
@@ -47,7 +47,7 @@ export const ProfileMenu = ({
                 </Link>
             </div>
             <div className={styles["profile-menu__sign-out"]}>
-                <Link to={"/home"} onClick={handleLogout}>
+                <Link to={"/"} onClick={handleLogout}>
                     <SignOut size={20} />
                     <p>Sair</p>
                 </Link>

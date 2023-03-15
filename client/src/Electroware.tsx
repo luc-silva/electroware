@@ -13,6 +13,7 @@ import { ShoppingCart } from "./pages/ShoppingCart";
 import { UserProfile } from "./pages/UserProfile";
 import { ProfileMenu } from "./components/ProfileMenu";
 import { Checkout } from "./pages/Checkout";
+import { CreateOffer } from "./pages/CreateOffer";
 
 function Electroware() {
     let initialState = {
@@ -44,7 +45,7 @@ function Electroware() {
                 />
                 <Routes>
                     <Route
-                        path="/home"
+                        path="/"
                         element={<Store user={user} setUser={setUser} />}
                     />
                     <Route
@@ -55,7 +56,7 @@ function Electroware() {
                     <Route path="/faq" element={<Faq />} />
 
                     {/* need params */}
-                    <Route path="/user" element={<UserProfile />} />
+                    <Route path="/user/:id" element={<UserProfile />} />
                     <Route
                         path="/product/:id"
                         element={<Product user={user} setUser={setUser} />}
@@ -68,6 +69,7 @@ function Electroware() {
                         element={<ShoppingCart user={user} setUser={setUser} />}
                     />
                     <Route path="/checkout" element={<Checkout user={user} setUser={setUser} />} />
+                    <Route path="/create-offer" element={<CreateOffer user={user} setUser={setUser} />} />
 
                     {/* misc */}
                     <Route path="/*" element={<NotFound />} />

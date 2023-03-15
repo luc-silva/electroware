@@ -31,8 +31,10 @@ export const Login = ({
                 .post("http://localhost:6060/api/login", form)
                 .then(setLocalstorageToken)
                 .then(setCurrentUser)
+                .then(() =>{
+                    navigate("/");
+                })
                 .catch(alert);
-            navigate("/home");
         } catch (error) {
             alert(error);
         }

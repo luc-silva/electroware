@@ -43,7 +43,7 @@ export const Header = ({
         <header className={styles["header"]}>
             <div className={styles["header__main"]}>
                 <h1 className={styles["header-logo"]}>
-                    <Link to={"/home"}>Electroware</Link>
+                    <Link to={"/"}>Electroware</Link>
                 </h1>
             </div>
             <div className={styles["header__form"]}>
