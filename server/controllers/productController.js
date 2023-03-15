@@ -18,7 +18,8 @@ const searchProduct = asyncHandler(async (request, response) => {
 
     if (possibleProducts.length === 0) {
         response.status(404).json({
-            message: "Nenhum produto com as palavras chaves especificadas foi encontrado",
+            message:
+                "Nenhum produto com as palavras chaves especificadas foi encontrado",
         });
     }
 
@@ -29,7 +30,7 @@ const getProductDetails = asyncHandler(async (request, response) => {
     let { id } = request.params;
     let product = await Product.findById(id);
     if (!product) {
-        response.status(404)
+        response.status(404);
         throw new Error("Produto não encontrado");
     }
 
@@ -38,17 +39,17 @@ const getProductDetails = asyncHandler(async (request, response) => {
 
 //private
 const createProduct = asyncHandler(async (request, response) => {
-    let { name, price, category, quantity, brand, description, buyers } =
-        request.body;
-    if ((!name, !price, !category, !quantity)) {
+    let { name, price, category, quantity, description, brand } = request.body;
+    if (!name || !price || !quantity || !category || !brand) {
         response.status(400);
-        throw new Error("Por favor, insira os dados necessarios" );
+        throw new Error("Por favor, insira os dados necessarios");
     }
 
     let createdProduct = await Product.create({
         owner: request.user,
-        category,
         name,
+        category,
+        brand,
         description,
         price,
         quantity,

@@ -9,7 +9,7 @@ const ProductSchema = new Schema(
         name: { type: String, maxLength: 30, required: true },
         price: { type: Number, required: true },
         quantity: { type: Number, required: true },
-        brand: { type: String, maxLength: 15 },
+        brand: { type: String, maxLength: 15, required: true },
         description: { type: String, maxLength: 200 },
     },
     { timestamps: true }
