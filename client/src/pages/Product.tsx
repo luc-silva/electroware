@@ -1,9 +1,11 @@
 import styles from "./Product.module.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import axios from "axios";
 import { StarsContainer } from "../components/StarsContainer";
 import { ReviewsContainer } from "../components/ReviewsContainer";
+import { QuantityCounter } from "../components/QuantityCounter";
+import { ReviewForm } from "../components/ReviewForm";
 
 export const Product = ({
     user,
@@ -24,9 +26,22 @@ export const Product = ({
         quantity: 0,
         reviews: 0,
     };
-    let [owner, setOwner] = useState({ first: "", last: "" });
     let [productDetails, setProductDetails] = useState(productInitialState);
     let [productReviews, setProductReviews] = useState([]);
+    let [owner, setOwner] = useState({ first: "", last: "" });
+    let [category, setCategory] = useState("");
+    let [quantity, setQuantity] = useState(1);
+    let [updateReview, toggleUpdateReview] = useState(false);
+    useEffect(() => {
+        if (updateReview) {
+            toggleUpdateReview(false);
+        }
+    }, [toggleUpdateReview]);
+
+    function updateWindow() {
+        toggleUpdateReview(true);
+    }
+
     useEffect(() => {
         axios
             .get(`http://localhost:6060/api/product/${id}`)
@@ -48,6 +63,16 @@ export const Product = ({
             });
     }, [productDetails]);
 
+    useEffect(() => {
+        axios
+            .get(
+                `http://localhost:6060/api/category/${productDetails.category}`
+            )
+            .then(({ data }) => {
+                setCategory(data.name);
+            });
+    }, [productDetails]);
+
     function getRatingAverage() {
         let total = 0;
         productReviews.forEach((review: Review) => {
@@ -57,36 +82,17 @@ export const Product = ({
             ? 0
             : Number((total / productReviews.length).toFixed(1));
     }
-
-    let [selectValue, setSelectValue] = useState(1);
-    function handleSelect(event: ChangeEvent<HTMLSelectElement>) {
-        setSelectValue(Number(event.target.value));
-    }
-
-    let [textareaValue, setTextareaValue] = useState("");
-    function handleTextarea(event: ChangeEvent<HTMLTextAreaElement>) {
-        setTextareaValue(event.target.value);
-    }
-
-    function handleReviewSubmit(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        axios.post(
-            `http://localhost:6060/api/review/`,
-            {
-                author: user.id,
-                authorUsername: user.username,
-                product: id,
-                productOwner: productDetails.owner,
-                text: textareaValue,
-                score: selectValue,
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${user.token}`,
-                },
-            }
-        );
-        navigate(`/product/${id}`);
+    function addToShoppingCart(event: React.MouseEvent) {
+        let data = {
+            owner: user.id,
+            product: productDetails._id,
+            price: productDetails.price,
+            quantity: quantity,
+        };
+        axios.post(`http://localhost:6060/api/shoppingcart/`, data, {
+            headers: { Authorization: `Bearer ${user.token}` },
+        });
+        navigate("/shopping-cart");
     }
 
     return (
@@ -99,23 +105,45 @@ export const Product = ({
                     <div className={styles["details-info"]}>
                         <div className={styles["details-title"]}>
                             <h1>{productDetails.name}</h1>
-                            Tech, Tools
+                            <em>{category}</em>
                         </div>
                         <div className={styles["details-pricing"]}>
                             <div>
-                                <div>Reputation: 4.0</div>
-                                <a>{`Seller: ${owner.first} ${owner.last}`}</a>
+                                <p>
+                                    {`Vendedor: `}
+                                    <Link
+                                        to={`user/${productDetails.owner}`}
+                                    >{`${owner.first} ${owner.last}`}</Link>
+                                </p>
+                                <div>Reputação: 4.0</div>
                             </div>
                             <h2>{`${productDetails.price}$`}</h2>
                         </div>
                         <div className={styles["details-description"]}>
                             {productDetails.description ||
-                                "Nenhuma descricao disponivel"}
+                                "Nenhuma descrição disponível"}
                         </div>
                     </div>
                     <div className={styles["details-misc"]}>
-                        <p>{`Available: ${productDetails.quantity}`}</p>
-                        <button>Add to cart</button>
+                        <p>{`Unidades disponíveis: ${productDetails.quantity}`}</p>
+                        {(user.logged && (
+                            <div>
+                                <QuantityCounter
+                                    max={productDetails.quantity}
+                                    quantity={quantity}
+                                    setQuantity={setQuantity}
+                                />
+                                <button onClick={addToShoppingCart}>
+                                    Adicionar ao carrinho
+                                </button>
+                            </div>
+                        )) || (
+                            <div>
+                                <Link to={"/login"}>
+                                    Entre em sua conta para comprar
+                                </Link>
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>
@@ -135,34 +163,11 @@ export const Product = ({
                     </div>
                 </div>
                 <ReviewsContainer productId={id} />
-                {user.logged && (
-                    <div className={styles["ratings__form"]}>
-                        <form action="POST" onSubmit={handleReviewSubmit}>
-                            <textarea
-                                name="text"
-                                defaultValue={textareaValue}
-                                onChange={handleTextarea}
-                            />
-                            <div>
-                                <label htmlFor="score">
-                                    <p>Nota:</p>
-                                    <select
-                                        name="score"
-                                        onChange={handleSelect}
-                                        value={selectValue}
-                                    >
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </label>
-                                <input type="submit" />
-                            </div>
-                        </form>
-                    </div>
-                )}
+                <ReviewForm
+                    product={productDetails}
+                    user={user}
+                    update={updateWindow}
+                />
             </section>
         </main>
     );
