@@ -18,13 +18,22 @@ export const CreateOffer = ({
         price: 0,
         quantity: 0,
     };
+    const navigate = useNavigate();
+
     let [form, setForm] = useState(formInitialValue);
-    const navigate = useNavigate()
     useEffect(() => {
-        if(!user.logged){
-            navigate("/login")
+        if (!user.logged) {
+            navigate("/login");
         }
-    }, [])
+    }, []);
+
+    let [categories, setCategories] = useState([{ name: "", _id: "" }]);
+    useEffect(() => {
+        axios.get(`http://localhost:6060/api/category`).then(({ data }) => {
+            setCategories(data);
+        });
+    }, []);
+
     function handleForm(event: FormEvent<HTMLFormElement>) {
         let target = event.target;
         if (
@@ -37,18 +46,15 @@ export const CreateOffer = ({
     }
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        axios.post(
-            "http://localhost:6060/api/product/create",
-            form,
-            {
+        axios
+            .post("http://localhost:6060/api/product/create", form, {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },
-            }
-        ).then(({data}) => {
-            navigate(`/product/${data._id}`)
-        })
-        
+            })
+            .then(({ data }) => {
+                navigate(`/product/${data._id}`);
+            });
     }
     return (
         <main role={"main"} className={styles["create-offer"]}>
@@ -96,16 +102,15 @@ export const CreateOffer = ({
                             </div>
                             <div className={styles["input-container"]}>
                                 <label htmlFor="category">Categoria</label>
-                                <select name="category"  required>
+                                <select name="category" required>
                                     <option selected value="">
                                         -----
                                     </option>
-                                    <option value="640126c1eb64172330a83a22">
-                                        Novo Teste
-                                    </option>
-                                    <option value="640126c1eb64172330a83a22">
-                                        Novo Teste
-                                    </option>
+                                    {categories.map(({ name, _id }) => {
+                                        return (
+                                            <option value={_id}>{name}</option>
+                                        );
+                                    })}
                                 </select>
                             </div>
                         </div>

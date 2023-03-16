@@ -17,14 +17,14 @@ interface PageProps {
 }
 
 interface Product {
-    name: String;
-    owner: String;
-    category: String;
-    description: String;
-    _id: String;
-    price: Number;
-    quantity: Number;
-    reviews: Number;
+    name: string;
+    owner: string;
+    category: string;
+    description: string;
+    _id: string;
+    price: number;
+    quantity: number;
+    reviews: number;
 }
 interface Review{
     author: string;
