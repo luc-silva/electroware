@@ -27,7 +27,7 @@ export const ProfileMenu = ({
 
     if (!isActive) return null;
     return (
-        <div className={styles["profile-menu"]} role="menu">
+        <div className={styles["profile-menu"]} role="menu" onClick={() =>{toggleMenu()}}>
             <div className={styles["profile-menu__links"]}>
                 <Link to={"/config/billings"}>
                     <Money size={20} color="var(--text-color)" />
