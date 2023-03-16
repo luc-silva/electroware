@@ -5,7 +5,6 @@ const bcrypt = require("bcryptjs");
 
 const User = require("../models/User");
 const Product = require("../models/Product");
-const ShoppingCart = require("../models/ShoppingCart");
 
 function generateToken(id) {
     return jwt.sign({ id }, "123", {
@@ -61,7 +60,6 @@ const registerUser = asyncHandler(async (request, response) => {
     };
 
     let user = await User.create(newUser);
-    let shoppingCart = await ShoppingCart.create({ cartOwner: user.id });
 
     response.status(202).json({ user });
 });

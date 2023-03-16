@@ -6,12 +6,12 @@ const createCategory = asyncHandler(async (request, response) => {
         response.status(400);
         throw new Error("Por favor, insira os dados requeridos");
     }
-    let categoryExists = await Category.find({ name: request.body.name });
+    let categoryExists = await Category.findOne({ name: request.body.name });
     if (categoryExists) {
         response.status(400);
         throw new Error("Categoria ja existente");
     }
-    
+
     let category = await Category.create(request.body);
     response.json(category);
 });
@@ -26,7 +26,18 @@ const getCategories = asyncHandler(async (request, response) => {
     response.json(categories);
 });
 
+const getSingleCategory = asyncHandler(async (request, response) => {
+    const category = await Category.findById(request.params.id);
+    if (!category) {
+        response.status(404);
+        throw new Error("Categoria nao encontrada");
+    }
+
+    response.status(202).json(category);
+});
+
 module.exports = {
     createCategory,
+    getSingleCategory,
     getCategories,
 };

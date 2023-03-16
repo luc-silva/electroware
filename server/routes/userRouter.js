@@ -3,9 +3,6 @@ const router = express.Router();
 
 const { getEveryUserReviews } = require("../controllers/reviewsController");
 const {
-    getShoppingCartDetails,
-} = require("../controllers/shoppingCartController");
-const {
     registerUser,
     loginUser,
     getProfile,

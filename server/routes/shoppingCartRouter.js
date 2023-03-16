@@ -6,9 +6,6 @@ const {
     createInstance,
     getInstances,
 } = require("../controllers/productInstanceController");
-const {
-    getShoppingCartDetails,
-} = require("../controllers/shoppingCartController");
 
 //router.get("/", protected, getShoppingCartDetails);
 router.get("/", protected, getInstances)

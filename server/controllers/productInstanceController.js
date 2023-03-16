@@ -1,7 +1,5 @@
 const asyncHandler = require("express-async-handler");
 const ProductInstance = require("../models/ProductInstance");
-const productInstance = require("../models/ProductInstance");
-const ShoppingCart = require("../models/ShoppingCart");
 const User = require("../models/User");
 
 //private
@@ -22,22 +20,12 @@ const createInstance = asyncHandler(async (request, response) => {
         response.status(404).json({ message: "Usuario não encontrado" });
     }
 
-    let shoppingCart = await ShoppingCart.findOne({ cartOwner: user.id });
-    if (!shoppingCart) {
-        response
-            .status(404)
-            .json({ message: "Usuario não possui carrinho de compras" });
-    }
-
-    if (shoppingCart.cartOwner.toString() !== user.id) {
+    if (instance.owner != user.id.toString()) {
         response.status(404);
-        throw new Error("Não autorizado");
+        throw new Errorr("Não autorizado");
     }
 
-    let createdInstance = await ProductInstance.create({
-        ...instance,
-        shoppingCart: shoppingCart.id,
-    });
+    let createdInstance = await ProductInstance.create(instance);
 
     response.status(202).json(createdInstance);
 });
