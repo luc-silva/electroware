@@ -46,20 +46,20 @@ export const Checkout = ({
                     </div>
                     <div className={styles["checkout__credit-value"]}>
                         <p>Seu Saldo:</p>
-                        <strong>{`${user.saldo} R$`}</strong>
+                        <strong>{`${user.funds} R$`}</strong>
                     </div>
                     <div className={styles["checkout__info"]}>
                         <Info size={30} color="var(--main-color)" />
                         <p>{`Você esta comprando ${items.length} items`}</p>
                     </div>
                 </div>
-                {getTotalValue() > user.saldo && (
+                {getTotalValue() > user.funds && (
                     <div className={styles["checkout__warning"]}>
                         <Warning size={30} />
                         <strong>
                             Você nao tem saldo o suficiente para finalizar a
                             compra. Adicione mais{" "}
-                            <Link to="add-funds">aqui.</Link>
+                            <Link to="/add-funds">aqui.</Link>
                         </strong>
                     </div>
                 )}

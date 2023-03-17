@@ -31,7 +31,7 @@ export const ProfileMenu = ({
             <div className={styles["profile-menu__links"]}>
                 <Link to={"/config/billings"}>
                     <Money size={20} color="var(--text-color)" />
-                    <p>{`Saldo: ${user.saldo} R$`}</p>
+                    <p>{`Saldo: ${user.funds} R$`}</p>
                 </Link>
                 <Link to={"/create-offer"}>
                     <Note  size={20} color="var(--text-color)" />

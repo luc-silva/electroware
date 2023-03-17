@@ -14,11 +14,12 @@ import { UserProfile } from "./pages/UserProfile";
 import { ProfileMenu } from "./components/ProfileMenu";
 import { Checkout } from "./pages/Checkout";
 import { CreateOffer } from "./pages/CreateOffer";
+import { AddFunds } from "./pages/AddFunds";
 
 function Electroware() {
     let initialState = {
         id: "",
-        saldo: 0,
+        funds: 0,
         username: "",
         token: "",
         logged: false,
@@ -36,7 +37,7 @@ function Electroware() {
                     setUser={setUser}
                     handleInfoMenu={handleInfoMenu}
                     isMenuActive={infoMenuActive}
-                    />
+                />
                 <ProfileMenu
                     isActive={infoMenuActive}
                     toggleMenu={toggleInfoMenu}
@@ -68,8 +69,18 @@ function Electroware() {
                         path="/shopping-cart"
                         element={<ShoppingCart user={user} setUser={setUser} />}
                     />
-                    <Route path="/checkout" element={<Checkout user={user} setUser={setUser} />} />
-                    <Route path="/create-offer" element={<CreateOffer user={user} setUser={setUser} />} />
+                    <Route
+                        path="/checkout"
+                        element={<Checkout user={user} setUser={setUser} />}
+                    />
+                    <Route
+                        path="/create-offer"
+                        element={<CreateOffer user={user} setUser={setUser} />}
+                    />
+                    <Route
+                        path="/add-funds"
+                        element={<AddFunds user={user} />}
+                    />
 
                     {/* misc */}
                     <Route path="/*" element={<NotFound />} />
