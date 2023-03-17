@@ -5,12 +5,13 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema(
     {
         name: {
-            first: { type: String, maxlength: 10 },
+            first: { type: String, maxlength: 10, required: true },
             last: { type: String, maxlength: 10 },
         },
         email: { required: true, unique: true, type: String },
         password: { required: true, type: String },
-        credit: { type: Number, default: 0},
+        funds: { type: Number, default: 0},
+        description: { type: String},
     },
     { timestamps: true }
 );

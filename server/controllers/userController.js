@@ -30,7 +30,7 @@ const loginUser = asyncHandler(async (request, response) => {
     response.json({
         id: user._id,
         username: user.username,
-        saldo: user.credit,
+        funds: user.funds,
         token: token,
     });
 });
@@ -47,7 +47,7 @@ const registerUser = asyncHandler(async (request, response) => {
     let userExist = await User.findOne({ email });
     if (userExist) {
         response.status(401);
-        throw new Error(`Uma conta ja foi criada com esse email: ${userExist}`);
+        throw new Error(`Uma conta ja foi criada com esse email`);
     }
 
     //hash password

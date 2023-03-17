@@ -1,8 +1,8 @@
 interface UserProps {
-    username: String;
-    id: String;
-    token: String;
-    saldo: Number;
+    username: string;
+    id: string;
+    token: string;
+    funds: number;
     logged: boolean;
 }
 
