@@ -35,7 +35,11 @@ export const Checkout = ({
         });
         return total;
     }
-
+    function handleCheckout(){
+        axios.get(`http://localhost:6060/api/transaction`, {
+            headers: { Authorization: `Bearer ${user.token}` },
+        });
+    }
     return (
         <main className={styles["checkout"]}>
             <section className={styles["checkout__main"]}>
@@ -68,7 +72,7 @@ export const Checkout = ({
                         <p>FORMA DE PAGAMENTO: BOLETO</p>
                     </div>
                     <div>
-                        <button>FINALIZAR COMPRA</button>
+                        <button onClick={handleCheckout}>FINALIZAR COMPRA</button>
                     </div>
                 </div>
             </section>

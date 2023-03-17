@@ -84,7 +84,7 @@ export const Product = ({
     }
     function addToShoppingCart(event: React.MouseEvent) {
         let data = {
-            owner: user.id,
+            user: user.id,
             product: productDetails._id,
             price: productDetails.price,
             quantity: quantity,
