@@ -41,7 +41,6 @@ export const ReviewForm = ({
                 },
             }
         );
-        update();
     }
 
     if (!user.logged) return null;

@@ -93,7 +93,7 @@ const deleteProduct = asyncHandler(async (request, response) => {
     }
 
     let deletedProduct = await Product.findByIdAndDelete(request.params.id);
-    response.status(402).json(deletedProduct);
+    response.status(202).json(deletedProduct);
 });
 
 module.exports = {

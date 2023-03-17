@@ -86,13 +86,14 @@ export const CreateOffer = ({
                                 <input
                                     type="number"
                                     name="price"
-                                    step={"any"}
+                                    step="any"
+                                    max={99999}
                                     required
                                 />
                             </div>
                             <div className={styles["input-container"]}>
                                 <label htmlFor="quantity">Unidades</label>
-                                <input type="number" name="quantity" required />
+                                <input type="number" name="quantity" required max={9999}/>
                             </div>
                         </div>
                         <div className={styles["larger-input-container"]}>

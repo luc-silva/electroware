@@ -1,43 +1,43 @@
-.card-wrapper{
+.card-wrapper {
     height: 50vh;
     border: 1px solid var(--background-color-faded);
 }
-.card{
+.card {
     display: flex;
     flex-direction: column;
     height: 100%;
     width: 100%;
 }
-.card-image{
+.card-image {
     width: 100%;
     height: 60%;
     background-color: black;
 }
-.card-info{
+.card-info {
     height: 40%;
     padding: 1rem;
 }
-.card-details{
+.card-details {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-.card-details p{
+.card-details p {
     color: var(--text-color);
 }
-.details-vendor{
+.details-vendor {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     font-size: 0.8rem;
 }
-.card-info{
+.card-info {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     border-top: 1px solid var(--background-color-faded);
 }
-.card-info strong{
+.card-info strong {
     font-size: 1.5rem;
 }
 .card-info-price {
@@ -47,5 +47,4 @@
 
 }
 @media (min-width: 1025px) {
-
 }

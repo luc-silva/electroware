@@ -35,8 +35,8 @@ export const ShoppingCart = ({
         });
         return total;
     }
-    function handleCheckout(){
-        navigate("/checkout")
+    function handleCheckout() {
+        navigate("/checkout");
     }
     return (
         <main role={"main"} className={styles["shopping-cart"]}>
@@ -64,7 +64,11 @@ export const ShoppingCart = ({
                     <p>Valor total:</p>
                     <strong>{`${getTotalValue()} R$`}</strong>
                 </div>
-                <button onClick={handleCheckout}>Finalizar Compra</button>
+                {(getTotalValue() > 0 && (
+                    <button onClick={handleCheckout}>Finalizar Compra</button>
+                )) || (
+                    <button disabled>Finalizar Compra</button>
+                )}
             </aside>
         </main>
     );

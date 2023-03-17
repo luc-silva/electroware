@@ -6,6 +6,7 @@ import { StarsContainer } from "../components/StarsContainer";
 import { ReviewsContainer } from "../components/ReviewsContainer";
 import { QuantityCounter } from "../components/QuantityCounter";
 import { ReviewForm } from "../components/ReviewForm";
+import { ProductBtnPanel } from "../components/ProductBtnPanel";
 
 export const Product = ({
     user,
@@ -30,7 +31,6 @@ export const Product = ({
     let [productReviews, setProductReviews] = useState([]);
     let [owner, setOwner] = useState({ first: "", last: "" });
     let [category, setCategory] = useState("");
-    let [quantity, setQuantity] = useState(1);
     let [updateReview, toggleUpdateReview] = useState(false);
     useEffect(() => {
         if (updateReview) {
@@ -82,18 +82,6 @@ export const Product = ({
             ? 0
             : Number((total / productReviews.length).toFixed(1));
     }
-    function addToShoppingCart(event: React.MouseEvent) {
-        let data = {
-            user: user.id,
-            product: productDetails._id,
-            price: productDetails.price,
-            quantity: quantity,
-        };
-        axios.post(`http://localhost:6060/api/shoppingcart/`, data, {
-            headers: { Authorization: `Bearer ${user.token}` },
-        });
-        navigate("/shopping-cart");
-    }
 
     return (
         <main className={styles["product"]}>
@@ -112,7 +100,7 @@ export const Product = ({
                                 <p>
                                     {`Vendedor: `}
                                     <Link
-                                        to={`user/${productDetails.owner}`}
+                                        to={`/user/${productDetails.owner}`}
                                     >{`${owner.first} ${owner.last}`}</Link>
                                 </p>
                                 <div>Reputação: 4.0</div>
@@ -126,24 +114,7 @@ export const Product = ({
                     </div>
                     <div className={styles["details-misc"]}>
                         <p>{`Unidades disponíveis: ${productDetails.quantity}`}</p>
-                        {(user.logged && (
-                            <div>
-                                <QuantityCounter
-                                    max={productDetails.quantity}
-                                    quantity={quantity}
-                                    setQuantity={setQuantity}
-                                />
-                                <button onClick={addToShoppingCart}>
-                                    Adicionar ao carrinho
-                                </button>
-                            </div>
-                        )) || (
-                            <div>
-                                <Link to={"/login"}>
-                                    Entre em sua conta para comprar
-                                </Link>
-                            </div>
-                        )}
+                        <ProductBtnPanel user={user} product={productDetails}/>
                     </div>
                 </div>
             </section>

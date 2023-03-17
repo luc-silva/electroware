@@ -70,8 +70,9 @@
 }
 .products-container {
     display: grid;
-    grid-template-columns: repeat(1, auto);
+    grid-template-columns: repeat(1, 100%);
     grid-template-rows: repeat(auto, auto);
+    justify-content: space-between;
     gap: 1rem;
 }
 @media (min-width: 769px) and (max-width: 1024px) {
@@ -96,7 +97,7 @@
         padding: 1rem;
     }
     .products-container {
-        grid-template-columns: repeat(3, auto);
+        grid-template-columns: repeat(3, calc(33% - 1rem));
     }
 }
 @media (min-width: 1025px) {
@@ -121,6 +122,6 @@
         padding: 1rem;
     }
     .products-container {
-        grid-template-columns: repeat(4, auto);
+        grid-template-columns: repeat(4, calc(25% - 1rem));
     }
 }

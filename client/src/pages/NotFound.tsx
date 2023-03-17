@@ -20,7 +20,7 @@ export const NotFound = () => {
                 <nav className={styles["footer__navigation"]}>
                     <ul>
                         <li>
-                            <Link to="/home">Home</Link>
+                            <Link to="/">Home</Link>
                         </li>
                         <li>
                             <Link to="/Faq">FAQ</Link>

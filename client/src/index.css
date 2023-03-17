@@ -76,6 +76,7 @@ a {
     --text-color: #3d3d3d;
 
     --modal-background: #00000042;
+    --btn-disabled: #d2d2d2;
 
     --confirm: #8fd085;
     --confirm-clicked: #6eac64;

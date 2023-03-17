@@ -29,10 +29,14 @@ const createInstance = asyncHandler(async (request, response) => {
         throw new Error("O produto não esta mais disponível");
     }
 
+    if(product.owner.toString() === user.id.toString()){
+        response.status(400)
+        throw new Error("Você não pode comprar o seu próprio produto")
+    }
+
     let instaceAlreadyExist = await ProductInstance.findOne({
         product: instance.product,
     });
-
     if (instaceAlreadyExist) {
         response.status(400);
         throw new Error("Instancia ja existe");

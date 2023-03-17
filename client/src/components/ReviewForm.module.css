@@ -31,6 +31,7 @@
 }
 .ratings__form input[type="submit"] {
     padding: 0.5rem 1rem;
+    cursor: pointer;
     font-weight: bolder;
     color: white;
     background-color: var(--main-color);

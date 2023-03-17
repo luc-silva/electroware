@@ -33,6 +33,12 @@
     width: 40vw;
     color: var(--background-color);
     background-color: var(--main-color);
+    cursor: pointer;
+}
+.shopping-cart__panel button:disabled{
+    cursor: not-allowed;
+    color: var(--title-color);
+    background-color: var(--btn-disabled);
 }
 .shopping-cart__panel__display {
     display: flex;
