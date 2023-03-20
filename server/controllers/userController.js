@@ -87,11 +87,29 @@ const getUserProducts = asyncHandler(async (request, response) => {
 });
 
 //private
-const getMyOrders = (request, response) => {};
+const addFunds = asyncHandler(async (request, response) => {
+    let amount = request.body.amount;
+    if (!amount) {
+        response.status(400);
+        throw new Error("Insira os dados necessarios");
+    } 
+
+    let userExist = await User.findById(request.user);
+    if (!userExist) {
+        response.status(404);
+        throw new Error("Usuário não existe");
+    }
+
+    let user = await User.findByIdAndUpdate(request.user, {
+        $inc: { funds: +amount },
+    });
+    response.status(202).json(user);
+});
 
 module.exports = {
     registerUser,
     loginUser,
     getProfile,
     getUserProducts,
+    addFunds,
 };
