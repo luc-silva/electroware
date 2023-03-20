@@ -28,6 +28,7 @@ const loginUser = asyncHandler(async (request, response) => {
     let token = generateToken(user._id);
 
     response.json({
+        email,
         id: user._id,
         username: user.username,
         funds: user.funds,
@@ -65,7 +66,12 @@ const registerUser = asyncHandler(async (request, response) => {
 });
 
 const getProfileInfo = asyncHandler(async (request, response) => {
-    let user = await User.findById(request.params.id).select({ name: 1, id: 1, email:1, createdAt: 1 });
+    let user = await User.findById(request.params.id).select({
+        name: 1,
+        id: 1,
+        email: 1,
+        createdAt: 1,
+    });
     if (!user) {
         response.status(404);
         throw new Error("Usuario não encontrado");
@@ -88,20 +94,30 @@ const getUserProducts = asyncHandler(async (request, response) => {
 
 //private
 const getUserPrivateInfo = asyncHandler(async (request, response) => {
-    let user = await User.findById(request.user).select({id: 1, funds: 1, email: 1 })
-    if(!user){
-        response.status(404)
-        throw new Error("Usuário não encontrado ")
+    let user = await User.findById(request.user).select({
+        id: 1,
+        funds: 1,
+        email: 1,
+    });
+    if (!user) {
+        response.status(404);
+        throw new Error("Usuário não encontrado ");
+    }
+    if (user.id !== request.params.id) {
+        response.status(402);
+        throw new Error("Não autorizado");
     }
 
-    response.status(202).json(user)
-})
+    response
+        .status(202)
+        .json({ id: user.id, funds: user.funds, email: user.email });
+});
 const addFunds = asyncHandler(async (request, response) => {
     let amount = request.body.amount;
     if (!amount) {
         response.status(400);
         throw new Error("Insira os dados necessarios");
-    } 
+    }
 
     let userExist = await User.findById(request.user);
     if (!userExist) {
@@ -121,5 +137,5 @@ module.exports = {
     getProfileInfo,
     getUserProducts,
     addFunds,
-    getUserPrivateInfo
+    getUserPrivateInfo,
 };

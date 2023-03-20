@@ -3,30 +3,48 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./AddFunds.module.css";
 
-export const AddFunds = ({ user }: { user: UserProps }) => {
+export const AddFunds = ({
+    user,
+    setUser,
+}: {
+    user: UserProps;
+    setUser: Function;
+}) => {
     let navigate = useNavigate();
     useEffect(() => {
         if (!user.logged) {
             navigate("/login");
         }
+        updateAccountDetails()
     }, []);
 
+    async function updateAccountDetails(){
+        axios
+        .get(`http://localhost:6060/api/user/private/${user.id}`, {
+            headers: { Authorization: `Bearer ${user.token}` },
+        })
+        .then(({ data }) => {
+            setUser(() => {
+                return { ...user, funds: data.funds };
+            });
+        });
+    }
+
     function addAmount(event: React.MouseEvent) {
-        let target = event.target
+        let target = event.target;
         try {
-            console.log(event.target)
-            if(target instanceof HTMLButtonElement){
+            if (target instanceof HTMLButtonElement) {
                 axios.post(
                     `http://localhost:6060/api/user/billings/add`,
                     { amount: target.value },
                     { headers: { Authorization: `Bearer ${user.token}` } }
                 );
+                updateAccountDetails()
             }
-            navigate("/config/billings")
+            //navigate("/config/billings");
         } catch (error) {
-            alert(error)
+            alert(error);
         }
-        
     }
 
     return (
@@ -42,7 +60,9 @@ export const AddFunds = ({ user }: { user: UserProps }) => {
                             <strong>1000 R$</strong>
                         </div>
                         <div className={styles["add-funds__btn-panel"]}>
-                            <button onClick={addAmount} value={1000}>Clique Aqui</button>
+                            <button onClick={addAmount} value={1000}>
+                                Clique Aqui
+                            </button>
                         </div>
                     </div>
                     <div className={styles["add-funds__card"]}>
@@ -51,7 +71,9 @@ export const AddFunds = ({ user }: { user: UserProps }) => {
                             <strong>10000 R$</strong>
                         </div>
                         <div className={styles["add-funds__btn-panel"]}>
-                            <button onClick={addAmount} value={10000}>Clique Aqui</button>
+                            <button onClick={addAmount} value={10000}>
+                                Clique Aqui
+                            </button>
                         </div>
                     </div>
                     <div className={styles["add-funds__card"]}>
@@ -60,7 +82,9 @@ export const AddFunds = ({ user }: { user: UserProps }) => {
                             <strong>100000 R$</strong>
                         </div>
                         <div className={styles["add-funds__btn-panel"]}>
-                            <button onClick={addAmount} value={100000}>Clique Aqui</button>
+                            <button onClick={addAmount} value={100000}>
+                                Clique Aqui
+                            </button>
                         </div>
                     </div>
                 </div>
