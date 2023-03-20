@@ -42,8 +42,7 @@ export const ReviewForm = ({
             }
         );
     }
-
-    if (!user.logged) return null;
+    if (!user.logged || user.id === product.owner) return null;
     return (
         <div className={styles["ratings__form"]}>
             <form

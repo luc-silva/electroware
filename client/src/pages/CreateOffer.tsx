@@ -99,7 +99,7 @@ export const CreateOffer = ({
                         <div className={styles["larger-input-container"]}>
                             <div className={styles["input-container"]}>
                                 <label htmlFor="brand">Marca</label>
-                                <input type="text" name="brand" required />
+                                <input type="text" name="brand" required maxLength={15}/>
                             </div>
                             <div className={styles["input-container"]}>
                                 <label htmlFor="category">Categoria</label>
