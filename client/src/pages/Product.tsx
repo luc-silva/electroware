@@ -16,7 +16,6 @@ export const Product = ({
     setUser: Function;
 }) => {
     let { id } = useParams();
-    let navigate = useNavigate();
     let productInitialState: Product = {
         _id: "",
         category: "",
@@ -31,16 +30,6 @@ export const Product = ({
     let [productReviews, setProductReviews] = useState([]);
     let [owner, setOwner] = useState({ first: "", last: "" });
     let [category, setCategory] = useState("");
-    let [updateReview, toggleUpdateReview] = useState(false);
-    useEffect(() => {
-        if (updateReview) {
-            toggleUpdateReview(false);
-        }
-    }, [toggleUpdateReview]);
-
-    function updateWindow() {
-        toggleUpdateReview(true);
-    }
 
     useEffect(() => {
         axios
@@ -48,11 +37,7 @@ export const Product = ({
             .then(({ data }) => {
                 setProductDetails(data);
             });
-        axios
-            .get(`http://localhost:6060/api/product/${id}/reviews`)
-            .then(({ data }) => {
-                setProductReviews(data);
-            });
+        updateReviews();
     }, [id]);
 
     useEffect(() => {
@@ -82,7 +67,14 @@ export const Product = ({
             ? 0
             : Number((total / productReviews.length).toFixed(1));
     }
-
+    async function updateReviews() {
+        axios
+            .get(`http://localhost:6060/api/product/${id}/reviews`)
+            .then(({ data }) => {
+                console.log(data);
+                setProductReviews(data);
+            });
+    }
     return (
         <main className={styles["product"]}>
             <section className={styles["product__about"]}>
@@ -114,7 +106,7 @@ export const Product = ({
                     </div>
                     <div className={styles["details-misc"]}>
                         <p>{`Unidades disponíveis: ${productDetails.quantity}`}</p>
-                        <ProductBtnPanel user={user} product={productDetails}/>
+                        <ProductBtnPanel user={user} product={productDetails} />
                     </div>
                 </div>
             </section>
@@ -133,11 +125,11 @@ export const Product = ({
                         </div>
                     </div>
                 </div>
-                <ReviewsContainer productId={id} />
+                <ReviewsContainer reviews={productReviews} />
                 <ReviewForm
                     product={productDetails}
+                    updateReviews={updateReviews}
                     user={user}
-                    update={updateWindow}
                 />
             </section>
         </main>

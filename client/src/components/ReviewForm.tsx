@@ -6,11 +6,11 @@ import styles from "./ReviewForm.module.css";
 export const ReviewForm = ({
     user,
     product,
-    update,
+    updateReviews,
 }: {
+    updateReviews: Function;
     user: UserProps;
     product: Product;
-    update: Function;
 }) => {
     let [reviewForm, setReviewForm] = useState({ text: "", score: 1 });
     let navigate = useNavigate();
@@ -25,22 +25,26 @@ export const ReviewForm = ({
     }
     function handleReviewSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        axios.post(
-            `http://localhost:6060/api/review/`,
-            {
-                author: user.id,
-                authorUsername: user.username,
-                product: product._id,
-                productOwner: product.owner,
-                text: reviewForm.text,
-                score: reviewForm.score,
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${user.token}`,
+        axios
+            .post(
+                `http://localhost:6060/api/review/`,
+                {
+                    author: user.id,
+                    authorUsername: user.username,
+                    product: product._id,
+                    productOwner: product.owner,
+                    text: reviewForm.text,
+                    score: reviewForm.score,
                 },
-            }
-        );
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.token}`,
+                    },
+                }
+            )
+            .then(() => {
+                updateReviews();
+            });
     }
     if (!user.logged || user.id === product.owner) return null;
     return (

@@ -79,7 +79,7 @@ function Electroware() {
                     />
                     <Route
                         path="/add-funds"
-                        element={<AddFunds user={user} />}
+                        element={<AddFunds user={user} setUser={setUser} />}
                     />
 
                     {/* misc */}
