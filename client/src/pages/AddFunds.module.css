@@ -1,0 +1,126 @@
+.add-funds{
+    min-height: 90vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+}
+.add-funds__main{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+}
+.add-funds__title{
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+.add-funds__title h2{
+    font-size: 1.3rem;
+    color: var(--title-color);
+}
+.add-funds__card-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+.add-funds__card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    height: 50vh;
+    border-radius: 5px;
+    border: 1px solid var(--background-color-faded);
+    background-color: var(--background-color);
+}
+.add-funds__card div{
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.add-funds__card p{
+    color: var(--text-color);
+}
+.add-funds__card strong{
+    color: var(--title-color);
+    font-size: 2rem;
+}
+.add-funds__btn-panel{
+    width: 100%;
+    background-color: var(--background-color-faded);
+}
+.add-funds__card button{
+    background-color: var(--main-color);
+    font-size: 1.3rem;
+    padding: 0.5rem 1rem;
+    font-weight: bolder;
+    color: white;
+    cursor: pointer;
+}
+.add-funds__current-fund{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+.add-funds__current-fund div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.add-funds__current-fund p{
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+.add-funds__current-fund strong{
+    font-size: 1.5rem;
+    color: var(--title-color);
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+    .add-funds{
+        flex-direction: column;
+    }
+    .add-funds__title{
+        
+    }
+    .add-funds__main{
+        align-items: center;
+    }
+    .add-funds__card-container{
+        width: 70%;
+        grid-template-columns: repeat(3, auto);
+    }
+    .add-funds__card{
+        width: 70%;
+    }
+    .add-funds__card button{
+        font-size: 1rem;
+    }
+}
+@media (min-width: 1025px) {
+    .add-funds{
+        flex-direction: column;
+    }
+    .add-funds__title{
+        
+    }
+    .add-funds__main{
+        align-items: center;
+    }
+    .add-funds__card-container{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+    }
+    .add-funds__card{
+        width: 30%;
+    }
+    .add-funds__card button{
+        font-size: 1rem;
+    }
+}
