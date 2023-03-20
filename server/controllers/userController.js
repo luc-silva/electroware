@@ -64,8 +64,8 @@ const registerUser = asyncHandler(async (request, response) => {
     response.status(202).json({ user });
 });
 
-const getProfile = asyncHandler(async (request, response) => {
-    let user = await User.findById(request.params.id).select({ password: 0 });
+const getProfileInfo = asyncHandler(async (request, response) => {
+    let user = await User.findById(request.params.id).select({ name: 1, id: 1, email:1, createdAt: 1 });
     if (!user) {
         response.status(404);
         throw new Error("Usuario não encontrado");
@@ -87,6 +87,15 @@ const getUserProducts = asyncHandler(async (request, response) => {
 });
 
 //private
+const getUserPrivateInfo = asyncHandler(async (request, response) => {
+    let user = await User.findById(request.user).select({id: 1, funds: 1, email: 1 })
+    if(!user){
+        response.status(404)
+        throw new Error("Usuário não encontrado ")
+    }
+
+    response.status(202).json(user)
+})
 const addFunds = asyncHandler(async (request, response) => {
     let amount = request.body.amount;
     if (!amount) {
@@ -97,7 +106,7 @@ const addFunds = asyncHandler(async (request, response) => {
     let userExist = await User.findById(request.user);
     if (!userExist) {
         response.status(404);
-        throw new Error("Usuário não existe");
+        throw new Error("Usuário não encontrado");
     }
 
     let user = await User.findByIdAndUpdate(request.user, {
@@ -109,7 +118,8 @@ const addFunds = asyncHandler(async (request, response) => {
 module.exports = {
     registerUser,
     loginUser,
-    getProfile,
+    getProfileInfo,
     getUserProducts,
     addFunds,
+    getUserPrivateInfo
 };

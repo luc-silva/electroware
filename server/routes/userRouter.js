@@ -5,20 +5,22 @@ const { getEveryUserReviews } = require("../controllers/reviewsController");
 const {
     registerUser,
     loginUser,
-    getProfile,
     getUserProducts,
     addFunds,
+    getProfileInfo,
+    getUserPrivateInfo,
 } = require("../controllers/userController");
 const { protected } = require("../middleware/auth");
 
 router.post("/login", loginUser);
 router.post("/register", registerUser);
 
-router.get("/user/:id", getProfile);
+router.get("/user/:id", getProfileInfo);
 router.get("/user/:id/products", getUserProducts);
 router.get("/user/:id/reviews", getEveryUserReviews);
 
 //protected
-router.post("/user/billings/add", protected, addFunds)
+router.post("/user/billings/add", protected, addFunds);
+router.get("/user/private/:id", protected, getUserPrivateInfo);
 
 module.exports = router;
