@@ -103,10 +103,26 @@ const getEveryUserReviews = asyncHandler(async (request, response) => {
     response.status(202).json(reviews);
 });
 
+const getEveryUserProductsReviews = asyncHandler(async (request, response) => {
+    let user = await User.findById(request.params.id);
+    if (!user) {
+        response.status(404);
+        throw new Error("Usuário não encontrado");
+    }
+    let reviews = await Review.find({ productOwner: user.id }).select({score:1});
+    if (reviews.length === 0) {
+        response.status(404);
+        throw new Error("Sem análises aos produtos desse usuário");
+    }
+
+    response.status(202).json(reviews);
+});
+
 module.exports = {
     deleteReview,
     updateReview,
     submitReview,
     getProductReviews,
     getEveryUserReviews,
+    getEveryUserProductsReviews,
 };

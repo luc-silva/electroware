@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-const { getEveryUserReviews } = require("../controllers/reviewsController");
+const {
+    getEveryUserReviews,
+    getEveryUserProductsReviews,
+} = require("../controllers/reviewsController");
 const {
     registerUser,
     loginUser,
@@ -18,6 +21,7 @@ router.post("/register", registerUser);
 router.get("/user/:id", getProfileInfo);
 router.get("/user/:id/products", getUserProducts);
 router.get("/user/:id/reviews", getEveryUserReviews);
+router.get("/user/:id/products/reviews", getEveryUserProductsReviews);
 
 //protected
 router.post("/user/billings/add", protected, addFunds);

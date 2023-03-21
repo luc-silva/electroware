@@ -91,6 +91,16 @@ export const questions = [
             "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium nihil tempore minima quia, impedit ea pariatur, soluta quo iste consequuntur rem ipsa excepturi quaerat similique commodi? Nesciunt animi dicta hic.",
     },
     {
+        faqQuestion: "Como funciona a reputação de um usuário?",
+        faqAnswer:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium nihil tempore minima quia, impedit ea pariatur, soluta quo iste consequuntur rem ipsa excepturi quaerat similique commodi? Nesciunt animi dicta hic.",
+    },
+    {
+        faqQuestion: "Como funciona a reputação de um produto?",
+        faqAnswer:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium nihil tempore minima quia, impedit ea pariatur, soluta quo iste consequuntur rem ipsa excepturi quaerat similique commodi? Nesciunt animi dicta hic.",
+    },
+    {
         faqQuestion: "Oi, como vai?",
         faqAnswer:
             "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium nihil tempore minima quia, impedit ea pariatur, soluta quo iste consequuntur rem ipsa excepturi quaerat similique commodi? Nesciunt animi dicta hic.",
