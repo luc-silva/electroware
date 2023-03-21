@@ -14,6 +14,10 @@ export const UserProfile = () => {
             first: "",
             last: "",
         },
+        location: {
+            state:"",
+            country:"",
+        },
         email: "",
         createdAt: new Date(),
         description: "",
@@ -51,7 +55,7 @@ export const UserProfile = () => {
                 <div className={styles["user-profile__details"]}>
                     <div className={styles["user-profile__details__title"]}>
                         <h2>{`${user.name.first} ${user.name.last}`}</h2>
-                        <p>Sao Paulo, Santos</p>
+                        <p>{`${user.location.state}, ${user.location.country}`}</p>
                     </div>
                     <div
                         className={styles["user-profile__details__reputation"]}

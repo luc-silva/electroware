@@ -4,6 +4,7 @@ interface UserProps {
     token: string;
     funds: number;
     logged: boolean;
+    description: string;
 }
 
 interface HeaderProps {

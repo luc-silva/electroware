@@ -8,11 +8,13 @@ export const Registration = () => {
     let formInitialValues = {
         first: "",
         last: "",
+        state: "",
+        country: "",
         email: "",
         password: "",
     };
     let [form, setForm] = useState(formInitialValues);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     function handleChange(event: FormEvent<HTMLFormElement>) {
         let target = event.target;
@@ -23,25 +25,30 @@ export const Registration = () => {
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        axios.post("http://localhost:6060/api/register", {
-            ...form,
-            name: { first: form.first, last: form.last },
-        }).catch(alert)
-        navigate("/login")
+        axios
+            .post("http://localhost:6060/api/register", {
+                ...form,
+                name: { first: form.first, last: form.last },
+                location: {state: form.state, country: form.country}
+            })
+            .then(() => {
+                navigate("/login");
+            })
+            .catch(alert);
     }
 
-    useEffect(() => {
-        
-    })
-
     return (
-        <div className={styles["registration"]}>
-            <div className={styles["registration-text"]}>
+        <main role={"main"} className={styles["registration"]}>
+            <section className={styles["registration__title"]}>
                 <h1>Crie uma conta</h1>
                 <p>Não gaste o seu dinheiro em outros sites!</p>
-            </div>
-            <div className={styles["registration-form"]}>
-                <form action="POST" onChange={handleChange} onSubmit={handleSubmit}>
+            </section>
+            <section className={styles["registration-form"]}>
+                <form
+                    action="POST"
+                    onChange={handleChange}
+                    onSubmit={handleSubmit}
+                >
                     <input
                         name="first"
                         value={form.first}
@@ -53,8 +60,12 @@ export const Registration = () => {
                         name="last"
                         value={form.last}
                         type="text"
-                        placeholder="Sobrenome" 
+                        placeholder="Sobrenome"
                     />
+                    <div>
+                        <input type="text" name="state" placeholder="Estado" required/>
+                        <input type="text" name="country" placeholder="País" required/>
+                    </div>
                     <input
                         name="email"
                         value={form.email}
@@ -69,13 +80,10 @@ export const Registration = () => {
                         placeholder="Senha"
                         required
                     />
-                    <input
-                        type="submit"
-                        value="Crie uma conta"
-                    />
+                    <input type="submit" value="Crie uma conta" />
                 </form>
                 <Link to="/login">Já possui uma conta? Entre </Link>
-            </div>
-        </div>
+            </section>
+        </main>
     );
 };

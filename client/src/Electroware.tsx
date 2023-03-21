@@ -23,6 +23,7 @@ function Electroware() {
         username: "",
         token: "",
         logged: false,
+        description: ""
     };
     let [user, setUser] = useState(initialState);
     let [infoMenuActive, toggleInfoMenu] = useState(false);
