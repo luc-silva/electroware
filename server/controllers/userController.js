@@ -5,6 +5,9 @@ const bcrypt = require("bcryptjs");
 
 const User = require("../models/User");
 const Product = require("../models/Product");
+const Review = require("../models/Review");
+const ProductInstance = require("../models/ProductInstance");
+const Transaction = require("../models/Transaction");
 
 function generateToken(id) {
     return jwt.sign({ id }, "123", {
@@ -38,8 +41,14 @@ const loginUser = asyncHandler(async (request, response) => {
 
 const registerUser = asyncHandler(async (request, response) => {
     //validates inputs
-    let { email, password, name } = request.body;
-    if (!email || !password || !name.first) {
+    let { email, password, name, location } = request.body;
+    if (
+        !email ||
+        !password ||
+        !name.first ||
+        !location.country ||
+        !location.state
+    ) {
         response.status(401);
         throw new Error("Por favor, insira credenciais validos");
     }
@@ -48,7 +57,7 @@ const registerUser = asyncHandler(async (request, response) => {
     let userExist = await User.findOne({ email });
     if (userExist) {
         response.status(401);
-        throw new Error(`Uma conta ja foi criada com esse email`);
+        throw new Error(`Uma conta já foi criada com esse email`);
     }
 
     //hash password
@@ -71,6 +80,7 @@ const getProfileInfo = asyncHandler(async (request, response) => {
         id: 1,
         email: 1,
         createdAt: 1,
+        location: 1,
     });
     if (!user) {
         response.status(404);
@@ -131,6 +141,52 @@ const addFunds = asyncHandler(async (request, response) => {
     response.status(202).json(user);
 });
 
+const deleteAccount = asyncHandler(async (request, response) => {
+    if (request.user !== request.params.id) {
+        response.status(401);
+        throw new Error("Não autorizado");
+    }
+    const user = await User.findById(request.params.id);
+    if (!user) {
+        response.status(404);
+        throw new Error("Usuário não existe");
+    }
+
+    let session = mongoose.startSession();
+    await session.withTransaction(async () => {
+        let deletedProducts = await Product.deleteMany([{ owner: user._id }], {
+            session,
+        });
+        let deletedOwnReviews = await Review.deleteMany(
+            [{ author: user._id }],
+            {
+                session,
+            }
+        );
+        let deletedReceivedReviews = await Review.deleteMany(
+            [{ productOwner: user._id }],
+            { session }
+        );
+        // let deletedOwnWishlistItems = await WishlistItem.deleteMany(
+        //     [{ user: user._id }],
+        //     { session }
+        // );
+
+        let deletedOwnShoppingCart = await ProductInstance.deleteMany(
+            [{ user: user._id }],
+            { session }
+        );
+        let deletedRelatedCartItems = await ProductInstance.deleteMany(
+            [{ seller: user._id }],
+            { session }
+        );
+
+        let deletedUser = await User.findByIdAndDelete(user._id)
+        await session.commitTransaction();
+    });
+    session.endSession();
+    response.status(204).json({message: "Deletado"})
+});
 module.exports = {
     registerUser,
     loginUser,
@@ -138,4 +194,5 @@ module.exports = {
     getUserProducts,
     addFunds,
     getUserPrivateInfo,
+    deleteAccount
 };

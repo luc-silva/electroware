@@ -1,3 +1,5 @@
 const errorMiddleware = (err, request, response) => {
-    response.status(404).json({message: err})
-}
+    response.json({ message: err });
+};
+
+module.exports = errorMiddleware;
