@@ -22,10 +22,10 @@ Provavelmente é o projeto que mais venho me dedicando. Nele, tentei reunir recu
 ``` 
 cd electroware
 npm install
-cd electroware server
+cd server
 npm install
 cd ..
-cd electroware client
+cd client
 npm install
 ```
 
