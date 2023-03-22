@@ -44,7 +44,7 @@ npm run server
 npm run client
 ```
 
-Após os passos, o website deve abrir em seu navegador padrão. Dúvidas, entre em contato através do [LinkedIn](https://linkedin.com/silva-luc)
+Após os passos, o website deve abrir em seu navegador padrão. Dúvidas, entre em contato através do [LinkedIn](https://linkedin.com/in/silva-luc)
 
 ## Planos
 - Passar o backend para typescript
