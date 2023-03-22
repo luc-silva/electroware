@@ -15,7 +15,9 @@ Provavelmente é o projeto que mais venho me dedicando. Nele, tentei reunir recu
 ## Como Testar (NodeJS necessário)
 1 - Clone o repositório:
 ``` git clone https://github.com/luc-silva/electroware ```
+
 2 - Vá para o diretório o qual o repositório foi baixado
+
 3 - Baixe as dependências do repositório, server e client
 ``` 
 cd electroware
@@ -26,14 +28,17 @@ cd ..
 cd electroware client
 npm install
 ```
+
 4 - Volte para a raiz do repositório (electroware/)
 ```
 cd ..
 ```
+
 5 - inicie o servidor
 ```
 npm run server
 ```
+
 6 - abra um novo terminal e inicie o client
 ```
 npm run client
