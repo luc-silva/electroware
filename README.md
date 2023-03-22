@@ -34,20 +34,20 @@ npm install
 cd ..
 ```
 
-5 - inicie o servidor
+5 - Inicie o servidor
 ```
 npm run server
 ```
 
-6 - abra um novo terminal e inicie o client
+6 - Abra um novo terminal e inicie o client
 ```
 npm run client
 ```
 
-Após os passos, o website deve abrir em seu navegador padrão. Duvidas, entre em contato através do [LinkedIn](https://linkedin.com/silva-luc)
+Após os passos, o website deve abrir em seu navegador padrão. Dúvidas, entre em contato através do [LinkedIn](https://linkedin.com/silva-luc)
 
 ## Planos
-- Passar o backend para typescript também
+- Passar o backend para typescript
 - Refatorar o código fonte
 - Hospedar o servidor e client do pŕojeto
 
