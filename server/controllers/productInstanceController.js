@@ -28,6 +28,10 @@ const createInstance = asyncHandler(async (request, response) => {
         response.status(404);
         throw new Error("O produto não esta mais disponível");
     }
+    if(product.quantity === 0){
+        response.status(400)
+        throw new Error("Produto indisponível")
+    }
 
     if(product.owner.toString() === user.id.toString()){
         response.status(400)
@@ -39,7 +43,7 @@ const createInstance = asyncHandler(async (request, response) => {
     });
     if (instaceAlreadyExist) {
         response.status(400);
-        throw new Error("Instancia ja existe");
+        throw new Error("Instância já existe");
     }
 
     let createdInstance = await ProductInstance.create({

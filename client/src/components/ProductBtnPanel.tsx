@@ -39,18 +39,19 @@ export const ProductBtnPanel = ({
 
     return (
         (user.logged &&
-            ((user.id != product.owner && (
-                <div>
-                    <QuantityCounter
-                        max={product.quantity}
-                        quantity={quantity}
-                        setQuantity={setQuantity}
-                    />
-                    <button onClick={addToShoppingCart}>
-                        Adicionar ao carrinho
-                    </button>
-                </div>
-            )) || (
+            ((user.id != product.owner &&
+                ((product.quantity > 0 && (
+                    <div>
+                        <QuantityCounter
+                            max={product.quantity}
+                            quantity={quantity}
+                            setQuantity={setQuantity}
+                        />
+                        <button onClick={addToShoppingCart}>
+                            Adicionar ao carrinho
+                        </button>
+                    </div>
+                )) || <button disabled>Produto Esgotado</button>)) || (
                 <div>
                     <button onClick={removeProduct}>Remover anúncio</button>
                 </div>
