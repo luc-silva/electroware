@@ -15,31 +15,34 @@ export const AddFunds = ({
         if (!user.logged) {
             navigate("/login");
         }
-        updateAccountDetails()
+        updateAccountDetails();
     }, []);
 
-    async function updateAccountDetails(){
+    async function updateAccountDetails() {
         axios
-        .get(`http://localhost:6060/api/user/private/${user.id}`, {
-            headers: { Authorization: `Bearer ${user.token}` },
-        })
-        .then(({ data }) => {
-            setUser(() => {
-                return { ...user, funds: data.funds };
+            .get(`http://localhost:6060/api/user/private/${user.id}`, {
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            .then(({ data }) => {
+                setUser(() => {
+                    return { ...user, funds: data.funds };
+                });
             });
-        });
     }
 
     function addAmount(event: React.MouseEvent) {
         let target = event.target;
         try {
             if (target instanceof HTMLButtonElement) {
-                axios.post(
-                    `http://localhost:6060/api/user/billings/add`,
-                    { amount: target.value },
-                    { headers: { Authorization: `Bearer ${user.token}` } }
-                );
-                updateAccountDetails()
+                axios
+                    .post(
+                        `http://localhost:6060/api/user/billings/add`,
+                        { amount: target.value },
+                        { headers: { Authorization: `Bearer ${user.token}` } }
+                    )
+                    .then(() => {
+                        updateAccountDetails();
+                    });
             }
             //navigate("/config/billings");
         } catch (error) {
