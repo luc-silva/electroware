@@ -27,7 +27,7 @@ interface Product {
     quantity: number;
     reviews: number;
 }
-interface Review{
+interface Review {
     author: string;
     authorUsername: string;
     product: string;
@@ -43,4 +43,18 @@ interface ShoppingCartCardProps {
     shoppingCart: string;
     price: number;
     quantity: number;
+}
+interface Transaction {
+    buyer: string;
+    products: ProductInstance[];
+    paymentMethod: string;
+    totalPrice: number;
+    createdAt: Date;
+}
+interface ProductInstance{
+    user: string,
+    seller: string,
+    product: string,
+    price: number,
+    quantity: number,
 }
