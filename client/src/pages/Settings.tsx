@@ -22,6 +22,11 @@ export const Settings = ({
                 setUserTransactions(data);
             });
     }, []);
+    function handleDeleteAccountBtn() {
+        axios.delete(`http://localhost:6060/api/user/${user.id}`, {
+            headers: { Authorization: `Bearer ${user.token}` },
+        });
+    }
     return (
         <main role={"main"} className={styles["settings"]}>
             <section className={styles["settings__edit-profile"]}>
@@ -64,7 +69,10 @@ export const Settings = ({
                     </div>
                 </form>
             </section>
-            <section className={styles["settings__transactions"]} id="transactions">
+            <section
+                className={styles["settings__transactions"]}
+                id="transactions"
+            >
                 <div className={styles["transactions__title"]}>
                     <h3>Compras Realizadas</h3>
                 </div>
@@ -129,10 +137,17 @@ export const Settings = ({
                     <div className={styles["button-container"]}>
                         <div className={styles["warning-info"]}>
                             <Warning size={30} />
-                            <p>Aviso: Ao optar por "deletar conta", você perderá todos os dados contidos, além da reputação do perfil e de produtos. Não será possivel retornar com a decisão depois.</p>
+                            <p>
+                                Aviso: Ao optar por "deletar conta", você
+                                perderá todos os dados contidos, além da
+                                reputação do perfil e de produtos. Não será
+                                possivel retornar com a decisão depois.
+                            </p>
                         </div>
-                        <button onClick={() => {}}>Excluir conta.</button>
-                    </div>          
+                        <button onClick={handleDeleteAccountBtn}>
+                            Excluir conta.
+                        </button>
+                    </div>
                 </div>
             </section>
         </main>

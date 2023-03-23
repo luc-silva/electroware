@@ -5,6 +5,7 @@ const {
     getEveryUserReviews,
     getEveryUserProductsReviews,
 } = require("../controllers/reviewsController");
+const { getUserTransactions } = require("../controllers/transactionController");
 const {
     registerUser,
     loginUser,
@@ -12,6 +13,7 @@ const {
     addFunds,
     getProfileInfo,
     getUserPrivateInfo,
+    deleteAccount
 } = require("../controllers/userController");
 const { protected } = require("../middleware/auth");
 
@@ -26,5 +28,7 @@ router.get("/user/:id/products/reviews", getEveryUserProductsReviews);
 //protected
 router.post("/user/billings/add", protected, addFunds);
 router.get("/user/private/:id", protected, getUserPrivateInfo);
+router.get("/user/:id/transactions", protected, getUserTransactions);
+router.delete("/user/:id", protected, deleteAccount);
 
 module.exports = router;

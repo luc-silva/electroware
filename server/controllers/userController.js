@@ -142,29 +142,29 @@ const addFunds = asyncHandler(async (request, response) => {
 });
 
 const deleteAccount = asyncHandler(async (request, response) => {
-    if (request.user !== request.params.id) {
-        response.status(401);
-        throw new Error("Não autorizado");
-    }
-    const user = await User.findById(request.params.id);
+    const user = await User.findById(request.user);
     if (!user) {
         response.status(404);
         throw new Error("Usuário não existe");
     }
+    if (user.id !== request.params.id) {
+        response.status(401);
+        throw new Error("Não autorizado");
+    }
 
-    let session = mongoose.startSession();
+    let session = await mongoose.startSession();
     await session.withTransaction(async () => {
-        let deletedProducts = await Product.deleteMany([{ owner: user._id }], {
+        let deletedProducts = await Product.deleteMany({ owner: user._id }, {
             session,
         });
         let deletedOwnReviews = await Review.deleteMany(
-            [{ author: user._id }],
+            { author: user._id },
             {
                 session,
             }
         );
         let deletedReceivedReviews = await Review.deleteMany(
-            [{ productOwner: user._id }],
+            { productOwner: user._id },
             { session }
         );
         // let deletedOwnWishlistItems = await WishlistItem.deleteMany(
@@ -173,11 +173,11 @@ const deleteAccount = asyncHandler(async (request, response) => {
         // );
 
         let deletedOwnShoppingCart = await ProductInstance.deleteMany(
-            [{ user: user._id }],
+            { user: user._id },
             { session }
         );
         let deletedRelatedCartItems = await ProductInstance.deleteMany(
-            [{ seller: user._id }],
+            { seller: user._id },
             { session }
         );
 
