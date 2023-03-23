@@ -6,7 +6,7 @@ Provavelmente é o projeto que mais venho me dedicando. Nele, tentei reunir recu
 - Tanto a API quanto a interface estão inclusas nesse repositório.
 - Backend decidi desenvolver em Javascript pois a API foi a primeira de larga escala (por assim dizer) que fiz. Pretendo passar para Typescript o quanto antes.
 - Creio que devido a sua complexidade, esse projeto irá se tornar bem interessante para refatorar, portanto, pretendo manter e atualiza-lo de acordo com a experiência que eu obter no futuro.
-- Alguma sugestão de melhoria, erro notado, ou ideias, por favor, abra um [issue](https://github.com/luc-silva/electroware/issue).
+- Alguma sugestão de melhoria, erro notado, ou ideias, por favor, abra um [issue](https://github.com/luc-silva/electroware/issues).
 
 ### Fotos do Projeto
 
