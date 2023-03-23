@@ -138,7 +138,7 @@ export const Settings = ({
                         <div className={styles["warning-info"]}>
                             <Warning size={30} />
                             <p>
-                                Aviso: Ao optar por "deletar conta", você
+                                <strong>Aviso:</strong> Ao optar por "deletar conta", você
                                 perderá todos os dados contidos, além da
                                 reputação do perfil e de produtos. Não será
                                 possivel retornar com a decisão depois.

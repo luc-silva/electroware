@@ -59,7 +59,7 @@ export const CreateOffer = ({
     return (
         <main role={"main"} className={styles["create-offer"]}>
             <section className={styles["create-offer__title"]}>
-                <h2>Crie o seu anuncio</h2>
+                <h2>Crie o seu anúncio</h2>
             </section>
             <section className={styles["create-offer__main"]}>
                 <div className={styles["create-offer__image-container"]}>
