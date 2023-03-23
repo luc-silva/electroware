@@ -15,6 +15,7 @@ import { ProfileMenu } from "./components/ProfileMenu";
 import { Checkout } from "./pages/Checkout";
 import { CreateOffer } from "./pages/CreateOffer";
 import { AddFunds } from "./pages/AddFunds";
+import { Settings } from "./pages/Settings";
 
 function Electroware() {
     let initialState = {
@@ -82,6 +83,7 @@ function Electroware() {
                         path="/add-funds"
                         element={<AddFunds user={user} setUser={setUser} />}
                     />
+                    <Route path="/config" element={<Settings user={user} setUser={setUser} />} />
 
                     {/* misc */}
                     <Route path="/*" element={<NotFound />} />

@@ -3,9 +3,7 @@ import {
     Bookmarks,
     CaretDown,
     CaretUp,
-    Heart,
     MagnifyingGlass,
-    Plus,
     ShoppingCart,
 } from "phosphor-react";
 

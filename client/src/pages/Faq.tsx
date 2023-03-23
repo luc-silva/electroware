@@ -7,7 +7,7 @@ export const Faq = () => {
     return (
         <main className={styles["faq"]}>
             <section className={styles["faq-main"]}>
-                <h2>Perguntas comuns</h2>
+                <h2>Perguntas mais Frequentes</h2>
                 <div className={styles["faq-container"]}>
                     {questions.map(({ faqQuestion, faqAnswer }) => {
                         return (

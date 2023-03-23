@@ -29,7 +29,7 @@ export const ProfileMenu = ({
     return (
         <div className={styles["profile-menu"]} role="menu" onClick={() =>{toggleMenu()}}>
             <div className={styles["profile-menu__links"]}>
-                <Link to={"/config/billings"}>
+                <Link to={"/add-funds"}>
                     <Money size={20} color="var(--text-color)" />
                     <p>{`Saldo: ${user.funds} R$`}</p>
                 </Link>
