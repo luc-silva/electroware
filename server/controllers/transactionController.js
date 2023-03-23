@@ -8,15 +8,21 @@ const User = require("../models/User");
 const Transaction = require("../models/Transaction");
 
 const createProductTransaction = asyncHandler(async (request, response) => {
+    let { paymentMethod } = request.body;
+    if(!paymentMethod){
+        response.status(400)
+        throw new Error("Insira dados válidos")
+    }
+
     let user = await User.findById(request.user);
     if (!user) {
         response.status(404);
-        throw new Error("Usuario nao encontrado");
+        throw new Error("Usuário não encontrado");
     }
     let products = await ProductInstance.find({ user: user.id });
     if (products.length === 0) {
         response.status(401);
-        throw new Error("Nao ha produtos no carrinhos de compras");
+        throw new Error("Não há produtos no carrinhos de compras");
     }
 
     function getTotal() {
@@ -27,12 +33,17 @@ const createProductTransaction = asyncHandler(async (request, response) => {
         return total;
     }
 
+    if (user.funds < getTotal()) {
+        response.status(400);
+        throw new Error("Fundos insuficientes");
+    }
+
     try {
         const session = await mongoose.startSession();
         await session.withTransaction(async () => {
             let data = {
                 buyer: user.id,
-                paymentMethod: "boleto",
+                paymentMethod,
                 products,
                 totalPrice: getTotal(),
             };
@@ -72,6 +83,23 @@ const createProductTransaction = asyncHandler(async (request, response) => {
     }
 });
 
+//protected
+const getUserTransactions = asyncHandler(async (request, response) => {
+    let user = await User.findById(request.user);
+    if (!user) {
+        response.status(404);
+        throw new Error("Usuário não encontrado");
+    }
+
+    if (user.id !== request.params.id) {
+        response.status(401);
+        throw new Error("Não autorizado");
+    }
+
+    let transactions = await Transaction.find({ buyer: user._id });
+    response.status(202).json(transactions);
+});
 module.exports = {
     createProductTransaction,
+    getUserTransactions,
 };

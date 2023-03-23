@@ -1,7 +1,7 @@
 import styles from "./Checkout.module.css";
 import axios from "axios";
 import { Info, Warning } from "phosphor-react";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export const Checkout = ({
@@ -35,11 +35,19 @@ export const Checkout = ({
         });
         return total;
     }
+    let [paymentMethod, setPaymentMethod] = useState("Boleto");
+    function handleSelect(event: ChangeEvent<HTMLSelectElement>) {
+        setPaymentMethod(event.target.value);
+    }
     function handleCheckout() {
         axios
-            .get(`http://localhost:6060/api/transaction`, {
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
+            .post(
+                `http://localhost:6060/api/transaction`,
+                {paymentMethod},
+                {
+                    headers: { Authorization: `Bearer ${user.token}` },
+                }
+            )
             .then(() => {
                 navigate("/config#transactions");
             });
@@ -80,8 +88,10 @@ export const Checkout = ({
                 <div className={styles["checkout__footer"]}>
                     <div className={styles["payment-method__display"]}>
                         <p>FORMA DE PAGAMENTO:</p>
-                        <select name="paymentMethod">
-                            <option value="Boleto">Boleto</option>
+                        <select name="paymentMethod" onChange={handleSelect}>
+                            <option value="Boleto" defaultChecked>
+                                Boleto
+                            </option>
                             <option value="Cartão de Crédito">
                                 Cartão de Crédito
                             </option>
