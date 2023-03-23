@@ -35,10 +35,14 @@ export const Checkout = ({
         });
         return total;
     }
-    function handleCheckout(){
-        axios.get(`http://localhost:6060/api/transaction`, {
-            headers: { Authorization: `Bearer ${user.token}` },
-        });
+    function handleCheckout() {
+        axios
+            .get(`http://localhost:6060/api/transaction`, {
+                headers: { Authorization: `Bearer ${user.token}` },
+            })
+            .then(() => {
+                navigate("/config#transactions");
+            });
     }
     return (
         <main className={styles["checkout"]}>
@@ -54,25 +58,47 @@ export const Checkout = ({
                     </div>
                     <div className={styles["checkout__info"]}>
                         <Info size={30} color="var(--main-color)" />
-                        <p>{`Você esta comprando ${items.length} items`}</p>
+                        <p>
+                            {items.length === 1
+                                ? `Você está comprando ${items.length} item.`
+                                : `Você está comprando ${items.length} itens.`}
+                        </p>
                     </div>
                 </div>
                 {getTotalValue() > user.funds && (
                     <div className={styles["checkout__warning"]}>
-                        <Warning size={30} />
-                        <strong>
-                            Você nao tem saldo o suficiente para finalizar a
-                            compra. Adicione mais{" "}
-                            <Link to="/add-funds">aqui.</Link>
-                        </strong>
+                        <div>
+                            <Warning size={30} />
+                            <strong>
+                                Você não tem saldo o suficiente para finalizar a
+                                compra.
+                            </strong>
+                        </div>
+                        <Link to="/add-funds">Adicionar mais</Link>
                     </div>
                 )}
                 <div className={styles["checkout__footer"]}>
-                    <div>
-                        <p>FORMA DE PAGAMENTO: BOLETO</p>
+                    <div className={styles["payment-method__display"]}>
+                        <p>FORMA DE PAGAMENTO:</p>
+                        <select name="paymentMethod">
+                            <option value="Boleto">Boleto</option>
+                            <option value="Cartão de Crédito">
+                                Cartão de Crédito
+                            </option>
+                            <option value="Bitcoin">Bitcoin</option>
+                            <option value="Pix">Pix</option>
+                        </select>
                     </div>
                     <div>
-                        <button onClick={handleCheckout}>FINALIZAR COMPRA</button>
+                        {(getTotalValue() > user.funds && (
+                            <button onClick={handleCheckout} disabled>
+                                FINALIZAR COMPRA
+                            </button>
+                        )) || (
+                            <button onClick={handleCheckout}>
+                                FINALIZAR COMPRA
+                            </button>
+                        )}
                     </div>
                 </div>
             </section>
