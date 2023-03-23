@@ -1,0 +1,163 @@
+.settings {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.settings__title {
+    margin-top: 2rem;
+}
+.settings__title h2 {
+    font-size: 1.3rem;
+    color: var(--title-color);
+}
+.settings section {
+    min-height: 90vh;
+}
+.settings section h3 {
+    font-size: 1.4rem;
+    color: var(--title-color);
+}
+.settings__edit-profile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0 2rem;
+}
+.edit-profile__form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.edit-profile__form textarea {
+    resize: none;
+}
+.edit-profile__form input {
+    height: 1rem;
+}
+.edit-profile__form textarea,
+.edit-profile__form input {
+    font-size: 1rem;
+    padding: 1rem;
+    width: 100%;
+    background-color: var(--background-color-faded);
+    border-radius: 5px;
+}
+.image-input__container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.image-input__container input[type="image"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 1rem;
+}
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    background-color: black;
+}
+.input__larger-container {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    width: 100%;
+}
+.input__larger-container .input__container {
+    width: 50%;
+}
+
+.settings__transactions {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 2rem;
+    gap: 0.5rem;
+    background-color: var(--background-color-faded);
+}
+.transactions__container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.transactions__container .container__item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--background-color);
+    border-radius: 5px;
+}
+.container__item div {
+    display: flex;
+    gap: 0.5rem;
+}
+.item__main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 50%;
+}
+.item__main .item__date {
+    font-size: 1.2rem;
+    color: var(--title-color);
+}
+.item__main .item__payment-method {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    font-size: 0.8rem;
+    color: var(--text-color);
+}
+.item__details{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0;
+}
+.item__details p{
+    color: var(--title-color);
+}
+.item__details em{
+    font-size: 0.8rem;
+    color: var(--text-color);
+}
+.settings__delete-account{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+}
+.button-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    width: 100%;
+    background-color: #fff2f2;
+    color: #dc3545;
+    border-radius: 5px;
+}
+.button-container button{
+    padding: 0.5rem 1rem;
+    background-color: #dc3545;
+    font-weight: bolder;
+    color: white;
+    border-radius: 5px;
+}
+.warning-info{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.warning-info > svg{
+    width: 50%;
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+}
+@media (min-width: 1025px) {
+}
