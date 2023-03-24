@@ -26,18 +26,14 @@ export const Login = ({
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        try {
-            axios
-                .post("http://localhost:6060/api/login", form)
-                .then(setLocalstorageToken)
-                .then(setCurrentUser)
-                .then(() =>{
-                    navigate("/");
-                })
-                .catch(alert);
-        } catch (error) {
-            alert(error);
-        }
+
+        axios
+            .post("http://localhost:6060/api/login", form)
+            .then(setLocalstorageToken)
+            .then(setCurrentUser)
+            .then(() => {
+                navigate("/");
+            })
     }
     function setLocalstorageToken(response: AxiosResponse) {
         localStorage.setItem("user", JSON.stringify(response.data));

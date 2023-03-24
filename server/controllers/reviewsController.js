@@ -8,8 +8,8 @@ const submitReview = asyncHandler(async (request, response) => {
     let reviewer = await User.findById(request.user);
     let { product, text, score, productOwner } = request.body;
     if (!reviewer || !(product, score, productOwner)) {
-        response.status(401);
-        throw new Error("Insira credenciais validos");
+        response.status(400);
+        throw new Error("Insira dados válidos.");
     }
 
     let review = await Review.create({
@@ -20,41 +20,41 @@ const submitReview = asyncHandler(async (request, response) => {
         score,
         productOwner,
     });
-    response.status(202).json(review);
+    response.status(201).json(review);
 });
 
 const deleteReview = asyncHandler(async (request, response) => {
     let review = await Review.findById(request.params.id);
     if (!review) {
         response.status(404);
-        throw new Error("Review não encontrada");
+        throw new Error("Análise não encontrada.");
     }
 
     let user = await User.findById(request.user);
     if (!user) {
         response.status(404);
-        throw new Error("Usuario não encontrado");
+        throw new Error("Usuário não encontrado.");
     }
     if (user.id !== review.author.toString()) {
         response.status(401);
-        throw new Error("Não autorizado");
+        throw new Error("Não autorizado.");
     }
 
     let deletedReview = await Review.findByIdAndDelete(review.id);
-    response.status(202).json(deletedReview);
+    response.status(200).json(deletedReview);
 });
 
 const updateReview = asyncHandler(async (request, response) => {
     let review = await Review.findById(request.params.id);
     if (!review) {
         response.status(404);
-        throw new Error("Review não encontrada");
+        throw new Error("Análise não encontrada.");
     }
 
     let user = await User.findById(request.user);
     if (user.id !== review.author.toString()) {
         response.status(401);
-        throw new Error("Não autorizado");
+        throw new Error("Não autorizado.");
     }
 
     let { text, score } = request.body;
@@ -62,7 +62,7 @@ const updateReview = asyncHandler(async (request, response) => {
         text: text,
         score: score,
     });
-    response.status(202).json(updatedReview);
+    response.status(200).json(updatedReview);
 });
 
 //public
@@ -71,51 +71,51 @@ const getProductReviews = asyncHandler(async (request, response) => {
     let product = await Product.findById(request.params.id);
     if (!product) {
         response.status(404);
-        throw new Error("Produto não encontrado");
+        throw new Error("Produto não encontrado.");
     }
 
     let reviews = await Review.find({ product: product.id }).sort({
         createdAt: -1,
     });
     if (!reviews) {
-        response
-            .status(404)
-            .json({ message: "Sem reviews encontradas para esse produto" });
+        response.status(404);
+        throw new Error("Sem reviews disponíveis.");
     }
 
-    response.status(202).json(reviews);
+    response.status(200).json(reviews);
 });
 
 const getEveryUserReviews = asyncHandler(async (request, response) => {
     let user = await User.findById(request.params.id);
     if (!user) {
         response.status(404);
-        throw new Error("Usuario não encontrado");
+        throw new Error("Usuário não encontrado.");
     }
 
     let reviews = await Review.find({ author: user.id });
     if (reviews.length === 0) {
-        response
-            .status(404)
-            .json({ message: "Sem reviews por parte desse usuario" });
+        response.status(404);
+        throw new Error("Sem análises disponíveis.");
     }
 
-    response.status(202).json(reviews);
+    response.status(200).json(reviews);
 });
 
 const getEveryUserProductsReviews = asyncHandler(async (request, response) => {
     let user = await User.findById(request.params.id);
     if (!user) {
         response.status(404);
-        throw new Error("Usuário não encontrado");
+        throw new Error("Usuário não encontrado.");
     }
-    let reviews = await Review.find({ productOwner: user.id }).select({score:1});
+    let reviews = await Review.find({ productOwner: user.id }).select({
+        score: 1,
+    });
     if (reviews.length === 0) {
         response.status(404);
-        throw new Error("Sem análises aos produtos desse usuário");
+        throw new Error("Sem análises disponíveis.");
     }
 
-    response.status(202).json(reviews);
+    response.status(200).json(reviews);
 });
 
 module.exports = {

@@ -9,20 +9,20 @@ const Transaction = require("../models/Transaction");
 
 const createProductTransaction = asyncHandler(async (request, response) => {
     let { paymentMethod } = request.body;
-    if(!paymentMethod){
-        response.status(400)
-        throw new Error("Insira dados válidos")
+    if (!paymentMethod) {
+        response.status(400);
+        throw new Error("Insira dados válidos.");
     }
 
     let user = await User.findById(request.user);
     if (!user) {
         response.status(404);
-        throw new Error("Usuário não encontrado");
+        throw new Error("Usuário não encontrado.");
     }
     let products = await ProductInstance.find({ user: user.id });
     if (products.length === 0) {
-        response.status(401);
-        throw new Error("Não há produtos no carrinhos de compras");
+        response.status(404);
+        throw new Error("Não há produtos no carrinhos de compras.");
     }
 
     function getTotal() {
@@ -35,7 +35,7 @@ const createProductTransaction = asyncHandler(async (request, response) => {
 
     if (user.funds < getTotal()) {
         response.status(400);
-        throw new Error("Fundos insuficientes");
+        throw new Error("Fundos insuficientes.");
     }
 
     try {
@@ -75,11 +75,12 @@ const createProductTransaction = asyncHandler(async (request, response) => {
             }
 
             await session.commitTransaction();
-            response.json(transaction);
+            response.status(201).json(transaction);
         });
         session.endSession();
     } catch (error) {
-        throw new Error(`Algo deu errado: ${error}`);
+        response.status(400);
+        throw new Error(`Algo deu errado: ${error}.`);
     }
 });
 
@@ -88,16 +89,16 @@ const getUserTransactions = asyncHandler(async (request, response) => {
     let user = await User.findById(request.user);
     if (!user) {
         response.status(404);
-        throw new Error("Usuário não encontrado");
+        throw new Error("Usuário não encontrado.");
     }
 
     if (user.id !== request.params.id) {
         response.status(401);
-        throw new Error("Não autorizado");
+        throw new Error("Não autorizado.");
     }
 
     let transactions = await Transaction.find({ buyer: user._id });
-    response.status(202).json(transactions);
+    response.status(200).json(transactions);
 });
 module.exports = {
     createProductTransaction,

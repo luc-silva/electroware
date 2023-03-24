@@ -9,7 +9,7 @@ const categoryRouter = require("./routes/categoryRouter");
 const reviewRouter = require("./routes/reviewRouter");
 const shoppingCartRouter = require("./routes/shoppingCartRouter");
 const transactionRouter = require("./routes/transactionRouter");
-const errorMiddleware = require("./middleware/error");
+const { errorMiddleware } = require("./middleware/error");
 
 let app = express();
 
@@ -29,5 +29,5 @@ app.use("/api/category", categoryRouter);
 app.use("/api/review", reviewRouter);
 app.use("/api/shoppingcart", shoppingCartRouter);
 
-app.use('/api/transaction', transactionRouter)
-app.use(errorMiddleware)
+app.use("/api/transaction", transactionRouter);
+app.use(errorMiddleware);

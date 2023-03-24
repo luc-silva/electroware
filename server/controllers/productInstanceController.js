@@ -10,32 +10,33 @@ const createInstance = asyncHandler(async (request, response) => {
         (!instance.user, !instance.product, !instance.price, !instance.quantity)
     ) {
         response.status(400);
-        throw new Error("Algo deu errado");
+        throw new Error("Insira dados válidos.");
     }
 
     let user = await User.findById(request.user);
     if (!user) {
-        response.status(404).json({ message: "Usuario não encontrado" });
+        response.status(404);
+        throw new Error("Usuario não encontrado.");
     }
 
     if (instance.user != user.id.toString()) {
-        response.status(404);
-        throw new Errorr("Não autorizado");
+        response.status(401);
+        throw new Errorr("Não autorizado.");
     }
 
     let product = await Product.findById(instance.product);
     if (!product) {
-        response.status(404);
-        throw new Error("O produto não esta mais disponível");
+        response.status(400);
+        throw new Error("Produto indisponível.");
     }
-    if(product.quantity === 0){
-        response.status(400)
-        throw new Error("Produto indisponível")
+    if (product.quantity === 0) {
+        response.status(400);
+        throw new Error("Produto indisponível.");
     }
 
-    if(product.owner.toString() === user.id.toString()){
-        response.status(400)
-        throw new Error("Você não pode comprar o seu próprio produto")
+    if (product.owner.toString() === user.id.toString()) {
+        response.status(400);
+        throw new Error("Você não pode comprar o seu próprio produto.");
     }
 
     let instaceAlreadyExist = await ProductInstance.findOne({
@@ -43,7 +44,7 @@ const createInstance = asyncHandler(async (request, response) => {
     });
     if (instaceAlreadyExist) {
         response.status(400);
-        throw new Error("Instância já existe");
+        throw new Error("Instância já existe.");
     }
 
     let createdInstance = await ProductInstance.create({
@@ -51,33 +52,33 @@ const createInstance = asyncHandler(async (request, response) => {
         seller: product.owner,
     });
 
-    response.status(202).json(createdInstance);
+    response.status(201).json(createdInstance);
 });
 
 const removeInstance = asyncHandler(async (request, response) => {
     let instance = await ProductInstance.findById(request.params.id);
     if (!instance) {
         response.status(404);
-        throw new Error("Produto não encontrado ou solicitado");
+        throw new Error("Produto não encontrado.");
     }
     let user = await User.findById(request.user);
     if (instance.user.toString() !== user.id) {
         response.status(401);
-        throw new Error("Não autorizado");
+        throw new Error("Não autorizado.");
     }
 
     let deletedInstance = await ProductInstance.findByIdAndDelete(instance.id);
-    response.status(202).json(deletedInstance);
+    response.status(200).json(deletedInstance);
 });
 
 const getInstances = asyncHandler(async (request, response) => {
     let user = await User.findById(request.user);
     if (!user) {
-        response.status(202);
-        throw new Error("Usuario não encontrado");
+        response.status(402);
+        throw new Error("Usuario não encontrado.");
     }
     let cartInstances = await ProductInstance.find({ user: user.id });
-    response.status(202).json(cartInstances);
+    response.status(200).json(cartInstances);
 });
 
 module.exports = {
