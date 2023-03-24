@@ -29,7 +29,7 @@ const getSingleCategory = asyncHandler(async (request, response) => {
     const category = await Category.findById(request.params.id);
     if (!category) {
         response.status(404);
-        throw new Error("Categoria nao encontrada.");
+        throw new Error("Categoria não encontrada.");
     }
 
     response.status(200).json(category);

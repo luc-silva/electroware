@@ -32,9 +32,11 @@ export const Header = ({
     };
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        navigate(`/search/${searchInput}`);
+        if(searchInput){
+            navigate(`/search/${searchInput}`);
+        }
     };
-    const showModal = (event: React.MouseEvent<HTMLDivElement>) => {
+    const showModal = () => {
         handleInfoMenu();
     };
     return (

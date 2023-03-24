@@ -12,7 +12,7 @@ const getRecentProducts = asyncHandler(async (request, response) => {
 });
 
 const searchProduct = asyncHandler(async (request, response) => {
-    let { name } = request.body;
+    let name = request.params.keyword;
     let possibleProducts = await Product.find({ name: { $regex: name } });
 
     if (possibleProducts.length === 0) {

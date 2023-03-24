@@ -18,7 +18,7 @@ router.get("/:id/reviews", getProductReviews)
 router.put("/:id", protected, updateProduct);
 router.delete("/:id", protected, deleteProduct);
 
-router.post("/search", searchProduct);
+router.post("/search/:keyword", searchProduct);
 router.post("/create", protected, createProduct);
 
 module.exports = router;

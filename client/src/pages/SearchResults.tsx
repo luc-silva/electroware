@@ -1,41 +1,46 @@
 import styles from "./SearchResults.module.css";
-import { categories } from "../testData";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { SearchResultItem } from "../components/SearchResultItem";
 
 export const SearchResults = () => {
-    const { search } = useParams();
+    let { search } = useParams();
     let [searchResults, setSearchResults] = useState([]);
+    let [categories, setCategories] = useState([]);
     useEffect(() => {
-        axios({
-            method: "post",
-            url: "http://localhost:6060/api/product/search",
-            data: {
-                name: search,
-            },
-        }).then((response) => {
-            if (response.data) {
-                setSearchResults(response.data);
-            }
+        axios
+            .post(`http://localhost:6060/api/product/search/${search}`)
+            .then(({ data }) => {
+                setSearchResults(data);
+            });
+        axios.get("http://localhost:6060/api/category").then(({ data }) => {
+            setCategories(data);
         });
     }, [search]);
 
     return (
         <main role={"main"} className={styles["search-results"]}>
             <aside className={styles["search-results__panel"]}>
-                <section className={styles["filter-container"]} >
+                {/* <section className={styles["filter-container"]} >
                     <h3>Filtros</h3>
-                    <p>Ainda em Implementacao</p>
-                </section>
-                <section className={styles["category-container"]} >
+                    <p>Ainda em Implementação</p>
+                </section> */}
+                <section className={styles["category-container"]}>
                     <div>
                         <h3>Categorias</h3>
                     </div>
                     <ul>
-                        {categories.map((categoria, index: React.Key) => (
-                            <li key={index}>{categoria}</li>
-                        ))}
+                        {categories.map(
+                            (
+                                { name, id }: { name: string; id: string },
+                                index: React.Key
+                            ) => (
+                                <li key={index}>
+                                    <Link to={`/category/${id}`}>{name}</Link>
+                                </li>
+                            )
+                        )}
                     </ul>
                 </section>
             </aside>
@@ -47,27 +52,7 @@ export const SearchResults = () => {
                 </div>
                 <div className={styles["results-container"]}>
                     {searchResults.map((product: Product, index: React.Key) => (
-                        <div key={index} className={styles["result-product"]}>
-                            <Link to={`/product/${product._id}`}>
-                                <div className={styles["product-image"]}>
-                                    <img src="a" alt="" />
-                                </div>
-                                <div className={styles["product-details"]}>
-                                    <div
-                                        className={styles["product-details__main"]}
-                                    >
-                                        <h3>{product.name}</h3>
-                                        <p>Vendido por {product.owner}</p>
-                                    </div>
-                                    <div
-                                        className={styles["product-details__info"]}
-                                    >
-                                        <strong>{`R$ ${product.price}`}</strong>
-                                        <p>{`Reviews: ${product.reviews}`}</p>
-                                    </div>
-                                </div>
-                            </Link>
-                        </div>
+                        <SearchResultItem product={product} key={index} />
                     ))}
                 </div>
             </section>
