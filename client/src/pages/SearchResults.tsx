@@ -33,11 +33,11 @@ export const SearchResults = () => {
                     <ul>
                         {categories.map(
                             (
-                                { name, id }: { name: string; id: string },
+                                { name, _id }: { name: string; _id: string },
                                 index: React.Key
                             ) => (
                                 <li key={index}>
-                                    <Link to={`/category/${id}`}>{name}</Link>
+                                    <Link to={`/category/${_id}`}>{name}</Link>
                                 </li>
                             )
                         )}

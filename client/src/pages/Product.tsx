@@ -85,7 +85,13 @@ export const Product = ({
                     <div className={styles["details-info"]}>
                         <div className={styles["details-title"]}>
                             <h1>{productDetails.name}</h1>
-                            <em>{category}</em>
+                            <em>
+                                <Link
+                                    to={`/category/${productDetails.category}`}
+                                >
+                                    {category}
+                                </Link>
+                            </em>
                         </div>
                         <div className={styles["details-pricing"]}>
                             <div>

@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const asyncHandler = require("express-async-handler");
 const Product = require("../models/Product");
 const User = require("../models/User");
+const Category = require("../models/Category");
+const Wishlist = require("../models/Wishlist");
 
 const getRecentProducts = asyncHandler(async (request, response) => {
     let products = await Product.find().limit(12).sort({ createdAt: -1 });
@@ -91,6 +93,36 @@ const deleteProduct = asyncHandler(async (request, response) => {
     response.status(200).json(deletedProduct);
 });
 
+const getProductFromCategory = asyncHandler(async (request, response) => {
+    let category = await Category.findById(request.params.id);
+    if (!category) {
+        response.status(404);
+        throw new Error("Categoria não encontrada");
+    }
+
+    let products = await Product.find({ category: category.id });
+    response.status(200).json(products);
+});
+
+const addProductToWishlist = asyncHandler(async (request, response) => {
+    let { product } = request.body;
+    if (!request.user) {
+        response.status(401);
+        throw new Error("Credênciais Inválidas.");
+    }
+    let user = await User.findById(request.user);
+
+    let wishlist = await Wishlist.findOne({ user: user.id });
+    if (!wishlist) {
+        response.status(404);
+        throw new Error("Lista de desejos não encontrada.");
+    }
+    let addedItem = Wishlist.findOneAndUpdate(
+        { user: user.id },
+        { $push: { products: product } }
+    );
+});
+
 module.exports = {
     getRecentProducts,
     searchProduct,
@@ -98,4 +130,5 @@ module.exports = {
     createProduct,
     updateProduct,
     deleteProduct,
+    getProductFromCategory,
 };

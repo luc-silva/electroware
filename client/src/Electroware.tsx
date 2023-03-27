@@ -16,6 +16,7 @@ import { Checkout } from "./pages/Checkout";
 import { CreateOffer } from "./pages/CreateOffer";
 import { AddFunds } from "./pages/AddFunds";
 import { Settings } from "./pages/Settings";
+import { Category } from "./pages/Category";
 
 function Electroware() {
     let initialState = {
@@ -24,7 +25,7 @@ function Electroware() {
         username: "",
         token: "",
         logged: false,
-        description: ""
+        description: "",
     };
     let [user, setUser] = useState(initialState);
     let [infoMenuActive, toggleInfoMenu] = useState(false);
@@ -65,6 +66,7 @@ function Electroware() {
                         element={<Product user={user} setUser={setUser} />}
                     />
                     <Route path="/search/:search" element={<SearchResults />} />
+                    <Route path="/category/:id" element={<Category />} />
 
                     {/* protected */}
                     <Route
@@ -83,7 +85,10 @@ function Electroware() {
                         path="/add-funds"
                         element={<AddFunds user={user} setUser={setUser} />}
                     />
-                    <Route path="/config" element={<Settings user={user} setUser={setUser} />} />
+                    <Route
+                        path="/config"
+                        element={<Settings user={user} setUser={setUser} />}
+                    />
 
                     {/* misc */}
                     <Route path="/*" element={<NotFound />} />
