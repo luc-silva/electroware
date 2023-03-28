@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const ProductInstanceSchema = new Schema({
     user: { type: Schema.Types.ObjectId, required: true, ref: "User" },
@@ -8,4 +8,4 @@ const ProductInstanceSchema = new Schema({
     quantity: { type: Number, required: true },
 });
 
-module.exports = mongoose.model("ProductInstance", ProductInstanceSchema);
+export = model("ProductInstance", ProductInstanceSchema);
