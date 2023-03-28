@@ -8,6 +8,7 @@ const Product = require("../models/Product");
 const Review = require("../models/Review");
 const ProductInstance = require("../models/ProductInstance");
 const Transaction = require("../models/Transaction");
+const Wishlist = require("../models/Wishlist");
 
 function generateToken(id) {
     return jwt.sign({ id }, "123", {
@@ -69,7 +70,9 @@ const registerUser = asyncHandler(async (request, response) => {
         password: hashedPassword,
     };
 
+    //make transaction later
     let user = await User.create(newUser);
+    let wishlist = await Wishlist.create({user: user.id})
 
     response.status(202).json({ user });
 });

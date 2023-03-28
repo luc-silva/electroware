@@ -17,6 +17,7 @@ import { CreateOffer } from "./pages/CreateOffer";
 import { AddFunds } from "./pages/AddFunds";
 import { Settings } from "./pages/Settings";
 import { Category } from "./pages/Category";
+import { Wishlist } from "./pages/Wishlist";
 
 function Electroware() {
     let initialState = {
@@ -63,7 +64,7 @@ function Electroware() {
                     <Route path="/user/:id" element={<UserProfile />} />
                     <Route
                         path="/product/:id"
-                        element={<Product user={user} setUser={setUser} />}
+                        element={<Product user={user}/>}
                     />
                     <Route path="/search/:search" element={<SearchResults />} />
                     <Route path="/category/:id" element={<Category />} />
@@ -72,6 +73,10 @@ function Electroware() {
                     <Route
                         path="/shopping-cart"
                         element={<ShoppingCart user={user} setUser={setUser} />}
+                    />
+                    <Route
+                        path="/wishlist"
+                        element={<Wishlist user={user}/>}
                     />
                     <Route
                         path="/checkout"

@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { format } from "date-fns";
 import { ArrowSquareOut, Warning } from "phosphor-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Settings.module.css";
 
 export const Settings = ({
@@ -12,6 +12,10 @@ export const Settings = ({
     user: UserProps;
     setUser: Function;
 }) => {
+    let navigate = useNavigate();
+    if (!user.logged) {
+        navigate("/login");
+    }
     let [userTransactions, setUserTransactions] = useState([]);
     useEffect(() => {
         axios
@@ -138,10 +142,10 @@ export const Settings = ({
                         <div className={styles["warning-info"]}>
                             <Warning size={30} />
                             <p>
-                                <strong>Aviso:</strong> Ao optar por "deletar conta", você
-                                perderá todos os dados contidos, além da
-                                reputação do perfil e de produtos. Não será
-                                possivel retornar com a decisão depois.
+                                <strong>Aviso:</strong> Ao optar por "deletar
+                                conta", você perderá todos os dados contidos,
+                                além da reputação do perfil e de produtos. Não
+                                será possivel retornar com a decisão depois.
                             </p>
                         </div>
                         <button onClick={handleDeleteAccountBtn}>

@@ -117,10 +117,19 @@ const addProductToWishlist = asyncHandler(async (request, response) => {
         response.status(404);
         throw new Error("Lista de desejos não encontrada.");
     }
-    let addedItem = Wishlist.findOneAndUpdate(
+
+    let itemExists = await Wishlist.findOne({products:{$elemMatch: product}})
+    if(itemExists){
+        response.status(400)
+        throw new Error("Item já adicionado à lista de desejos.")
+    }
+
+    let addedItem = await Wishlist.findOneAndUpdate(
         { user: user.id },
         { $push: { products: product } }
     );
+
+    response.status(200).json(addedItem)
 });
 
 module.exports = {
@@ -131,4 +140,5 @@ module.exports = {
     updateProduct,
     deleteProduct,
     getProductFromCategory,
+    addProductToWishlist
 };

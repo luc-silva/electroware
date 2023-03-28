@@ -1,4 +1,5 @@
 const express = require("express");
+const { addProductToWishlist } = require("../controllers/productController");
 const router = express.Router();
 
 const {
@@ -13,7 +14,7 @@ const {
     addFunds,
     getProfileInfo,
     getUserPrivateInfo,
-    deleteAccount
+    deleteAccount,
 } = require("../controllers/userController");
 const { protected } = require("../middleware/auth");
 
@@ -26,6 +27,7 @@ router.get("/user/:id/reviews", getEveryUserReviews);
 router.get("/user/:id/products/reviews", getEveryUserProductsReviews);
 
 //protected
+router.post("/user/wishlist", protected, addProductToWishlist);
 router.post("/user/billings/add", protected, addFunds);
 router.get("/user/private/:id", protected, getUserPrivateInfo);
 router.get("/user/:id/transactions", protected, getUserTransactions);

@@ -23,6 +23,9 @@
     gap: 1rem;
 }
 .details-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 .details-title h2 {
     color: var(--title-color);

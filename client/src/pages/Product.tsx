@@ -1,20 +1,15 @@
-import styles from "./Product.module.css";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "axios";
+
 import { StarsContainer } from "../components/StarsContainer";
 import { ReviewsContainer } from "../components/ReviewsContainer";
-import { QuantityCounter } from "../components/QuantityCounter";
 import { ReviewForm } from "../components/ReviewForm";
 import { ProductBtnPanel } from "../components/ProductBtnPanel";
+import { Bookmark } from "phosphor-react";
+import styles from "./Product.module.css";
 
-export const Product = ({
-    user,
-    setUser,
-}: {
-    user: UserProps;
-    setUser: Function;
-}) => {
+export const Product = ({ user }: { user: UserProps }) => {
     let { id } = useParams();
     let productInitialState: Product = {
         _id: "",
@@ -46,9 +41,6 @@ export const Product = ({
             .then(({ data }) => {
                 setOwner(data.name);
             });
-    }, [productDetails]);
-
-    useEffect(() => {
         axios
             .get(
                 `http://localhost:6060/api/category/${productDetails.category}`
@@ -75,6 +67,15 @@ export const Product = ({
                 setProductReviews(data);
             });
     }
+    async function handleWishlist() {
+        axios.post(
+            `http://localhost:6060/api/user/wishlist`,
+            {
+                product: productDetails._id,
+            },
+            { headers: { Authorization: `Bearer ${user.token}` } }
+        );
+    }
     return (
         <main className={styles["product"]}>
             <section className={styles["product__about"]}>
@@ -84,14 +85,24 @@ export const Product = ({
                 <div className={styles["product-details"]}>
                     <div className={styles["details-info"]}>
                         <div className={styles["details-title"]}>
-                            <h1>{productDetails.name}</h1>
-                            <em>
-                                <Link
-                                    to={`/category/${productDetails.category}`}
-                                >
-                                    {category}
-                                </Link>
-                            </em>
+                            <div>
+                                <h1>{productDetails.name}</h1>
+                                <em>
+                                    <Link
+                                        to={`/category/${productDetails.category}`}
+                                    >
+                                        {category}
+                                    </Link>
+                                </em>
+                            </div>
+                            {user.logged && user.id != productDetails.owner && (
+                                <div onClick={handleWishlist}>
+                                    <Bookmark
+                                        size={35}
+                                        color="var(--main-color)"
+                                    />
+                                </div>
+                            )}
                         </div>
                         <div className={styles["details-pricing"]}>
                             <div>
