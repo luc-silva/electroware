@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import { Schema } from "mongoose";
 
 const CategorySchema = new Schema({
     name: { type: String, required: true, uniq: true },

@@ -1,11 +1,13 @@
-const mongoose = require("mongoose");
-
-const Schema = mongoose.Schema;
+import { Schema } from "mongoose";
 
 const ProductSchema = new Schema(
     {
-        owner: { type: Schema.Types.ObjectId, ref: "User", required:true},
-        category: { type: Schema.Types.ObjectId, ref:"Category", required: true },
+        owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
+        category: {
+            type: Schema.Types.ObjectId,
+            ref: "Category",
+            required: true,
+        },
         name: { type: String, maxLength: 30, required: true },
         price: { type: Number, required: true },
         quantity: { type: Number, required: true },

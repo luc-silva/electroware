@@ -1,6 +1,4 @@
-const mongoose = require("mongoose");
-
-const Schema = mongoose.Schema;
+import { Schema } from "mongoose";
 
 const UserSchema = new Schema(
     {
@@ -12,7 +10,7 @@ const UserSchema = new Schema(
             state: { type: String, required: true },
             country: { type: String, required: true },
         },
-        profilePic: {type: String, default: "" },
+        profilePic: { type: String, default: "" },
         email: { required: true, unique: true, type: String },
         password: { required: true, type: String },
         funds: { type: Number, default: 0 },
@@ -21,10 +19,4 @@ const UserSchema = new Schema(
     { timestamps: true }
 );
 
-UserSchema.virtual("username").get(function () {
-    return this.name.last
-        ? `${this.name.first} ${this.name.last}`
-        : this.name.first;
-});
-
-module.exports = mongoose.model("User", UserSchema);
+export = mongoose.model("User", UserSchema);
