@@ -1,7 +1,7 @@
 ## Electroware (Atualmente em desenvolvimento)
 Electroware é um projeto pessoal baseado em um marketplace, criado com Javascript (no backend), ReactJS, Typescript e Node (Express) + MongoDB. Também utilizei UML para tentar estruturar a relação entre dados e objetos o máximo possível.
 
-Backend foi implementado seguindo a arquitetura REST, utilizando os drivers ODM nativos do mongoose para realizar a interação no banco de dados.
+Backend foi implementado seguindo a arquitetura REST, utilizando uma biblioteca ODM (Mongoose) para realizar a interação no banco de dados.
 
 Provavelmente é o projeto que mais venho me dedicando. Nele, tentei reunir recursos comuns os quais um e-commerce possui: criação de contas, anúncios de produtos, histórico de compras, lista de desejos, carrinhos de compras, etc.
 
