@@ -1,3 +1,5 @@
+import { Request, Response } from "express";
+
 const mongose = require("mongoose");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/User");
@@ -5,7 +7,7 @@ const Wishlist = require("../models/Wishlist");
 const Products = require("../models/Product");
 
 //private
-const getWishlistItems = asyncHandler(async (request, response) => {
+const getWishlistItems = asyncHandler(async (request: Request, response:Response) => {
     if (!request.user) {
         response.status(401);
         throw new Error("Credênciais Inválidas.");

@@ -1,33 +1,42 @@
-const mongoose = require("mongoose");
-const asyncHandler = require("express-async-handler");
-const connectDB = require("../middleware/db");
+import asyncHandler from "express-async-handler";
+import mongoose from "mongoose";
+import { connectDB } from "../middleware/db";
 
-const ProductInstance = require("../models/ProductInstance");
-const Product = require("../models/Product");
-const User = require("../models/User");
-const Transaction = require("../models/Transaction");
+import ProductInstance from "../models/ProductInstance";
+import Product from "../models/Product";
+import User from "../models/User";
+import Transaction from "../models/Transaction";
+import { Request, Response } from "express";
+import { IUser } from "../interface";
 
-const createProductTransaction = asyncHandler(async (request, response) => {
-    let { paymentMethod } = request.body;
-    if (!paymentMethod) {
-        response.status(400);
-        throw new Error("Insira dados válidos.");
+//post
+const createProductTransaction = asyncHandler(async (request: Request, response: Response)  => {
+    if(!request.body || !request.user){
+        response.status(400)
+        throw new Error("Dados Inválidos")
     }
 
-    let user = await User.findById(request.user);
+    let user = await User.findById(request.user) as IUser;
     if (!user) {
         response.status(404);
         throw new Error("Usuário não encontrado.");
     }
-    let products = await ProductInstance.find({ user: user.id });
-    if (products.length === 0) {
+
+    let {paymentMethod} = request.body
+    if(typeof paymentMethod !== "string"){
+        response.status(400)
+        throw new Error("Método de pagamento inválido.")
+    }
+
+    let productsBought = await ProductInstance.find({ user: user.id });
+    if (productsBought.length === 0) {
         response.status(404);
         throw new Error("Não há produtos no carrinhos de compras.");
     }
 
     function getTotal() {
         let total = 0;
-        products.forEach(({ price, quantity }) => {
+        productsBought.forEach(({ price, quantity }) => {
             total += price * quantity;
         });
         return total;
@@ -44,7 +53,7 @@ const createProductTransaction = asyncHandler(async (request, response) => {
             let data = {
                 buyer: user.id,
                 paymentMethod,
-                products,
+                productsBought,
                 totalPrice: getTotal(),
             };
             let transaction = await Transaction.create([data], { session });
@@ -55,7 +64,7 @@ const createProductTransaction = asyncHandler(async (request, response) => {
                 { session }
             );
 
-            for (let productInstance of products) {
+            for (let productInstance of productsBought) {
                 await User.findByIdAndUpdate(
                     [productInstance.seller],
                     {
@@ -84,8 +93,16 @@ const createProductTransaction = asyncHandler(async (request, response) => {
     }
 });
 
-//protected
-const getUserTransactions = asyncHandler(async (request, response) => {
+
+////private
+
+//get, need params
+const getUserTransactions = asyncHandler(async (request: Request, response: Response)  => {
+    if(!request.user || !request.params){
+        response.status(400)
+        throw new Error("Dados Inválidos.")
+    }
+
     let user = await User.findById(request.user);
     if (!user) {
         response.status(404);
