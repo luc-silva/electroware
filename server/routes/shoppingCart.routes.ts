@@ -1,13 +1,13 @@
 import { Router } from "express";
-const { protectedRoute } = require("../middleware/auth");
-const {
+import { protectedRoute } from "../middleware/auth";
+import {
     removeInstance,
     createInstance,
     getInstances,
-} = require("../controllers/productInstanceController");
+} from "../controllers/productInstanceController";
 
 export const shoppingCartRouter = Router();
 //router.get("/", protected, getShoppingCartDetails);
-shoppingCartRouter.get("/", protectedRoute, getInstances)
+shoppingCartRouter.get("/", protectedRoute, getInstances);
 shoppingCartRouter.post("/", protectedRoute, createInstance);
 shoppingCartRouter.delete("/:id", protectedRoute, removeInstance);

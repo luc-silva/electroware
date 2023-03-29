@@ -1,15 +1,14 @@
 import { Router } from "express";
-
-import  {protectedRoute} from "../middleware/auth"
-const {
+import { protectedRoute } from "../middleware/auth";
+import {
     getRecentProducts,
     getProductDetails,
     searchProduct,
     createProduct,
     updateProduct,
     deleteProduct,
-} = require("../controllers/productController");
-const { getProductReviews } = require("../controllers/reviewsController");
+} from "../controllers/productController";
+import { getProductReviews } from "../controllers/reviewsController";
 
 export const productRouter = Router();
 

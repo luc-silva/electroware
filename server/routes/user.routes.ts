@@ -1,12 +1,13 @@
 import { Router } from "express";
-const { addProductToWishlist } = require("../controllers/productController");
+import { addProductToWishlist } from "../controllers/productController";
+import { protectedRoute } from "../middleware/auth";
+import { getUserTransactions } from "../controllers/transactionController";
 
-const {
+import {
     getEveryUserReviews,
     getEveryUserProductsReviews,
-} = require("../controllers/reviewsController");
-const { getUserTransactions } = require("../controllers/transactionController");
-const {
+} from "../controllers/reviewsController";
+import {
     registerUser,
     loginUser,
     getUserProducts,
@@ -14,8 +15,7 @@ const {
     getProfileInfo,
     getUserPrivateInfo,
     deleteAccount,
-} = require("../controllers/userController");
-const { protectedRoute } = require("../middleware/auth");
+} from "../controllers/userController";
 
 export const userRouter = Router();
 userRouter.post("/login", loginUser);
@@ -32,4 +32,3 @@ userRouter.post("/user/billings/add", protectedRoute, addFunds);
 userRouter.get("/user/private/:id", protectedRoute, getUserPrivateInfo);
 userRouter.get("/user/:id/transactions", protectedRoute, getUserTransactions);
 userRouter.delete("/user/:id", protectedRoute, deleteAccount);
-

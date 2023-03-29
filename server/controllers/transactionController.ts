@@ -10,7 +10,7 @@ import { Request, Response } from "express";
 import { IUser } from "../interface";
 
 //post
-const createProductTransaction = asyncHandler(async (request: Request, response: Response)  => {
+export const createProductTransaction = asyncHandler(async (request: Request, response: Response)  => {
     if(!request.body || !request.user){
         response.status(400)
         throw new Error("Dados Inválidos")
@@ -97,7 +97,7 @@ const createProductTransaction = asyncHandler(async (request: Request, response:
 ////private
 
 //get, need params
-const getUserTransactions = asyncHandler(async (request: Request, response: Response)  => {
+export const getUserTransactions = asyncHandler(async (request: Request, response: Response)  => {
     if(!request.user || !request.params){
         response.status(400)
         throw new Error("Dados Inválidos.")
@@ -117,7 +117,3 @@ const getUserTransactions = asyncHandler(async (request: Request, response: Resp
     let transactions = await Transaction.find({ buyer: user._id });
     response.status(200).json(transactions);
 });
-module.exports = {
-    createProductTransaction,
-    getUserTransactions,
-};

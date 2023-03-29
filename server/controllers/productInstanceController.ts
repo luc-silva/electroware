@@ -7,7 +7,7 @@ import User from "../models/User";
 ////private
 
 //post
-const createInstance = asyncHandler(async (request, response) => {
+export const createInstance = asyncHandler(async (request, response) => {
     if (!request.user || !request.body) {
         response.status(400);
         throw new Error("Dados Inválidos.");
@@ -65,7 +65,7 @@ const createInstance = asyncHandler(async (request, response) => {
 });
 
 //delete, need params
-const removeInstance = asyncHandler(async (request, response) => {
+export const removeInstance = asyncHandler(async (request, response) => {
     if (!request.params || !request.user) {
         response.status(400);
         throw new Error("Dados Inválidos");
@@ -99,7 +99,7 @@ const removeInstance = asyncHandler(async (request, response) => {
 });
 
 //get
-const getInstances = asyncHandler(async (request, response) => {
+export const getInstances = asyncHandler(async (request, response) => {
     if (!request.user) {
         response.status(400);
         throw new Error("Dados Inválidos");
@@ -114,8 +114,3 @@ const getInstances = asyncHandler(async (request, response) => {
     response.status(200).json(cartInstances);
 });
 
-module.exports = {
-    getInstances,
-    createInstance,
-    removeInstance,
-};

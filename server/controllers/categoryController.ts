@@ -7,7 +7,7 @@ interface ICategoryDTO {
 }
 
 //post
-const createCategory = asyncHandler(
+export const createCategory = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.body) {
             response.status(400);
@@ -32,7 +32,7 @@ const createCategory = asyncHandler(
 );
 
 //get
-const getCategories = asyncHandler(
+export const getCategories = asyncHandler(
     async (request: Request, response: Response) => {
         const categories = await Category.find();
         if (categories.length === 0) {
@@ -44,7 +44,7 @@ const getCategories = asyncHandler(
 );
 
 //get, need id
-const getSingleCategory = asyncHandler(
+export const getSingleCategory = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params) {
             response.status(400);
@@ -66,9 +66,3 @@ const getSingleCategory = asyncHandler(
         response.status(200).json(category);
     }
 );
-
-module.exports = {
-    createCategory,
-    getSingleCategory,
-    getCategories,
-};

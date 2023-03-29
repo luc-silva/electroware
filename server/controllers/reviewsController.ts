@@ -8,7 +8,7 @@ import { Request, Response } from "express";
 
 ////public
 //get, need params
-const getProductReviews = asyncHandler(
+export const getProductReviews = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params) {
             response.status(400);
@@ -35,7 +35,7 @@ const getProductReviews = asyncHandler(
 );
 
 //get, need params
-const getEveryUserReviews = asyncHandler(
+export const getEveryUserReviews = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params) {
             response.status(400);
@@ -60,7 +60,7 @@ const getEveryUserReviews = asyncHandler(
 );
 
 //get, need params
-const getEveryUserProductsReviews = asyncHandler(
+export const getEveryUserProductsReviews = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params) {
             response.status(400);
@@ -89,7 +89,7 @@ const getEveryUserProductsReviews = asyncHandler(
 ////private
 
 //post
-const submitReview = asyncHandler(
+export const submitReview = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.user || !request.body) {
             response.status(400);
@@ -131,7 +131,7 @@ const submitReview = asyncHandler(
 );
 
 //delete
-const deleteReview = asyncHandler(
+export const deleteReview = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params) {
             response.status(400);
@@ -162,7 +162,7 @@ const deleteReview = asyncHandler(
 );
 
 //patch, need params
-const updateReview = asyncHandler(
+export const updateReview = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params || !request.user || request.body) {
             response.status(400);
@@ -202,12 +202,3 @@ const updateReview = asyncHandler(
         response.status(200).json(updatedReview);
     }
 );
-
-module.exports = {
-    deleteReview,
-    updateReview,
-    submitReview,
-    getProductReviews,
-    getEveryUserReviews,
-    getEveryUserProductsReviews,
-};

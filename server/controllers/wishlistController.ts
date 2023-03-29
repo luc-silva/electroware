@@ -7,7 +7,7 @@ const Wishlist = require("../models/Wishlist");
 const Products = require("../models/Product");
 
 //private
-const getWishlistItems = asyncHandler(async (request: Request, response:Response) => {
+export const getWishlistItems = asyncHandler(async (request: Request, response:Response) => {
     if (!request.user) {
         response.status(401);
         throw new Error("Credênciais Inválidas.");
@@ -23,7 +23,3 @@ const getWishlistItems = asyncHandler(async (request: Request, response:Response
 
     response.status(200).json(wishlist);
 });
-
-module.exports = {
-    getWishlistItems,
-};

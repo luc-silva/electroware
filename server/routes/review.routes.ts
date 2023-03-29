@@ -1,14 +1,13 @@
 import { Router } from "express";
 
-const {
+import {
     submitReview,
     deleteReview,
     updateReview,
-} = require("../controllers/reviewsController");
-const { protectedRoute } = require("../middleware/auth");
+} from "../controllers/reviewsController";
+import { protectedRoute } from "../middleware/auth";
 
 export const reviewRouter = Router();
 reviewRouter.post("/", protectedRoute, submitReview);
 reviewRouter.delete("/:id", protectedRoute, deleteReview);
 reviewRouter.patch("/:id", protectedRoute, updateReview);
-

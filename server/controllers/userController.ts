@@ -22,7 +22,7 @@ function generateToken(id: string) {
 }
 
 //post
-const loginUser = asyncHandler(async (request: Request, response: Response) => {
+export const loginUser = asyncHandler(async (request: Request, response: Response) => {
     if (!request.body) {
         response.status(400);
         throw new Error("Dados Inválidos");
@@ -55,7 +55,7 @@ const loginUser = asyncHandler(async (request: Request, response: Response) => {
 });
 
 //post
-const registerUser = asyncHandler(
+export const registerUser = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.body) {
             response.status(400);
@@ -100,7 +100,7 @@ const registerUser = asyncHandler(
 );
 
 //get, need params
-const getProfileInfo = asyncHandler(
+export const getProfileInfo = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.body || !request.params) {
             response.status(400);
@@ -124,7 +124,7 @@ const getProfileInfo = asyncHandler(
 );
 
 //get, need params
-const getUserProducts = asyncHandler(
+export const getUserProducts = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.body || !request.params) {
             response.status(400);
@@ -146,7 +146,7 @@ const getUserProducts = asyncHandler(
 //private
 
 //get, need params
-const getUserPrivateInfo = asyncHandler(
+export const getUserPrivateInfo = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.user || !request.params) {
             response.status(400);
@@ -175,7 +175,7 @@ const getUserPrivateInfo = asyncHandler(
 );
 
 //post
-const addFunds = asyncHandler(async (request: Request, response: Response) => {
+export const addFunds = asyncHandler(async (request: Request, response: Response) => {
     if (!request.body || !request.user) {
         response.status(400);
         throw new Error("Dados Inválidos.");
@@ -196,7 +196,7 @@ const addFunds = asyncHandler(async (request: Request, response: Response) => {
 });
 
 //delete, needs params
-const deleteAccount = asyncHandler(
+export const deleteAccount = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params || !request.user) {
             response.status(400);
@@ -253,12 +253,3 @@ const deleteAccount = asyncHandler(
         response.status(200).json({ message: "Deletado" });
     }
 );
-module.exports = {
-    registerUser,
-    loginUser,
-    getProfileInfo,
-    getUserProducts,
-    addFunds,
-    getUserPrivateInfo,
-    deleteAccount,
-};

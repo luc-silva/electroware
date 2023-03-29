@@ -1,10 +1,10 @@
 import { Router } from "express";
 
-const {
+import {
     createProductTransaction,
     getUserTransactions,
-} = require("../controllers/transactionController");
-const { protectedRoute } = require("../middleware/auth");
+} from "../controllers/transactionController";
+import { protectedRoute } from "../middleware/auth";
 
 export const transactionRouter = Router();
 transactionRouter.post("/", protectedRoute, createProductTransaction);

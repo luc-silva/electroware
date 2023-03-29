@@ -1,6 +1,6 @@
 import { Router } from "express";
-const { getRecentProducts } = require("../controllers/productController")
+import { getRecentProducts } from "../controllers/productController";
 
-export const productsRouter = Router()
+export const productsRouter = Router();
 
-productsRouter.get("/", getRecentProducts)
+productsRouter.get("/", getRecentProducts);
