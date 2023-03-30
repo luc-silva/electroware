@@ -14,7 +14,7 @@ const UserSchema = new Schema(
         email: { required: true, unique: true, type: String },
         password: { required: true, type: String },
         funds: { type: Number, default: 0 },
-        description: { type: String },  
+        description: { type: String, maxLength:250 },  
     },
     { timestamps: true }
 );

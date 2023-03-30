@@ -1,9 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import { format } from "date-fns";
 import { ArrowSquareOut, Warning } from "phosphor-react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ProfileSettingsForm } from "../components/ProfileSettingsForm";
 import styles from "./Settings.module.css";
+import { TransactionItem } from "../components/TransactionItem";
 
 export const Settings = ({
     user,
@@ -40,38 +42,7 @@ export const Settings = ({
                 <div className={styles["edit-profile__title"]}>
                     <h3>Edite o seu perfil</h3>
                 </div>
-                <form className={styles["edit-profile__form"]}>
-                    <div className={styles["image-input__container"]}>
-                        <div className={styles["profile-picture"]}>
-                            <img src="" alt="" />
-                        </div>
-                        <input type="image" value="Selecione uma imagem" />
-                    </div>
-                    <div className={styles["input__container"]}>
-                        <label htmlFor="description">Descrição do Perfil</label>
-                        <textarea name="description" maxLength={200} />
-                    </div>
-                    <div className={styles["input__larger-container"]}>
-                        <div className={styles["input__container"]}>
-                            <label htmlFor="first">Nome</label>
-                            <input type="text" name="first" maxLength={200} />
-                        </div>
-                        <div className={styles["input__container"]}>
-                            <label htmlFor="last">Sobrenome</label>
-                            <input type="text" name="last" maxLength={200} />
-                        </div>
-                    </div>
-                    <div className={styles["input__larger-container"]}>
-                        <div className={styles["input__container"]}>
-                            <label htmlFor="state">Estado</label>
-                            <input type="text" name="state" maxLength={200} />
-                        </div>
-                        <div className={styles["input__container"]}>
-                            <label htmlFor="country">País</label>
-                            <input type="text" name="country" maxLength={200} />
-                        </div>
-                    </div>
-                </form>
+                <ProfileSettingsForm user={user}/>
             </section>
             <section
                 className={styles["settings__transactions"]}
@@ -85,49 +56,12 @@ export const Settings = ({
                         <p>Nenhuma compra realizada</p>
                     )) ||
                         userTransactions.map(
-                            ({
-                                createdAt,
-                                totalPrice,
-                                products,
-                                paymentMethod,
-                            }: Transaction) => {
+                            (transaction: Transaction, index: React.Key) => {
                                 return (
-                                    <div className={styles["container__item"]}>
-                                        <div className={styles["item__main"]}>
-                                            <div
-                                                className={styles["item__date"]}
-                                            >
-                                                <p>
-                                                    {format(
-                                                        new Date(createdAt),
-                                                        "dd/MM/yyyy"
-                                                    )}
-                                                </p>
-                                            </div>
-                                            <div
-                                                className={
-                                                    styles[
-                                                        "item__payment-method"
-                                                    ]
-                                                }
-                                            >
-                                                <p>FORMA DE PAGMENTO:</p>
-                                                <p>{paymentMethod}</p>
-                                            </div>
-                                        </div>
-                                        <div
-                                            className={styles["item__details"]}
-                                        >
-                                            <p>
-                                                {products.length === 1
-                                                    ? `${1} PRODUTO`
-                                                    : `${products.length} PRODUTOS`}
-                                            </p>
-                                            {
-                                                <em>{`(Total: R$ ${totalPrice})`}</em>
-                                            }
-                                        </div>
-                                    </div>
+                                    <TransactionItem
+                                        transaction={transaction}
+                                        key={index}
+                                    />
                                 );
                             }
                         )}
