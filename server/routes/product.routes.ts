@@ -18,5 +18,5 @@ productRouter.get("/:id/reviews", getProductReviews);
 productRouter.put("/:id", protectedRoute, updateProduct);
 productRouter.delete("/:id", protectedRoute, deleteProduct);
 
-productRouter.get("/search/:keyword", searchProduct);
+productRouter.post("/search/:keyword", searchProduct);
 productRouter.post("/create", protectedRoute, createProduct);

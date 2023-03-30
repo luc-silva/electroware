@@ -6,6 +6,7 @@ import User from "../models/User";
 import Category from "../models/Category";
 import Wishlist from "../models/Wishlist";
 import { IProduct } from "../interface";
+import mongoose from "mongoose";
 
 //get
 export const getRecentProducts = asyncHandler(
@@ -18,7 +19,7 @@ export const getRecentProducts = asyncHandler(
     }
 );
 
-//get
+//post
 export const searchProduct = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params) {
@@ -54,7 +55,7 @@ export const getProductDetails = asyncHandler(
         }
 
         let { id } = request.params;
-        if (typeof id !== "string") {
+        if (!mongoose.Types.ObjectId.isValid(id)) {
             response.status(400);
             throw new Error("URL Inválida.");
         }
