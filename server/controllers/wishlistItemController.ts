@@ -51,20 +51,20 @@ export const createWishlistItem = asyncHandler(
             throw new Error("Usuário não encontrado.");
         }
 
-        let productFound = (await Product.findOne({ id: product })) as IProduct;
+        let productFound = (await Product.findById({ id: product })) as IProduct;
         if (!productFound) {
             response.status(404);
             throw new Error("Produto não encontrado.");
         }
 
-        if (product.owner === user.id) {
+        if (productFound.owner === user.id) {
             response.status(400);
             throw new Error("Não é possivel adicionar o próprio produto.");
         }
 
         await WishlistItem.create({
             user: user.id,
-            product: product.id,
+            product: productFound.id,
             group: "Favoritos",
         });
 

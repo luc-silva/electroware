@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { addProductToWishlist } from "../controllers/productController";
 import { protectedRoute } from "../middleware/auth";
 import { getUserTransactions } from "../controllers/transactionController";
 
@@ -27,7 +26,6 @@ userRouter.get("/user/:id/reviews", getEveryUserReviews);
 userRouter.get("/user/:id/products/reviews", getEveryUserProductsReviews);
 
 //protected
-userRouter.post("/user/wishlist", protectedRoute, addProductToWishlist);
 userRouter.post("/user/billings/add", protectedRoute, addFunds);
 userRouter.get("/user/private/:id", protectedRoute, getUserPrivateInfo);
 userRouter.get("/user/:id/transactions", protectedRoute, getUserTransactions);
