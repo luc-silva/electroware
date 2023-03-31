@@ -6,7 +6,7 @@ export const errorMiddleware = (
     response: Response,
     next: NextFunction
 ) => {
-    response.status(response.statusCode);
+    response.status(response.statusCode < 400 ? 400 : response.statusCode);
     response.json({
         errorStatus: response.statusCode,
         message: err.message,

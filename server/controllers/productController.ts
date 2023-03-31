@@ -4,14 +4,14 @@ import { Request, Response } from "express";
 import Product from "../models/Product";
 import User from "../models/User";
 import Category from "../models/Category";
-import Wishlist from "../models/Wishlist";
+import Wishlist from "../models/WishlistItem";
 import { IProduct } from "../interface";
 import mongoose from "mongoose";
 
 //get
 export const getRecentProducts = asyncHandler(
     async (request: Request, response: Response) => {
-        let products = await Product.find().limit(12).sort({ createdAt: -1 });
+        let products = await Product.find().select({id: 1}).limit(12).sort({ createdAt: -1 });
         if (products.length === 0) {
             throw new Error("Nenhum produto encontrado.");
         }

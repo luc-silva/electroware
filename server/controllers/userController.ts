@@ -7,7 +7,7 @@ import User from "../models/User";
 import Product from "../models/Product";
 import Review from "../models/Review";
 import ProductInstance from "../models/ProductInstance";
-import Wishlist from "../models/Wishlist";
+import Wishlist from "../models/WishlistItem";
 import { IUser } from "../interface";
 import { Request, Response } from "express";
 

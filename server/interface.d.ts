@@ -21,6 +21,7 @@ interface IUser {
     description: string;
 }
 interface IProduct {
+    id: string;
     owner: string;
     category: string;
     name: string;
