@@ -7,9 +7,9 @@ import User from "../models/User";
 import Product from "../models/Product";
 import Review from "../models/Review";
 import ProductInstance from "../models/ProductInstance";
-import Wishlist from "../models/WishlistItem";
 import { IUser } from "../interface";
 import { Request, Response } from "express";
+import WishlistItem from "../models/WishlistItem";
 
 interface IUserDTO extends IUser {
     password: string;
@@ -22,37 +22,39 @@ function generateToken(id: string) {
 }
 
 //post
-export const loginUser = asyncHandler(async (request: Request, response: Response) => {
-    if (!request.body) {
-        response.status(400);
-        throw new Error("Dados Inválidos");
+export const loginUser = asyncHandler(
+    async (request: Request, response: Response) => {
+        if (!request.body) {
+            response.status(400);
+            throw new Error("Dados Inválidos");
+        }
+
+        let { email, password } = request.body;
+        let user = (await User.findOne({ email })) as IUserDTO;
+        if (!user) {
+            response.status(404);
+            throw new Error("Usuario não encontrado");
+        }
+
+        if (user && !(await bcrypt.compare(password, user.password))) {
+            response.status(401);
+            throw new Error("Senha invalida");
+        }
+
+        //gen token to use in a protected route
+        let token = generateToken(user.id);
+
+        response.json({
+            email,
+            id: user.id,
+            username:
+                (user.name.last && `${user.name.first} ${user.name.last}`) ||
+                user.name.first,
+            funds: user.funds,
+            token: token,
+        });
     }
-
-    let { email, password } = request.body;
-    let user = (await User.findOne({ email })) as IUserDTO;
-    if (!user) {
-        response.status(404);
-        throw new Error("Usuario não encontrado");
-    }
-
-    if (user && !(await bcrypt.compare(password, user.password))) {
-        response.status(401);
-        throw new Error("Senha invalida");
-    }
-
-    //gen token to use in a protected route
-    let token = generateToken(user.id);
-
-    response.json({
-        email,
-        id: user.id,
-        username:
-            (user.name.last && `${user.name.first} ${user.name.last}`) ||
-            user.name.first,
-        funds: user.funds,
-        token: token,
-    });
-});
+);
 
 //post
 export const registerUser = asyncHandler(
@@ -70,14 +72,14 @@ export const registerUser = asyncHandler(
             !location.country ||
             !location.state
         ) {
-            response.status(401);
-            throw new Error("Dados Inválidos");
+            response.status(400);
+            throw new Error("Dados Inválidos.");
         }
 
         let userExist = (await User.findOne({ email })) as IUser;
         if (userExist) {
-            response.status(401);
-            throw new Error(`Uma conta já foi criada com esse email`);
+            response.status(400);
+            throw new Error(`Uma conta já foi criada com esse email.`);
         }
 
         //hash password
@@ -93,9 +95,8 @@ export const registerUser = asyncHandler(
 
         //make transaction later
         let user = (await User.create(newUser)) as IUser;
-        let wishlist = await Wishlist.create({ user: user.id });
 
-        response.status(202).json({ user });
+        response.status(202).json({ message:"Usuário Criado." });
     }
 );
 
@@ -161,11 +162,11 @@ export const getUserPrivateInfo = asyncHandler(
         });
         if (!user) {
             response.status(404);
-            throw new Error("Usuário não encontrado ");
+            throw new Error("Usuário não encontrado.");
         }
         if (user.id !== id) {
             response.status(402);
-            throw new Error("Não autorizado");
+            throw new Error("Não autorizado.");
         }
 
         response
@@ -175,25 +176,27 @@ export const getUserPrivateInfo = asyncHandler(
 );
 
 //post
-export const addFunds = asyncHandler(async (request: Request, response: Response) => {
-    if (!request.body || !request.user) {
-        response.status(400);
-        throw new Error("Dados Inválidos.");
+export const addFunds = asyncHandler(
+    async (request: Request, response: Response) => {
+        if (!request.body || !request.user) {
+            response.status(400);
+            throw new Error("Dados Inválidos.");
+        }
+
+        let { amount } = request.body;
+
+        let userExist = await User.findById(request.user);
+        if (!userExist) {
+            response.status(404);
+            throw new Error("Usuário não encontrado");
+        }
+
+        let user = await User.findByIdAndUpdate(request.user, {
+            $inc: { funds: +amount },
+        });
+        response.status(202).json(user);
     }
-
-    let { amount } = request.body;
-
-    let userExist = await User.findById(request.user);
-    if (!userExist) {
-        response.status(404);
-        throw new Error("Usuário não encontrado");
-    }
-
-    let user = await User.findByIdAndUpdate(request.user, {
-        $inc: { funds: +amount },
-    });
-    response.status(202).json(user);
-});
+);
 
 //delete, needs params
 export const deleteAccount = asyncHandler(
@@ -216,32 +219,32 @@ export const deleteAccount = asyncHandler(
 
         let session = await mongoose.startSession();
         await session.withTransaction(async () => {
-            let deletedProducts = await Product.deleteMany(
+            await Product.deleteMany(
                 { owner: user.id },
                 {
                     session,
                 }
             );
-            let deletedOwnReviews = await Review.deleteMany(
+            await Review.deleteMany(
                 { author: user.id },
                 {
                     session,
                 }
             );
-            let deletedReceivedReviews = await Review.deleteMany(
+            await Review.deleteMany(
                 { productOwner: user.id },
                 { session }
             );
-            // let deletedOwnWishlistItems = await WishlistItem.deleteMany(
-            //     [{ user: user.id }],
-            //     { session }
-            // );
-
-            let deletedOwnShoppingCart = await ProductInstance.deleteMany(
+            await WishlistItem.deleteMany(
                 { user: user.id },
                 { session }
             );
-            let deletedRelatedCartItems = await ProductInstance.deleteMany(
+
+            await ProductInstance.deleteMany(
+                { user: user.id },
+                { session }
+            );
+            await ProductInstance.deleteMany(
                 { seller: user.id },
                 { session }
             );
@@ -250,6 +253,6 @@ export const deleteAccount = asyncHandler(
             await session.commitTransaction();
         });
         session.endSession();
-        response.status(200).json({ message: "Deletado" });
+        response.status(200).json({ message: "Conta Excluida." });
     }
 );
