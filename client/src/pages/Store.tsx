@@ -1,9 +1,7 @@
 import styles from "./Store.module.css";
 import { Truck, Cube, Gauge, Wallet } from "phosphor-react";
 import { ProductCard } from "../components/ProductCard";
-
-import { productsHomepage } from "../testData";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 export const Store = ({
@@ -59,19 +57,8 @@ export const Store = ({
                     <ul className={styles["products-container"]}>
                         {recentProducts.length > 0
                             ? recentProducts.map(
-                                  (
-                                      { name, price, owner, _id }: Product,
-                                      index: any,
-                                      number
-                                  ) => {
-                                      return (
-                                          <ProductCard
-                                              id={_id}
-                                              name={name}
-                                              price={price}
-                                              key={index}
-                                          />
-                                      );
+                                  ({ _id }: Product, index: React.Key) => {
+                                      return <ProductCard id={_id} key={index}/>;
                                   }
                               )
                             : ""}

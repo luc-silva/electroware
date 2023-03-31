@@ -27,6 +27,10 @@ interface Product {
     quantity: number;
     reviews: number;
 }
+interface WishlistItem{
+    id: string;
+    product: string;
+}
 interface Review {
     author: string;
     authorUsername: string;

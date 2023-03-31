@@ -34,20 +34,20 @@ export const Product = ({ user }: { user: UserProps }) => {
             });
         updateReviews();
     }, [id]);
+    axios
+        .get(`http://localhost:6060/api/user/${productDetails.owner}`)
+        .then(({ data }) => {
+            setOwner(data.name);
+        });
+    axios
+        .get(
+            `http://localhost:6060/api/category/${productDetails.category}`
+        )
+        .then(({ data }) => {
+            setCategory(data.name);
+        });
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:6060/api/user/${productDetails.owner}`)
-            .then(({ data }) => {
-                setOwner(data.name);
-            });
-        axios
-            .get(
-                `http://localhost:6060/api/category/${productDetails.category}`
-            )
-            .then(({ data }) => {
-                setCategory(data.name);
-            });
     }, [productDetails]);
 
     function getRatingAverage() {
@@ -69,7 +69,7 @@ export const Product = ({ user }: { user: UserProps }) => {
     }
     async function handleWishlist() {
         axios.post(
-            `http://localhost:6060/api/user/wishlist`,
+            `http://localhost:6060/api/wishlist/`,
             {
                 product: productDetails._id,
             },

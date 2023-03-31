@@ -31,19 +31,12 @@ export const Category = () => {
                             : `${products.length} produtos disponíveis!`}
                     </p>
                 </div>
-                <div
-                    className={styles["products__container"]}
-                >
+                <div className={styles["products__container"]}>
                     {products.map(
                         ({ _id, name, price }: Product, index: React.Key) => (
-                            <ProductCard
-                                name={name}
-                                price={price}
-                                id={_id}
-                                key={index}
-                            />
+                            <ProductCard id={_id} />
                         )
-                    )} 
+                    )}
                 </div>
             </section>
         </main>

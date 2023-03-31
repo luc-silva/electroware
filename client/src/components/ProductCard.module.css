@@ -1,12 +1,10 @@
 .card-wrapper {
-    height: 50vh;
-    border: 1px solid var(--background-color-faded);
-}
-.card {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: 100%;
+    flex: 1;
+    height: 50vh;
+    min-width: 100%;
+    border: 1px solid var(--background-color-faded);
 }
 .card-image {
     width: 100%;
@@ -44,7 +42,12 @@
     font-size: 2rem;
 }
 @media (min-width: 769px) and (max-width: 1024px) {
-
+    /* .card-wrapper{
+        width: 25%;
+    } */
 }
 @media (min-width: 1025px) {
+    /* .card-wrapper{
+        width: 20%;
+    } */
 }
