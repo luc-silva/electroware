@@ -1,0 +1,25 @@
+.active-promos {
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    height: 50vh;
+    background-color: white;
+    overflow: hidden;
+}
+.active-promos img {
+    object-fit: contain;
+    object-position: -15rem;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .active-promos img {
+        object-fit: contain;
+        object-position: center;
+    }
+}
+@media (min-width: 1025px) {
+    .active-promos img {
+        object-fit: contain;
+        object-position: center;
+    }
+}
