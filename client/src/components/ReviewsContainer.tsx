@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ReviewCard } from "./ReviewCard";
+import { ReviewCard } from "./Cards/ReviewCard";
 import styles from "./ReviewsContainer.module.css";
 
 export const ReviewsContainer = ({ reviews }: { reviews: Review[] }) => {
