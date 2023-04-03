@@ -68,6 +68,12 @@ a {
 
 :root {
     --main-color: #f3bd1c;
+
+    --submit-btn: #f3bd1c;
+    --submit-btn-pressed: #dfaa0a;
+    --submit-btn-hover: #f9cc46;
+    --submit-btn-disabled: #d2d2d2;
+
     --main-color-faded: #fdf4d7;
     --background-color: #ffffff;
     --background-color-faded: #f0f0f0;
@@ -75,19 +81,9 @@ a {
     --title-color: #2e2e2e;
     --text-color: #3d3d3d;
 
+    --warning-background-v1:#fff2f2;
+    --warning-text-v1: #dc3545;
+
     --modal-background: #00000042;
     --btn-disabled: #d2d2d2;
-
-    --confirm: #8fd085;
-    --confirm-clicked: #6eac64;
-    --cancel: #f9694d;
-    --cancel-clicked: #d05239;
-
-    --positive-num: #8fd085;
-    --negative-num: #f9694d;
-
-    --concluded: #8fd085;
-    --warning: #ffda53;
-    --error: #f9694d;
-    --info: #299ed8;
 }
