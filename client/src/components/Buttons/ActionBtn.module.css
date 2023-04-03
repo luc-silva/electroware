@@ -1,0 +1,16 @@
+.action-btn button{
+    cursor: pointer;
+    border: none;
+    background-color: var(--info);
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+}
+@media (min-width: 1025px) {
+
+}

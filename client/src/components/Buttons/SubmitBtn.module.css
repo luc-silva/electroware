@@ -1,0 +1,30 @@
+.submit-btn{
+    width: 100%;
+    font-weight: bolder;
+    padding: 0.5rem 1rem;
+    border: none;
+    color: white;
+    background-color: var(--submit-btn);
+}
+.submit-btn:hover {
+    background-color: var(--submit-btn-hover);
+}
+.submit-btn:focus {
+    background-color: var(--submit-btn-pressed);
+    color: white;
+}
+.submit-btn:disabled {
+    cursor: not-allowed;
+    color: var(--title-color);
+    background-color: var(--btn-disabled);
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+    .submit-btn{
+        width: fit-content;
+    }
+}
+@media (min-width: 1025px) {
+    .submit-btn{
+        width: fit-content;
+    }
+}
