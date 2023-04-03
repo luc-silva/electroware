@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { SubmitBtn } from "../components/Buttons/SubmitBtn";
 import styles from "./Login.module.css";
 
 export const Login = ({
@@ -68,7 +69,7 @@ export const Login = ({
                         placeholder="Senha"
                         required
                     />
-                    <input type="submit" value="Entrar" />
+                    <SubmitBtn textValue="Entrar"/>
                 </form>
                 <Link to="/registration">Crie uma conta</Link>
             </section>
