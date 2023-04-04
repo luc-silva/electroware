@@ -1,11 +1,15 @@
-import styles from "./Checkout.module.css";
-import axios from "axios";
+//services
+import ShoppingCartService from "../services/ShoppingCartService";
+import TransactionService from "../services/TransactionService";
+
+//components
+import { SubmitBtn } from "../components/Buttons/SubmitBtn";
+
+//misc
 import { Info, Warning } from "phosphor-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { SubmitBtn } from "../components/Buttons/SubmitBtn";
-import ShoppingCartService from "../services/ShoppingCartService";
-import TransactionService from "../services/TransactionService";
+import styles from "./Checkout.module.css";
 
 export const Checkout = ({
     user,

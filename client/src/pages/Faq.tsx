@@ -1,4 +1,4 @@
-import { FaqCard } from "../components/FaqCard";
+import { FaqCard } from "../components/Cards/FaqCard";
 
 import { questions } from "../testData";
 import styles from "./Faq.module.css";
