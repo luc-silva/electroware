@@ -11,12 +11,18 @@ interface CartInstanceBody {
 class ShoppingCartService extends Service {
     private baseUrl = "http://localhost:6060/api/shoppingcart";
 
-    public async getShoppingcart(token: string) {
+    public async getCartInstances(token: string) {
         return await axios
             .get(this.baseUrl, this.createHeader(token))
             .then(({ data }) => {
                 return data;
             });
+    }
+
+    public async getSingleInstance(instanceId: string, token:string) {
+        return await axios.get(this.baseUrl + `/${instanceId}`, this.createHeader(token)).then(({ data }) => {
+            return data;
+        });
     }
 
     public async createCartInstance(body: CartInstanceBody, token: string) {
