@@ -17,8 +17,8 @@ import {
 } from "../controllers/userController";
 
 export const userRouter = Router();
-userRouter.post("/login", loginUser);
-userRouter.post("/register", registerUser);
+userRouter.post("/user/login", loginUser);
+userRouter.post("/user/register", registerUser);
 
 userRouter.get("/user/:id", getProfileInfo);
 userRouter.get("/user/:id/products", getUserProducts);

@@ -12,6 +12,7 @@ import { getProductReviews } from "../controllers/reviewsController";
 
 export const productRouter = Router();
 
+productRouter.get("/", getRecentProducts)
 productRouter.get("/:id", getProductDetails); //get a specific product
 productRouter.get("/:id/reviews", getProductReviews);
 
