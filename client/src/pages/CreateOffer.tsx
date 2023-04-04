@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { SubmitBtn } from "../components/Buttons/SubmitBtn";
 import styles from "./CreateOffer.module.css";
 
-import ShoppingCartService from "../services/ShoppingCartService";
 import CategoryService from "../services/CategoryService";
+import ProductService from "../services/ProductService";
 
 export const CreateOffer = ({
     user,
@@ -49,7 +49,7 @@ export const CreateOffer = ({
     }
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        await ShoppingCartService.getShoppingcart(user.token).then((data) => {
+        await ProductService.createProduct(form, user.token).then((data) => {
             navigate(`/product/${data._id}`);
         });
     }

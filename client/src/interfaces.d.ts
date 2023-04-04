@@ -41,7 +41,7 @@ interface Review {
     createdAt: string;
 }
 interface ShoppingCartCardProps {
-    id: string;
+    _id: string;
     owner: string;
     product: string;
     shoppingCart: string;

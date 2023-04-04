@@ -85,7 +85,7 @@ class UserService extends Service {
     }
 
     public async deleteAccount(userId: string, token: string) {
-        return axios.delete(this.baseUrl + userId,this.createHeader(token));
+        return axios.delete(this.baseUrl + userId, this.createHeader(token));
     }
 }
 

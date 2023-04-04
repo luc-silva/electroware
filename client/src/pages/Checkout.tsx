@@ -24,7 +24,7 @@ export const Checkout = ({
         if (!user.logged) {
             navigate("/login");
         }
-        ShoppingCartService.getShoppingcart(user.token).then((data) => {
+        ShoppingCartService.getCartInstances(user.token).then((data) => {
             setItems(data);
         });
     }, [user]);
