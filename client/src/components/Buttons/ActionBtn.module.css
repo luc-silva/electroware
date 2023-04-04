@@ -1,7 +1,7 @@
 .action-btn button{
     cursor: pointer;
     border: none;
-    background-color: var(--info);
+    background-color: royalblue;
     color: white;
     padding: 0.5rem 1rem;
     font-size: 1rem;
