@@ -2,7 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Registration.module.css";
 
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { InfoToast } from "../components/InfoToast";
 import { SubmitBtn } from "../components/Buttons/SubmitBtn";
 import UserService from "../services/UserService";

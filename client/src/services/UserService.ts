@@ -1,4 +1,5 @@
 import axios from "axios";
+import Service from "./Service";
 
 interface RegistrationBody {
     state: string;
@@ -14,7 +15,7 @@ interface LogInBody {
     password: string;
 }
 
-class UserService {
+class UserService extends Service {
     private baseUrl = "http://localhost:6060/api/user/";
 
     public async registerUser(data: RegistrationBody) {
@@ -54,9 +55,7 @@ class UserService {
 
     public async getUserPrivateInfo(userId: string, token: string) {
         return await axios
-            .get(this.baseUrl + `private/${userId}`, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
+            .get(this.baseUrl + `private/${userId}`, this.createHeader(token))
             .then(({ data }) => {
                 return data;
             });
@@ -64,9 +63,10 @@ class UserService {
 
     public async getUserTransactions(userId: string, token: string) {
         return await axios
-            .get(this.baseUrl + `${userId}/transactions/`, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
+            .get(
+                this.baseUrl + `${userId}/transactions/`,
+                this.createHeader(token)
+            )
             .then(({ data }) => {
                 return data;
             });
@@ -75,9 +75,9 @@ class UserService {
     public async addFunds(amount: number, token: string) {
         return await axios
             .post(
-                this.baseUrl + "/billings/add",
+                this.baseUrl + "billings/add",
                 { amount },
-                { headers: { Authorization: `Bearer ${token}` } }
+                this.createHeader(token)
             )
             .then(({ data }) => {
                 return data;
@@ -85,11 +85,7 @@ class UserService {
     }
 
     public async deleteAccount(userId: string, token: string) {
-        return axios.delete(this.baseUrl + userId, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        return axios.delete(this.baseUrl + userId,this.createHeader(token));
     }
 }
 

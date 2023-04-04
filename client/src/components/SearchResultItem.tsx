@@ -1,14 +1,13 @@
-import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import UserService from "../services/UserService";
 import styles from "./SearchResultItem.module.css";
 
 export const SearchResultItem = ({ product }: { product: Product }) => {
     let [seller, setSeller] = useState({ first: "", last: "" });
     useEffect(() => {
-        axios
-            .get(`http://localhost:6060/api/user/${product.owner}`)
-            .then(({ data }: AxiosResponse) => {
+        UserService.getUserInfo(product.owner)
+            .then((data) => {
                 //type it later
                 setSeller({ first: data.name.first, last: data.name.last });
             });

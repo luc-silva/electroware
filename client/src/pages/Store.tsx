@@ -1,8 +1,5 @@
 import styles from "./Store.module.css";
 import { Truck, Cube, Gauge, Wallet } from "phosphor-react";
-import { ProductCard } from "../components/Cards/ProductCard";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { HomeRecentProducts } from "../components/Sections/HomeRecentProducts";
 import { HomeBanner } from "../components/Sections/HomeBanner";
 

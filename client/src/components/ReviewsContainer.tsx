@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { ReviewCard } from "./Cards/ReviewCard";
 import styles from "./ReviewsContainer.module.css";
 

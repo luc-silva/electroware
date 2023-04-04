@@ -1,6 +1,6 @@
-import { ArrowSquareOut, Warning } from "phosphor-react";
+import { Warning } from "phosphor-react";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ProfileSettingsForm } from "../components/Forms/ProfileSettingsForm";
 import styles from "./Settings.module.css";
 import { TransactionCard } from "../components/TransactionCard";
@@ -27,7 +27,7 @@ export const Settings = ({
     async function handleDeleteAccountBtn() {
         await UserService.deleteAccount(user.id, user.token);
     }
-    
+
     return (
         <main role={"main"} className={styles["settings"]}>
             <section className={styles["settings__edit-profile"]}>

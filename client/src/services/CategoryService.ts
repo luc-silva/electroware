@@ -1,6 +1,7 @@
 import axios from "axios";
+import Service from "./Service";
 
-class CategoryService {
+class CategoryService extends Service{
     private baseUrl = "http://localhost:6060/api/category/";
 
     public async getCategory(categoryId: string) {

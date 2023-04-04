@@ -1,7 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ProductCard } from "../components/Cards/ProductCard";
 import { ProductCardSmall } from "../components/Cards/ProductCardSmall";
 import ShoppingCartService from "../services/ShoppingCartService";
 import { getTotalValue } from "../utils/operations";

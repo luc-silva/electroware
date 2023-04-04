@@ -1,4 +1,5 @@
 import axios from "axios";
+import Service from "./Service";
 
 interface ReviewBody {
     author: string;
@@ -9,7 +10,7 @@ interface ReviewBody {
     score: number;
 }
 
-class ReviewService {
+class ReviewService extends Service {
     private baseUrl = "http://localhost:6060/api/review";
 
     public async getReview(reviewId: string) {
@@ -17,15 +18,11 @@ class ReviewService {
     }
 
     public async submitReview(data: ReviewBody, token: string) {
-        axios.post(this.baseUrl, data, {
-            headers: { Authorization: `Bearer ${token}` },
-        });
+        axios.post(this.baseUrl, data, this.createHeader(token));
     }
 
-    public async deleteReview(reviewId: string, token: string){
-        axios.delete(reviewId, {
-            headers: { Authorization: `Bearer ${token}` },
-        })
+    public async deleteReview(reviewId: string, token: string) {
+        axios.delete(reviewId, this.createHeader(token));
     }
 }
 

@@ -1,7 +1,9 @@
-import axios from "axios";
 import { Trash } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import ProductService from "../../services/ProductService";
+import ShoppingCartService from "../../services/ShoppingCartService";
+import UserService from "../../services/UserService";
 import styles from "./ProductCardSmall.module.css";
 
 export const ProductCardSmall = ({
@@ -11,7 +13,7 @@ export const ProductCardSmall = ({
     productPrice,
     productQNT,
 }: {
-    userToken: String;
+    userToken: string;
     instanceID: string;
     productID: string;
     productPrice: number;
@@ -20,22 +22,19 @@ export const ProductCardSmall = ({
     let [product, setProduct] = useState({ category: "", name: "", owner: "" });
     let [productSeller, setSeller] = useState({ first: "", last: "" });
     useEffect(() => {
-        axios
-            .get(`http://localhost:6060/api/product/${productID}`)
-            .then(({ data }) => setProduct(data));
+        ProductService.getProductDetails(productID).then((data) =>
+            setProduct(data)
+        );
     }, [productID]);
+
     useEffect(() => {
-        axios
-            .get(`http://localhost:6060/api/user/${product.owner}`)
-            .then(({ data }) => {
-                setSeller(data.name);
-            });
+        UserService.getUserInfo(product.owner).then((data) => {
+            setSeller(data.name);
+        });
     }, [product]);
 
-    function removeItem() {
-        axios.delete(`http://localhost:6060/api/shoppingcart/${instanceID}`, {
-            headers: { Authorization: `Bearer ${userToken}` },
-        });
+    async function removeItem() {
+        await ShoppingCartService.deleteCartInstance(instanceID, userToken);
     }
 
     return (

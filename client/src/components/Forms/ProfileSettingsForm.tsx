@@ -1,4 +1,3 @@
-import axios from "axios";
 import { FormEvent } from "react";
 import styles from "./ProfileSettingsForm.module.css";
 
@@ -6,7 +5,6 @@ export const ProfileSettingsForm = ({user}:{user:UserProps}) => {
     let formInitalState={}
     async function handleSubmit(event:FormEvent<HTMLFormElement>){
         event.preventDefault()
-        //axios.post()
     }
     return (
         <form className={styles["edit-profile__form"]} action="POST" onSubmit={handleSubmit}>

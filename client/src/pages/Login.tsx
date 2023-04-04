@@ -1,5 +1,4 @@
-import axios, { AxiosResponse } from "axios";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitBtn } from "../components/Buttons/SubmitBtn";
 import UserService from "../services/UserService";
@@ -36,11 +35,11 @@ export const Login = ({
                 navigate("/");
             });
     }
-    function setLocalstorageToken(data: AxiosResponse) {
+    function setLocalstorageToken(data: UserProps) {
         localStorage.setItem("user", JSON.stringify(data));
         return data;
     }
-    function setCurrentUser(data: AxiosResponse) {
+    function setCurrentUser(data: UserProps) {
         setUser(() => {
             return { ...data, logged: true };
         });

@@ -1,6 +1,5 @@
-
 import { CaretDown, CaretRight } from "phosphor-react";
-import { useReducer, useState } from "react";
+import { useReducer } from "react";
 
 import styles from "./FaqCard.module.css";
 

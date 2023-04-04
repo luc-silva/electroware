@@ -1,4 +1,3 @@
-import axios from "axios";
 import { FormEvent, useState } from "react";
 import ReviewService from "../../services/ReviewService";
 import { SubmitBtn } from "../Buttons/SubmitBtn";
@@ -25,7 +24,7 @@ export const ReviewForm = ({
         }
     }
 
-    function handleReviewSubmit(event: FormEvent<HTMLFormElement>) {
+    async function handleReviewSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         let data = {
             author: user.id,
@@ -35,7 +34,7 @@ export const ReviewForm = ({
             text: reviewForm.text,
             score: reviewForm.score,
         };
-        ReviewService.submitReview(data, user.token).then(() => {
+        await ReviewService.submitReview(data, user.token).then(() => {
             updateReviews();
         });
     }

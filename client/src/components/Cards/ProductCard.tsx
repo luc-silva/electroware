@@ -1,6 +1,6 @@
-import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import ProductService from "../../services/ProductService";
 import styles from "./ProductCard.module.css";
 
 export const ProductCard = ({ id }: { id: string }) => {
@@ -12,11 +12,11 @@ export const ProductCard = ({ id }: { id: string }) => {
     let [productData, setProductData] = useState(productCardInitialState);
     let [cardStatus, setCardStatus] = useState({ loading: true, error: false });
     useEffect(() => {
-        axios
-            .get(`http://localhost:6060/api/product/${id}`)
-            .then(({ data }: AxiosResponse) => {
+        ProductService.getProductDetails(id)
+            .then((data) => {
                 setProductData(data);
-            }).then(() => {
+            })
+            .then(() => {
                 setCardStatus({ loading: false, error: false });
             })
             .catch(() => {
