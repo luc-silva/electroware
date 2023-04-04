@@ -112,12 +112,14 @@ export const createProduct = asyncHandler(
 
         let { name, price, category, quantity, description, brand }: IProduct =
             request.body;
+        let convertedQuantity:number = Number(quantity)
+        let convertedPrice:number = Number(price)
         if (
             typeof name !== "string" ||
             typeof category !== "string" ||
             typeof brand !== "string" ||
-            typeof price !== "number" ||
-            !Number.isInteger(quantity)
+            typeof convertedPrice !== "number" ||
+            !Number.isInteger(convertedQuantity)
         ) {
             response.status(400);
             throw new Error("Dados Inválidos.");
@@ -129,8 +131,8 @@ export const createProduct = asyncHandler(
             category,
             brand,
             description,
-            price,
-            quantity,
+            price: convertedPrice,
+            quantity: convertedQuantity,
         });
 
         response.status(201).json(createdProduct);
