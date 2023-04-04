@@ -117,10 +117,6 @@ export const submitReview = asyncHandler(
 
         let review = await Review.create({
             author: reviewer.id,
-            authorUsername:
-                (reviewer.name.last &&
-                    `${reviewer.name.first} ${reviewer.name.last}`) ||
-                reviewer.name.first,
             product,
             text,
             score,

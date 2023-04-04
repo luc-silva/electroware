@@ -3,7 +3,6 @@ import { Schema, model } from "mongoose";
 const ReviewSchema = new Schema(
     {
         author: { type: Schema.Types.ObjectId, ref: "User", required: true },
-        authorUsername: { type: String, required: true },
         product: {
             type: Schema.Types.ObjectId,
             ref: "Product",

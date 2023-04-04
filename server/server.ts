@@ -4,7 +4,6 @@ import cors from "cors";
 
 import { userRouter } from "./routes/user.routes";
 import { productRouter } from "./routes/product.routes";
-import { productsRouter } from "./routes/products.routes";
 import { categoryRouter } from "./routes/categories.routes";
 import { reviewRouter } from "./routes/review.routes";
 import { wishlistRouter } from "./routes/wishlist.routes";
@@ -31,7 +30,6 @@ function main() {
 
     //
     app.use("/api/product", productRouter);
-    app.use("/api/products", productsRouter);
     app.use("/api/category", categoryRouter);
     app.use("/api/review", reviewRouter);
     app.use("/api/shoppingcart", shoppingCartRouter);
