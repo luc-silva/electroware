@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProfileSettingsForm } from "../components/Forms/ProfileSettingsForm";
 import styles from "./Settings.module.css";
-import { TransactionCard } from "../components/TransactionCard";
+import { TransactionCard } from "../components/Cards/TransactionCard";
 import UserService from "../services/UserService";
 
 export const Settings = ({

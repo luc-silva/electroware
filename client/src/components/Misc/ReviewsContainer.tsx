@@ -1,4 +1,4 @@
-import { ReviewCard } from "./Cards/ReviewCard";
+import { ReviewCard } from "../Cards/ReviewCard";
 import styles from "./ReviewsContainer.module.css";
 
 export const ReviewsContainer = ({ reviews }: { reviews: Review[] }) => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { StarsContainer } from "../components/StarsContainer";
+import { StarsContainer } from "../components/Misc/StarsContainer";
 import styles from "./UserProfile.module.css";
 import UserService from "../services/UserService";
 import { getAverage } from "../utils/operations";

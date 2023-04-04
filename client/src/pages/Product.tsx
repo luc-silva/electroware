@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { getAverage } from "../utils/operations";
 
 //other components
-import { StarsContainer } from "../components/StarsContainer";
-import { ReviewsContainer } from "../components/ReviewsContainer";
+import { StarsContainer } from "../components/Misc/StarsContainer";
+import { ReviewsContainer } from "../components/Misc/ReviewsContainer";
 import { ReviewForm } from "../components/Forms/ReviewForm";
 
 //styles

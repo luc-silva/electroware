@@ -2,9 +2,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ProductService from "../../services/ProductService";
 import ShoppingCartService from "../../services/ShoppingCartService";
-import { QuantityCounter } from "../QuantityCounter";
+import { QuantityCounter } from "../Misc/QuantityCounter";
 import { ActionBtn } from "./ActionBtn";
-import styles from "./ProducBtnPanel.module.css";
+
+import styles from "./ProductBtnPanel.module.css";
 
 export const ProductBtnPanel = ({
     user,
