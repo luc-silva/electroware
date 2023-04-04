@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ProductCardSmall } from "../components/Cards/ProductCardSmall";
 import ShoppingCartService from "../services/ShoppingCartService";
 import { getTotalValue } from "../utils/operations";
+
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { ProductCardSmall } from "../components/Cards/ShoppingCartCard";
 import styles from "./ShoppingCart.module.css";
 
 export const ShoppingCart = ({
@@ -14,15 +16,16 @@ export const ShoppingCart = ({
 }) => {
     let navigate = useNavigate();
     let [items, setItems] = useState([]);
-    
+
     useEffect(() => {
         if (!user.logged) {
             navigate("/login");
         }
-        ShoppingCartService.getShoppingcart(user.token).then((data) => {
-            setItems(data);
+        ShoppingCartService.getCartInstances(user.token).then((data) => {
+
+            setItems(data)
         });
-    });
+    }, []);
 
     function handleCheckout() {
         navigate("/checkout");
@@ -34,14 +37,11 @@ export const ShoppingCart = ({
                     <h2>Carrinho de Compras</h2>
                 </div>
                 <div className={styles["shopping-cart__container"]}>
-                    {items.map(({ product, price, quantity, _id }, index) => {
+                    {items.map(({ _id }:ShoppingCartCardProps, index) => {
                         return (
                             <ProductCardSmall
-                                userToken={user.token}
                                 instanceID={_id}
-                                productID={product}
-                                productPrice={price}
-                                productQNT={quantity}
+                                userToken={user.token}
                                 key={index}
                             />
                         );

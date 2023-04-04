@@ -1,37 +1,45 @@
-import { Trash } from "phosphor-react";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import ProductService from "../../services/ProductService";
 import ShoppingCartService from "../../services/ShoppingCartService";
 import UserService from "../../services/UserService";
-import styles from "./ProductCardSmall.module.css";
 
+import { Trash } from "phosphor-react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import styles from "./ShoppingCartCard.module.css";
+
+//rename to ShoppingCartCard
 export const ProductCardSmall = ({
     userToken,
     instanceID,
-    productID,
-    productPrice,
-    productQNT,
 }: {
-    userToken: string;
     instanceID: string;
-    productID: string;
-    productPrice: number;
-    productQNT: number;
+    userToken: string;
 }) => {
-    let [product, setProduct] = useState({ category: "", name: "", owner: "" });
+    let [instanceData, setInstanceData] = useState({
+        id: "",
+        product: "",
+        price: 0,
+        quantity: 0,
+    });
+    let [product, setProduct] = useState({
+        id: "",
+        category: "",
+        name: "",
+        owner: "",
+    });
     let [productSeller, setSeller] = useState({ first: "", last: "" });
-    useEffect(() => {
-        ProductService.getProductDetails(productID).then((data) =>
-            setProduct(data)
-        );
-    }, [productID]);
 
     useEffect(() => {
+        ShoppingCartService.getSingleInstance(instanceID, userToken).then(
+            setInstanceData
+        );
+        ProductService.getProductDetails(instanceData.product).then(setProduct);
         UserService.getUserInfo(product.owner).then((data) => {
             setSeller(data.name);
         });
-    }, [product]);
+    }, []);
+
+    //useEffect(() => {      }, [product]);
 
     async function removeItem() {
         await ShoppingCartService.deleteCartInstance(instanceID, userToken);
@@ -39,7 +47,7 @@ export const ProductCardSmall = ({
 
     return (
         <div className={styles["container__item"]}>
-            <Link to={`/product/${productID}`}>
+            <Link to={`/product/${product.id}`}>
                 <div className={styles["container__picture"]}>
                     <img src="" alt="" />
                 </div>
@@ -48,8 +56,10 @@ export const ProductCardSmall = ({
                 <div>
                     <p>{product.name}</p>
                     <div className={styles["container__pricing"]}>
-                        <strong>{`R$ ${productQNT * productPrice} `}</strong>
-                        <p>{`UNIDS: ${productQNT} x ${productPrice} `}</p>
+                        <strong>{`R$ ${
+                            instanceData.quantity * instanceData.price
+                        } `}</strong>
+                        <p>{`UNIDS: ${instanceData.quantity} x ${instanceData.price} `}</p>
                     </div>
                 </div>
                 <div className={styles["container__footer"]}>
