@@ -49,12 +49,6 @@
 .registration-form input:focus::placeholder{
   color: var(--main-color);
 }
-.registration-form input[type="submit"]{
-  border: none;
-  font-weight: bold;
-  background-color: var(--main-color);
-  color: white;
-}
 .registration-form a{
   color: var(--main-color);
   text-align: center;

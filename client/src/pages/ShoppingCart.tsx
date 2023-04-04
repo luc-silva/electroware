@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ProductCard } from "../components/ProductCard";
-import { ProductCardSmall } from "../components/ProductCardSmall";
+import { ProductCard } from "../components/Cards/ProductCard";
+import { ProductCardSmall } from "../components/Cards/ProductCardSmall";
+import ShoppingCartService from "../services/ShoppingCartService";
+import { getTotalValue } from "../utils/operations";
 import styles from "./ShoppingCart.module.css";
 
 export const ShoppingCart = ({
@@ -14,27 +16,16 @@ export const ShoppingCart = ({
 }) => {
     let navigate = useNavigate();
     let [items, setItems] = useState([]);
+    
     useEffect(() => {
         if (!user.logged) {
             navigate("/login");
         }
-        axios
-            .get(`http://localhost:6060/api/shoppingcart`, {
-                headers: {
-                    Authorization: `Bearer ${user.token}`,
-                },
-            })
-            .then(({ data }) => {
-                setItems(data);
-            });
-    });
-    function getTotalValue() {
-        let total = 0;
-        items.forEach(({ price, quantity }: ShoppingCartCardProps) => {
-            total += price * quantity;
+        ShoppingCartService.getShoppingcart(user.token).then((data) => {
+            setItems(data);
         });
-        return total;
-    }
+    });
+
     function handleCheckout() {
         navigate("/checkout");
     }
@@ -62,13 +53,11 @@ export const ShoppingCart = ({
             <aside className={styles["shopping-cart__panel"]}>
                 <div className={styles["shopping-cart__panel__display"]}>
                     <p>Valor total:</p>
-                    <strong>{`${getTotalValue()} R$`}</strong>
+                    <strong>{`${getTotalValue(items)} R$`}</strong>
                 </div>
-                {(getTotalValue() > 0 && (
+                {(getTotalValue(items) > 0 && (
                     <button onClick={handleCheckout}>Finalizar Compra</button>
-                )) || (
-                    <button disabled>Finalizar Compra</button>
-                )}
+                )) || <button disabled>Finalizar Compra</button>}
             </aside>
         </main>
     );

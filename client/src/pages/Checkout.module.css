@@ -72,17 +72,6 @@
     font-size: 0.8rem;
     columns: var(--text-color);
 }
-.checkout__footer button {
-    font-weight: bolder;
-    background-color: var(--main-color);
-    color: white;
-    padding: 0.5rem 1rem;
-}
-.checkout__footer button:disabled {
-    cursor: not-allowed;
-    color: var(--title-color);
-    background-color: var(--btn-disabled);
-}
 .payment-method__display {
 }
 .payment-method__display select {

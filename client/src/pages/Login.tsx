@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitBtn } from "../components/Buttons/SubmitBtn";
+import UserService from "../services/UserService";
 import styles from "./Login.module.css";
 
 export const Login = ({
@@ -28,19 +29,18 @@ export const Login = ({
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        axios
-            .post("http://localhost:6060/api/login", form)
+        UserService.logInUser(form)
             .then(setLocalstorageToken)
             .then(setCurrentUser)
             .then(() => {
                 navigate("/");
-            })
+            });
     }
-    function setLocalstorageToken(response: AxiosResponse) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-        return response;
+    function setLocalstorageToken(data: AxiosResponse) {
+        localStorage.setItem("user", JSON.stringify(data));
+        return data;
     }
-    function setCurrentUser({ data }: AxiosResponse) {
+    function setCurrentUser(data: AxiosResponse) {
         setUser(() => {
             return { ...data, logged: true };
         });
@@ -69,7 +69,7 @@ export const Login = ({
                         placeholder="Senha"
                         required
                     />
-                    <SubmitBtn textValue="Entrar"/>
+                    <SubmitBtn textValue="Entrar" />
                 </form>
                 <Link to="/registration">Crie uma conta</Link>
             </section>

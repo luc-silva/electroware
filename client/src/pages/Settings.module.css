@@ -50,13 +50,13 @@
     gap: 1rem;
     padding: 1rem;
     width: 100%;
-    background-color: #fff2f2;
-    color: #dc3545;
+    background-color: var(--warning-background-v1);
+    color: var(--warning-text-v1);
     border-radius: 5px;
 }
 .button-container button{
     padding: 0.5rem 1rem;
-    background-color: #dc3545;
+    background-color: var(--warning-text-v1);
     font-weight: bolder;
     color: white;
     border-radius: 5px;

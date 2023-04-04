@@ -1,7 +1,10 @@
-import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { SubmitBtn } from "../components/Buttons/SubmitBtn";
 import styles from "./CreateOffer.module.css";
+
+import ShoppingCartService from "../services/ShoppingCartService";
+import CategoryService from "../services/CategoryService";
 
 export const CreateOffer = ({
     user,
@@ -29,7 +32,7 @@ export const CreateOffer = ({
 
     let [categories, setCategories] = useState([{ name: "", _id: "" }]);
     useEffect(() => {
-        axios.get(`http://localhost:6060/api/category`).then(({ data }) => {
+        CategoryService.getCategories().then((data) => {
             setCategories(data);
         });
     }, []);
@@ -44,17 +47,11 @@ export const CreateOffer = ({
             setForm({ ...form, [target.name]: target.value });
         }
     }
-    function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        axios
-            .post("http://localhost:6060/api/product/create", form, {
-                headers: {
-                    Authorization: `Bearer ${user.token}`,
-                },
-            })
-            .then(({ data }) => {
-                navigate(`/product/${data._id}`);
-            });
+        await ShoppingCartService.getShoppingcart(user.token).then((data) => {
+            navigate(`/product/${data._id}`);
+        });
     }
     return (
         <main role={"main"} className={styles["create-offer"]}>
@@ -93,13 +90,23 @@ export const CreateOffer = ({
                             </div>
                             <div className={styles["input-container"]}>
                                 <label htmlFor="quantity">Unidades</label>
-                                <input type="number" name="quantity" required max={9999}/>
+                                <input
+                                    type="number"
+                                    name="quantity"
+                                    required
+                                    max={9999}
+                                />
                             </div>
                         </div>
                         <div className={styles["larger-input-container"]}>
                             <div className={styles["input-container"]}>
                                 <label htmlFor="brand">Marca</label>
-                                <input type="text" name="brand" required maxLength={15}/>
+                                <input
+                                    type="text"
+                                    name="brand"
+                                    required
+                                    maxLength={15}
+                                />
                             </div>
                             <div className={styles["input-container"]}>
                                 <label htmlFor="category">Categoria</label>
@@ -121,8 +128,8 @@ export const CreateOffer = ({
                             </label>
                             <textarea name="description" maxLength={200} />
                         </div>
-                        <div className={styles["input-container"]}>
-                            <input type="submit" value={"Anunciar"} />
+                        <div>
+                            <SubmitBtn textValue="Anunciar" />
                         </div>
                     </form>
                 </div>

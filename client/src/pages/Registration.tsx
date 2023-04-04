@@ -2,7 +2,10 @@ import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Registration.module.css";
 
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { InfoToast } from "../components/InfoToast";
+import { SubmitBtn } from "../components/Buttons/SubmitBtn";
+import UserService from "../services/UserService";
 
 export const Registration = () => {
     let formInitialValues = {
@@ -23,22 +26,43 @@ export const Registration = () => {
         }
     }
 
-    function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    let [toastMessage, setMessage] = useState("");
+    let [isToastActive, toggleToast] = useState(false);
+    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        axios
-            .post("http://localhost:6060/api/register", {
-                ...form,
-                name: { first: form.first, last: form.last },
-                location: {state: form.state, country: form.country}
-            })
+
+        let data = {
+            ...form,
+            name: {
+                first: form.first,
+                last: form.last,
+            },
+            location: {
+                state: form.state,
+                country: form.country,
+            },
+        };
+
+        await UserService.registerUser(data)
             .then(() => {
                 navigate("/login");
             })
-            .catch(alert);
+            .catch(({ response }: AxiosError) => {
+                if (response && typeof response.data === "string") {
+                    toggleToast(!isToastActive);
+                    setMessage(response.data);
+                }
+            });
     }
 
     return (
         <main role={"main"} className={styles["registration"]}>
+            <InfoToast
+                type="warning"
+                message={toastMessage}
+                isActive={isToastActive}
+                toggle={toggleToast}
+            />
             <section className={styles["registration__title"]}>
                 <h1>Crie uma conta</h1>
                 <p>Não gaste o seu dinheiro em outros sites!</p>
@@ -63,8 +87,18 @@ export const Registration = () => {
                         placeholder="Sobrenome"
                     />
                     <div>
-                        <input type="text" name="state" placeholder="Estado" required/>
-                        <input type="text" name="country" placeholder="País" required/>
+                        <input
+                            type="text"
+                            name="state"
+                            placeholder="Estado"
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="country"
+                            placeholder="País"
+                            required
+                        />
                     </div>
                     <input
                         name="email"
@@ -80,7 +114,7 @@ export const Registration = () => {
                         placeholder="Senha"
                         required
                     />
-                    <input type="submit" value="Crie uma conta" />
+                    <SubmitBtn textValue="Crie uma conta" />
                 </form>
                 <Link to="/login">Já possui uma conta? Entre </Link>
             </section>

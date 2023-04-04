@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import UserService from "../services/UserService";
 import styles from "./AddFunds.module.css";
 
 export const AddFunds = ({
@@ -19,34 +20,23 @@ export const AddFunds = ({
     }, []);
 
     async function updateAccountDetails() {
-        axios
-            .get(`http://localhost:6060/api/user/private/${user.id}`, {
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
-            .then(({ data }) => {
+        await UserService.getUserPrivateInfo(user.id, user.token).then(
+            (data) => {
                 setUser(() => {
                     return { ...user, funds: data.funds };
                 });
-            });
+            }
+        );
     }
 
-    function addAmount(event: React.MouseEvent) {
+    async function addAmount(event: React.MouseEvent) {
         let target = event.target;
-        try {
-            if (target instanceof HTMLButtonElement) {
-                axios
-                    .post(
-                        `http://localhost:6060/api/user/billings/add`,
-                        { amount: target.value },
-                        { headers: { Authorization: `Bearer ${user.token}` } }
-                    )
-                    .then(() => {
-                        updateAccountDetails();
-                    });
-            }
-            //navigate("/config/billings");
-        } catch (error) {
-            alert(error);
+
+        if (target instanceof HTMLButtonElement) {
+            let amount = Number(target.value);
+            await UserService.addFunds(amount, user.token).then(() => {
+                updateAccountDetails();
+            });
         }
     }
 

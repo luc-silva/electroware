@@ -1,24 +1,25 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ProductCard } from "../components/ProductCard";
+import { ProductCard } from "../components/Cards/ProductCard";
+
+import CategoryService from "../services/CategoryService";
 import styles from "./Category.module.css";
+
+
 export const Category = () => {
     let { id } = useParams();
     let [products, setProducts] = useState([]);
     let [category, setCategory] = useState("");
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:6060/api/category/${id}/products`)
-            .then(({ data }) => {
+        if (id) {
+            CategoryService.getCategoryProducts(id).then((data) => {
                 setProducts(data);
             });
-        axios
-            .get(`http://localhost:6060/api/category/${id}`)
-            .then(({ data }) => {
+            CategoryService.getCategory(id).then((data) => {
                 setCategory(data.name);
             });
+        }
     }, [id]);
     return (
         <main role="main" className={styles["category"]}>

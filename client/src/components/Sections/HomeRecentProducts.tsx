@@ -6,8 +6,8 @@ import styles from "./HomeRecentProducts.module.css"
 export const HomeRecentProducts = () => {
     let [recentProducts, setRecentProducts] = useState([]);
     useEffect(() => {
-        ProductService.getRecentProducts().then((response) => {
-            setRecentProducts(response)
+        ProductService.getRecentProducts().then((data) => {
+            setRecentProducts(data)
         })
     }, []);
     

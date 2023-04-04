@@ -3,6 +3,9 @@ import axios from "axios";
 import { Info, Warning } from "phosphor-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { SubmitBtn } from "../components/Buttons/SubmitBtn";
+import ShoppingCartService from "../services/ShoppingCartService";
+import TransactionService from "../services/TransactionService";
 
 export const Checkout = ({
     user,
@@ -17,15 +20,9 @@ export const Checkout = ({
         if (!user.logged) {
             navigate("/login");
         }
-        axios
-            .get(`http://localhost:6060/api/shoppingcart`, {
-                headers: {
-                    Authorization: `Bearer ${user.token}`,
-                },
-            })
-            .then(({ data }) => {
-                setItems(data);
-            });
+        ShoppingCartService.getShoppingcart(user.token).then((data) => {
+            setItems(data);
+        });
     }, [user]);
 
     function getTotalValue() {
@@ -39,18 +36,13 @@ export const Checkout = ({
     function handleSelect(event: ChangeEvent<HTMLSelectElement>) {
         setPaymentMethod(event.target.value);
     }
-    function handleCheckout() {
-        axios
-            .post(
-                `http://localhost:6060/api/transaction`,
-                {paymentMethod},
-                {
-                    headers: { Authorization: `Bearer ${user.token}` },
-                }
-            )
-            .then(() => {
-                navigate("/config#transactions");
-            });
+    async function handleCheckout() {
+        TransactionService.createTransaction(
+            { paymentMethod },
+            user.token
+        ).then(() => {
+            navigate("/config");
+        });
     }
     return (
         <main className={styles["checkout"]}>
@@ -101,13 +93,16 @@ export const Checkout = ({
                     </div>
                     <div>
                         {(getTotalValue() > user.funds && (
-                            <button onClick={handleCheckout} disabled>
-                                FINALIZAR COMPRA
-                            </button>
+                            <div>
+                                <SubmitBtn
+                                    textValue="FINALIZAR COMPRA"
+                                    disabled
+                                />
+                            </div>
                         )) || (
-                            <button onClick={handleCheckout}>
-                                FINALIZAR COMPRA
-                            </button>
+                            <div onClick={handleCheckout}>
+                                <SubmitBtn textValue="FINALIZAR COMPRA" />
+                            </div>
                         )}
                     </div>
                 </div>

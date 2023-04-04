@@ -1,11 +1,10 @@
-import axios, { AxiosResponse } from "axios";
-import { format } from "date-fns";
 import { ArrowSquareOut, Warning } from "phosphor-react";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ProfileSettingsForm } from "../components/ProfileSettingsForm";
+import { ProfileSettingsForm } from "../components/Forms/ProfileSettingsForm";
 import styles from "./Settings.module.css";
-import { TransactionItem } from "../components/TransactionItem";
+import { TransactionCard } from "../components/TransactionCard";
+import UserService from "../services/UserService";
 
 export const Settings = ({
     user,
@@ -20,19 +19,15 @@ export const Settings = ({
     }
     let [userTransactions, setUserTransactions] = useState([]);
     useEffect(() => {
-        axios
-            .get(`http://localhost:6060/api/user/${user.id}/transactions/`, {
-                headers: { Authorization: `Bearer ${user.token}` },
-            })
-            .then(({ data }: AxiosResponse) => {
-                setUserTransactions(data);
-            });
-    }, []);
-    function handleDeleteAccountBtn() {
-        axios.delete(`http://localhost:6060/api/user/${user.id}`, {
-            headers: { Authorization: `Bearer ${user.token}` },
+        UserService.getUserTransactions(user.id, user.token).then((data) => {
+            setUserTransactions(data);
         });
+    }, []);
+
+    async function handleDeleteAccountBtn() {
+        await UserService.deleteAccount(user.id, user.token);
     }
+    
     return (
         <main role={"main"} className={styles["settings"]}>
             <section className={styles["settings__edit-profile"]}>
@@ -42,7 +37,7 @@ export const Settings = ({
                 <div className={styles["edit-profile__title"]}>
                     <h3>Edite o seu perfil</h3>
                 </div>
-                <ProfileSettingsForm user={user}/>
+                <ProfileSettingsForm user={user} />
             </section>
             <section
                 className={styles["settings__transactions"]}
@@ -58,7 +53,7 @@ export const Settings = ({
                         userTransactions.map(
                             (transaction: Transaction, index: React.Key) => {
                                 return (
-                                    <TransactionItem
+                                    <TransactionCard
                                         transaction={transaction}
                                         key={index}
                                     />

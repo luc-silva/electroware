@@ -1,11 +1,9 @@
-import axios from "axios";
-import { Star } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ProductCard } from "../components/ProductCard";
-import { ProductCardSmall } from "../components/ProductCardSmall";
 import { StarsContainer } from "../components/StarsContainer";
 import styles from "./UserProfile.module.css";
+import UserService from "../services/UserService";
+import { getAverage } from "../utils/operations";
 
 export const UserProfile = () => {
     let { id } = useParams();
@@ -15,8 +13,8 @@ export const UserProfile = () => {
             last: "",
         },
         location: {
-            state:"",
-            country:"",
+            state: "",
+            country: "",
         },
         email: "",
         createdAt: new Date(),
@@ -24,26 +22,17 @@ export const UserProfile = () => {
     });
     let [products, setProducts] = useState([]);
     let [reviews, setReviews] = useState([]);
+
     useEffect(() => {
-        axios
-            .get(`http://localhost:6060/api/user/${id}`)
-            .then(({ data }) => setUser(data));
-        axios
-            .get(`http://localhost:6060/api/user/${id}/products`)
-            .then(({ data }) => setProducts(data));
-        axios
-            .get(`http://localhost:6060/api/user/${id}/products/reviews`)
-            .then(({ data }) => setReviews(data));
+        if (id) {
+            UserService.getUserInfo(id).then((data) => setUser(data));
+            UserService.getUserProducts(id).then((data) => setProducts(data));
+            UserService.getUserProductsReviews(id).then((data) =>
+                setReviews(data)
+            );
+        }
     }, [id]);
 
-    function setUserReputation() {
-        if (reviews.length === 0) return 0;
-        let total = 0;
-        reviews.forEach(({ score }) => {
-            total += score;
-        });
-        return Number((total / reviews.length).toFixed(1));
-    }
     return (
         <main role={"main"} className={styles["user-profile"]}>
             <section className={styles["user-profile__main"]}>
@@ -62,11 +51,11 @@ export const UserProfile = () => {
                     >
                         <p>Reputação</p>
                         <div>
-                            <strong>{setUserReputation()}</strong>
+                            <strong>{getAverage(reviews)}</strong>
                             <div>
                                 <StarsContainer
                                     size={20}
-                                    stars={setUserReputation()}
+                                    stars={getAverage(reviews)}
                                 />
                             </div>
                         </div>

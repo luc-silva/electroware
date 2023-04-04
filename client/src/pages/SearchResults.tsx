@@ -3,20 +3,23 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { SearchResultItem } from "../components/SearchResultItem";
+import ProductService from "../services/ProductService";
+import CategoryService from "../services/CategoryService";
 
 export const SearchResults = () => {
     let { search } = useParams();
     let [searchResults, setSearchResults] = useState([]);
     let [categories, setCategories] = useState([]);
+    
     useEffect(() => {
-        axios
-            .post(`http://localhost:6060/api/product/search/${search}`)
-            .then(({ data }) => {
+        if (search) {
+            ProductService.searchProduct(search).then((data) => {
                 setSearchResults(data);
             });
-        axios.get("http://localhost:6060/api/category").then(({ data }) => {
-            setCategories(data);
-        });
+            CategoryService.getCategories().then((data) => {
+                setCategories(data);
+            });
+        }
     }, [search]);
 
     return (

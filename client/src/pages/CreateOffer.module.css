@@ -67,11 +67,6 @@
     resize: none;
     min-height: 6rem;
 }
-.input-container input[type="submit"] {
-    background-color: var(--main-color);
-    color: white;
-    font-weight: bolder;
-}
 label {
     color: var(--text-color);
     font-size: 0.8rem;
