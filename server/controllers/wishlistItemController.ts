@@ -51,7 +51,7 @@ export const createWishlistItem = asyncHandler(
             throw new Error("Usuário não encontrado.");
         }
 
-        let productFound = (await Product.findById({ id: product })) as IProduct;
+        let productFound = (await Product.findById(product)) as IProduct;
         if (!productFound) {
             response.status(404);
             throw new Error("Produto não encontrado.");
