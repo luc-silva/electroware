@@ -1,17 +1,70 @@
 import axios from "axios";
 
-class UserService {
-    private baseUrl = "http://localhost:6060/api/user";
+interface RegistrationBody {
+    state: string;
+    country: string;
+    email: string;
+    password: string;
+    name: { first: string; last: string };
+    location: { state: string; country: string };
+}
 
-    public async getUserInfo(id: string) {
-        return await axios.get(this.baseUrl + `/${id}`).then(({ data }) => {
-            return data;
-        });
+interface LogInBody {
+    email: string;
+    password: string;
+}
+
+class UserService {
+    private baseUrl = "http://localhost:6060/api/user/";
+
+    public async registerUser(data: RegistrationBody) {
+        return await axios.post(this.baseUrl + "register", data);
     }
 
-    public async getUserPrivateInfo(id: string, token: string) {
+    public async logInUser(data: LogInBody) {
         return await axios
-            .get(this.baseUrl + `/private/${id}`, {
+            .post(this.baseUrl + "login", data)
+            .then(({ data }) => {
+                return data;
+            });
+    }
+
+    public async getUserInfo(userId: string) {
+        return await axios.get(this.baseUrl + `${userId}`).then(({ data }) => {
+            return data;
+        });
+        //.then(({ data }) => {return data;});
+    }
+
+    public async getUserProducts(userId: string) {
+        return await axios
+            .get(this.baseUrl + `${userId}/products`)
+            .then(({ data }) => {
+                return data;
+            });
+    }
+
+    public async getUserProductsReviews(userId: string) {
+        return await axios
+            .get(this.baseUrl + `${userId}/products/reviews`)
+            .then(({ data }) => {
+                return data;
+            });
+    }
+
+    public async getUserPrivateInfo(userId: string, token: string) {
+        return await axios
+            .get(this.baseUrl + `private/${userId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then(({ data }) => {
+                return data;
+            });
+    }
+
+    public async getUserTransactions(userId: string, token: string) {
+        return await axios
+            .get(this.baseUrl + `${userId}/transactions/`, {
                 headers: { Authorization: `Bearer ${token}` },
             })
             .then(({ data }) => {

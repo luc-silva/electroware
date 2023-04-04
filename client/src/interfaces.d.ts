@@ -27,7 +27,7 @@ interface Product {
     quantity: number;
     reviews: number;
 }
-interface WishlistItem{
+interface WishlistItem {
     id: string;
     product: string;
 }
@@ -55,10 +55,14 @@ interface Transaction {
     totalPrice: number;
     createdAt: Date;
 }
-interface ProductInstance{
-    user: string,
-    seller: string,
-    product: string,
-    price: number,
-    quantity: number,
+interface ProductInstance {
+    user: string;
+    seller: string;
+    product: string;
+    price: number;
+    quantity: number;
+}
+
+interface ServiceInterface {
+    private baseUrl: string;
 }
