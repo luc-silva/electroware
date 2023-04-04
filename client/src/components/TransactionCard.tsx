@@ -1,7 +1,7 @@
 import { format } from "date-fns";
-import styles from "./TransactionItem.module.css";
+import styles from "./TransactionCard.module.css";
 
-export const TransactionItem = ({
+export const TransactionCard = ({
     transaction
 }: {transaction:Transaction}) => {
     return (
