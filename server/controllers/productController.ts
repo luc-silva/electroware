@@ -1,17 +1,20 @@
 import asyncHandler from "express-async-handler";
 import { Request, Response } from "express";
 
+import { IProduct } from "../interface";
+import mongoose from "mongoose";
 import Product from "../models/Product";
 import User from "../models/User";
 import Category from "../models/Category";
-import Wishlist from "../models/WishlistItem";
-import { IProduct } from "../interface";
-import mongoose from "mongoose";
+import Review from "../models/Review";
 
 //get
 export const getRecentProducts = asyncHandler(
     async (request: Request, response: Response) => {
-        let products = await Product.find().select({id: 1}).limit(12).sort({ createdAt: -1 });
+        let products = await Product.find()
+            .select({ id: 1 })
+            .limit(12)
+            .sort({ createdAt: -1 });
         if (products.length === 0) {
             throw new Error("Nenhum produto encontrado.");
         }
@@ -112,8 +115,8 @@ export const createProduct = asyncHandler(
 
         let { name, price, category, quantity, description, brand }: IProduct =
             request.body;
-        let convertedQuantity:number = Number(quantity)
-        let convertedPrice:number = Number(price)
+        let convertedQuantity: number = Number(quantity);
+        let convertedPrice: number = Number(price);
         if (
             typeof name !== "string" ||
             typeof category !== "string" ||
@@ -206,7 +209,7 @@ export const deleteProduct = asyncHandler(
         }
 
         let { id } = request.params;
-        if (typeof id !== "string") {
+        if (!mongoose.Types.ObjectId.isValid(id)) {
             response.status(400);
             throw new Error("Dados Inválidos");
         }
@@ -216,13 +219,19 @@ export const deleteProduct = asyncHandler(
             response.status(404);
             throw new Error("Produto não encontrado.");
         }
-
         if (product.owner.toString() !== user.id) {
             response.status(401);
             throw new Error("Não autorizado.");
         }
 
-        let deletedProduct = await Product.findByIdAndDelete(product.id);
-        response.status(200).json(deletedProduct);
+        const session = await mongoose.startSession();
+        await session.withTransaction(async () => {
+            await Review.deleteMany({ product: product?.id }, { session });
+            await Product.findByIdAndDelete([product?.id], { session });
+            await session.commitTransaction();
+        });
+
+        session.endSession();
+        response.status(201).json({ message: "Produto excluido" });
     }
 );
