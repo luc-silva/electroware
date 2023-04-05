@@ -5,6 +5,7 @@ import User from "../models/User";
 import Product from "../models/Product";
 import { IReview, IUser } from "../interface";
 import { Request, Response } from "express";
+import ReviewValidator from "../validators/ReviewValidator";
 
 ////public
 //get, need params
@@ -96,16 +97,8 @@ export const submitReview = asyncHandler(
             throw new Error("Dados Inválidos.");
         }
 
-        let { product, text, score, productOwner }: IReview = request.body;
-        if (
-            typeof product !== "string" ||
-            typeof text !== "string" ||
-            typeof productOwner !== "string" ||
-            !Number.isInteger(score)
-        ) {
-            response.status(400);
-            throw new Error("Dados Inválidos.");
-        }
+        ReviewValidator.validate(response, request.body)
+        let { product, text, score, productOwner } = request.body;
 
         let reviewer = (await User.findById(request.user).select({
             password: -1,
@@ -160,18 +153,13 @@ export const deleteReview = asyncHandler(
 //patch, need params
 export const updateReview = asyncHandler(
     async (request: Request, response: Response) => {
-        if (!request.params || !request.user || request.body) {
+        if (!request.params || !request.user || !request.body) {
             response.status(400);
             throw new Error("Dados Inválidos.");
         }
+
+        ReviewValidator.validateUpdate(response, request.body)
         let { text, score } = request.body;
-        if (
-            typeof text !== "string" ||
-            (!Number.isInteger(score) && score < 6)
-        ) {
-            response.status(400);
-            throw new Error("Dados Inválidos.");
-        }
 
         let { id } = request.params;
         let review = await Review.findById(id);
