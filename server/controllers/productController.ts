@@ -7,6 +7,7 @@ import Product from "../models/Product";
 import User from "../models/User";
 import Category from "../models/Category";
 import Review from "../models/Review";
+import ProductValidator from "../validators/ProductValidator";
 
 //get
 export const getRecentProducts = asyncHandler(
@@ -113,20 +114,13 @@ export const createProduct = asyncHandler(
             throw new Error("Usuário não encontrado");
         }
 
+        ProductValidator.validate(response, request.body);
         let { name, price, category, quantity, description, brand }: IProduct =
             request.body;
+            
         let convertedQuantity: number = Number(quantity);
         let convertedPrice: number = Number(price);
-        if (
-            typeof name !== "string" ||
-            typeof category !== "string" ||
-            typeof brand !== "string" ||
-            typeof convertedPrice !== "number" ||
-            !Number.isInteger(convertedQuantity)
-        ) {
-            response.status(400);
-            throw new Error("Dados Inválidos.");
-        }
+
 
         let createdProduct = await Product.create({
             owner: user.id,
@@ -162,32 +156,23 @@ export const updateProduct = asyncHandler(
             throw new Error("Dados Inválidos");
         }
 
+        ProductValidator.validate(response, request.body);
         let { name, price, category, quantity, description, brand }: IProduct =
             request.body;
-        if (
-            typeof name !== "string" ||
-            typeof category !== "string" ||
-            typeof brand !== "string" ||
-            typeof price !== "number" ||
-            !Number.isInteger(quantity)
-        ) {
-            response.status(400);
-            throw new Error("Dados Inválidos.");
-        }
 
-        let product = await Product.findById(id);
-        if (!product) {
-            response.status(404);
-            throw new Error("Produto não encontrado.");
-        }
-        if (product.owner.toString() !== user.id) {
-            response.status(401);
-            throw new Error("Não autorizado.");
-        }
+        let convertedQuantity: number = Number(quantity);
+        let convertedPrice: number = Number(price);
 
         let updatedProduct = await Product.findByIdAndUpdate(
             request.params.id,
-            { name, category, brand, description, price, quantity }
+            {
+                name,
+                category,
+                brand,
+                description,
+                price: convertedPrice,
+                quantity: convertedQuantity,
+            }
         );
 
         response.status(201).json(updatedProduct);
