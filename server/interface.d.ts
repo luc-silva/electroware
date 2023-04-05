@@ -1,4 +1,4 @@
-import { Request } from "express";
+import { Request, Response } from "express";
 import { JsonWebTokenError } from "jsonwebtoken";
 import { Schema } from "mongoose";
 
@@ -49,6 +49,11 @@ interface IReview {
 interface IRequestError {
     message: string;
 }
+
+interface Validator {
+    public validate<any>(response: Response, requestBody: any): void;
+}
+
 declare global {
     namespace Express {
         interface Request {

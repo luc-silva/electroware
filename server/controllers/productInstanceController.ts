@@ -5,6 +5,7 @@ import { IProductInstance } from "../interface";
 import Product from "../models/Product";
 import ProductInstance from "../models/ProductInstance";
 import User from "../models/User";
+import ProductInstanceValidator from "../validators/ProductInstanceValidator";
 
 ////private
 
@@ -16,16 +17,8 @@ export const createInstance = asyncHandler(
             throw new Error("Dados Inválidos.");
         }
 
+        ProductInstanceValidator.validate(response, request.body)
         let { user, product, price, quantity }: IProductInstance = request.body;
-        if (
-            typeof user !== "string" ||
-            typeof product !== "string" ||
-            typeof price !== "number" ||
-            !Number.isInteger(quantity)
-        ) {
-            response.status(400);
-            throw new Error("Dados Inválidos.");
-        }
 
         let instanceOwner = await User.findById(request.user);
         if (!instanceOwner) {
