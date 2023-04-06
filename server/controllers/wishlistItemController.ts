@@ -62,6 +62,12 @@ export const createWishlistItem = asyncHandler(
             throw new Error("Não é possivel adicionar o próprio produto.");
         }
 
+        let alreadyWishlisted = await WishlistItem.find({user: user.id, product})
+        if(alreadyWishlisted){
+            response.status(400)
+            throw new Error("Esse item já foi adicionado na lista de desejos.")
+        }
+
         await WishlistItem.create({
             user: user.id,
             product: productFound.id,
