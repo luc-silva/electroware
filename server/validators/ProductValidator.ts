@@ -14,7 +14,7 @@ class ProductValidator {
     private BRAND_MAX_LENGTH = 15;
     private DESCRIPTION_MAX_LENGTH = 200;
     private MAX_PRICE = 10000;
-    private MAX_QUANTITY = 300;
+    private MAX_QUANTITY = 3000;
 
     public validate(response: Response, productBody: ProductBody) {
         let { name, price, category, quantity, description, brand } =
@@ -57,7 +57,7 @@ class ProductValidator {
             convertedQuantity > this.MAX_QUANTITY
         ) {
             response.status(400);
-            throw new Error("Campo categoria Inválido.");
+            throw new Error("Campo quantidade Inválido.");
         }
     }
 }
