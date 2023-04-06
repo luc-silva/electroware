@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ProductService from "../../services/ProductService";
+import { CardInfo } from "../Misc/CardInfo";
+import { ImageBox } from "../Misc/ImageBox";
 import styles from "./ProductCard.module.css";
 
 export const ProductCard = ({ id }: { id: string }) => {
@@ -27,16 +29,9 @@ export const ProductCard = ({ id }: { id: string }) => {
     return (
         <Link className={styles["card-wrapper"]} to={`/product/${id}`}>
             <div className={styles["card-image"]}>
-                {/* <img src="" alt="" /> */}
+                <ImageBox isLoading={cardStatus.loading} />
             </div>
-            <div className={styles["card-info"]}>
-                <div className={styles["card-info-price"]}>
-                    <strong>{`R$ ${productData.price}`}</strong>
-                </div>
-                <div className={styles["card-details"]}>
-                    <p>{productData.name}</p>
-                </div>
-            </div>
+            <CardInfo data={productData} isLoading={cardStatus.loading} />
         </Link>
     );
 };

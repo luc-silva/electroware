@@ -81,9 +81,13 @@ a {
     --title-color: #2e2e2e;
     --text-color: #3d3d3d;
 
+    --title-color-lighter:#393939;
+    --text-color-lighter:#484848;
+
     --warning-background-v1:#fff2f2;
     --warning-text-v1: #dc3545;
 
     --modal-background: #00000042;
     --btn-disabled: #d2d2d2;
+
 }
