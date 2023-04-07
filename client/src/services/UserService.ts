@@ -17,6 +17,10 @@ interface LogInBody {
 
 class UserService extends Service {
     private baseUrl = "http://localhost:6060/api/user/";
+    
+    constructor() {
+        super();
+    }
 
     public async registerUser(data: RegistrationBody) {
         return await axios.post(this.baseUrl + "register", data);

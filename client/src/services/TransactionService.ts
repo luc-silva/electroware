@@ -7,6 +7,7 @@ interface TransactionBody {
 
 class TransactioService extends Service {
     private baseUrl = "http://localhost:6060/api/transaction";
+    
     constructor() {
         super();
     }

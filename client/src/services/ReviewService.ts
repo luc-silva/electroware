@@ -13,6 +13,10 @@ interface ReviewBody {
 class ReviewService extends Service {
     private baseUrl = "http://localhost:6060/api/review";
 
+    constructor() {
+        super();
+    }
+
     public async getReview(reviewId: string) {
         axios.get(this.baseUrl + reviewId);
     }

@@ -11,6 +11,10 @@ interface CartInstanceBody {
 class ShoppingCartService extends Service {
     private baseUrl = "http://localhost:6060/api/shoppingcart";
 
+    constructor() {
+        super();
+    }
+
     public async getCartInstances(token: string) {
         return await axios
             .get(this.baseUrl, this.createHeader(token))
