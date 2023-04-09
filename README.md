@@ -58,3 +58,5 @@ Após os passos, o website deve abrir em seu navegador padrão. Dúvidas, entre 
 - [CSS Reset](https://meyerweb.com/eric/tools/css/reset/)
 - [Valorax Font (Fonte usada no logo)](https://befonts.com/valorax-font.html)
 - [Caixas - Banner 1](https://unsplash.com/@shutter_speed_)
+- [Notebook, Tablet e Celular - Banner 2](https://www.freepik.com/free-psd/digital-devices-screen-editable_16303836.htm#page=4&query=eletronics&position=34&from_view=search&track=sph)
+
