@@ -22,7 +22,7 @@ export const ImageInput = ({ user }: { user: UserProps }) => {
     return (
         <>
             <div className={styles["profile-picture"]}>
-                {image && <ImageBox isLoading={imageLoading} imgSrc={image} /> }
+                <ImageBox isLoading={imageLoading} imgSrc={image} /> 
             </div>
             <input name="imageFile" type="file" accept="jpeg jpg" size={1} />
         </>

@@ -91,7 +91,7 @@ function Electroware() {
                         element={<AddFunds user={user} setUser={setUser} />}
                     />
                     <Route
-                        path="/config"
+                        path="/settings"
                         element={<Settings user={user} setUser={setUser} />}
                     />
 

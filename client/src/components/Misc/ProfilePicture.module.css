@@ -1,0 +1,8 @@
+.profile-picture, .profile-picture--rounded{
+    width: 250px;
+    height: 250px;
+}
+.profile-picture--rounded{
+    overflow: hidden;
+    border-radius: 50%;
+}
