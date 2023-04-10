@@ -1,0 +1,33 @@
+.search__form{
+    display: flex;
+    align-items: center;
+    height: 2rem;
+    width: 100%;
+}
+.search__form input {
+    height: 100%;
+    padding: 0.25rem;
+}
+.search__input {
+    width: 75%;
+}
+.search__form input[type="submit"] {
+    display: none;
+}
+.search__form .search__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--main-color);
+    height: 100%;
+    width: 10%;
+    border: 1px solid white;
+    color: white;
+    cursor: pointer;
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+
+}
+@media (min-width: 1025px) {
+
+}

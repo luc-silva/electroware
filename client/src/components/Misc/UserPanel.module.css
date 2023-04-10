@@ -1,0 +1,32 @@
+.panel__main,
+.panel__main--logged {
+    display: none;
+}
+@media (min-width: 769px) {
+    .panel__main,
+    .panel__main--logged {
+        display: flex;
+        font-size: 0.9rem;
+        color: white;
+    }
+    .panel__main--logged {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .panel__user {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+        margin-left: 1rem;
+    }
+    .panel__user > div {
+        display: flex;
+        flex-direction: column;
+    }
+    .panel__user p {
+        font-size: 0.8rem;
+    }
+}

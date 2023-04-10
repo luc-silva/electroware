@@ -11,112 +11,39 @@
     width: 50%;
     display: flex;
     flex-direction: row;
-    /* padding: 2rem; */
 }
-.header-logo {
-    display: block;
-    align-self: center;
-    font-size: 1.3rem;
-}
-.header-logo a {
-    color: var(--background-color);
-    font-family: Valorax;
-}
-
 .header__form {
     display: none;
     align-items: center;
     gap: 1rem;
     height: 100%;
 }
-.header__form form {
-    display: flex;
-    align-items: center;
-    height: 2rem;
-    width: 100%;
-}
-.header__form input {
-    height: 100%;
-    padding: 0.25rem;
-}
-.header__form input[type="text"] {
-    width: 75%;
-}
-.header__form input[type="submit"]{
-    display: none;
-} 
-.header__form .search-icon {
+.header__panel{
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--main-color);
-    height: 100%;
-    width: 10%;
-    border: 1px solid white;
-    color: white;
-    cursor: pointer;
 }
-.header__user-panel {
-    display: none;
-    flex-direction: row;
-    align-items: center;
-    gap: 1rem;
-    color: white;
-}
-.header__user-panel__main--logged{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.5rem;
-}
-.header__user-panel__main,
-.header__user-panel__main--logged {
-    font-size: 0.9rem;
-    color: var(--background-color);
-}
-.header__user-panel__user{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    cursor: pointer;
-    margin-left: 1rem;
-}
-.header__user-panel__user > div{
-    display: flex;
-    flex-direction: column;
-}
-.header__user-panel__user p{
-    font-size: 0.8rem;
-}
+
 @media (min-width: 769px) and (max-width: 1024px) {
-    .header{
+    .header {
         display: grid;
         grid-template-columns: repeat(3, auto);
         justify-content: space-between;
     }
-    .header__form{
+    .header__form {
         display: flex;
-    }
-    .header__user-panel{
-        display: flex;
-    }
-    .header__form{
         width: 40vw;
     }
 }
-@media (min-width: 1025px){
-    .header{
+@media (min-width: 1025px) {
+    .header {
         display: grid;
         grid-template-columns: repeat(3, auto);
         justify-content: space-between;
     }
-    .header__form{
+    
+    .header__form {
         display: flex;
-    }
-    .header__user-panel{
-        display: flex;
-    }
-    .header__form{
         width: 40vw;
     }
 }

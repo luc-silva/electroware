@@ -1,0 +1,9 @@
+.header-logo {
+    display: block;
+    align-self: center;
+    font-size: 1.3rem;
+}
+.header-logo a {
+    color: var(--background-color);
+    font-family: Valorax;
+}
