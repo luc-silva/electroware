@@ -10,6 +10,7 @@ import { wishlistRouter } from "./routes/wishlist.routes";
 import { shoppingCartRouter } from "./routes/shoppingCart.routes";
 import { transactionRouter } from "./routes/transaction.routes";
 import { errorMiddleware } from "./middleware/error";
+import { imageRouter } from "./routes/image.routes"; 
 
 function main() {
     let app = express();
@@ -22,6 +23,7 @@ function main() {
 
     app.use(cors());
     app.use(express.json());
+    // app.use(express.);
     app.use(express.urlencoded({ extended: false }));
 
     app.listen(6060);
@@ -35,6 +37,7 @@ function main() {
     app.use("/api/shoppingcart", shoppingCartRouter);
     app.use("/api/wishlist", wishlistRouter);
     app.use("/api/transaction", transactionRouter);
+    app.use("/api/image", imageRouter);
     app.use(errorMiddleware);
 }
  
