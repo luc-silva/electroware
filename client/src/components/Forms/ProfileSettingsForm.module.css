@@ -7,14 +7,15 @@
     resize: none;
 }
 .edit-profile__form textarea,
-.edit-profile__form input {
+.edit-profile__form input[type="file"],
+.edit-profile__form input[type="text"] {
     font-size: 1rem;
     padding: 0.5rem;
     width: 100%;
     background-color: var(--background-color-faded);
     border-radius: 5px;
 }
-.form__main{
+.form__main {
     display: flex;
     flex-direction: column;
     gap: 1rem;

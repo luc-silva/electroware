@@ -9,7 +9,7 @@
     padding: 0.25rem;
 }
 .search__input {
-    width: 75%;
+    width: 100%;
 }
 .search__form input[type="submit"] {
     display: none;

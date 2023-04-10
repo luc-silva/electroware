@@ -1,0 +1,59 @@
+.delete-account {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+}
+.delete-account section h3 {
+    font-size: 1.4rem;
+    color: var(--title-color);
+}
+.delete-account__title {
+    font-size: 1.3rem;
+    color: var(--title-color);
+}
+.button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    width: 100%;
+    background-color: var(--warning-background-v1);
+    color: var(--warning-text-v1);
+    border-radius: 5px;
+}
+.button-container button {
+    padding: 0.5rem 1rem;
+    background-color: var(--warning-text-v1);
+    font-weight: bolder;
+    color: white;
+    border-radius: 5px;
+}
+.warning-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.warning-info > svg {
+    width: 50%;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .button-container {
+        flex-direction: row;
+    }
+    .button-container div {
+        text-align: justify;
+        width: 50%;
+    }
+}
+@media (min-width: 1025px) {
+    .button-container {
+        flex-direction: row;
+    }
+    .button-container div {
+        text-align: justify;
+        width: 50%;
+    }
+}
