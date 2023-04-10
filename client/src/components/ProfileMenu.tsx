@@ -25,7 +25,7 @@ export const ProfileMenu = ({
         })
     }
 
-    if (!isActive) return null;
+    if (!isActive || window.innerWidth < 769) return null;
     return (
         <div className={styles["profile-menu"]} role="menu" onClick={() =>{toggleMenu()}}>
             <div className={styles["profile-menu__links"]}>
@@ -37,7 +37,7 @@ export const ProfileMenu = ({
                     <Note  size={20} color="var(--text-color)" />
                     <p>Anunciar Produto</p>
                 </Link>
-                <Link to={"/config"}>
+                <Link to={"/settings"}>
                     <Sliders size={20} color="var(--text-color)"/>
                     <p>Configurações</p>
                 </Link>
