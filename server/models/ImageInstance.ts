@@ -5,6 +5,7 @@ const ImageInstanceSchema = new Schema(
         user: { type: Types.ObjectId, ref: "User", required: true },
         product: { type: Types.ObjectId, ref: "Product" },
         data: { type: Buffer, required: true },
+        imageType: { type: String, required: true},
         imageName: { type: String, required: true },
         imageAlt: { type: String, default: "" },
     },

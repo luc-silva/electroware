@@ -10,11 +10,10 @@ const UserSchema = new Schema(
             state: { type: String, required: true },
             country: { type: String, required: true },
         },
-        profilePic: { type: String, default: "" },
         email: { required: true, unique: true, type: String },
         password: { required: true, type: String },
         funds: { type: Number, default: 0 },
-        description: { type: String, maxLength:250 },  
+        description: { type: String, maxLength: 250, default: "" },
     },
     { timestamps: true }
 );

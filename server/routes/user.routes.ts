@@ -7,6 +7,7 @@ import {
     getEveryUserProductsReviews,
 } from "../controllers/reviewsController";
 import {
+    updateUserInfo,
     registerUser,
     loginUser,
     getUserProducts,
@@ -15,6 +16,7 @@ import {
     getUserPrivateInfo,
     deleteAccount,
 } from "../controllers/userController";
+import { imageUploader } from "../middleware/buffer";
 
 export const userRouter = Router();
 userRouter.post("/user/login", loginUser);
@@ -30,3 +32,4 @@ userRouter.post("/user/billings/add", protectedRoute, addFunds);
 userRouter.get("/user/private/:id", protectedRoute, getUserPrivateInfo);
 userRouter.get("/user/:id/transactions", protectedRoute, getUserTransactions);
 userRouter.delete("/user/:id", protectedRoute, deleteAccount);
+userRouter.put("/user/:id", imageUploader, protectedRoute, deleteAccount);

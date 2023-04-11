@@ -10,6 +10,7 @@ import ProductInstance from "../models/ProductInstance";
 import { IUser } from "../interface";
 import { Request, Response } from "express";
 import WishlistItem from "../models/WishlistItem";
+import ImageInstance from "../models/ImageInstance";
 
 interface IUserDTO extends IUser {
     password: string;
@@ -94,9 +95,15 @@ export const registerUser = asyncHandler(
         };
 
         //make transaction later
-        let user = (await User.create(newUser)) as IUser;
+        let session = await mongoose.startSession();
+        await session.withTransaction(async () => {
+            let user = await User.create(newUser);
 
-        response.status(202).json({ message:"Usuário Criado." });
+            await session.commitTransaction();
+        });
+
+        session.endSession();
+        response.status(202).json({ message: "Usuário Criado." });
     }
 );
 
@@ -231,28 +238,79 @@ export const deleteAccount = asyncHandler(
                     session,
                 }
             );
-            await Review.deleteMany(
-                { productOwner: user.id },
-                { session }
-            );
-            await WishlistItem.deleteMany(
-                { user: user.id },
-                { session }
-            );
+            await Review.deleteMany({ productOwner: user.id }, { session });
+            await WishlistItem.deleteMany({ user: user.id }, { session });
 
-            await ProductInstance.deleteMany(
-                { user: user.id },
-                { session }
-            );
-            await ProductInstance.deleteMany(
-                { seller: user.id },
-                { session }
-            );
+            await ProductInstance.deleteMany({ user: user.id }, { session });
+            await ProductInstance.deleteMany({ seller: user.id }, { session });
 
-            let deletedUser = await User.findByIdAndDelete(user.id);
+            await User.findByIdAndDelete(user.id);
             await session.commitTransaction();
         });
         session.endSession();
         response.status(200).json({ message: "Conta Excluida." });
+    }
+);
+
+//put, need param
+export const updateUserInfo = asyncHandler(
+    async (request: Request, response: Response) => {
+        if (
+            !request.user ||
+            !request.params ||
+            !request.file ||
+            !request.body
+        ) {
+            response.status(400);
+            throw new Error("Dados Inválidos.");
+        }
+        let { name, location, description } = request.body;
+        let { buffer } = request.file;
+        let { id } = request.params;
+
+        let session = await mongoose.startSession();
+        await session.withTransaction(async () => {
+            let userExist = await User.findById(id);
+            if (!userExist) {
+                response.status(404);
+                throw new Error("Usuário Não Encontrado.");
+            }
+
+            let imageExist = await ImageInstance.findOne({
+                user: userExist.id,
+                imageType: "userImage",
+            });
+
+            if (!imageExist) {
+                await ImageInstance.create(
+                    {
+                        user: userExist.id,
+                        data: buffer,
+                        imageType: "userImage",
+                        imageName: "pic-" + userExist.id,
+                        imageAlt: "User Image",
+                    },
+                    { session }
+                );
+            } else {
+                await ImageInstance.findOneAndUpdate(
+                    { user: userExist.id, imageType: "userImage" },
+                    {
+                        buffer,
+                    },
+                    { session }
+                );
+            }
+
+            const user = await User.findByIdAndUpdate(
+                id,
+                { name, location, description },
+                { session }
+            );
+
+            await session.commitTransaction();
+        });
+        session.endSession();
+        response.status(201).json({ message: "Feito." });
     }
 );
