@@ -20,6 +20,11 @@ class ImageService extends Service {
             return data.data;
         });
     }
+    public async getProductImage(productId: string) {
+        return axios.get(this.baseUrl + productId).then(({ data }) => {
+            return data.data;
+        });
+    }
 }
 
 export default new ImageService();
