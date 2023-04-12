@@ -15,7 +15,6 @@ interface IUser {
         state: string;
         country: string;
     };
-    profilePic: string;
     email: string;
     funds: number;
     description: string;

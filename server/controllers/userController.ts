@@ -10,7 +10,7 @@ import ProductInstance from "../models/ProductInstance";
 import { IUser } from "../interface";
 import { Request, Response } from "express";
 import WishlistItem from "../models/WishlistItem";
-import ImageInstance from "../models/ImageInstance";
+import UserValidator from "../validators/UserValidator";
 
 interface IUserDTO extends IUser {
     password: string;
@@ -122,6 +122,7 @@ export const getProfileInfo = asyncHandler(
             email: 1,
             createdAt: 1,
             location: 1,
+            description: 1,
         });
         if (!user) {
             response.status(404);
@@ -255,62 +256,28 @@ export const deleteAccount = asyncHandler(
 //put, need param
 export const updateUserInfo = asyncHandler(
     async (request: Request, response: Response) => {
-        if (
-            !request.user ||
-            !request.params ||
-            !request.file ||
-            !request.body
-        ) {
+        if (!request.user || !request.body || !request.params) {
             response.status(400);
             throw new Error("Dados Inválidos.");
         }
+
+        UserValidator.validate(response, request.body);
         let { name, location, description } = request.body;
-        let { buffer } = request.file;
         let { id } = request.params;
 
-        let session = await mongoose.startSession();
-        await session.withTransaction(async () => {
-            let userExist = await User.findById(id);
-            if (!userExist) {
-                response.status(404);
-                throw new Error("Usuário Não Encontrado.");
-            }
+        let userExist = await User.findById(id);
+        if (!userExist) {
+            response.status(404);
+            throw new Error("Usuário Não Encontrado.");
+        }
 
-            let imageExist = await ImageInstance.findOne({
-                user: userExist.id,
-                imageType: "userImage",
-            });
+        if (userExist.id !== id) {
+            response.status(401);
+            throw new Error("Não Autorizado.");
+        }
 
-            if (!imageExist) {
-                await ImageInstance.create(
-                    {
-                        user: userExist.id,
-                        data: buffer,
-                        imageType: "userImage",
-                        imageName: "pic-" + userExist.id,
-                        imageAlt: "User Image",
-                    },
-                    { session }
-                );
-            } else {
-                await ImageInstance.findOneAndUpdate(
-                    { user: userExist.id, imageType: "userImage" },
-                    {
-                        buffer,
-                    },
-                    { session }
-                );
-            }
+        await User.findByIdAndUpdate(id, { name, location, description });
 
-            const user = await User.findByIdAndUpdate(
-                id,
-                { name, location, description },
-                { session }
-            );
-
-            await session.commitTransaction();
-        });
-        session.endSession();
         response.status(201).json({ message: "Feito." });
     }
 );

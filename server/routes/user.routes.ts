@@ -32,4 +32,4 @@ userRouter.post("/user/billings/add", protectedRoute, addFunds);
 userRouter.get("/user/private/:id", protectedRoute, getUserPrivateInfo);
 userRouter.get("/user/:id/transactions", protectedRoute, getUserTransactions);
 userRouter.delete("/user/:id", protectedRoute, deleteAccount);
-userRouter.put("/user/:id", imageUploader, protectedRoute, deleteAccount);
+userRouter.patch("/user/:id", protectedRoute, updateUserInfo);
