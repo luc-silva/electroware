@@ -64,22 +64,31 @@ export const updateImage = asyncHandler(
             throw new Error("Usuário não Encontrado.");
         }
 
-        let image = await ImageInstance.findOne({ user: user.id });
-        if (!image) {
-            response.status(404);
-            throw new Error("Imagem não Encontrada.");
-        }
-
-        if (image.user !== user.id) {
-            response.status(401);
-            throw new Error("Não Autorizado");
-        }
-
-        let updatedImage = await ImageInstance.findByIdAndUpdate(image.id, {
-            buffer,
-            imageName: image.id,
+        let imageAlreadyExist = await ImageInstance.findOne({
+            user: user.id,
+            imageType: "userImage",
         });
+        if (imageAlreadyExist) {
+            if (imageAlreadyExist.user !== user.id) {
+                response.status(401);
+                throw new Error("Não Autorizado");
+            }
+            await ImageInstance.findByIdAndUpdate(imageAlreadyExist.id, {
+                data: buffer,
+                imageName: `pic-${user.id}`,
+                imageType: "userImage",
+                imageAlt: "User Profile Picture"
+            });
+        } else {
+            await ImageInstance.create({
+                user: user.id,
+                data: buffer,
+                imageName: `pic-${user.id}`,
+                imageType: "userImage",
+                imageAlt: "User Profile Picture"
+            });
+        }
 
-        response.status(200).json(updatedImage);
+        response.status(200).json({message:"Foto Atualizada."});
     }
 );

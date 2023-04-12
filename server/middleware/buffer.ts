@@ -17,7 +17,7 @@ const upload = multer({
             callback(new Error("Imagem Inválida"));
         }
     },
-}).single("userImage");
+}).single("imageField");
 
 export const imageUploader = asyncHandler(
     async (request: Request, response: Response, next: NextFunction) => {
