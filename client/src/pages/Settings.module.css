@@ -13,7 +13,7 @@
     flex-direction: column;
     gap: 0.5rem;
     padding: 0 2rem;
-    height: 90vh;
+    min-height: 90vh;
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {

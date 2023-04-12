@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import UserService from "../../services/UserService";
 import { SubmitBtn } from "../Buttons/SubmitBtn";
-import { ImageInput } from "../Inputs/ImageInput";
+import { UserImageInput } from "../Inputs/UserImageInput";
 import { LocationInput } from "../Inputs/LocationInput";
 import { NameInput } from "../Inputs/NameInput";
 import styles from "./ProfileSettingsForm.module.css";
@@ -62,7 +62,7 @@ export const ProfileSettingsForm = ({ user }: { user: UserProps }) => {
         >
             <div className={styles["form__image"]}>
                 <div className={styles["image-input__container"]}>
-                    <ImageInput userId={user.id} type="userImage" />
+                    <UserImageInput user={user} />
                 </div>
             </div>
             <div className={styles["form__main"]}>
