@@ -276,7 +276,11 @@ export const updateUserInfo = asyncHandler(
             throw new Error("Não Autorizado.");
         }
 
-        await User.findByIdAndUpdate(id, { name, location, description });
+        await User.findByIdAndUpdate(id, {
+            name,
+            location,
+            description,
+        });
 
         response.status(201).json({ message: "Feito." });
     }
