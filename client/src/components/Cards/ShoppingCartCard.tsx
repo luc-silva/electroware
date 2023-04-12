@@ -1,10 +1,12 @@
+import { useEffect, useState } from "react";
 import ProductService from "../../services/ProductService";
 import ShoppingCartService from "../../services/ShoppingCartService";
 import UserService from "../../services/UserService";
 
 import { Trash } from "phosphor-react";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ImageBox } from "../Misc/ImageBox";
+
 import styles from "./ShoppingCartCard.module.css";
 
 //rename to ShoppingCartCard
@@ -15,31 +17,37 @@ export const ProductCardSmall = ({
     instanceID: string;
     userToken: string;
 }) => {
-    let [instanceData, setInstanceData] = useState({
+    let cardInitialState = {
         id: "",
         product: "",
         price: 0,
         quantity: 0,
-    });
-    let [product, setProduct] = useState({
+    };
+    let productInitialState = {
         id: "",
         category: "",
         name: "",
         owner: "",
-    });
+    };
+
+    let [instanceData, setInstanceData] = useState(cardInitialState);
+    let [product, setProduct] = useState(productInitialState);
     let [productSeller, setSeller] = useState({ first: "", last: "" });
+    let [loading, toggleLoading] = useState(true);
 
     useEffect(() => {
         ShoppingCartService.getSingleInstance(instanceID, userToken).then(
             setInstanceData
         );
-        ProductService.getProductDetails(instanceData.product).then(setProduct);
+        ProductService.getProductDetails(instanceData.product)
+            .then(setProduct)
+            .then(() => {
+                toggleLoading(false);
+            });
         UserService.getUserInfo(product.owner).then((data) => {
             setSeller(data.name);
         });
     }, []);
-
-    //useEffect(() => {      }, [product]);
 
     async function removeItem() {
         await ShoppingCartService.deleteCartInstance(instanceID, userToken);
@@ -49,7 +57,7 @@ export const ProductCardSmall = ({
         <div className={styles["container__item"]}>
             <Link to={`/product/${product.id}`}>
                 <div className={styles["container__picture"]}>
-                    <img src="" alt="" />
+                    <ImageBox isLoading={loading} />
                 </div>
             </Link>
             <div className={styles["container__details"]}>

@@ -9,7 +9,6 @@
 .container__picture {
     width: 100px;
     height: 100%;
-    background-color: black;
 }
 .container__details {
     display: flex;
