@@ -17,7 +17,7 @@ interface LogInBody {
 
 class UserService extends Service {
     private baseUrl = "http://localhost:6060/api/user/";
-    
+
     constructor() {
         super();
     }
@@ -89,7 +89,15 @@ class UserService extends Service {
     }
 
     public async deleteAccount(userId: string, token: string) {
-        return axios.delete(this.baseUrl + userId, this.createHeader(token));
+        return await axios.delete(this.baseUrl + userId, this.createHeader(token));
+    }
+
+    public async updateAccountDetails(
+        userId: string,
+        token: string,
+        body: any
+    ) {
+        return await axios.patch(this.baseUrl + userId, body, this.createHeader(token));
     }
 }
 
