@@ -1,13 +1,13 @@
 .edit-profile__form {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 0.5rem;
 }
 .edit-profile__form textarea {
     resize: none;
 }
 .edit-profile__form textarea,
-.edit-profile__form input[type="file"],
 .edit-profile__form input[type="text"] {
     font-size: 1rem;
     padding: 0.5rem;
@@ -24,13 +24,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 250px;
+    height: 250px;
     gap: 0.5rem;
-}
-.image-input__container input[type="file"] {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
 }
 .input__larger-container {
     display: flex;
@@ -49,10 +45,15 @@
         flex-direction: row;
         justify-content: space-between;
     }
+    .image-input__container{
+        width: 200px;
+        height: 200px;
+    }
     .form__main {
         width: 70%;
     }
-    .form-image {
+    .form__image {
+        align-items: center;
         width: 30%;
     }
 }
@@ -64,7 +65,9 @@
     .form__main {
         width: 70%;
     }
-    .form-image {
+    .form__image {
+        align-items: center;
+
         width: 30%;
     }
 }
