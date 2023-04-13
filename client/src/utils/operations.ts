@@ -12,3 +12,10 @@ export function getTotalValue(items:ShoppingCartCardProps[]) {
     });
     return total;
 }
+export function createImage(bufferArr:any) {
+    let blob = new Blob([new Uint8Array(bufferArr)], {
+        type: "image/jpeg",
+    });
+    let srcBlob = URL.createObjectURL(blob);
+    return (srcBlob)
+}

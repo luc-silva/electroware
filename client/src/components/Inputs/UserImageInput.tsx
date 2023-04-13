@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import { ChangeEvent, useEffect, useState } from "react";
 import ImageService from "../../services/ImageService";
+import { createImage } from "../../utils/operations";
 import { ImageBox } from "../Misc/ImageBox";
 import styles from "./UserImageInput.module.css";
 
@@ -12,25 +13,20 @@ export const UserImageInput = ({ user }: { user: UserProps }) => {
 
     useEffect(() => {
         ImageService.getUserImage(user.id)
-            .then(setSource)
+            .then(({data}) => {
+                setImage(createImage(data));
+            })
             .then(() => {
                 toggleImageLoading(false);
             });
     }, []);
 
-    async function setSource({ data }: AxiosResponse) {
-        let blob = new Blob([new Uint8Array(data)], {
-            type: "image/jpeg",
-        });
-        let srcBlob = URL.createObjectURL(blob);
-        setImage(srcBlob);
-    }
     async function handleChange(event: ChangeEvent<HTMLInputElement>) {
-        let formData = new FormData()
+        let formData = new FormData();
 
         let files = event.target.files;
         if (event.target && files && files[0] instanceof File) {
-            formData.append("imageField", files[0])
+            formData.append("imageField", files[0]);
             await ImageService.uploadImage(formData, user.token);
         }
     }
