@@ -8,6 +8,7 @@ import User from "../models/User";
 import Category from "../models/Category";
 import Review from "../models/Review";
 import ProductValidator from "../validators/ProductValidator";
+import ImageInstance from "../models/ImageInstance";
 
 //get
 export const getRecentProducts = asyncHandler(
@@ -103,7 +104,7 @@ export const getProductFromCategory = asyncHandler(
 //post
 export const createProduct = asyncHandler(
     async (request: Request, response: Response) => {
-        if (!request.body || !request.user) {
+        if (!request.body || !request.user || !request.file) {
             response.status(400);
             throw new Error("Insira os dados restantes.");
         }
@@ -114,25 +115,39 @@ export const createProduct = asyncHandler(
             throw new Error("Usuário não encontrado");
         }
 
-        ProductValidator.validate(response, request.body);
+        let requestBody = JSON.parse(request.body.product);
+        ProductValidator.validate(response, requestBody);
+        
         let { name, price, category, quantity, description, brand }: IProduct =
-            request.body;
-            
+            requestBody;
+
         let convertedQuantity: number = Number(quantity);
         let convertedPrice: number = Number(price);
 
+        let { buffer } = request.file;
 
-        let createdProduct = await Product.create({
-            owner: user.id,
-            name,
-            category,
-            brand,
-            description,
-            price: convertedPrice,
-            quantity: convertedQuantity,
+        let session = await mongoose.startSession();
+        await session.withTransaction(async () => {
+            let product = await Product.create({
+                owner: request.user,
+                name,
+                category,
+                brand,
+                description,
+                price: convertedPrice,
+                quantity: convertedQuantity,
+            });
+            await ImageInstance.create({
+                user: request.user,
+                product: product.id,
+                data: buffer,
+                imageType: "productImage",
+                imageName: product.name,
+                imageAlt: `Product ${product.name}`,
+            });
         });
 
-        response.status(201).json(createdProduct);
+        response.status(201).json({ message: "Anúncio Criado." });
     }
 );
 

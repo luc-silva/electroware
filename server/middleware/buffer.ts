@@ -25,8 +25,6 @@ export const imageUploader = asyncHandler(
             if (err) {
                 response.status(400).json({ message: err.message });
             } else {
-                console.log(request.body);
-                console.log(request.file);
                 next();
             }
         });

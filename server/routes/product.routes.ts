@@ -9,6 +9,7 @@ import {
     deleteProduct,
 } from "../controllers/productController";
 import { getProductReviews } from "../controllers/reviewsController";
+import { imageUploader } from "../middleware/buffer";
 
 export const productRouter = Router();
 
@@ -20,4 +21,4 @@ productRouter.put("/:id", protectedRoute, updateProduct);
 productRouter.delete("/:id", protectedRoute, deleteProduct);
 
 productRouter.post("/search/:keyword", searchProduct);
-productRouter.post("/create", protectedRoute, createProduct);
+productRouter.post("/create", protectedRoute, imageUploader, createProduct);
