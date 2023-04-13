@@ -1,0 +1,25 @@
+
+.larger-input-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    width: 100%;
+}
+.larger-input-container .input-container {
+    width: 50%;
+}
+.input-container {
+    display: flex;
+    flex-direction: column;
+}
+.input-container input,
+.input-container textarea,
+.input-container select {
+    background-color: var(--background-color-faded);
+    padding: 0.5rem;
+    width: 100%;
+}
+.input-container textarea {
+    resize: none;
+    min-height: 6rem;
+}
