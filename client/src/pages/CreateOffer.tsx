@@ -1,9 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { SubmitBtn } from "../components/Buttons/SubmitBtn";
 import styles from "./CreateOffer.module.css";
 
-import CategoryService from "../services/CategoryService";
 import ProductService from "../services/ProductService";
 import { ImageBox } from "../components/Misc/ImageBox";
 import { CreateOfferForm } from "../components/Forms/CreateOfferForm";
@@ -22,10 +20,14 @@ export const CreateOffer = ({
         }
     }, []);
 
+    let blobInitialState = null as File | null;
+    let [productBlob, setProductBlob] = useState(blobInitialState);
+
     let [productImage, setProductImage] = useState("");
     function setImage(event: ChangeEvent<HTMLInputElement>) {
         let files = event.target.files;
         if (files && files[0]) {
+            setProductBlob(files[0]);
             setProductImage(URL.createObjectURL(files[0]));
         }
     }
@@ -42,11 +44,18 @@ export const CreateOffer = ({
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        
+        let formData = new FormData();
 
-        // await ProductService.createProduct(form, user.token).then((data) => {
-        //     navigate(`/product/${data._id}`);
-        // });
+        if (productBlob instanceof File) {
+            formData.append("imageField", productBlob);
+            formData.append("product", JSON.stringify(form, null));
+
+            await ProductService.createProduct(formData, user.token).then(
+                (data) => {
+                    navigate(`/product/${data._id}`);
+                }
+            );
+        }
     }
 
     return (

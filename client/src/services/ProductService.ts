@@ -1,22 +1,13 @@
 import axios from "axios";
 import Service from "./Service";
 
-interface ProductBody {
-    description: string;
-    name: string;
-    brand: string;
-    category: string;
-    price: number;
-    quantity: number;
-}
-
 class ProductService extends Service {
     private baseUrl = "http://localhost:6060/api/product/";
     constructor() {
         super();
     }
 
-    public async createProduct(data: ProductBody, token: string) {
+    public async createProduct(data: FormData, token: string) {
         return await axios
             .post(this.baseUrl + "create", data, this.createHeader(token))
             .then(({ data }) => {
