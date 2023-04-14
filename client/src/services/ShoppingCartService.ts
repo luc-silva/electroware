@@ -39,7 +39,7 @@ class ShoppingCartService extends Service {
 
     public async deleteCartInstance(instanceId: string, token: string) {
         return axios
-            .delete(this.baseUrl + instanceId, this.createHeader(token))
+            .delete(this.baseUrl + `/${instanceId}`, this.createHeader(token))
             .then(({ data }) => {
                 return data;
             });

@@ -97,7 +97,7 @@ export const removeInstance = asyncHandler(
             throw new Error("Usuário não encontrado.");
         }
 
-        if (instance.user !== user.id) {
+        if (instance.user.toString() !== user.id) {
             response.status(401);
             throw new Error("Não autorizado.");
         }
