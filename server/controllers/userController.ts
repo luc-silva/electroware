@@ -11,6 +11,7 @@ import { IUser } from "../interface";
 import { Request, Response } from "express";
 import WishlistItem from "../models/WishlistItem";
 import UserValidator from "../validators/UserValidator";
+import ImageInstance from "../models/ImageInstance";
 
 interface IUserDTO extends IUser {
     password: string;
@@ -128,6 +129,9 @@ export const getProfileInfo = asyncHandler(
             response.status(404);
             throw new Error("Usuario não encontrado");
         }
+
+        let image = ImageInstance.findOne({user:user.id, imageType: "userImage"})
+        
         response.json(user);
     }
 );

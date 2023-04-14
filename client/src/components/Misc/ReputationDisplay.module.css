@@ -1,0 +1,45 @@
+.user-profile__details__reputation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.user-profile__details__reputation p {
+    font-size: 0.8rem;
+    color: var(--text-color);
+}
+.user-profile__details__reputation strong {
+    font-size: 1.3rem;
+    line-height: 0;
+}
+.user-profile__details__reputation > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+.user-profile__description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+.user-profile__description p {
+    color: var(--text-color);
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .user-profile__details__reputation {
+        align-items: flex-start;
+    }
+    .user-profile__details__reputation strong {
+        font-size: 1.5rem;
+    }
+}
+@media (min-width: 1025px) {
+    .user-profile__details__reputation {
+        align-items: flex-start;
+    }
+    .user-profile__details__reputation strong {
+        font-size: 1.5rem;
+    }
+}

@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { userProfileInitialValues } from "../constants/initialStates";
+import {
+    imageInitialValue,
+    userProfileInitialValues,
+} from "../constants/initialStates";
 
 //
 import { StarsContainer } from "../components/Misc/StarsContainer";
 import UserService from "../services/UserService";
-import { getAverage } from "../utils/operations";
+import { createImage, getAverage } from "../utils/operations";
 
 //
 import styles from "./UserProfile.module.css";
+import { ImageBox } from "../components/Misc/ImageBox";
+import ImageService from "../services/ImageService";
+import { UserProducts } from "../components/Sections/UserProducts";
+import { ReputationDisplay } from "../components/Misc/ReputationDisplay";
 
 export const UserProfile = () => {
     let { id } = useParams();
+    let [userImage, setUserImage] = useState(imageInitialValue);
     let [user, setUser] = useState(userProfileInitialValues);
     let [products, setProducts] = useState([]);
     let [reviews, setReviews] = useState([]);
@@ -20,18 +28,29 @@ export const UserProfile = () => {
         if (id) {
             UserService.getUserInfo(id).then((data) => setUser(data));
             UserService.getUserProducts(id).then((data) => setProducts(data));
-            UserService.getUserProductsReviews(id).then((data) =>
+            UserService.getUserProductsReceivedReviews(id).then((data) =>
                 setReviews(data)
             );
         }
     }, [id]);
+    useEffect(() => {
+        if (id) {
+            ImageService.getUserImage(id).then((data) => {
+                console.log(data);
+                setUserImage(data.data);
+            });
+        }
+    }, [user]);
 
     return (
         <main role={"main"} className={styles["user-profile"]}>
             <section className={styles["user-profile__main"]}>
                 <div className={styles["user-profile__info"]}>
                     <div className={styles["user-profile__picture"]}>
-                        <img src="" alt="" />
+                        <ImageBox
+                            isLoading={false}
+                            imgSrc={createImage(userImage)}
+                        />
                     </div>
                 </div>
                 <div className={styles["user-profile__details"]}>
@@ -39,20 +58,7 @@ export const UserProfile = () => {
                         <h2>{`${user.name.first} ${user.name.last}`}</h2>
                         <p>{`${user.location.state}, ${user.location.country}`}</p>
                     </div>
-                    <div
-                        className={styles["user-profile__details__reputation"]}
-                    >
-                        <p>Reputação</p>
-                        <div>
-                            <strong>{getAverage(reviews)}</strong>
-                            <div>
-                                <StarsContainer
-                                    size={20}
-                                    stars={getAverage(reviews)}
-                                />
-                            </div>
-                        </div>
-                    </div>
+                    <ReputationDisplay reviews={reviews} />
                     <div className={styles["user-profile__description"]}>
                         <div className={styles["description__title"]}>
                             <p>Descrição</p>
@@ -66,32 +72,7 @@ export const UserProfile = () => {
                     </div>
                 </div>
             </section>
-            <section className={styles["user-profile__products"]}>
-                <div className={styles["user-profile__products__title"]}>
-                    <h2>Produtos a venda</h2>
-                </div>
-                <div className={styles["user-profile__products__container"]}>
-                    {products.map(({ name, _id, price }) => {
-                        return (
-                            <Link to={`/product/${_id}`}>
-                                <div
-                                    className={
-                                        styles["user-profile__product__item"]
-                                    }
-                                >
-                                    <div className={styles["product__picture"]}>
-                                        <img src="" alt="" />
-                                    </div>
-                                    <div className={styles["product__main"]}>
-                                        <p>{name}</p>
-                                        <strong>{`${price} R$`}</strong>
-                                    </div>
-                                </div>
-                            </Link>
-                        );
-                    })}
-                </div>
-            </section>
+            <UserProducts products={products} />
         </main>
     );
 };
