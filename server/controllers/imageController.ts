@@ -13,6 +13,7 @@ export const getUserImage = asyncHandler(
 
         let userImage = await ImageInstance.findOne({
             user: request.params.id,
+            imageType: "userImage",
         });
         if (!userImage) {
             response.status(404);
@@ -77,7 +78,7 @@ export const updateImage = asyncHandler(
                 data: buffer,
                 imageName: `pic-${user.id}`,
                 imageType: "userImage",
-                imageAlt: "User Profile Picture"
+                imageAlt: "User Profile Picture",
             });
         } else {
             await ImageInstance.create({
@@ -85,10 +86,10 @@ export const updateImage = asyncHandler(
                 data: buffer,
                 imageName: `pic-${user.id}`,
                 imageType: "userImage",
-                imageAlt: "User Profile Picture"
+                imageAlt: "User Profile Picture",
             });
         }
 
-        response.status(200).json({message:"Foto Atualizada."});
+        response.status(200).json({ message: "Foto Atualizada." });
     }
 );
