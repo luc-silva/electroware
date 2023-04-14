@@ -1,6 +1,8 @@
+import { useEffect } from "react";
+
+//style
 import styles from "./InfoToast.module.css";
 import { X, Info, WarningCircle } from "phosphor-react";
-import { useEffect } from "react";
 
 type ToastTypes = "warning" | "info";
 

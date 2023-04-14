@@ -2,6 +2,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getAverage } from "../utils/operations";
+import { productPageInitialState } from "../constants/initialStates";
 
 //other components
 import { StarsContainer } from "../components/Misc/StarsContainer";
@@ -15,27 +16,15 @@ import ProductService from "../services/ProductService";
 
 export const Product = ({ user }: { user: UserProps }) => {
     let { id } = useParams();
-    let productInitialState: ProductData = {
-        image: { data: "" },
-        product: {
-            _id: "",
-            category: "",
-            name: "",
-            description: "",
-            owner: "",
-            price: 0,
-            quantity: 0,
-        },
-    };
-    let [productDetails, setProductDetails] = useState(productInitialState);
-    let [productReviews, setProductReviews] = useState([]);
-    let [infoStatus, toggleInfoStatus] = useState(true)
 
+    let [productDetails, setProductDetails] = useState(productPageInitialState);
+    let [productReviews, setProductReviews] = useState([]);
+    let [infoStatus, toggleInfoStatus] = useState(true);
 
     useEffect(() => {
         if (id) {
             ProductService.getProductDetails(id).then((data: any) => {
-                toggleInfoStatus(false)
+                toggleInfoStatus(false);
                 setProductDetails(data);
             });
         }
@@ -52,7 +41,11 @@ export const Product = ({ user }: { user: UserProps }) => {
     }
     return (
         <main className={styles["product"]}>
-            <ProductAbout user={user} productDetails={productDetails} status={infoStatus}/>
+            <ProductAbout
+                user={user}
+                productDetails={productDetails}
+                status={infoStatus}
+            />
             <section className={styles["product__ratings"]}>
                 <div className={styles["ratings-main"]}>
                     <div className={styles["ratings__title"]}>

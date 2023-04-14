@@ -6,17 +6,10 @@ import { AxiosError } from "axios";
 import { InfoToast } from "../components/InfoToast";
 import { SubmitBtn } from "../components/Buttons/SubmitBtn";
 import UserService from "../services/UserService";
+import { registrationFormInitialValues } from "../constants/initialStates";
 
 export const Registration = () => {
-    let formInitialValues = {
-        first: "",
-        last: "",
-        state: "",
-        country: "",
-        email: "",
-        password: "",
-    };
-    let [form, setForm] = useState(formInitialValues);
+    let [form, setForm] = useState(registrationFormInitialValues);
     const navigate = useNavigate();
 
     function handleChange(event: FormEvent<HTMLFormElement>) {

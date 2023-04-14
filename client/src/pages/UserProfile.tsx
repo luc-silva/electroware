@@ -1,25 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { userProfileInitialValues } from "../constants/initialStates";
+
+//
 import { StarsContainer } from "../components/Misc/StarsContainer";
-import styles from "./UserProfile.module.css";
 import UserService from "../services/UserService";
 import { getAverage } from "../utils/operations";
 
+//
+import styles from "./UserProfile.module.css";
+
 export const UserProfile = () => {
     let { id } = useParams();
-    let [user, setUser] = useState({
-        name: {
-            first: "",
-            last: "",
-        },
-        location: {
-            state: "",
-            country: "",
-        },
-        email: "",
-        createdAt: new Date(),
-        description: "",
-    });
+    let [user, setUser] = useState(userProfileInitialValues);
     let [products, setProducts] = useState([]);
     let [reviews, setReviews] = useState([]);
 

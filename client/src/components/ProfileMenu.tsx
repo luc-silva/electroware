@@ -1,5 +1,8 @@
-import { Money, Note, Question, SignOut, Sliders } from "phosphor-react";
 import { Link } from "react-router-dom";
+import { userSessionInitialState } from "../constants/initialStates";
+
+//styles
+import { Money, Note, Question, SignOut, Sliders } from "phosphor-react";
 import styles from "./ProfileMenu.module.css";
 
 export const ProfileMenu = ({
@@ -16,13 +19,7 @@ export const ProfileMenu = ({
 
     function handleLogout(){
         toggleMenu()
-        setUser({
-            id: "",
-            saldo: 0,
-            username: "",
-            token: "",
-            logged: false,
-        })
+        setUser(userSessionInitialState)
     }
 
     if (!isActive || window.innerWidth < 769) return null;

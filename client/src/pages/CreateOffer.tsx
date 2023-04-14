@@ -5,6 +5,7 @@ import styles from "./CreateOffer.module.css";
 import ProductService from "../services/ProductService";
 import { ImageBox } from "../components/Misc/ImageBox";
 import { CreateOfferForm } from "../components/Forms/CreateOfferForm";
+import { createrOfferFormInitialValue } from "../constants/initialStates";
 
 export const CreateOffer = ({
     user,
@@ -32,15 +33,8 @@ export const CreateOffer = ({
         }
     }
 
-    let formInitialValue = {
-        description: "",
-        name: "",
-        brand: "",
-        category: "",
-        price: 0,
-        quantity: 0,
-    };
-    let [form, setForm] = useState(formInitialValue);
+    
+    let [form, setForm] = useState(createrOfferFormInitialValue);
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();

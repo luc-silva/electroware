@@ -2,13 +2,17 @@ import { format } from "date-fns";
 import styles from "./TransactionCard.module.css";
 
 export const TransactionCard = ({
-    transaction
-}: {transaction:Transaction}) => {
+    transaction,
+}: {
+    transaction: Transaction;
+}) => {
     return (
         <div className={styles["container__item"]}>
             <div className={styles["item__main"]}>
                 <div className={styles["item__date"]}>
-                    <p>{format(new Date(transaction.createdAt), "dd/MM/yyyy")}</p>
+                    <p>
+                        {format(new Date(transaction.createdAt), "dd/MM/yyyy")}
+                    </p>
                 </div>
                 <div className={styles["item__payment-method"]}>
                     <p>FORMA DE PAGMENTO:</p>

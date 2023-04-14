@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import ProductService from "../../services/ProductService";
 import ShoppingCartService from "../../services/ShoppingCartService";
-import UserService from "../../services/UserService";
+import { useEffect, useState } from "react";
+import { createImage } from "../../utils/operations";
+import { cardInitialState } from "../../constants/initialStates";
 
 import { Trash } from "phosphor-react";
 import { Link } from "react-router-dom";
@@ -17,36 +17,17 @@ export const ProductCardSmall = ({
     instanceID: string;
     userToken: string;
 }) => {
-    let cardInitialState = {
-        id: "",
-        product: "",
-        price: 0,
-        quantity: 0,
-    };
-    let productInitialState = {
-        id: "",
-        category: "",
-        name: "",
-        owner: "",
-    };
+    
 
     let [instanceData, setInstanceData] = useState(cardInitialState);
-    let [product, setProduct] = useState(productInitialState);
-    let [productSeller, setSeller] = useState({ first: "", last: "" });
     let [loading, toggleLoading] = useState(true);
 
     useEffect(() => {
-        ShoppingCartService.getSingleInstance(instanceID, userToken).then(
-            setInstanceData
-        );
-        ProductService.getProductDetails(instanceData.product)
-            .then(setProduct)
+        ShoppingCartService.getSingleInstance(instanceID, userToken)
+            .then(setInstanceData)
             .then(() => {
                 toggleLoading(false);
             });
-        UserService.getUserInfo(product.owner).then((data) => {
-            setSeller(data.name);
-        });
     }, []);
 
     async function removeItem() {
@@ -55,14 +36,17 @@ export const ProductCardSmall = ({
 
     return (
         <div className={styles["container__item"]}>
-            <Link to={`/product/${product.id}`}>
+            <Link to={`/product/${instanceData.product._id}`}>
                 <div className={styles["container__picture"]}>
-                    <ImageBox isLoading={loading} />
+                    <ImageBox
+                        isLoading={loading}
+                        imgSrc={createImage(instanceData.productImage.data.data)}
+                    />
                 </div>
             </Link>
             <div className={styles["container__details"]}>
                 <div>
-                    <p>{product.name}</p>
+                    <p>{instanceData.product.name}</p>
                     <div className={styles["container__pricing"]}>
                         <strong>{`R$ ${
                             instanceData.quantity * instanceData.price
@@ -71,7 +55,7 @@ export const ProductCardSmall = ({
                     </div>
                 </div>
                 <div className={styles["container__footer"]}>
-                    <p>{`Vendendor: ${productSeller.first} ${productSeller.last}`}</p>
+                    <p>{`Vendendor: ${instanceData.seller.name.first} ${instanceData.seller.name.last}`}</p>
                     <Trash
                         size={20}
                         color={`var(--text-color)`}

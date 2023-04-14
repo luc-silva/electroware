@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { productInitialState } from "../constants/initialStates";
 import ProductService from "../services/ProductService";
 import UserService from "../services/UserService";
 import { createImage } from "../utils/operations";
@@ -7,15 +8,6 @@ import { ImageBox } from "./Misc/ImageBox";
 import styles from "./SearchResultItem.module.css";
 
 export const SearchResultItem = ({ productId }: { productId: string }) => {
-    const productInitialState = {
-        product: {
-            price: 0,
-            name: "",
-            owner: "",
-            _id: "",
-        },
-        image: { data: null as null | string },
-    };
     let [status, setStatus] = useState(true);
     let [seller, setSeller] = useState({ first: "", last: "" });
     let [productData, setProductData] = useState(productInitialState);

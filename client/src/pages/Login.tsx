@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitBtn } from "../components/Buttons/SubmitBtn";
+import { loginFormInitialValue } from "../constants/initialStates";
 import UserService from "../services/UserService";
 import styles from "./Login.module.css";
 
@@ -11,11 +12,7 @@ export const Login = ({
     user: UserProps;
     setUser: Function;
 }) => {
-    let formInitialValue = {
-        email: "",
-        password: "",
-    };
-    let [form, setForm] = useState(formInitialValue);
+    let [form, setForm] = useState(loginFormInitialValue);
     let navigate = useNavigate();
 
     function handleChange(event: FormEvent<HTMLFormElement>) {

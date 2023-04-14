@@ -1,19 +1,21 @@
-import { AxiosResponse } from "axios";
 import { ChangeEvent, useEffect, useState } from "react";
+import { imageInitialValue } from "../../constants/initialStates";
+
+//components & utils
 import ImageService from "../../services/ImageService";
 import { createImage } from "../../utils/operations";
 import { ImageBox } from "../Misc/ImageBox";
+
+//style
 import styles from "./UserImageInput.module.css";
 
 export const UserImageInput = ({ user }: { user: UserProps }) => {
-    let imageInitialValue = null as null | string;
-
     let [image, setImage] = useState(imageInitialValue);
     let [imageLoading, toggleImageLoading] = useState(true);
 
     useEffect(() => {
         ImageService.getUserImage(user.id)
-            .then(({data}) => {
+            .then(({ data }) => {
                 setImage(createImage(data));
             })
             .then(() => {

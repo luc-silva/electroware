@@ -1,24 +1,19 @@
 import { FormEvent, useEffect, useState } from "react";
+import { profileSettingsFormInitalState } from "../../constants/initialStates";
+
+//components & utils
 import UserService from "../../services/UserService";
 import { SubmitBtn } from "../Buttons/SubmitBtn";
 import { UserImageInput } from "../Inputs/UserImageInput";
 import { LocationInput } from "../Inputs/LocationInput";
 import { NameInput } from "../Inputs/NameInput";
+
+//style
 import styles from "./ProfileSettingsForm.module.css";
 
 export const ProfileSettingsForm = ({ user }: { user: UserProps }) => {
-    let formInitalState = {
-        name: {
-            first: "",
-            last: "",
-        },
-        location: {
-            state: "",
-            country: "",
-        },
-        description: "",
-    };
-    let [form, setForm] = useState(formInitalState);
+    
+    let [form, setForm] = useState(profileSettingsFormInitalState);
 
     useEffect(() => {
         UserService.getUserInfo(user.id).then(setForm);
