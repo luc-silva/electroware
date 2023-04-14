@@ -39,7 +39,7 @@ class ProductService extends Service {
 
     public async searchProduct(keyword: string) {
         return axios
-            .post(this.baseUrl + `/search/${keyword}`)
+            .post(this.baseUrl + `search/${keyword}`)
             .then(({ data }) => {
                 return data;
             });
