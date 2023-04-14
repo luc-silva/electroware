@@ -63,7 +63,7 @@ export const createWishlistItem = asyncHandler(
         }
 
         let alreadyWishlisted = await WishlistItem.find({user: user.id, product})
-        if(alreadyWishlisted){
+        if(alreadyWishlisted.length === 1){
             response.status(400)
             throw new Error("Esse item já foi adicionado na lista de desejos.")
         }
