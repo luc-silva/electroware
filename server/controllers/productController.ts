@@ -47,7 +47,7 @@ export const searchProduct = asyncHandler(
             throw new Error("Nenhum produto encontrado.");
         }
 
-        response.status(200).json(possibleProducts);
+        response.status(200).json(possibleProducts.map((item) => item.id));
     }
 );
 
