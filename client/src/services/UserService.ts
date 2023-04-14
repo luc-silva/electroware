@@ -49,7 +49,7 @@ class UserService extends Service {
             });
     }
 
-    public async getUserProductsReviews(userId: string) {
+    public async getUserProductsReceivedReviews(userId: string) {
         return await axios
             .get(this.baseUrl + `${userId}/products/reviews`)
             .then(({ data }) => {
