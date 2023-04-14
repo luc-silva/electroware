@@ -66,7 +66,7 @@ export const CreateOffer = ({
             <section className={styles["create-offer__main"]}>
                 <div className={styles["create-offer__image-container"]}>
                     <ImageBox isLoading={false} imgSrc={productImage} />
-                    <div>
+                    <div className={styles["input-container"]}>
                         <input
                             type="file"
                             name="productImage"

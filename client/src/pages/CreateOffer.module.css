@@ -29,6 +29,12 @@
 .create-offer__image-container {
     width: 100%;
     height: 40vh;
+    position: relative;
+}
+.create-offer__image-container .input-container{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 .create-offer__form-container {
     display: flex;
