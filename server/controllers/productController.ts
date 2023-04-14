@@ -39,7 +39,7 @@ export const searchProduct = asyncHandler(
         }
 
         let possibleProducts = await Product.find({
-            name: { $regex: keyword },
+            name: { $regex: new RegExp(keyword, "i") },
         });
 
         if (possibleProducts.length === 0) {
