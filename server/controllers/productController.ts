@@ -70,8 +70,14 @@ export const getProductDetails = asyncHandler(
             response.status(404);
             throw new Error("Produto não encontrado.");
         }
+        
+        let image = await ImageInstance.findOne({product:product.id})
+        if(!image){
+            response.status(400)
+            throw new Error("Imagem do produto não encontrada.")
+        }
 
-        response.status(200).json(product);
+        response.status(200).json({product, image: image.data});
     }
 );
 

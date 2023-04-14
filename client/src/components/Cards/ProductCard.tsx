@@ -8,8 +8,10 @@ import styles from "./ProductCard.module.css";
 
 export const ProductCard = ({ id }: { id: string }) => {
     let productCardInitialState = {
-        price: 0,
-        name: "",
+        product: {
+            price: 0,
+            name: "",
+        },
         image: { data: null as null | string },
     };
 
@@ -17,7 +19,8 @@ export const ProductCard = ({ id }: { id: string }) => {
     let [cardStatus, setCardStatus] = useState({ loading: true, error: false });
     useEffect(() => {
         ProductService.getProductDetails(id)
-            .then((data) => {
+            .then((data: any) => {
+                console.log(data)
                 setProductData(data);
             })
             .then(() => {
@@ -27,7 +30,6 @@ export const ProductCard = ({ id }: { id: string }) => {
                 setCardStatus({ loading: false, error: true });
             });
     }, []);
-    
 
     return (
         <Link className={styles["card-wrapper"]} to={`/product/${id}`}>
@@ -37,7 +39,7 @@ export const ProductCard = ({ id }: { id: string }) => {
                     imgSrc={createImage(productData.image.data)}
                 />
             </div>
-            <CardInfo data={productData} isLoading={cardStatus.loading} />
+            <CardInfo product={productData.product as Product} isLoading={cardStatus.loading} />
         </Link>
     );
 };

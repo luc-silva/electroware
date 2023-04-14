@@ -1,22 +1,22 @@
 import styles from "./CardInfo.module.css";
 
 export const CardInfo = ({
-    data,
+    product,
     isLoading,
 }: {
-    data: any;
+    product: Product;
     isLoading: boolean;
 }) => {
     return (
         <div className={styles["card-info"]}>
             <div className={styles["card-info-price"]}>
                 {(isLoading && <div className={styles["loading-line"]} />) || (
-                    <strong>{`R$ ${data.price}`}</strong>
+                    <strong>{`R$ ${product.price}`}</strong>
                 )}
             </div>
             <div className={styles["card-details"]}>
                 {(isLoading && <div className={styles["loading-block"]} />) || (
-                    <p>{data.name}</p>
+                    <p>{product.name}</p>
                 )}
             </div>
         </div>

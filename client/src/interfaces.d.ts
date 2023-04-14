@@ -17,6 +17,12 @@ interface PageProps {
     isLogged: Boolean;
 }
 
+interface ProductData {
+    image: {
+        data: string;
+    };
+    product: Product;
+}
 interface Product {
     name: string;
     owner: string;
@@ -25,8 +31,8 @@ interface Product {
     _id: string;
     price: number;
     quantity: number;
-    reviews: number;
 }
+
 interface WishlistItem {
     id: string;
     product: string;
@@ -64,5 +70,5 @@ interface ProductInstance {
 }
 
 interface ServiceInterface {
-    private baseUrl: string;
+    baseUrl: string;
 }
