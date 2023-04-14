@@ -15,23 +15,28 @@ import ProductService from "../services/ProductService";
 
 export const Product = ({ user }: { user: UserProps }) => {
     let { id } = useParams();
-    let productInitialState: Product = {
-        _id: "",
-        category: "",
-        name: "",
-        description: "",
-        owner: "",
-        price: 0,
-        quantity: 0,
-        reviews: 0,
+    let productInitialState: ProductData = {
+        image: { data: "" },
+        product: {
+            _id: "",
+            category: "",
+            name: "",
+            description: "",
+            owner: "",
+            price: 0,
+            quantity: 0,
+        },
     };
     let [productDetails, setProductDetails] = useState(productInitialState);
     let [productReviews, setProductReviews] = useState([]);
+    let [infoStatus, toggleInfoStatus] = useState(true)
+
 
     useEffect(() => {
         if (id) {
-            ProductService.getProductDetails(id).then((resp: any) => {
-                setProductDetails(resp);
+            ProductService.getProductDetails(id).then((data: any) => {
+                toggleInfoStatus(false)
+                setProductDetails(data);
             });
         }
 
@@ -39,7 +44,7 @@ export const Product = ({ user }: { user: UserProps }) => {
     }, [id]);
 
     async function updateReviews() {
-        await ProductService.getProductReviews(productDetails._id).then(
+        await ProductService.getProductReviews(productDetails.product._id).then(
             (response) => {
                 setProductReviews(response);
             }
@@ -47,7 +52,7 @@ export const Product = ({ user }: { user: UserProps }) => {
     }
     return (
         <main className={styles["product"]}>
-            <ProductAbout user={user} productDetails={productDetails} />
+            <ProductAbout user={user} productDetails={productDetails} status={infoStatus}/>
             <section className={styles["product__ratings"]}>
                 <div className={styles["ratings-main"]}>
                     <div className={styles["ratings__title"]}>
@@ -65,7 +70,7 @@ export const Product = ({ user }: { user: UserProps }) => {
                 </div>
                 <ReviewsContainer reviews={productReviews} />
                 <ReviewForm
-                    product={productDetails}
+                    product={productDetails.product}
                     updateReviews={updateReviews}
                     user={user}
                 />
