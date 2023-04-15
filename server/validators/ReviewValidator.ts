@@ -15,23 +15,23 @@ class ReviewValidator implements Validator {
 
         if (!author && typeof author !== "string") {
             response.status(400);
-            throw new Error('Campo "autor" Inválido.');
+            throw new Error("Campo autor Inválido.");
         }
         if (!product && typeof product !== "string") {
             response.status(400);
-            throw new Error('Campo "produto" Inválido.');
+            throw new Error("Campo produto Inválido.");
         }
         if (!productOwner && typeof productOwner !== "string") {
             response.status(400);
-            throw new Error('Campo "vendedor" Inválido.');
+            throw new Error("Campo vendedor Inválido.");
         }
-        if ((!text && typeof text !== "string") || text.length < 150) {
+        if (typeof text !== "string" || text.length > 150) {
             response.status(400);
-            throw new Error('Campo "texto" Inválido.');
+            throw new Error("Campo texto Inválido.");
         }
         if ((!score && isNaN(score)) || score < 0 || score > 5) {
             response.status(400);
-            throw new Error('Campo "nota" Inválido.');
+            throw new Error("Campo nota Inválido.");
         }
     }
 
@@ -41,13 +41,13 @@ class ReviewValidator implements Validator {
     ): void {
         let { score, text } = requestBody;
 
-        if ((!text && typeof text !== "string") || text.length > 150) {
+        if (typeof text !== "string" || text.length > 150) {
             response.status(400);
-            throw new Error('Campo "texto" Inválido.');
+            throw new Error("Campo texto Inválido.");
         }
         if ((!score && isNaN(score)) || score < 0 || score > 5) {
             response.status(400);
-            throw new Error('Campo "nota" Inválido.');
+            throw new Error("Campo nota Inválido.");
         }
     }
 }

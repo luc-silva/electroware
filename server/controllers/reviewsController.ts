@@ -27,8 +27,9 @@ export const getProductReviews = asyncHandler(
             createdAt: -1,
         });
         if (!reviews) {
-            response.status(404);
-            throw new Error("Sem reviews disponíveis.");
+            response
+                .status(404)
+                .json({ message: "Esse produto ainda não possui avaliações." });
         }
 
         response.status(200).json(reviews);
@@ -97,7 +98,7 @@ export const submitReview = asyncHandler(
             throw new Error("Dados Inválidos.");
         }
 
-        ReviewValidator.validate(response, request.body)
+        ReviewValidator.validate(response, request.body);
         let { product, text, score, productOwner } = request.body;
 
         let reviewer = (await User.findById(request.user).select({
@@ -158,7 +159,7 @@ export const updateReview = asyncHandler(
             throw new Error("Dados Inválidos.");
         }
 
-        ReviewValidator.validateUpdate(response, request.body)
+        ReviewValidator.validateUpdate(response, request.body);
         let { text, score } = request.body;
 
         let { id } = request.params;
