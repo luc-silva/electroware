@@ -15,7 +15,7 @@ export const CardInfo = ({
                 )}
             </div>
             <div className={styles["card-details"]}>
-                {(isLoading && <div className={styles["loading-block"]} />) || (
+                {(isLoading && <div className={styles["loading-line"]} />) || (
                     <p>{product.name}</p>
                 )}
             </div>

@@ -23,7 +23,6 @@
 .card-details p {
     color: var(--text-color);
 }
-.loading-block,
 .loading-line {
     width: 100%;
     animation-name: loading-animation;
@@ -31,10 +30,11 @@
     animation-iteration-count: infinite;
     border-radius: 5px;
 }
-.loading-block {
-    height: 4rem;
+.card-info-price .loading-line{
+    height: 1.3rem;
+    width: 30%;
 }
-.loading-line {
+.card-details .loading-line{
     height: 1rem;
 }
 
