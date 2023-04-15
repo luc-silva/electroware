@@ -3,37 +3,24 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-}
-.user-profile__info {
-    padding: 2rem;
-}
-.user-profile__picture {
-    width: 200px;
-    height: 200px;
-    background-color: black;
+    min-height: 90vh;
 }
 .user-profile__main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 2rem;
     width: 100%;
-    min-height: 60vh;
+    height: 100%;
 }
-.user-profile__details {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 1rem;
+/* .user-profile__info {
+} */
+.user-profile__picture {
+    width: 200px;
+    height: 200px;
+    background-color: black;
 }
-.user-profile__details__title {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.user-profile__details__title h2 {
-    font-size: 1.5rem;
-    color: var(--title-color);
-}
+
 
 @media (min-width: 769px) and (max-width: 1024px) {
     .user-profile {
@@ -48,21 +35,10 @@
         align-items: flex-start;
         gap: 2rem;
         padding: 2rem;
-        flex-grow: 1;
+        flex-grow: 0;
+        height: 40%;
     }
-    .user-profile__details {
-        min-height: 200px;
-    }
-    .user-profile__details__title {
-        align-items: flex-start;
-    }
-    .user-profile__details__title h2 {
-        font-size: 1.8rem;
-    }
-
-    .user-profile__description {
-        align-items: flex-start;
-    }
+    
     .user-profile__products {
         display: flex;
         flex-direction: column;
@@ -96,27 +72,16 @@
         flex-direction: column;
         align-items: flex-start;
     }
-    .user-profile__info {
-        padding: 0rem;
-    }
     .user-profile__main {
         flex-direction: row;
         align-items: flex-start;
         gap: 2rem;
         padding: 2rem;
-        flex-grow: 1;
+        flex-grow: 0;
+        height: 40%;
     }
-    .user-profile__details {
-        min-height: 200px;
+    .user-profile__info {
+        padding: 0rem;
     }
-    .user-profile__details__title {
-        align-items: flex-start;
-    }
-    .user-profile__details__title h2 {
-        font-size: 1.8rem;
-    }
-
-    .user-profile__description {
-        align-items: flex-start;
-    }
+    
 }

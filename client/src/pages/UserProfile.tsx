@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
     imageInitialValue,
     userProfileInitialValues,
 } from "../constants/initialStates";
 
 //
-import { StarsContainer } from "../components/Misc/StarsContainer";
 import UserService from "../services/UserService";
-import { createImage, getAverage } from "../utils/operations";
+import ImageService from "../services/ImageService";
+import { createImage } from "../utils/operations";
+import { UserProducts } from "../components/Sections/UserProducts";
+import { ProfileDetails } from "../components/Misc/ProfileDetails";
+import { ImageBox } from "../components/Misc/ImageBox";
 
 //
 import styles from "./UserProfile.module.css";
-import { ImageBox } from "../components/Misc/ImageBox";
-import ImageService from "../services/ImageService";
-import { UserProducts } from "../components/Sections/UserProducts";
-import { ReputationDisplay } from "../components/Misc/ReputationDisplay";
 
 export const UserProfile = () => {
     let { id } = useParams();
@@ -53,24 +52,7 @@ export const UserProfile = () => {
                         />
                     </div>
                 </div>
-                <div className={styles["user-profile__details"]}>
-                    <div className={styles["user-profile__details__title"]}>
-                        <h2>{`${user.name.first} ${user.name.last}`}</h2>
-                        <p>{`${user.location.state}, ${user.location.country}`}</p>
-                    </div>
-                    <ReputationDisplay reviews={reviews} />
-                    <div className={styles["user-profile__description"]}>
-                        <div className={styles["description__title"]}>
-                            <p>Descrição</p>
-                            <div>
-                                {(user.description && (
-                                    <p>{user.description}</p>
-                                )) || <em>Nenhuma descrição provida</em>}
-                            </div>
-                        </div>
-                        <div className={styles["description-text"]}></div>
-                    </div>
-                </div>
+                <ProfileDetails user={user} reviews={reviews} />
             </section>
             <UserProducts products={products} />
         </main>

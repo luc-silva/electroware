@@ -23,6 +23,17 @@ interface ProductData {
     };
     product: Product;
 }
+interface UserData {
+    name: {
+        first: string;
+        last: string;
+    };
+    location: {
+        country: string;
+        state: string;
+    };
+    description: string;
+}
 interface Product {
     name: string;
     owner: string;
