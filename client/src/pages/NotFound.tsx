@@ -26,9 +26,6 @@ export const NotFound = () => {
                             <Link to="/Faq">FAQ</Link>
                         </li>
                         <li>
-                            <Link to="/user/me">Seu Perfil</Link>
-                        </li>
-                        <li>
                             <a
                                 href="https://github.com/luc-silva/electroware"
                                 target={"_blank"}
