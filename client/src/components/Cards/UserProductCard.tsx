@@ -29,8 +29,18 @@ export const UserProductCard = ({ id }: { id: string }) => {
                     />
                 </div>
                 <div className={styles["product__main"]}>
-                    <p>{productDetails.product.name}</p>
-                    <strong>{`${productDetails.product.price} R$`}</strong>
+                    <div className={styles["product__name"]}>
+                        {(isLoading && (
+                            <div className={styles["loading-line"]} />
+                        )) || <p>{productDetails.product.name}</p>}
+                    </div>
+                    <div className={styles["product__price"]}>
+                        {(isLoading && (
+                            <div className={styles["loading-line"]} />
+                        )) || (
+                            <strong>{`${productDetails.product.price} R$`}</strong>
+                        )}
+                    </div>
                 </div>
             </div>
         </Link>
