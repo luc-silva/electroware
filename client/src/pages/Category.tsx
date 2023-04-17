@@ -5,7 +5,6 @@ import { ProductCard } from "../components/Cards/ProductCard";
 import CategoryService from "../services/CategoryService";
 import styles from "./Category.module.css";
 
-
 export const Category = () => {
     let { id } = useParams();
     let [products, setProducts] = useState([]);
@@ -34,7 +33,7 @@ export const Category = () => {
                 </div>
                 <div className={styles["products__container"]}>
                     {products.map(
-                        ({ _id, name, price }: Product, index: React.Key) => (
+                        ({ _id }: { _id: string }, index: React.Key) => (
                             <ProductCard id={_id} />
                         )
                     )}
