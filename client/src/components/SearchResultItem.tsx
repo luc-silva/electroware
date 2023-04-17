@@ -23,7 +23,6 @@ export const SearchResultItem = ({ productId }: { productId: string }) => {
     }, []);
     useEffect(() => {
         UserService.getUserInfo(productData.product.owner).then(({ name }) => {
-            console.log({ name });
             setSeller(name);
         });
     }, [productData.product._id]);

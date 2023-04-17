@@ -17,7 +17,6 @@ export const ProductCard = ({ id }: { id: string }) => {
     useEffect(() => {
         ProductService.getProductDetails(id)
             .then((data: any) => {
-                console.log(data)
                 setProductData(data);
             })
             .then(() => {

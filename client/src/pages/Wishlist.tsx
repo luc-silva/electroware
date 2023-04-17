@@ -15,7 +15,6 @@ export const Wishlist = ({ user }: { user: UserProps }) => {
         }
 
         WishlistService.getWishlistItems(user.token).then((data) => {
-            console.log(data)
             setProducts(data);
         });
     }, [id]);
