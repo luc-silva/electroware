@@ -1,7 +1,7 @@
 import styles from "./SearchResults.module.css";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { SearchResultItem } from "../components/SearchResultItem";
+import { SearchResultItem } from "../components/Cards/SearchResultCard";
 import ProductService from "../services/ProductService";
 import CategoryService from "../services/CategoryService";
 import { CategoriesPanel } from "../components/Misc/CategoriesPanel";
