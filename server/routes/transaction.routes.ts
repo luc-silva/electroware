@@ -7,4 +7,5 @@ import {
 import { protectedRoute } from "../middleware/auth";
 
 export const transactionRouter = Router();
+
 transactionRouter.post("/", protectedRoute, createProductTransaction);

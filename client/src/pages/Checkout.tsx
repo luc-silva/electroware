@@ -45,7 +45,7 @@ export const Checkout = ({
             { paymentMethod },
             user.token
         ).then(() => {
-            navigate("/config");
+            navigate("/settings");
         });
     }
     return (

@@ -46,51 +46,45 @@ export const createProductTransaction = asyncHandler(
             throw new Error("Fundos insuficientes.");
         }
 
-        try {
-            const session = await mongoose.startSession();
-            await session.withTransaction(async () => {
-                let data = {
-                    buyer: user.id,
-                    paymentMethod,
-                    productsBought,
-                    totalPrice: getTotal(),
-                };
-                let transaction = await Transaction.create([data], { session });
+        const session = await mongoose.startSession();
+        await session.withTransaction(async () => {
+            let data = {
+                buyer: user.id,
+                paymentMethod,
+                products: productsBought,
+                totalPrice: getTotal(),
+            };
+            let transaction = await Transaction.create([data], { session });
 
+            await User.findByIdAndUpdate(
+                [user.id],
+                { $inc: { funds: -getTotal() } },
+                { session }
+            );
+
+            for (let productInstance of productsBought) {
                 await User.findByIdAndUpdate(
-                    [user.id],
-                    { $inc: { funds: -getTotal() } },
+                    [productInstance.seller],
+                    {
+                        $inc: {
+                            funds: +(
+                                productInstance.price * productInstance.quantity
+                            ),
+                        },
+                    },
                     { session }
                 );
+                await Product.findByIdAndUpdate([productInstance.product], {
+                    $inc: { quantity: -productInstance.quantity },
+                });
 
-                for (let productInstance of productsBought) {
-                    await User.findByIdAndUpdate(
-                        [productInstance.seller],
-                        {
-                            $inc: {
-                                funds: +(
-                                    productInstance.price *
-                                    productInstance.quantity
-                                ),
-                            },
-                        },
-                        { session }
-                    );
-                    await Product.findByIdAndUpdate([productInstance.product], {
-                        $inc: { quantity: -productInstance.quantity },
-                    });
+                await ProductInstance.findByIdAndDelete(productInstance.id);
+            }
 
-                    await ProductInstance.findByIdAndDelete(productInstance.id);
-                }
-
-                await session.commitTransaction();
-                response.status(201).json(transaction);
-            });
-            session.endSession();
-        } catch (error) {
-            response.status(400);
-            throw new Error(`Algo deu errado: ${error}.`);
-        }
+            await session.commitTransaction();
+            response.status(201).json(transaction);
+        });
+        session.endSession();
     }
 );
 

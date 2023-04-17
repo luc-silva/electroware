@@ -34,7 +34,7 @@
     gap: 0.5rem;
     width: 100%;
 }
-.input__larger-container .input__container {
+.input__larger-container div {
     width: 50%;
 }
 .form__main__submit {
