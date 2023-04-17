@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import { Request, Response } from "express";
-import {Types} from "mongoose"
+import { Types } from "mongoose";
 
 import { IProduct } from "../interface";
 import mongoose from "mongoose";
@@ -44,8 +44,9 @@ export const searchProduct = asyncHandler(
         });
 
         if (possibleProducts.length === 0) {
-            response.status(404);
-            throw new Error("Nenhum produto encontrado.");
+            response
+                .status(404)
+                .json({ message: "Nenhum Produto foi encontrado." });
         }
 
         response.status(200).json(possibleProducts.map((item) => item.id));
@@ -254,7 +255,7 @@ export const getProductAvarageRating = asyncHandler(
         let average = await Review.aggregate([
             { $group: { _id: "$product", averageScore: { $avg: "$score" } } },
             { $match: { _id: new Types.ObjectId(id) } },
-            {$limit: 1}
+            { $limit: 1 },
         ]);
         response.json(average);
     }
