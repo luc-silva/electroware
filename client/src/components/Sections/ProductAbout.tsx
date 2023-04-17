@@ -53,16 +53,26 @@ export const ProductAbout = ({
             </div>
             <div className={styles["product-details"]}>
                 <div className={styles["details-info"]}>
-                    <div className={styles["details-title"]}>
-                        <div>
-                            <h1>{productDetails.product.name}</h1>
-                            <em>
-                                <Link
-                                    to={`/category/${productDetails.product.category}`}
-                                >
-                                    {category}
-                                </Link>
-                            </em>
+                    <div className={styles["details-header"]}>
+                        <div className={styles["details-main"]}>
+                            <div className={styles["details-title"]}>
+                                {(status && (
+                                    <div className={styles["loading-line"]} />
+                                )) || <h1>{productDetails.product.name}</h1>}
+                            </div>
+                            <div className={styles["details-category"]}>
+                                {(status && (
+                                    <div className={styles["loading-line"]} />
+                                )) || (
+                                    <em>
+                                        <Link
+                                            to={`/category/${productDetails.product.category}`}
+                                        >
+                                            {category}
+                                        </Link>
+                                    </em>
+                                )}
+                            </div>
                         </div>
                         {user.logged &&
                             user.id !== productDetails.product.owner && (
@@ -75,19 +85,29 @@ export const ProductAbout = ({
                             )}
                     </div>
                     <div className={styles["details-pricing"]}>
-                        <div>
-                            <p>
-                                {`Vendedor: `}
-                                <Link
-                                    to={`/user/${productDetails.product.owner}`}
-                                >{`${owner.first} ${owner.last}`}</Link>
-                            </p>
-                            <div>Reputação: 4.0</div>
+                        <div className={styles["details-seller"]}>
+                            {(status && (
+                                <div className={styles["loading-line"]} />
+                            )) || (
+                                <p>
+                                    {`Vendedor: `}
+                                    <Link
+                                        to={`/user/${productDetails.product.owner}`}
+                                    >{`${owner.first} ${owner.last}`}</Link>
+                                </p>
+                            )}
                         </div>
-                        <h2>{`${productDetails.product.price}$`}</h2>
+                        <div className={styles["details-price"]}>
+                            {(status && (
+                                <div className={styles["loading-line"]} />
+                            )) || <h2>{`${productDetails.product.price}$`}</h2>}
+                        </div>
                     </div>
                     <div className={styles["details-description"]}>
-                        {productDetails.product.description ||
+                        {(status && (
+                            <div className={styles["loading-line"]} />
+                        )) ||
+                            productDetails.product.description ||
                             "Nenhuma descrição disponível"}
                     </div>
                 </div>
