@@ -18,9 +18,6 @@
     display: flex;
     flex-direction: column;
 }
-.shopping-cart__container:last-child {
-    border-bottom: 1px solid var(--background-color-faded);
-}
 .shopping-cart__panel {
     display: flex;
     flex-direction: column;

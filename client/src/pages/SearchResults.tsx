@@ -36,9 +36,13 @@ export const SearchResults = () => {
                     <p>{searchResults.length} resultados</p>
                 </div>
                 <div className={styles["results-container"]}>
-                    {searchResults.map((id: string, index: React.Key) => (
-                        <SearchResultItem productId={id} key={index} />
-                    ))}
+                    {searchResults.length === 0 ? (
+                        <strong>Nenhum produto encontrado.</strong>
+                    ) : (
+                        searchResults.map((id: string, index: React.Key) => (
+                            <SearchResultItem productId={id} key={index} />
+                        ))
+                    )}
                 </div>
             </section>
         </main>
