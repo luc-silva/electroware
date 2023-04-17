@@ -21,15 +21,18 @@ export const ShoppingCart = ({
         if (!user.logged) {
             navigate("/login");
         }
-        ShoppingCartService.getCartInstances(user.token).then((data) => {
-
-            setItems(data)
-        });
+        updateCart();
     }, []);
 
     function handleCheckout() {
         navigate("/checkout");
     }
+    async function updateCart() {
+        ShoppingCartService.getCartInstances(user.token).then((data) => {
+            setItems(data);
+        });
+    }
+
     return (
         <main role={"main"} className={styles["shopping-cart"]}>
             <section className={styles["shopping-cart__main"]}>
@@ -37,11 +40,13 @@ export const ShoppingCart = ({
                     <h2>Carrinho de Compras</h2>
                 </div>
                 <div className={styles["shopping-cart__container"]}>
-                    {items.map(({ _id }:ShoppingCartCardProps, index) => {
+                    {items.map(({ _id }: ShoppingCartCardProps, index) => {
                         return (
                             <ProductCardSmall
+                                updateCart={updateCart}
                                 instanceID={_id}
                                 userToken={user.token}
+                                user={user}
                                 key={index}
                             />
                         );

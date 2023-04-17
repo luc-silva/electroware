@@ -13,12 +13,14 @@ import styles from "./ShoppingCartCard.module.css";
 export const ProductCardSmall = ({
     userToken,
     instanceID,
+    user,
+    updateCart,
 }: {
     instanceID: string;
     userToken: string;
+    user: UserProps;
+    updateCart: Function;
 }) => {
-    
-
     let [instanceData, setInstanceData] = useState(cardInitialState);
     let [loading, toggleLoading] = useState(true);
 
@@ -31,7 +33,12 @@ export const ProductCardSmall = ({
     }, []);
 
     async function removeItem() {
-        await ShoppingCartService.deleteCartInstance(instanceID, userToken);
+        await ShoppingCartService.deleteCartInstance(
+            instanceID,
+            user.token
+        ).then(() => {
+            updateCart();
+        });
     }
 
     return (
@@ -40,7 +47,9 @@ export const ProductCardSmall = ({
                 <div className={styles["container__picture"]}>
                     <ImageBox
                         isLoading={loading}
-                        imgSrc={createImage(instanceData.productImage.data.data)}
+                        imgSrc={createImage(
+                            instanceData.productImage.data.data
+                        )}
                     />
                 </div>
             </Link>
