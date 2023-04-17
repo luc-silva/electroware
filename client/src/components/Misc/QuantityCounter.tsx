@@ -3,7 +3,7 @@ import styles from "./QuantityCounter.module.css";
 export const QuantityCounter = ({
     max,
     quantity,
-    setQuantity,
+    setQuantity, 
 }: {
     max: number;
     quantity: number;

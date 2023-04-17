@@ -1,0 +1,29 @@
+.btn-panel a{
+    color: white;
+    background-color: rgb(90, 131, 253);
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 1rem 0.5rem;
+}
+.panel-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 3rem;
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+    .panel-container{
+        height: 3rem;
+    }
+    .btn-panel a{
+        font-size: 1rem;
+    }
+}
+@media (min-width: 1025px) {
+    .panel-container{
+        height: 2rem;
+    }
+    .btn-panel a{
+        font-size: 1rem;
+    }
+}

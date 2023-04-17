@@ -7,6 +7,7 @@ import {
     createProduct,
     updateProduct,
     deleteProduct,
+    getProductAvarageRating,
 } from "../controllers/productController";
 import { getProductReviews } from "../controllers/reviewsController";
 import { imageUploader } from "../middleware/buffer";
@@ -16,6 +17,7 @@ export const productRouter = Router();
 productRouter.get("/", getRecentProducts)
 productRouter.get("/:id", getProductDetails); //get a specific product
 productRouter.get("/:id/reviews", getProductReviews);
+productRouter.get("/:id/reviews/score", getProductAvarageRating);
 
 productRouter.put("/:id", protectedRoute, updateProduct);
 productRouter.delete("/:id", protectedRoute, deleteProduct);

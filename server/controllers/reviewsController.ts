@@ -9,6 +9,28 @@ import ReviewValidator from "../validators/ReviewValidator";
 
 ////public
 //get, need params
+export const getSingleReview = asyncHandler(
+    async (request: Request, response: Response) => {
+        if (!request.params) {
+            response.status(400);
+            throw new Error("Dados Inválidos.");
+        }
+
+        let { id } = request.params;
+
+        let review = await Review.findById(id).populate(
+            "author",
+            { name: 1 }
+        );
+        if(!review){
+            response.status(404)
+            throw new Error("Avaliação não encontrada.")
+        }
+
+        response.status(200).json(review);
+    }
+);
+
 export const getProductReviews = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params) {
@@ -23,9 +45,11 @@ export const getProductReviews = asyncHandler(
             throw new Error("Produto não encontrado.");
         }
 
-        let reviews = await Review.find({ product: product.id }).sort({
-            createdAt: -1,
-        });
+        let reviews = await Review.find({ product: product.id })
+            .select({ id: 1 })
+            .sort({
+                createdAt: -1,
+            });
         if (!reviews) {
             response
                 .status(404)

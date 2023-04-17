@@ -34,8 +34,8 @@ export const ReviewForm = ({
             text: reviewForm.text,
             score: reviewForm.score,
         };
-        await ReviewService.submitReview(data, user.token).then(() => {
-            updateReviews();
+        await ReviewService.submitReview(data, user.token).then(async () => {
+            await updateReviews();
         });
     }
 

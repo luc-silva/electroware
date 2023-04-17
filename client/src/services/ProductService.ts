@@ -48,6 +48,12 @@ class ProductService extends Service {
     public async removeProduct(productId: string, token: string) {
         return axios.delete(this.baseUrl + productId, this.createHeader(token));
     }
+
+    public async getProductScore(productId: string){
+        return axios.get(this.baseUrl + `${productId}/reviews/score`).then(({data})=> {
+            return data
+        })
+    }
 }
 
 export default new ProductService();

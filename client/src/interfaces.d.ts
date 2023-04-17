@@ -50,7 +50,6 @@ interface WishlistItem {
 }
 interface Review {
     author: string;
-    authorUsername: string;
     product: string;
     productOwner: string;
     score: number;

@@ -39,27 +39,33 @@ export const ProductBtnPanel = ({
     }
 
     return (
-        (user.logged &&
-            ((user.id != product.owner &&
-                ((product.quantity > 0 && (
+        <div className={styles["btn-panel"]}>
+            {(user.logged &&
+                ((user.id != product.owner &&
+                    ((product.quantity > 0 && (
+                        <div className={styles["panel-container"]}>
+                            <QuantityCounter
+                                max={product.quantity}
+                                quantity={quantity}
+                                setQuantity={setQuantity}
+                            />
+                            <ActionBtn
+                                onClick={addToShoppingCart}
+                                textValue="Adicionar ao carrinho"
+                            />
+                        </div>
+                    )) || (
+                        <ActionBtn disabled textValue="Produto Esgotado" />
+                    ))) || (
                     <div className={styles["panel-container"]}>
-                        <QuantityCounter
-                            max={product.quantity}
-                            quantity={quantity}
-                            setQuantity={setQuantity}
-                        />
                         <ActionBtn
-                            onClick={addToShoppingCart}
-                            textValue="Adicionar ao carrinho"
+                            textValue="Remover anúncio"
+                            onClick={removeProduct}
                         />
                     </div>
-                )) || <ActionBtn disabled textValue="Produto Esgotado" />)) || (
-                <div className={styles["panel-container"]}>
-                    <ActionBtn
-                        textValue="Remover anúncio"
-                        onClick={removeProduct}
-                    />
-                </div>
-            ))) || <Link to={"/login"}>Entre em sua conta para comprar</Link>
+                ))) || (
+                <Link to={"/login"}>Entre em sua conta para comprar</Link>
+            )}
+        </div>
     );
 };

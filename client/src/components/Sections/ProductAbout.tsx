@@ -12,11 +12,11 @@ import styles from "./ProductAbout.module.css";
 export const ProductAbout = ({
     productDetails,
     user,
-    status
+    status,
 }: {
     productDetails: ProductData;
     user: UserProps;
-    status: boolean
+    status: boolean;
 }) => {
     let [owner, setOwner] = useState({ first: "", last: "" });
     let [category, setCategory] = useState("");
@@ -46,7 +46,10 @@ export const ProductAbout = ({
     return (
         <section className={styles["product__about"]}>
             <div className={styles["product-image"]}>
-                <ImageBox isLoading={status} imgSrc={createImage(productDetails.image.data)}/>
+                <ImageBox
+                    isLoading={status}
+                    imgSrc={createImage(productDetails.image.data)}
+                />
             </div>
             <div className={styles["product-details"]}>
                 <div className={styles["details-info"]}>
@@ -90,7 +93,10 @@ export const ProductAbout = ({
                 </div>
                 <div className={styles["details-misc"]}>
                     <p>{`Unidades disponíveis: ${productDetails.product.quantity}`}</p>
-                    <ProductBtnPanel user={user} product={productDetails.product} />
+                    <ProductBtnPanel
+                        user={user}
+                        product={productDetails.product}
+                    />
                 </div>
             </div>
         </section>

@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import { Request, Response } from "express";
+import {Types} from "mongoose"
 
 import { IProduct } from "../interface";
 import mongoose from "mongoose";
@@ -70,14 +71,14 @@ export const getProductDetails = asyncHandler(
             response.status(404);
             throw new Error("Produto não encontrado.");
         }
-        
-        let image = await ImageInstance.findOne({product:product.id})
-        if(!image){
-            response.status(400)
-            throw new Error("Imagem do produto não encontrada.")
+
+        let image = await ImageInstance.findOne({ product: product.id });
+        if (!image) {
+            response.status(400);
+            throw new Error("Imagem do produto não encontrada.");
         }
 
-        response.status(200).json({product, image: image.data});
+        response.status(200).json({ product, image: image.data });
     }
 );
 
@@ -123,7 +124,7 @@ export const createProduct = asyncHandler(
 
         let requestBody = JSON.parse(request.body.product);
         ProductValidator.validate(response, requestBody);
-        
+
         let { name, price, category, quantity, description, brand }: IProduct =
             requestBody;
 
@@ -239,5 +240,22 @@ export const deleteProduct = asyncHandler(
 
         session.endSession();
         response.status(201).json({ message: "Produto excluido" });
+    }
+);
+
+//get
+export const getProductAvarageRating = asyncHandler(
+    async (request: Request, response: Response) => {
+        if (!request.params) {
+            throw new Error("Produto Inválido");
+        }
+        let { id } = request.params;
+
+        let average = await Review.aggregate([
+            { $group: { _id: "$product", averageScore: { $avg: "$score" } } },
+            { $match: { _id: new Types.ObjectId(id) } },
+            {$limit: 1}
+        ]);
+        response.json(average);
     }
 );

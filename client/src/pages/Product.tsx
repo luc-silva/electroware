@@ -13,13 +13,14 @@ import { ReviewForm } from "../components/Forms/ReviewForm";
 import styles from "./Product.module.css";
 import { ProductAbout } from "../components/Sections/ProductAbout";
 import ProductService from "../services/ProductService";
+import ReviewService from "../services/ReviewService";
 
 export const Product = ({ user }: { user: UserProps }) => {
     let { id } = useParams();
 
     let [productDetails, setProductDetails] = useState(productPageInitialState);
-    let [productReviews, setProductReviews] = useState([]);
     let [infoStatus, toggleInfoStatus] = useState(true);
+    let [score, setScore] = useState(0);
 
     useEffect(() => {
         if (id) {
@@ -28,17 +29,17 @@ export const Product = ({ user }: { user: UserProps }) => {
                 setProductDetails(data);
             });
         }
-
-        updateReviews();
     }, [id]);
+    useEffect(() => {
+        if (productDetails.product._id) {
+            ProductService.getProductScore(productDetails.product._id).then(
+                (data: [{ id: string; averageScore: number }]) => {
+                    setScore(data[0].averageScore);
+                }
+            );
+        }
+    }, [productDetails]);
 
-    async function updateReviews() {
-        await ProductService.getProductReviews(productDetails.product._id).then(
-            (response) => {
-                setProductReviews(response);
-            }
-        );
-    }
     return (
         <main className={styles["product"]}>
             <ProductAbout
@@ -52,20 +53,15 @@ export const Product = ({ user }: { user: UserProps }) => {
                         <h2>Avaliações do produto</h2>
                     </div>
                     <div className={styles["ratings__score"]}>
-                        <strong>{getAverage(productReviews)}/5</strong>
+                        <strong>{score.toFixed(1)}/5</strong>
                         <div>
-                            <StarsContainer
-                                size={30}
-                                stars={getAverage(productReviews)}
-                            />
+                            <StarsContainer size={30} stars={score} />
                         </div>
                     </div>
                 </div>
-                <ReviewsContainer reviews={productReviews} />
-                <ReviewForm
-                    product={productDetails.product}
-                    updateReviews={updateReviews}
+                <ReviewsContainer
                     user={user}
+                    product={productDetails.product}
                 />
             </section>
         </main>

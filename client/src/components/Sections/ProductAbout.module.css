@@ -56,20 +56,9 @@
     align-items: center;
     box-sizing: border-box;
 }
-.details-misc > div {
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
-}
 .details-misc p {
-    font-size: 1.3rem;
-}
-.details-misc input[type="number"] {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--background-color-faded);
-    width: 2rem;
+    color: var(--text-color);
+    font-size: 1rem;
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {

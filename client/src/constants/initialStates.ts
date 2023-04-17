@@ -68,7 +68,7 @@ export const loginFormInitialValue = {
     email: "",
     password: "",
 };
-export const  registrationFormInitialValues = {
+export const registrationFormInitialValues = {
     first: "",
     last: "",
     state: "",
@@ -100,4 +100,20 @@ export const userProfileInitialValues = {
     email: "",
     createdAt: new Date(),
     description: "",
-}
+};
+export const reviewsInitialState = {
+    _id: "",
+    author: {
+        name: {
+            first: "",
+            last: "",
+        },
+        _id: "",
+    },
+    product: "",
+    productOwner: "",
+    score: 0,
+    text: "",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+};

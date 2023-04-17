@@ -1,34 +1,103 @@
 import { format } from "date-fns";
+import { Trash } from "phosphor-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import {
+    imageInitialValue,
+    reviewsInitialState,
+} from "../../constants/initialStates";
+
+import ImageService from "../../services/ImageService";
+import ReviewService from "../../services/ReviewService";
+import { createImage } from "../../utils/operations";
+import { ImageBox } from "../Misc/ImageBox";
+import { StarsContainer } from "../Misc/StarsContainer";
+
 import styles from "./ReviewCard.module.css";
 
 export const ReviewCard = ({
-    score,
-    text,
-    author,
-    createdAt,
-    authorUsername,
-}: Review) => {
+    reviewId,
+    user,
+    updateReviews,
+}: {
+    reviewId: string;
+    user: UserProps;
+    updateReviews: Function;
+}) => {
+    let [cardInfo, setCardInfo] = useState(reviewsInitialState);
+    let [userImage, setUserImage] = useState(imageInitialValue);
+    let [isLoading, toggleLoading] = useState(true);
+
+    useEffect(() => {
+        if (reviewId) {
+            ReviewService.getReview(reviewId).then(setCardInfo);
+        }
+    }, [reviewId]);
+    useEffect(() => {
+        if (cardInfo.author._id) {
+            ImageService.getUserImage(cardInfo.author._id)
+                .then(({ data }) => {
+                    setUserImage(data);
+                })
+                .then(() => {
+                    toggleLoading(false);
+                });
+        }
+    }, [cardInfo.author._id]);
+
+    async function handleDelete() {
+        ReviewService.deleteReview(cardInfo._id, user.token).then(() => {
+            updateReviews();
+        });
+    }
+
     return (
         <div className={styles["rating-card"]}>
             <div className={styles["card-userinfo"]}>
                 <div className={styles["user-photo"]}>
-                    {/* <img src="" alt="" /> */}
-                </div>
-                <div>
-                    Rating:
-                    {score}
+                    <ImageBox
+                        isLoading={isLoading}
+                        imgSrc={createImage(userImage)}
+                    />
                 </div>
             </div>
             <div className={styles["user-review"]}>
                 <div className={styles["review-detail"]}>
-                    <Link to={`/user/${author}`}>
-                        <strong>{authorUsername || "Anonymous"}</strong>
-                    </Link>
-                    <p>{format(new Date(createdAt), "dd/MM/yyyy")}</p>
+                    <div className={styles["review-author"]}>
+                        {(isLoading && (
+                            <div className={styles["loading-line"]} />
+                        )) || (
+                            <Link to={`/user/${cardInfo.author._id}`}>
+                                <strong>{`${cardInfo.author.name.first} ${cardInfo.author.name.last}`}</strong>
+                            </Link>
+                        )}
+                    </div>
+                    <div className={styles["date-display"]}>
+                        {(isLoading && (
+                            <div className={styles["loading-line"]} />
+                        )) || (
+                            <p>
+                                {format(
+                                    new Date(cardInfo.createdAt),
+                                    "dd/MM/yyyy"
+                                )}
+                            </p>
+                        )}
+                    </div>
                 </div>
-                <div className={styles["user-review-text"]}>
-                    {text || <em>Nenhum detalhe provido</em>}
+                <div className={styles["review-text"]}>
+                    {(isLoading && (
+                        <div className={styles["loading-line"]} />
+                    )) ||
+                        cardInfo.text || <em>Nenhum detalhe provido</em>}
+                </div>
+                <div className={styles["review-panel"]}>
+                    <StarsContainer stars={cardInfo.score} size={20} />
+                    {user && user.id === cardInfo.author._id && (
+                        <button onClick={handleDelete}>
+                            <Trash size={20} />
+                        </button>
+                    )}
                 </div>
             </div>
         </div>

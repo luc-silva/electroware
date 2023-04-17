@@ -11,22 +11,24 @@ interface ReviewBody {
 }
 
 class ReviewService extends Service {
-    private baseUrl = "http://localhost:6060/api/review";
+    private baseUrl = "http://localhost:6060/api/review/";
 
     constructor() {
         super();
     }
 
     public async getReview(reviewId: string) {
-        axios.get(this.baseUrl + reviewId);
+        return await axios.get(this.baseUrl + reviewId).then(({ data }) => {
+            return data;
+        });
     }
 
     public async submitReview(data: ReviewBody, token: string) {
-        axios.post(this.baseUrl, data, this.createHeader(token));
+        return await axios.post(this.baseUrl, data, this.createHeader(token));
     }
 
     public async deleteReview(reviewId: string, token: string) {
-        axios.delete(reviewId, this.createHeader(token));
+        return await axios.delete(this.baseUrl + reviewId, this.createHeader(token));
     }
 }
 
