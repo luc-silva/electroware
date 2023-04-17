@@ -48,26 +48,9 @@
     }
     .user-profile__products__title h2 {
         text-align: start;
-        font-size: 1.5rem;
-        color: var(--title-color);
     }
-    .user-profile__product__item {
+    .user-profile__products__container {
         width: 60%;
-        border-radius: 0 5px 5px 0;
-    }
-    .product__picture {
-        background-color: black;
-        width: 150px;
-        height: 100px;
-    }
-    .product__main {
-        padding: 0.5rem;
-    }
-    .product__main p {
-        font-size: 1.3rem;
-    }
-    .product__main strong {
-        font-size: 1.3rem;
     }
 }
 @media (min-width: 1025px) {
@@ -77,25 +60,8 @@
     }
     .user-profile__products__title h2 {
         text-align: start;
-        font-size: 1.5rem;
-        color: var(--title-color);
     }
-    .user-profile__product__item {
+    .user-profile__products__container {
         width: 60%;
-        border-radius: 0 5px 5px 0;
-    }
-    .product__picture {
-        background-color: black;
-        width: 150px;
-        height: 100px;
-    }
-    .product__main {
-        padding: 0.5rem;
-    }
-    .product__main p {
-        font-size: 1.3rem;
-    }
-    .product__main strong {
-        font-size: 1.3rem;
     }
 }

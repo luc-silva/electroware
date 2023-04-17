@@ -130,8 +130,11 @@ export const getProfileInfo = asyncHandler(
             throw new Error("Usuario não encontrado");
         }
 
-        let image = ImageInstance.findOne({user:user.id, imageType: "userImage"})
-        
+        let image = ImageInstance.findOne({
+            user: user.id,
+            imageType: "userImage",
+        });
+
         response.json(user);
     }
 );
@@ -151,7 +154,9 @@ export const getUserProducts = asyncHandler(
             throw new Error("Usuario nao encontrado");
         }
 
-        let userProducts = await Product.find({ owner: user.id });
+        let userProducts = await Product.find({ owner: user.id }).select({
+            id: 1,
+        });
         response.status(202).json(userProducts);
     }
 );

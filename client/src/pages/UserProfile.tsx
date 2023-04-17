@@ -21,21 +21,24 @@ export const UserProfile = () => {
     let [userImage, setUserImage] = useState(imageInitialValue);
     let [user, setUser] = useState(userProfileInitialValues);
     let [products, setProducts] = useState([]);
-    let [reviews, setReviews] = useState([]);
+    let [reviewsScore, setReviewsScore] = useState([]);
 
     useEffect(() => {
         if (id) {
-            UserService.getUserInfo(id).then((data) => setUser(data));
-            UserService.getUserProducts(id).then((data) => setProducts(data));
-            UserService.getUserProductsReceivedReviews(id).then((data) =>
-                setReviews(data)
-            );
+            UserService.getUserInfo(id).then((data) => {
+                setUser(data);
+            });
+            UserService.getUserProducts(id).then((data) => {
+                setProducts(data);
+            });
+            UserService.getUserProductsReceivedReviews(id).then((data) => {
+                setReviewsScore(data);
+            });
         }
     }, [id]);
     useEffect(() => {
         if (id) {
             ImageService.getUserImage(id).then((data) => {
-                console.log(data);
                 setUserImage(data.data);
             });
         }
@@ -52,7 +55,7 @@ export const UserProfile = () => {
                         />
                     </div>
                 </div>
-                <ProfileDetails user={user} reviews={reviews} />
+                <ProfileDetails user={user} reviews={reviewsScore} />
             </section>
             <UserProducts products={products} />
         </main>
