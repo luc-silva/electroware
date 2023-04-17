@@ -33,7 +33,6 @@ export const CreateOffer = ({
         }
     }
 
-    
     let [form, setForm] = useState(createrOfferFormInitialValue);
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -46,7 +45,7 @@ export const CreateOffer = ({
 
             await ProductService.createProduct(formData, user.token).then(
                 (data) => {
-                    navigate(`/product/${data._id}`);
+                    navigate(`/product/${data.productID}`);
                 }
             );
         }

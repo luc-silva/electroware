@@ -134,6 +134,8 @@ export const createProduct = asyncHandler(
 
         let { buffer } = request.file;
 
+        let productID = "";
+
         let session = await mongoose.startSession();
         await session.withTransaction(async () => {
             let product = await Product.create({
@@ -153,9 +155,10 @@ export const createProduct = asyncHandler(
                 imageName: product.name,
                 imageAlt: `Product ${product.name}`,
             });
+            productID = product.id;
         });
 
-        response.status(201).json({ message: "Anúncio Criado." });
+        response.status(201).json({ message: "Anúncio Criado.", productID });
     }
 );
 
