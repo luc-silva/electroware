@@ -11,7 +11,12 @@ import Review from "../models/Review";
 import ProductValidator from "../validators/ProductValidator";
 import ImageInstance from "../models/ImageInstance";
 
-//get
+/**
+ * GET - Get twenty most recent products.
+ * @param {Request} request - HTTP request doesn't need any parameters.
+ * @param {Response} response - The HTTP response object containing products id.
+ * @throws throws error if any product has been found.
+ */
 export const getRecentProducts = asyncHandler(
     async (request: Request, response: Response) => {
         let products = await Product.find()
@@ -25,7 +30,38 @@ export const getRecentProducts = asyncHandler(
     }
 );
 
-//post
+/**
+ * GET - Get product score with given id.
+ * @param {Request} request - The HTTP request containing product id.
+ * @param {Response} response - The HTTP response object containing product score.
+ * @throws throws error if any product has been found.
+ */
+export const getProductAvarageRating = asyncHandler(
+    async (request: Request, response: Response) => {
+        if (!request.params) {
+            throw new Error("Produto Inválido");
+        }
+        let { id } = request.params;
+        if (!Types.ObjectId.isValid(id)) {
+            response.status(400);
+            throw new Error("Dados Inválidos");
+        }
+
+        let average = await Review.aggregate([
+            { $group: { _id: "$product", averageScore: { $avg: "$score" } } },
+            { $match: { _id: new Types.ObjectId(id) } },
+            { $limit: 1 },
+        ]);
+        response.json(average);
+    }
+);
+
+/**
+ * POST - Search for a product with given keyword.
+ * @param {Request} request - The HTTP request containing product keyword.
+ * @param {Response} response - The HTTP response object containing the IDs of every product found.
+ * @throws throws error if receives invalid data.
+ */
 export const searchProduct = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params) {
@@ -53,7 +89,12 @@ export const searchProduct = asyncHandler(
     }
 );
 
-//get, need params
+/**
+ * GET - Get product details with given product id.
+ * @param {Request} request - The HTTP request containing product id.
+ * @param {Response} response - The HTTP response object containing the product information.
+ * @throws throws error if receives invalid data, if a product has not been found or if a product image has not been found.
+ */
 export const getProductDetails = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params) {
@@ -83,7 +124,12 @@ export const getProductDetails = asyncHandler(
     }
 );
 
-//get, need params
+/**
+ * GET - Get products from a category.
+ * @param {Request} request - The HTTP request containing category id.
+ * @param {Response} response - The HTTP response object containing the IDs of the products from the category.
+ * @throws throws error if receives invalid data or if a category has not been found.
+ */
 export const getProductFromCategory = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params) {
@@ -107,9 +153,13 @@ export const getProductFromCategory = asyncHandler(
     }
 );
 
-////private
-
-//post
+/**
+ * POST, AUTH REQUIRED - Create a product with given data.
+ *
+ * @param {Request} request - The HTTP request object containing user, name, price, category, quantity, description and brand.
+ * @param {Response} response - The HTTP response object containing a conclusion message and product id.
+ * @throws throws error if receives a invalid data or if a user has not been found.
+ */
 export const createProduct = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.body || !request.user || !request.file) {
@@ -162,7 +212,13 @@ export const createProduct = asyncHandler(
     }
 );
 
-//put, need params
+/**
+ * PUT, AUTH REQUIRED - Update a product with given data.
+ *
+ * @param {Request} request - The HTTP request object containing user, name, price, category, quantity, description and brand.
+ * @param {Response} response - The HTTP response object containing a conclusion message.
+ * @throws throws error if receives a invalid data or if a user has not been found.
+ */
 export const updateProduct = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params || !request.body || !request.user) {
@@ -189,23 +245,26 @@ export const updateProduct = asyncHandler(
         let convertedQuantity: number = Number(quantity);
         let convertedPrice: number = Number(price);
 
-        let updatedProduct = await Product.findByIdAndUpdate(
-            request.params.id,
-            {
-                name,
-                category,
-                brand,
-                description,
-                price: convertedPrice,
-                quantity: convertedQuantity,
-            }
-        );
+        await Product.findByIdAndUpdate(request.params.id, {
+            name,
+            category,
+            brand,
+            description,
+            price: convertedPrice,
+            quantity: convertedQuantity,
+        });
 
-        response.status(201).json(updatedProduct);
+        response.status(201).json({ message: "Produto Atualizado." });
     }
 );
 
-//delete, need params
+/**
+ * DELETE, AUTH REQUIRED - Delete product with given id.
+ *
+ * @param {Request} request - The HTTP request object containing product id.
+ * @param {Response} response - The HTTP response object containing a conclusion message.
+ * @throws throws error if receives a invalid data, if the product owner is different from request user, or if a user has not been found.
+ */
 export const deleteProduct = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.user || !request.params) {
@@ -244,22 +303,5 @@ export const deleteProduct = asyncHandler(
 
         session.endSession();
         response.status(201).json({ message: "Produto excluido" });
-    }
-);
-
-//get
-export const getProductAvarageRating = asyncHandler(
-    async (request: Request, response: Response) => {
-        if (!request.params) {
-            throw new Error("Produto Inválido");
-        }
-        let { id } = request.params;
-
-        let average = await Review.aggregate([
-            { $group: { _id: "$product", averageScore: { $avg: "$score" } } },
-            { $match: { _id: new Types.ObjectId(id) } },
-            { $limit: 1 },
-        ]);
-        response.json(average);
     }
 );
