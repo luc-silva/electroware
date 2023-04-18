@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 import { IProductInstance } from "../interface";
 import ImageInstance from "../models/ImageInstance";
 import Product from "../models/Product";
@@ -8,9 +8,13 @@ import ProductInstance from "../models/ProductInstance";
 import User from "../models/User";
 import ProductInstanceValidator from "../validators/ProductInstanceValidator";
 
-////private
-
-//post
+/**
+ * POST, AUTH REQUIRED - Create a shoppingcart instance for checkout.
+ *
+ * @param {Request} request - The HTTP request object containing user, product, price and quantity.
+ * @param {Response} response - The HTTP response object containing a conclusion message.
+ * @throws throws error if receives a invalid data, if user tries to buy its own product, if a product is not available and if user has not been found.
+ */
 export const createInstance = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.user || !request.body) {
@@ -58,7 +62,7 @@ export const createInstance = asyncHandler(
             throw new Error("Instância já existente.");
         }
 
-        let createdInstance = await ProductInstance.create({
+        await ProductInstance.create({
             user,
             product,
             price,
@@ -67,11 +71,19 @@ export const createInstance = asyncHandler(
             productImage: productImage.id,
         });
 
-        response.status(201).json(createdInstance);
+        response
+            .status(201)
+            .json({ message: "Adicionado ao Carrinhos de Compras." });
     }
 );
 
-//delete, need params
+/**
+ * DELETE, AUTH REQUIRED - Delete a shoppingcart instance with a given id. It should be a valid ObjectId
+ *
+ * @param {Request} request - The HTTP request object containing user and instance id.
+ * @param {Response} response - The HTTP response object containing a conclusion message.
+ * @throws throws error if receives a invalid id, if the instance owner id is different from request user id, and if user or instance has not been found.
+ */
 export const removeInstance = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params || !request.user) {
@@ -80,7 +92,7 @@ export const removeInstance = asyncHandler(
         }
 
         let { id } = request.params;
-        if (typeof id !== "string") {
+        if (!Types.ObjectId.isValid(id)) {
             response.status(400);
             throw new Error("Dados Inválidos");
         }
@@ -102,14 +114,18 @@ export const removeInstance = asyncHandler(
             throw new Error("Não autorizado.");
         }
 
-        let deletedInstance = await ProductInstance.findByIdAndDelete(
-            instance.id
-        );
-        response.status(200).json(deletedInstance);
+        await ProductInstance.findByIdAndDelete(instance.id);
+        response.status(200).json({ message: "Produto(s) Removido(s)." });
     }
 );
 
-//get
+/**
+ * GET, AUTH REQUIRED - Get shoppingcart instances from a user with a given user id. It should be a valid ObjectId
+ *
+ * @param {Request} request - The HTTP request object containing user.
+ * @param {Response} response - The HTTP response object containing every instance ids.
+ * @throws throws error if receives a invalid data and if user has not been found.
+ */
 export const getInstances = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.user) {
@@ -127,6 +143,13 @@ export const getInstances = asyncHandler(
     }
 );
 
+/**
+ * GET, AUTH REQUIRED - Get a single shopping instance with a given instance id. It should be a valid ObjectId
+ *
+ * @param {Request} request - The HTTP request object containing user and instance id.
+ * @param {Response} response - The HTTP response object containing every instance and populated product details.
+ * @throws throws error if receives a invalid data and if user has not been found.
+ */
 export const getSingleInstance = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params || !request.user) {
