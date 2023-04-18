@@ -12,7 +12,10 @@ import { IProduct, IUser } from "../interface";
 //get
 export const getWishlistItems = asyncHandler(
     async (request: Request, response: Response) => {
-        if (!request.user || !mongoose.Types.ObjectId.isValid(request.user.id)) {
+        if (
+            !request.user ||
+            !mongoose.Types.ObjectId.isValid(request.user.id)
+        ) {
             response.status(400);
             throw new Error("Dados Inválidos");
         }
@@ -32,7 +35,10 @@ export const getWishlistItems = asyncHandler(
 //post
 export const createWishlistItem = asyncHandler(
     async (request: Request, response: Response) => {
-        if (!request.user || !mongoose.Types.ObjectId.isValid(request.user.id)) {
+        if (
+            !request.user ||
+            !mongoose.Types.ObjectId.isValid(request.user.id)
+        ) {
             response.status(400);
             throw new Error("Dados Inválidos.");
         }
@@ -62,19 +68,26 @@ export const createWishlistItem = asyncHandler(
             throw new Error("Não é possivel adicionar o próprio produto.");
         }
 
-        let alreadyWishlisted = await WishlistItem.find({user: user.id, product})
-        if(alreadyWishlisted.length === 1){
-            response.status(400)
-            throw new Error("Esse item já foi adicionado na lista de desejos.")
-        }
-
-        await WishlistItem.create({
+        let alreadyWishlisted = await WishlistItem.findOne({
             user: user.id,
-            product: productFound.id,
-            group: "Favoritos",
+            product,
         });
 
-        response.status(201).json({ message: "Feito." });
+        if (alreadyWishlisted) {
+            await WishlistItem.findByIdAndRemove(alreadyWishlisted.id);
+            response
+                .status(201)
+                .json({ message: "Produto removido da lista de desejos." });
+        } else {
+            await WishlistItem.create({
+                user: user.id,
+                product: productFound.id,
+                group: "Favoritos",
+            });
+            response
+                .status(201)
+                .json({ message: "Adicionado à lista de desejos." });
+        }
     }
 );
 
