@@ -1,9 +1,16 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
+import { Types } from "mongoose";
 import ImageInstance from "../models/ImageInstance";
 import User from "../models/User";
 
-//get
+/**
+ * GET - Get the image from a user with given id. It should be a valid ObjectId
+ *
+ * @param {Request} request - The HTTP request object containing the id of a user as a parameter
+ * @param {Response} response - The HTTP response object containing an image data
+ * @throws throws error if no image has been found or receives a invalid id
+ */
 export const getUserImage = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params.id) {
@@ -11,6 +18,13 @@ export const getUserImage = asyncHandler(
             throw new Error("URL Inválida.");
         }
 
+        let { id } = request.params;
+        if (!Types.ObjectId.isValid(id)) {
+            response.status(400);
+            throw new Error("Dados Inválidos");
+        }
+
+        //check for image
         let userImage = await ImageInstance.findOne({
             user: request.params.id,
             imageType: "userImage",
@@ -24,8 +38,13 @@ export const getUserImage = asyncHandler(
     }
 );
 
-////private
-//post
+/**
+ * POST, AUTH REQUIRED - Create image with given data. Requires a middleware to handle a file
+ *
+ * @param {Request} request - The HTTP request object containing the file and user id
+ * @param {Response} response - The HTTP response object containing an image data
+ * @throws throws error if no file has been received
+ */
 export const createImage = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.file) {
@@ -33,7 +52,6 @@ export const createImage = asyncHandler(
             throw new Error("Imagem Inválida.");
         }
         let { buffer, originalname } = request.file;
-        console.log(request.file);
 
         let savedImage = await ImageInstance.create({
             data: buffer,
@@ -45,7 +63,13 @@ export const createImage = asyncHandler(
     }
 );
 
-//patch
+/**
+ * PATCH, AUTH REQUIRED - Update image with given data. Requires a middleware to handle a file
+ *
+ * @param {Request} request - The HTTP request object containing the file and user id
+ * @param {Response} response - The HTTP response object containing an image data
+ * @throws throws error if no file has been received, if the image owner has not been found or if the request user is different from the original image owner
+ */
 export const updateImage = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.file) {
