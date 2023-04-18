@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 import asyncHandler from "express-async-handler";
 import { sign } from "jsonwebtoken";
 import * as bcrypt from "bcryptjs";
@@ -23,7 +23,13 @@ function generateToken(id: string) {
     });
 }
 
-//post
+/**
+ * POST - Log in user if given email and password.
+ *
+ * @param {Request} request - The HTTP request object containing the email and password.
+ * @param {Response} response - The HTTP response object containing user info.
+ * @throws throws error if there's no user with given email or wrong credentials
+ */
 export const loginUser = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.body) {
@@ -43,7 +49,7 @@ export const loginUser = asyncHandler(
             throw new Error("Senha invalida");
         }
 
-        //gen token to use in a protected route
+        //generate token to use in a protected route
         let token = generateToken(user.id);
 
         response.json({
@@ -58,7 +64,13 @@ export const loginUser = asyncHandler(
     }
 );
 
-//post
+/**
+ * POST - Register user with given data.
+ *
+ * @param {Request} request - The HTTP request object containing the email, password, name and location objects.
+ * @param {Response} response - The HTTP response object containing conclusion message.
+ * @throws throws error if there's already a user with given email or with the data isn't valid.
+ */
 export const registerUser = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.body) {
@@ -95,20 +107,18 @@ export const registerUser = asyncHandler(
             password: hashedPassword,
         };
 
-        //make transaction later
-        let session = await mongoose.startSession();
-        await session.withTransaction(async () => {
-            let user = await User.create(newUser);
-
-            await session.commitTransaction();
-        });
-
-        session.endSession();
+        await User.create(newUser);
         response.status(202).json({ message: "Usuário Criado." });
     }
 );
 
-//get, need params
+/**
+ * GET - Get user profile information with given user id. It should be a valid ObjectId.
+ *
+ * @param {Request} request - The HTTP request object containing the user ID.
+ * @param {Response} response - The HTTP response object containing user info.
+ * @throws throws error if no user has been found or if the user id isn't valid.
+ */
 export const getProfileInfo = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.body || !request.params) {
@@ -117,6 +127,11 @@ export const getProfileInfo = asyncHandler(
         }
 
         let { id } = request.params;
+        if (!Types.ObjectId.isValid(id)) {
+            response.status(400);
+            throw new Error("Dados Inválidos");
+        }
+
         let user = await User.findById(id).select({
             name: 1,
             id: 1,
@@ -130,16 +145,17 @@ export const getProfileInfo = asyncHandler(
             throw new Error("Usuario não encontrado");
         }
 
-        let image = ImageInstance.findOne({
-            user: user.id,
-            imageType: "userImage",
-        });
-
         response.json(user);
     }
 );
 
-//get, need params
+/**
+ * GET - Get user products IDs with given user id. It should be a valid ObjectId.
+ *
+ * @param {Request} request - The HTTP request object containing the user id.
+ * @param {Response} response - The HTTP response object containing user products IDs.
+ * @throws throws error if no user has been found or if the user id isn't valid.
+ */
 export const getUserProducts = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.body || !request.params) {
@@ -148,6 +164,11 @@ export const getUserProducts = asyncHandler(
         }
 
         let { id } = request.params;
+        if (!Types.ObjectId.isValid(id)) {
+            response.status(400);
+            throw new Error("Dados Inválidos");
+        }
+
         let user = await User.findById(id);
         if (!user) {
             response.status(404);
@@ -161,9 +182,13 @@ export const getUserProducts = asyncHandler(
     }
 );
 
-//private
-
-//get, need params
+/**
+ * GET, AUTH REQUIRED - Get user profile private information with given user id. It should be a valid ObjectId.
+ *
+ * @param {Request} request - The HTTP request object containing the user ID.
+ * @param {Response} response - The HTTP response object containing user info.
+ * @throws throws error if no user has been found, if the private info ins't from the request user or if the user id isn't valid.
+ */
 export const getUserPrivateInfo = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.user || !request.params) {
@@ -172,6 +197,11 @@ export const getUserPrivateInfo = asyncHandler(
         }
 
         let { id } = request.params;
+        if (!Types.ObjectId.isValid(id)) {
+            response.status(400);
+            throw new Error("Dados Inválidos");
+        }
+
         let user = await User.findById(request.user).select({
             id: 1,
             funds: 1,
@@ -187,12 +217,18 @@ export const getUserPrivateInfo = asyncHandler(
         }
 
         response
-            .status(202)
+            .status(200)
             .json({ id: user.id, funds: user.funds, email: user.email });
     }
 );
 
-//post
+/**
+ * POST, AUTH REQUIRED - Increase the user balance with given amount.
+ *
+ * @param {Request} request - The HTTP request object containing the user ID.
+ * @param {Response} response - The HTTP response object containing conclusion message.
+ * @throws throws error if no user has been found, or if the amount isn't valid.
+ */
 export const addFunds = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.body || !request.user) {
@@ -201,21 +237,31 @@ export const addFunds = asyncHandler(
         }
 
         let { amount } = request.body;
+        if(amount < 0){
+            response.status(400)
+            throw new Error("Valor Inválido.")
+        }
 
         let userExist = await User.findById(request.user);
         if (!userExist) {
             response.status(404);
-            throw new Error("Usuário não encontrado");
+            throw new Error("Usuário não encontrado.");
         }
 
-        let user = await User.findByIdAndUpdate(request.user, {
+        await User.findByIdAndUpdate(request.user, {
             $inc: { funds: +amount },
         });
-        response.status(202).json(user);
+        response.status(202).json({message:"Valor Adicionado."});
     }
 );
 
-//delete, needs params
+/**
+ * DELETE, AUTH REQUIRED - Delete user account and associated info with given user id. It should be a valid ObjectId
+ *
+ * @param {Request} request - The HTTP request object containing the user ID.
+ * @param {Response} response - The HTTP response object containing a conclusion message.
+ * @throws throws error if no user has been found, if the request user id is different from the user id or if the user id isn't valid.
+ */
 export const deleteAccount = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params || !request.user) {
@@ -223,6 +269,10 @@ export const deleteAccount = asyncHandler(
             throw new Error("Dados Inválidos.");
         }
         let { id } = request.params;
+        if (!Types.ObjectId.isValid(id)) {
+            response.status(400);
+            throw new Error("Dados Inválidos");
+        }
 
         const user = await User.findById(request.user);
         if (!user) {
@@ -262,7 +312,13 @@ export const deleteAccount = asyncHandler(
     }
 );
 
-//put, need param
+/**
+ * PUT, AUTH REQUIRED - Update user account details with given data and user id. It should be a valid ObjectId
+ *
+ * @param {Request} request - The HTTP request object containing the user ID and data.
+ * @param {Response} response - The HTTP response object containing a conclusion message.
+ * @throws throws error if any field expect from the body isn't valid, if not user has been found or if the request user id is different from user id
+ */
 export const updateUserInfo = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.user || !request.body || !request.params) {
