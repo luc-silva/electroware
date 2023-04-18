@@ -6,6 +6,7 @@ import UserService from "../../services/UserService";
 import WishlistService from "../../services/WishlistService";
 import { createImage } from "../../utils/operations";
 import { ProductBtnPanel } from "../Buttons/ProductBtnPanel";
+import { InfoToast } from "../InfoToast";
 import { ImageBox } from "../Misc/ImageBox";
 import styles from "./ProductAbout.module.css";
 
@@ -20,16 +21,22 @@ export const ProductAbout = ({
 }) => {
     let [owner, setOwner] = useState({ first: "", last: "" });
     let [category, setCategory] = useState("");
+    let [toastMsg, setToastMessage] = useState("");
+    let [isToastActive, toggleToast] = useState(false);
 
     async function handleWishlist() {
         let data = {
             product: productDetails.product._id,
         };
         await WishlistService.createWishlistInstance(data, user.token).then(
-            () => {
-                //add toaster
+            ({ message }) => {
+                showToast(message);
             }
         );
+    }
+    function showToast(msg: string) {
+        toggleToast(true)
+        setToastMessage(msg);
     }
 
     useEffect(() => {
@@ -119,6 +126,12 @@ export const ProductAbout = ({
                     />
                 </div>
             </div>
+            <InfoToast
+                isActive={isToastActive}
+                message={toastMsg}
+                toggle={toggleToast}
+                type="info"
+            />
         </section>
     );
 };

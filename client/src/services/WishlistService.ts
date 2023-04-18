@@ -1,8 +1,8 @@
 import axios from "axios";
 import Service from "./Service";
 
-interface WishlistBody{
-    product:string;
+interface WishlistBody {
+    product: string;
 }
 
 class WishlistService extends Service {
@@ -20,8 +20,12 @@ class WishlistService extends Service {
             });
     }
 
-    public async createWishlistInstance(data:WishlistBody, token:string){
-        return axios.post(this.baseUrl, data, this.createHeader(token))
+    public async createWishlistInstance(data: WishlistBody, token: string) {
+        return await axios
+            .post(this.baseUrl, data, this.createHeader(token))
+            .then(({ data }) => {
+                return data;
+            });
     }
 }
 
