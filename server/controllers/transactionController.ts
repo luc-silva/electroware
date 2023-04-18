@@ -10,7 +10,13 @@ import { Request, Response } from "express";
 import { IUser } from "../interface";
 import TransactionValidator from "../validators/TransactionValidator";
 
-//post
+/**
+ * POST, AUTH REQUIRED - Create a transaction instance with given data
+ *
+ * @param {Request} request - The HTTP request object containing the user ID and payment method.
+ * @param {Response} response - The HTTP response object containing conclusion message.
+ * @throws throws error if user id isn't valid, if user has not been found or if user doesn't have required credit amount.
+ */
 export const createProductTransaction = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.body || !request.user) {
@@ -54,7 +60,7 @@ export const createProductTransaction = asyncHandler(
                 products: productsBought,
                 totalPrice: getTotal(),
             };
-            let transaction = await Transaction.create([data], { session });
+            await Transaction.create([data], { session });
 
             await User.findByIdAndUpdate(
                 [user.id],
@@ -82,15 +88,19 @@ export const createProductTransaction = asyncHandler(
             }
 
             await session.commitTransaction();
-            response.status(201).json(transaction);
+            response.status(201).json({message:"Compra Concluida."});
         });
         session.endSession();
     }
 );
 
-////private
-
-//get, need params
+/**
+ * GET, AUTH REQUIRED - Get every user transactions with given user id. it should be a valid ObjectId
+ *
+ * @param {Request} request - The HTTP request object containing the user ID.
+ * @param {Response} response - The HTTP response object containing every user transactions.
+ * @throws throws error if user id isn't valid, if user has not been found or if the request user id is different from user id
+ */
 export const getUserTransactions = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.user || !request.params) {
