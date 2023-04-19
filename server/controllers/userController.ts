@@ -1,21 +1,11 @@
-import mongoose, { Types } from "mongoose";
 import asyncHandler from "express-async-handler";
 import { sign } from "jsonwebtoken";
 import * as bcrypt from "bcryptjs";
 
-import User from "../models/User";
-import Product from "../models/Product";
-import Review from "../models/Review";
-import ProductInstance from "../models/ProductInstance";
 import { IUser } from "../interface";
 import { Request, Response } from "express";
-import WishlistItem from "../models/WishlistItem";
 import UserValidator from "../validators/UserValidator";
-import ImageInstance from "../models/ImageInstance";
-
-interface IUserDTO extends IUser {
-    password: string;
-}
+import UserRepository from "../repositories/UserRepository";
 
 function generateToken(id: string) {
     return sign({ id }, "123", {
@@ -38,7 +28,7 @@ export const loginUser = asyncHandler(
         }
 
         let { email, password } = request.body;
-        let user = (await User.findOne({ email })) as IUserDTO;
+        let user = await UserRepository.getUserInfoWithEmail(email);
         if (!user) {
             response.status(404);
             throw new Error("Usuario não encontrado");
@@ -55,9 +45,7 @@ export const loginUser = asyncHandler(
         response.json({
             email,
             id: user.id,
-            username:
-                (user.name.last && `${user.name.first} ${user.name.last}`) ||
-                user.name.first,
+            username: user.get("username"),
             funds: user.funds,
             token: token,
         });
@@ -78,19 +66,12 @@ export const registerUser = asyncHandler(
             throw new Error("Dados Inválidos.");
         }
 
-        let { email, password, name, location } = request.body;
-        if (
-            !email ||
-            !password ||
-            !name.first ||
-            !location.country ||
-            !location.state
-        ) {
-            response.status(400);
-            throw new Error("Dados Inválidos.");
-        }
+        let userData = request.body;
+        UserValidator.validateRegistration(response, userData);
 
-        let userExist = (await User.findOne({ email })) as IUser;
+        let userExist = await UserRepository.getUserInfoWithEmail(
+            userData.email
+        );
         if (userExist) {
             response.status(400);
             throw new Error(`Uma conta já foi criada com esse email.`);
@@ -98,16 +79,14 @@ export const registerUser = asyncHandler(
 
         //hash password
         let salt = await bcrypt.genSalt(10);
-        let hashedPassword = await bcrypt.hash(password, salt);
+        let hashedPassword = await bcrypt.hash(userData.password, salt);
 
         let newUser = {
-            email,
-            name,
-            location,
+            ...userData,
             password: hashedPassword,
         };
 
-        await User.create(newUser);
+        await UserRepository.createUser(newUser);
         response.status(202).json({ message: "Usuário Criado." });
     }
 );
@@ -127,19 +106,7 @@ export const getProfileInfo = asyncHandler(
         }
 
         let { id } = request.params;
-        if (!Types.ObjectId.isValid(id)) {
-            response.status(400);
-            throw new Error("Dados Inválidos");
-        }
-
-        let user = await User.findById(id).select({
-            name: 1,
-            id: 1,
-            email: 1,
-            createdAt: 1,
-            location: 1,
-            description: 1,
-        });
+        let user = await UserRepository.getUser(id);
         if (!user) {
             response.status(404);
             throw new Error("Usuario não encontrado");
@@ -164,20 +131,13 @@ export const getUserProducts = asyncHandler(
         }
 
         let { id } = request.params;
-        if (!Types.ObjectId.isValid(id)) {
-            response.status(400);
-            throw new Error("Dados Inválidos");
-        }
-
-        let user = await User.findById(id);
+        let user = await UserRepository.getUser(id);
         if (!user) {
             response.status(404);
             throw new Error("Usuario nao encontrado");
         }
 
-        let userProducts = await Product.find({ owner: user.id }).select({
-            id: 1,
-        });
+        let userProducts = await UserRepository.getUserProducts(user.id);
         response.status(202).json(userProducts);
     }
 );
@@ -197,20 +157,12 @@ export const getUserPrivateInfo = asyncHandler(
         }
 
         let { id } = request.params;
-        if (!Types.ObjectId.isValid(id)) {
-            response.status(400);
-            throw new Error("Dados Inválidos");
-        }
-
-        let user = await User.findById(request.user).select({
-            id: 1,
-            funds: 1,
-            email: 1,
-        });
+        let user = await UserRepository.getUserEmailAndFunds(id);
         if (!user) {
             response.status(404);
             throw new Error("Usuário não encontrado.");
         }
+
         if (user.id !== id) {
             response.status(402);
             throw new Error("Não autorizado.");
@@ -237,21 +189,19 @@ export const addFunds = asyncHandler(
         }
 
         let { amount } = request.body;
-        if(amount < 0){
-            response.status(400)
-            throw new Error("Valor Inválido.")
+        if (amount < 0) {
+            response.status(400);
+            throw new Error("Valor Inválido.");
         }
 
-        let userExist = await User.findById(request.user);
+        let userExist = await UserRepository.getUser(request.user.id);
         if (!userExist) {
             response.status(404);
             throw new Error("Usuário não encontrado.");
         }
 
-        await User.findByIdAndUpdate(request.user, {
-            $inc: { funds: +amount },
-        });
-        response.status(202).json({message:"Valor Adicionado."});
+        await UserRepository.addUserFunds(userExist.id, amount);
+        response.status(202).json({ message: "Valor Adicionado." });
     }
 );
 
@@ -268,46 +218,20 @@ export const deleteAccount = asyncHandler(
             response.status(400);
             throw new Error("Dados Inválidos.");
         }
-        let { id } = request.params;
-        if (!Types.ObjectId.isValid(id)) {
-            response.status(400);
-            throw new Error("Dados Inválidos");
-        }
 
-        const user = await User.findById(request.user);
+        let { id } = request.params;
+        const user = await UserRepository.getUser(id);
         if (!user) {
             response.status(404);
             throw new Error("Usuário não existe");
         }
+
         if (user.id !== id) {
             response.status(401);
             throw new Error("Não autorizado");
         }
 
-        let session = await mongoose.startSession();
-        await session.withTransaction(async () => {
-            await Product.deleteMany(
-                { owner: user.id },
-                {
-                    session,
-                }
-            );
-            await Review.deleteMany(
-                { author: user.id },
-                {
-                    session,
-                }
-            );
-            await Review.deleteMany({ productOwner: user.id }, { session });
-            await WishlistItem.deleteMany({ user: user.id }, { session });
-
-            await ProductInstance.deleteMany({ user: user.id }, { session });
-            await ProductInstance.deleteMany({ seller: user.id }, { session });
-
-            await User.findByIdAndDelete(user.id);
-            await session.commitTransaction();
-        });
-        session.endSession();
+        await UserRepository.deleteUserAccount(id);
         response.status(200).json({ message: "Conta Excluida." });
     }
 );
@@ -326,27 +250,18 @@ export const updateUserInfo = asyncHandler(
             throw new Error("Dados Inválidos.");
         }
 
-        UserValidator.validate(response, request.body);
-        let { name, location, description } = request.body;
-        let { id } = request.params;
+        let updatedUserData = request.body;
+        UserValidator.validate(response, updatedUserData);
 
-        let userExist = await User.findById(id);
+        let { id } = request.params;
+        let userExist = await UserRepository.getUser(id);
         if (!userExist) {
             response.status(404);
             throw new Error("Usuário Não Encontrado.");
         }
 
-        if (userExist.id !== id) {
-            response.status(401);
-            throw new Error("Não Autorizado.");
-        }
+        await UserRepository.findUserAndUpdateDetails(id, updatedUserData);
 
-        await User.findByIdAndUpdate(id, {
-            name,
-            location,
-            description,
-        });
-
-        response.status(201).json({ message: "Feito." });
+        response.status(200).json({ message: "Feito." });
     }
 );
