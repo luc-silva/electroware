@@ -113,7 +113,7 @@ export const registerUser = asyncHandler(
 );
 
 /**
- * GET - Get user profile information with given user id. It should be a valid ObjectId.
+ * GET - Get user profile information with given valid ObjectId.
  *
  * @param {Request} request - The HTTP request object containing the user ID.
  * @param {Response} response - The HTTP response object containing user info.
@@ -150,7 +150,7 @@ export const getProfileInfo = asyncHandler(
 );
 
 /**
- * GET - Get user products IDs with given user id. It should be a valid ObjectId.
+ * GET - Get user products IDs with given valid ObjectId.
  *
  * @param {Request} request - The HTTP request object containing the user id.
  * @param {Response} response - The HTTP response object containing user products IDs.
@@ -183,7 +183,7 @@ export const getUserProducts = asyncHandler(
 );
 
 /**
- * GET, AUTH REQUIRED - Get user profile private information with given user id. It should be a valid ObjectId.
+ * GET, AUTH REQUIRED - Get user profile private information with given valid ObjectId.
  *
  * @param {Request} request - The HTTP request object containing the user ID.
  * @param {Response} response - The HTTP response object containing user info.
@@ -256,11 +256,11 @@ export const addFunds = asyncHandler(
 );
 
 /**
- * DELETE, AUTH REQUIRED - Delete user account and associated info with given user id. It should be a valid ObjectId
+ * DELETE, AUTH REQUIRED - Delete user account and associated info with given valid ObjectId.
  *
  * @param {Request} request - The HTTP request object containing the user ID.
  * @param {Response} response - The HTTP response object containing a conclusion message.
- * @throws throws error if no user has been found, if the request user id is different from the user id or if the user id isn't valid.
+ * @throws throws error if no user has been found, if the request user ID is different from the user ID or if the user ID isn't valid.
  */
 export const deleteAccount = asyncHandler(
     async (request: Request, response: Response) => {
@@ -313,11 +313,11 @@ export const deleteAccount = asyncHandler(
 );
 
 /**
- * PUT, AUTH REQUIRED - Update user account details with given data and user id. It should be a valid ObjectId
+ * PUT, AUTH REQUIRED - Update user account details with given data and valid ObjectId.
  *
  * @param {Request} request - The HTTP request object containing the user ID and data.
  * @param {Response} response - The HTTP response object containing a conclusion message.
- * @throws throws error if any field expect from the body isn't valid, if not user has been found or if the request user id is different from user id
+ * @throws throws error if any field expect from the body isn't valid, if not user has been found or if the request user id is different from user ID.
  */
 export const updateUserInfo = asyncHandler(
     async (request: Request, response: Response) => {

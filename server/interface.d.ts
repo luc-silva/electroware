@@ -50,7 +50,7 @@ interface IRequestError {
 }
 
 interface Validator {
-    public validate<any>(response: Response, requestBody: any): void;
+    public validate(response: Response, requestBody: any): void;
 }
 
 declare global {

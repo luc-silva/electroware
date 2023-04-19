@@ -78,7 +78,7 @@ export const createInstance = asyncHandler(
 );
 
 /**
- * DELETE, AUTH REQUIRED - Delete a shoppingcart instance with a given id. It should be a valid ObjectId
+ * DELETE, AUTH REQUIRED - Delete a shoppingcart instance with a given valid ObjectId. 
  *
  * @param {Request} request - The HTTP request object containing user and instance id.
  * @param {Response} response - The HTTP response object containing a conclusion message.
@@ -120,7 +120,7 @@ export const removeInstance = asyncHandler(
 );
 
 /**
- * GET, AUTH REQUIRED - Get shoppingcart instances from a user with a given user id. It should be a valid ObjectId
+ * GET, AUTH REQUIRED - Get shoppingcart instances from a user with a given valid user ObjectId.
  *
  * @param {Request} request - The HTTP request object containing user.
  * @param {Response} response - The HTTP response object containing every instance ids.
@@ -144,7 +144,7 @@ export const getInstances = asyncHandler(
 );
 
 /**
- * GET, AUTH REQUIRED - Get a single shopping instance with a given instance id. It should be a valid ObjectId
+ * GET, AUTH REQUIRED - Get a single shopping instance with a given valid instance ObjectId
  *
  * @param {Request} request - The HTTP request object containing user and instance id.
  * @param {Response} response - The HTTP response object containing every instance and populated product details.

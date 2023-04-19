@@ -11,7 +11,7 @@ import { IUser } from "../interface";
 import TransactionValidator from "../validators/TransactionValidator";
 
 /**
- * POST, AUTH REQUIRED - Create a transaction instance with given data
+ * POST, AUTH REQUIRED - Create a transaction instance with given data.
  *
  * @param {Request} request - The HTTP request object containing the user ID and payment method.
  * @param {Response} response - The HTTP response object containing conclusion message.
@@ -95,11 +95,11 @@ export const createProductTransaction = asyncHandler(
 );
 
 /**
- * GET, AUTH REQUIRED - Get every user transactions with given user id. it should be a valid ObjectId
+ * GET, AUTH REQUIRED - Get every user transactions with given valid user id.
  *
  * @param {Request} request - The HTTP request object containing the user ID.
  * @param {Response} response - The HTTP response object containing every user transactions.
- * @throws throws error if user id isn't valid, if user has not been found or if the request user id is different from user id
+ * @throws throws error if user id isn't valid, if user has not been found or if the request user ID is different from user id
  */
 export const getUserTransactions = asyncHandler(
     async (request: Request, response: Response) => {

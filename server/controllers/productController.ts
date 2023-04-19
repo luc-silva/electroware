@@ -14,7 +14,7 @@ import ImageInstance from "../models/ImageInstance";
 /**
  * GET - Get twenty most recent products.
  * @param {Request} request - HTTP request doesn't need any parameters.
- * @param {Response} response - The HTTP response object containing products id.
+ * @param {Response} response - The HTTP response object containing products IDs.
  * @throws throws error if any product has been found.
  */
 export const getRecentProducts = asyncHandler(
@@ -31,8 +31,8 @@ export const getRecentProducts = asyncHandler(
 );
 
 /**
- * GET - Get product score with given id.
- * @param {Request} request - The HTTP request containing product id.
+ * GET - Get product score with given valid ObjectId.
+ * @param {Request} request - The HTTP request containing the product id.
  * @param {Response} response - The HTTP response object containing product score.
  * @throws throws error if any product has been found.
  */
@@ -57,7 +57,7 @@ export const getProductAvarageRating = asyncHandler(
 );
 
 /**
- * POST - Search for a product with given keyword.
+ * POST - Search for a product with given valid keyword.
  * @param {Request} request - The HTTP request containing product keyword.
  * @param {Response} response - The HTTP response object containing the IDs of every product found.
  * @throws throws error if receives invalid data.
@@ -90,7 +90,7 @@ export const searchProduct = asyncHandler(
 );
 
 /**
- * GET - Get product details with given product id.
+ * GET - Get product details with given valid ObjectId.
  * @param {Request} request - The HTTP request containing product id.
  * @param {Response} response - The HTTP response object containing the product information.
  * @throws throws error if receives invalid data, if a product has not been found or if a product image has not been found.
@@ -125,7 +125,7 @@ export const getProductDetails = asyncHandler(
 );
 
 /**
- * GET - Get products from a category.
+ * GET - Get products from a specific category with given valid ObjectId.
  * @param {Request} request - The HTTP request containing category id.
  * @param {Response} response - The HTTP response object containing the IDs of the products from the category.
  * @throws throws error if receives invalid data or if a category has not been found.
@@ -148,7 +148,9 @@ export const getProductFromCategory = asyncHandler(
             throw new Error("Categoria não encontrada");
         }
 
-        let products = await Product.find({ category: category.id });
+        let products = await Product.find({ category: category.id }).select({
+            id: 1,
+        });
         response.status(200).json(products);
     }
 );
@@ -259,7 +261,7 @@ export const updateProduct = asyncHandler(
 );
 
 /**
- * DELETE, AUTH REQUIRED - Delete product with given id.
+ * DELETE, AUTH REQUIRED - Delete product with given valid ObjectId.
  *
  * @param {Request} request - The HTTP request object containing product id.
  * @param {Response} response - The HTTP response object containing a conclusion message.

@@ -8,11 +8,11 @@ import WishlistItem from "../models/WishlistItem";
 import { IProduct, IUser } from "../interface";
 
 /**
- * GET, AUTH REQUIRED - Get wishlist items of a user with givem user id. It should be a valid ObjectId.
+ * GET, AUTH REQUIRED - Get wishlist items of a user with given valid ObjectId.
  * 
- * @param {Request} request - The HTTP request object containing the id of a user.
+ * @param {Request} request - The HTTP request object containing the ID of a user.
  * @param {Response} response - The HTTP response object containing every wishilist item found.
- * @throws throws error if receives a invalid id or if a use has not been found.
+ * @throws throws error if receives a invalid ID or if a use has not been found.
  */
 export const getWishlistItems = asyncHandler(
     async (request: Request, response: Response) => {
@@ -37,7 +37,7 @@ export const getWishlistItems = asyncHandler(
 );
 
 /**
- * POST, AUTH REQUIRED - Create a wishilist instance with given product id.
+ * POST, AUTH REQUIRED - Create a wishilist instance with given valid product ObjectID.
  * 
  * @param {Request} request - The HTTP request object containing product info and user.
  * @param {Response} response - The HTTP response object containing a conclusion message.
@@ -102,7 +102,7 @@ export const createWishlistItem = asyncHandler(
 );
 
 /**
- * DELETE, AUTH REQUIRED - Delete a wishlist instance with given wishlist item id.
+ * DELETE, AUTH REQUIRED - Delete a wishlist instance with given valid ObjectID.
  * 
  * @param {Request} request - The HTTP request object containing the id of the instance as a parameter.
  * @param {Response} response - The HTTP response object containing a conclusion message.

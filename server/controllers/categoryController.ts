@@ -8,11 +8,11 @@ interface ICategoryDTO {
 }
 
 /**
- * POST - Create a category for products.
+ * POST - Create a category for products with given name.
  *
  * @param {Request} request - The HTTP request object containing category name.
  * @param {Response} response - The HTTP response object containing a conclusion message.
- * @throws throws error if receives a invalid data and if a category has already been created.
+ * @throws throws error if receives an invalid name or if a category has already been created.
  */
 export const createCategory = asyncHandler(
     async (request: Request, response: Response) => {
@@ -22,8 +22,8 @@ export const createCategory = asyncHandler(
         }
 
         let { name }: ICategoryDTO = request.body;
-        if(typeof name !== "string"){
-            response.status(400)
+        if (typeof name !== "string") {
+            response.status(400);
             throw new Error("Insira dados válidos");
         }
 
@@ -34,29 +34,31 @@ export const createCategory = asyncHandler(
         }
 
         await Category.create(request.body);
-        response.status(201).json({message: "Categoria Criada."});
+        response.status(201).json({ message: "Categoria Criada." });
     }
 );
 
 /**
- * Get - Get every products categories.
+ * Get - Get every products categories IDs.
  *
  * @param {Request} request - HTTP request doesn't requires any params or data.
- * @param {Response} response - The HTTP response object containing a conclusion message.
+ * @param {Response} response - The HTTP response object containing categories IDs or a conclusion message.
  * @throws throws error only with unexpected issues.
  */
 export const getCategories = asyncHandler(
     async (request: Request, response: Response) => {
-        const categories = await Category.find();
+        const categories = await Category.find().select({ name: 1 });
         if (categories.length === 0) {
-            response.status(404).json({message: "Nenhuma categoria encontrada."});
+            response
+                .status(404)
+                .json({ message: "Nenhuma categoria encontrada." });
         }
         response.status(200).json(categories);
     }
 );
 
 /**
- * Get - Get a single category with given id. It should be a valid ObejctId
+ * Get - Get details of a category with given valid ObjectId
  *
  * @param {Request} request - The HTTP request object containing category id.
  * @param {Response} response - The HTTP response object containing category info.

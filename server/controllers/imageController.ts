@@ -5,11 +5,11 @@ import ImageInstance from "../models/ImageInstance";
 import User from "../models/User";
 
 /**
- * GET - Get the image from a user with given id. It should be a valid ObjectId
+ * GET - Get the image from a user with given valid ObjectId.
  *
- * @param {Request} request - The HTTP request object containing the id of a user as a parameter
- * @param {Response} response - The HTTP response object containing an image data
- * @throws throws error if no image has been found or receives a invalid id
+ * @param {Request} request - The HTTP request object containing the id of a user as a parameter.
+ * @param {Response} response - The HTTP response object containing an image data.
+ * @throws throws error if no image has been found or receives a invalid id.
  */
 export const getUserImage = asyncHandler(
     async (request: Request, response: Response) => {
@@ -39,11 +39,11 @@ export const getUserImage = asyncHandler(
 );
 
 /**
- * POST, AUTH REQUIRED - Create image with given data. Requires a middleware to handle a file
+ * POST, AUTH REQUIRED - Create image instance with given data. Requires a middleware to handle the file.
  *
- * @param {Request} request - The HTTP request object containing the file and user id
- * @param {Response} response - The HTTP response object containing an image data
- * @throws throws error if no file has been received
+ * @param {Request} request - The HTTP request object containing the file and user id.
+ * @param {Response} response - The HTTP response object containing an image data.
+ * @throws throws error if no file has been received.
  */
 export const createImage = asyncHandler(
     async (request: Request, response: Response) => {
@@ -64,11 +64,11 @@ export const createImage = asyncHandler(
 );
 
 /**
- * PATCH, AUTH REQUIRED - Update image with given data. Requires a middleware to handle a file
+ * PATCH, AUTH REQUIRED - Update user image with given data. Requires a middleware to handle the file.
  *
- * @param {Request} request - The HTTP request object containing the file and user id
- * @param {Response} response - The HTTP response object containing an image data
- * @throws throws error if no file has been received, if the image owner has not been found or if the request user is different from the original image owner
+ * @param {Request} request - The HTTP request object containing the file and user id.
+ * @param {Response} response - The HTTP response object containing an image data.
+ * @throws throws error if no file has been received, if the image owner has not been found or if the request user is different from the original image owner.
  */
 export const updateImage = asyncHandler(
     async (request: Request, response: Response) => {
