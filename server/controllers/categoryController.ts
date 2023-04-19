@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
-import { Types } from "mongoose";
-import Category from "../models/Category";
+import CategoryRepository from "../repositories/CategoryRepository";
 
 interface ICategoryDTO {
     name: string;
@@ -21,25 +20,25 @@ export const createCategory = asyncHandler(
             throw new Error("Insira dados válidos");
         }
 
-        let { name }: ICategoryDTO = request.body;
+        let { name } = request.body;
         if (typeof name !== "string") {
             response.status(400);
             throw new Error("Insira dados válidos");
         }
 
-        let categoryExists = await Category.findOne({ name });
+        let categoryExists = await CategoryRepository.getCategoryByName(name);
         if (categoryExists) {
             response.status(400);
             throw new Error("Categoria já existente.");
         }
 
-        await Category.create(request.body);
+        await CategoryRepository.createCategory(request.body);
         response.status(201).json({ message: "Categoria Criada." });
     }
 );
 
 /**
- * Get - Get every products categories IDs.
+ * Get - Get every products categories names.
  *
  * @param {Request} request - HTTP request doesn't requires any params or data.
  * @param {Response} response - The HTTP response object containing categories IDs or a conclusion message.
@@ -47,7 +46,7 @@ export const createCategory = asyncHandler(
  */
 export const getCategories = asyncHandler(
     async (request: Request, response: Response) => {
-        const categories = await Category.find().select({ name: 1 });
+        const categories = await CategoryRepository.getCategoryNames();
         if (categories.length === 0) {
             response
                 .status(404)
@@ -72,12 +71,7 @@ export const getSingleCategory = asyncHandler(
         }
 
         let { id } = request.params;
-        if (!Types.ObjectId.isValid(id)) {
-            response.status(400);
-            throw new Error("Dados Inválidos");
-        }
-
-        let category = await Category.findById(id);
+        let category = await CategoryRepository.getSingleCategory(id);
         if (!category) {
             response.status(404);
             throw new Error("Categoria não encontrada.");
