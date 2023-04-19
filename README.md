@@ -7,7 +7,6 @@ Provavelmente é o projeto que mais venho me dedicando. Nele, tentei reunir recu
 
 ### Observações
 - Tanto a API quanto a interface estão inclusas nesse repositório.
-- Backend decidi desenvolver em Javascript pois a API foi a primeira de larga escala (por assim dizer) que fiz. Pretendo passar para Typescript o quanto antes.
 - Creio que devido a sua complexidade, esse projeto irá se tornar bem interessante para refatorar, portanto, pretendo manter e atualiza-lo de acordo com a experiência que eu obter no futuro.
 - Alguma sugestão de melhoria, erro notado, ou ideias, por favor, abra um [issue](https://github.com/luc-silva/electroware/issues).
 
@@ -50,9 +49,7 @@ npm run client
 Após os passos, o website deve abrir em seu navegador padrão. Dúvidas, entre em contato através do [LinkedIn](https://linkedin.com/in/silva-luc) ou abra um [issue](https://github.com/luc-silva/electroware/issues).
 
 ## Planos
-- Passar o backend para typescript
-- Refatorar o código fonte
-- Hospedar o servidor e client do pŕojeto
+- Hospedar o servidor e client do projeto
 
 ### Créditos:
 - [CSS Reset](https://meyerweb.com/eric/tools/css/reset/)
