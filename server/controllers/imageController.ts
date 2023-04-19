@@ -3,6 +3,8 @@ import asyncHandler from "express-async-handler";
 import { Types } from "mongoose";
 import ImageInstance from "../models/ImageInstance";
 import User from "../models/User";
+import ImageRepository from "../repositories/ImageRepository";
+import UserRepository from "../repositories/UserRepository";
 
 /**
  * GET - Get the image from a user with given valid ObjectId.
@@ -19,16 +21,7 @@ export const getUserImage = asyncHandler(
         }
 
         let { id } = request.params;
-        if (!Types.ObjectId.isValid(id)) {
-            response.status(400);
-            throw new Error("Dados Inválidos");
-        }
-
-        //check for image
-        let userImage = await ImageInstance.findOne({
-            user: request.params.id,
-            imageType: "userImage",
-        });
+        let userImage = await ImageRepository.getUserImage(id);
         if (!userImage) {
             response.status(404);
             throw new Error("Imagem não encontrada.");
@@ -51,15 +44,14 @@ export const createImage = asyncHandler(
             response.status(400);
             throw new Error("Imagem Inválida.");
         }
-        let { buffer, originalname } = request.file;
+        let { buffer } = request.file;
 
-        let savedImage = await ImageInstance.create({
-            data: buffer,
-            user: request.user,
-            imageName: originalname,
+        await ImageRepository.createImage(request.user.id, {
+            buffer,
+            imageType: "userImage",
         });
 
-        response.status(200).json(savedImage);
+        response.status(200).json({ message: "Imagem Criada." });
     }
 );
 
@@ -83,34 +75,27 @@ export const updateImage = asyncHandler(
             throw new Error("Não Autorizado.");
         }
 
-        let user = await User.findById(request.user);
+        let user = await UserRepository.getUser(request.user.id);
         if (!user) {
             response.status(404);
             throw new Error("Usuário não Encontrado.");
         }
 
-        let imageAlreadyExist = await ImageInstance.findOne({
-            user: user.id,
-            imageType: "userImage",
-        });
+        let imageAlreadyExist = await ImageRepository.getUserImage(user.id);
         if (imageAlreadyExist) {
             if (imageAlreadyExist.user !== user.id) {
                 response.status(401);
                 throw new Error("Não Autorizado");
             }
-            await ImageInstance.findByIdAndUpdate(imageAlreadyExist.id, {
-                data: buffer,
-                imageName: `pic-${user.id}`,
+
+            await ImageRepository.updateImage(imageAlreadyExist.id, {
+                buffer,
                 imageType: "userImage",
-                imageAlt: "User Profile Picture",
             });
         } else {
-            await ImageInstance.create({
-                user: user.id,
-                data: buffer,
-                imageName: `pic-${user.id}`,
+            await ImageRepository.createImage(user.id, {
+                buffer,
                 imageType: "userImage",
-                imageAlt: "User Profile Picture",
             });
         }
 
