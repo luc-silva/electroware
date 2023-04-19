@@ -18,4 +18,10 @@ const UserSchema = new Schema(
     { timestamps: true }
 );
 
+UserSchema.virtual("username").get(function () {
+    return this.name?.last
+        ? `${this.name.first} ${this.name.last}`
+        : `${this.name?.first}`;
+});
+
 export = model("User", UserSchema);
