@@ -6,8 +6,8 @@ import { Repository } from "./Repository";
 
 class ProductRepository extends Repository {
     /**
-     * Get id of the most recent created products
-     *
+     * Get id of the most recent created products.
+     * @returns Returns IDs of products.
      */
     public async getRecentProducts() {
         return await Product.find()
@@ -18,8 +18,8 @@ class ProductRepository extends Repository {
 
     /**
      * Get the average score from a product with given id.
-     *
-     * @params objectId - Product ObjectId.
+     * @param objectId - Product ObjectId.
+     * @returns Returns product score.
      */
     public async getAverageScoreFromProduct(objectId: string) {
         this.validateObjectId(objectId);
@@ -33,19 +33,19 @@ class ProductRepository extends Repository {
 
     /**
      * Get products with specified keyword.
-     *
      * @param keyword - String to search for an item.
+     * @returns Returns IDs of products.
      */
     public async searchProductWithKeyword(keyword: string) {
         return await Product.find({
             name: { $regex: new RegExp(keyword, "i") },
-        });
+        }).select({ id: 1 });
     }
 
     /**
      * Get product details.
-     *
      * @param objectId - Product ObjectId.
+     * @returns Returns product details object.
      */
     public async getProductDetails(objectId: string) {
         this.validateObjectId(objectId);
@@ -54,7 +54,6 @@ class ProductRepository extends Repository {
 
     /**
      * Create a product and its related image.
-     *
      * @param productData - Product data such as name, category and related user.
      * @param imageData - Image data such as buffer, related user and image type.
      */
@@ -76,7 +75,6 @@ class ProductRepository extends Repository {
 
     /**
      * Update product with given data and product id.
-     *
      * @param objectId - Product ObjectId.
      * @param updatedProductData - Product data.
      */
@@ -87,7 +85,6 @@ class ProductRepository extends Repository {
 
     /**
      * Delete a product and related items with given product id
-     *
      * @param objectId - Product ObjectId.
      */
     public async deleteProduct(objectId: string) {

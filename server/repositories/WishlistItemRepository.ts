@@ -5,7 +5,7 @@ class WishlistItemRepository extends Repository {
     /**
      * Get wishlist item with given id.
      * @param objectId - Wishlist item ObjectId.
-     * @returns Return wishlist item details.
+     * @returns Return wishlist item details object.
      */
     public async getWishlistItem(objectId: string) {
         this.validateObjectId(objectId);
@@ -15,7 +15,7 @@ class WishlistItemRepository extends Repository {
     /**
      * Get wishlist items with given user id.
      * @param objectId - User ObjectId.
-     * @returns Returns wishlist item details.
+     * @returns Returns wishlist item details object.
      */
     public async getWishlistItemsByUser(objectId: string) {
         this.validateObjectId(objectId);
@@ -26,7 +26,7 @@ class WishlistItemRepository extends Repository {
      * Get wishlist item with given product and user ids.
      * @param userId - User ObjectId.
      * @param productId - Product ObjectId.
-     * @returns Returns wishlist item details.
+     * @returns Returns wishlist item details object.
      */
     public async getWishlistItemByUserAndProduct(
         userId: string,

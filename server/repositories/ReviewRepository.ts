@@ -3,9 +3,9 @@ import { Repository } from "./Repository";
 
 class ReviewRepository extends Repository {
     /**
-     * Get review with given id.
+     * Get review detailswith given id.
      * @param objectId Review ObjectId.
-     * @returns Returns review details
+     * @returns Returns review details object.
      */
     public async getReview(objectId: string) {
         this.validateObjectId(objectId);
@@ -15,7 +15,7 @@ class ReviewRepository extends Repository {
     /**
      * Get a review with given id and populate author field.
      * @param objectId - Review ObjectId.
-     * @returns Review details and author name and id.
+     * @returns Returns Review details object.
      */
     public async getReviewAndPopulate(objectId: string) {
         this.validateObjectId(objectId);
@@ -25,6 +25,7 @@ class ReviewRepository extends Repository {
     /**
      * Get reviews IDs from a product with given id and sort by the most recent.
      * @param objectId - Product ObjectId.
+     * @returns Returns IDs of reviews.
      */
     public async getProductReviews(objectId: string) {
         this.validateObjectId(objectId);
@@ -35,8 +36,8 @@ class ReviewRepository extends Repository {
 
     /**
      * Get reviews ids made by user with given id.
-     * @param objectId
-     * @returns
+     * @param objectId User ObjectId.
+     * @returns Returns IDs of reviews.
      */
     public async getReviewsMadeByUser(objectId: string) {
         this.validateObjectId(objectId);

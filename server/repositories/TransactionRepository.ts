@@ -1,10 +1,10 @@
 import { startSession } from "mongoose";
-import { IProduct, IProductInstance } from "../interface";
+import { Repository } from "./Repository";
+
 import Product from "../models/Product";
 import ProductInstance from "../models/ProductInstance";
 import Transaction from "../models/Transaction";
 import User from "../models/User";
-import { Repository } from "./Repository";
 
 interface TransactioItemData {
     paymentMethod: string;
@@ -66,7 +66,12 @@ class TransactionRepository extends Repository {
         session.endSession();
     }
 
-    public async findTrasactionItemByBuyer(objectId: string) {
+    /**
+     * Get transaction items with given buyer id.
+     * @param objectId User ObjectId.
+     * @returns Returns detailed transaction items.
+     */
+    public async getTrasactionItemsByBuyer(objectId: string) {
         this.validateObjectId(objectId);
         return await Transaction.find({ buyer: objectId });
     }

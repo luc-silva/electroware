@@ -4,9 +4,9 @@ import { Repository } from "./Repository";
 
 class CategoryRepository extends Repository {
     /**
-     * Get category by given name.
-     *
+     * Get category with given name.
      * @param categoryName - Category name.
+     * @returns Returns category details object.
      */
     public async getCategoryByName(categoryName: string) {
         return await Category.findOne({ name: categoryName });
@@ -14,6 +14,7 @@ class CategoryRepository extends Repository {
 
     /**
      * Get every category names.
+     * @return Returns array of string containing categories names.
      */
     public async getCategoryNames() {
         return await Category.find().select({ name: 1 });
@@ -21,7 +22,6 @@ class CategoryRepository extends Repository {
 
     /**
      * Create a category with given name.
-     *
      * @param categoryData - Category data such as name.
      */
     public async createCategory(categoryData: { name: string }) {
@@ -30,8 +30,8 @@ class CategoryRepository extends Repository {
 
     /**
      * Get a single category details
-     *
      * @param ObjectId - Category id.
+     * @returns Returns category details object.
      */
     public async getSingleCategory(ObjectId: string) {
         this.validateObjectId(ObjectId);
@@ -40,8 +40,8 @@ class CategoryRepository extends Repository {
 
     /**
      * Get products related to a category.
-     *
      * @param objectId - Category ObjectId.
+     * @returns Returns IDs of products.
      */
     public async getCategoryProducts(objectId: string) {
         return await Product.find({ category: objectId }).select({

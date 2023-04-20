@@ -4,8 +4,8 @@ import { Repository } from "./Repository";
 class CartItemRepository extends Repository {
     /**
      *  Get details of a shopping cart item.
-     *
-     * @param objectId - Card item ObjectId.
+     * @param objectId - Cart item ObjectId.
+     * @returns Returns cart item details object.
      */
     public async getCartItem(objectId: string) {
         return await ProductInstance.findById(objectId);
@@ -13,8 +13,8 @@ class CartItemRepository extends Repository {
     
     /**
      *Get details of a shopping cart item and populate seller, product and productImage fields.
-     *
-     * @param objectId - Card item ObjectId.
+     * @param objectId - Cart item ObjectId.
+     * @returns Returns cart item details object.
      */
     public async getCartItemAndPopulate(objectId: string) {
         return await ProductInstance.findById(objectId)
@@ -26,10 +26,9 @@ class CartItemRepository extends Repository {
 
     /**
      *Get shopping cart item by given user and product IDs.
-     *
      *@param productId - Product ObjectId.
      *@param userId - User ObjectId.
-     *
+     *@returns Returns cart item details object.
      */
     public async getCartItemByIdAndUser(productId: string, userId: string) {
         return await ProductInstance.findOne({
@@ -40,8 +39,8 @@ class CartItemRepository extends Repository {
 
     /**
      * Get cart items by given user id.
-     *
      * @param objectId - User ObjectId.
+     * @returns Returns cart item details object.
      */
     public async getCartItemsByUser(objectId: string) {
         this.validateObjectId(objectId);
@@ -50,7 +49,6 @@ class CartItemRepository extends Repository {
 
     /**
      *Create a shopping cart item with given data such as products, user, seller and price.
-     *
      * @param cartProductData - Object containing seller, product details and user.
      */
     public async createCartItem(cartProductData: any) {
@@ -59,7 +57,6 @@ class CartItemRepository extends Repository {
 
     /**
      *Delete shopping cart item with given id.
-     *
      * @param objectId - Cart item ObjectId.
      */
     public async deleteCartItem(objectId: string) {

@@ -88,7 +88,7 @@ export const getUserTransactions = asyncHandler(
         }
 
         let transactions 
-            await TransactionRepository.findTrasactionItemByBuyer(user.id);
+            await TransactionRepository.getTrasactionItemsByBuyer(user.id);
         response.status(200).json(transactions);
     }
 );
