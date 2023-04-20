@@ -1,36 +1,31 @@
 import { Request, Response } from "express";
-
-import mongoose from "mongoose";
 import asyncHandler from "express-async-handler";
-import User from "../models/User";
-import Product from "../models/Product";
-import WishlistItem from "../models/WishlistItem";
-import { IProduct, IUser } from "../interface";
+
+import ProductRepository from "../repositories/ProductRepository";
+import UserRepository from "../repositories/UserRepository";
+import WishlistItemRepository from "../repositories/WishlistItemRepository";
 
 /**
  * GET, AUTH REQUIRED - Get wishlist items of a user with given valid ObjectId.
- * 
+ *
  * @param {Request} request - The HTTP request object containing the ID of a user.
  * @param {Response} response - The HTTP response object containing every wishilist item found.
  * @throws throws error if receives a invalid ID or if a use has not been found.
  */
 export const getWishlistItems = asyncHandler(
     async (request: Request, response: Response) => {
-        if (
-            !request.user ||
-            !mongoose.Types.ObjectId.isValid(request.user.id)
-        ) {
+        if (!request.user) {
             response.status(400);
             throw new Error("Dados Inválidos");
         }
 
-        let user = await User.findById(request.user);
+        let user = await UserRepository.getUser(request.user.id);
         if (!user) {
             response.status(404);
             throw new Error("Usuário não encontrado");
         }
 
-        let items = await WishlistItem.find({ user: user.id });
+        let items = await WishlistItemRepository.getWishlistItemsByUser(user.id);
 
         response.status(200).json(items);
     }
@@ -38,36 +33,30 @@ export const getWishlistItems = asyncHandler(
 
 /**
  * POST, AUTH REQUIRED - Create a wishilist instance with given valid product ObjectID.
- * 
+ *
  * @param {Request} request - The HTTP request object containing product info and user.
  * @param {Response} response - The HTTP response object containing a conclusion message.
  * @throws throws error if receives a invalid id, invalid body data, or if a use has not been found.
  */
 export const createWishlistItem = asyncHandler(
     async (request: Request, response: Response) => {
-        if (
-            !request.user ||
-            !mongoose.Types.ObjectId.isValid(request.user.id)
-        ) {
+        if (!request.user) {
             response.status(400);
             throw new Error("Dados Inválidos.");
         }
-        if (
-            !request.body ||
-            !mongoose.Types.ObjectId.isValid(request.body.product)
-        ) {
+        if (!request.body) {
             response.status(400);
             throw new Error("Dados Inválidos.");
         }
         let { product } = request.body;
 
-        let user = (await User.findById(request.user)) as IUser;
+        let user = await UserRepository.getUser(request.user.id);
         if (!user) {
             response.status(404);
             throw new Error("Usuário não encontrado.");
         }
 
-        let productFound = (await Product.findById(product)) as IProduct;
+        let productFound = await ProductRepository.getProductDetails(product);
         if (!productFound) {
             response.status(404);
             throw new Error("Produto não encontrado.");
@@ -78,19 +67,21 @@ export const createWishlistItem = asyncHandler(
             throw new Error("Não é possivel adicionar o próprio produto.");
         }
 
-        let alreadyWishlisted = await WishlistItem.findOne({
-            user: user.id,
-            product,
-        });
+        let alreadyWishlisted =
+            await WishlistItemRepository.getWishlistItemByUserAndProduct(
+                user.id,
+                productFound.id
+            );
 
         if (alreadyWishlisted) {
-            await WishlistItem.findByIdAndRemove(alreadyWishlisted.id);
+            await WishlistItemRepository.deleteWishlistItem(
+                alreadyWishlisted.id
+            );
             response
                 .status(201)
                 .json({ message: "Produto removido da lista de desejos." });
         } else {
-            await WishlistItem.create({
-                user: user.id,
+            await WishlistItemRepository.createWishlistItem(user.id, {
                 product: productFound.id,
                 group: "Favoritos",
             });
@@ -103,37 +94,31 @@ export const createWishlistItem = asyncHandler(
 
 /**
  * DELETE, AUTH REQUIRED - Delete a wishlist instance with given valid ObjectID.
- * 
+ *
  * @param {Request} request - The HTTP request object containing the id of the instance as a parameter.
  * @param {Response} response - The HTTP response object containing a conclusion message.
  * @throws throws error if receives a invalid id, invalid body data, or if a use has not been found.
  */
 export const removeWishlistItem = asyncHandler(
     async (request: Request, response: Response) => {
-        if (
-            !request.user ||
-            !mongoose.Types.ObjectId.isValid(request.user.id)
-        ) {
+        if (!request.user) {
             response.status(400);
             throw new Error("Dados Inválidos");
         }
 
-        if (
-            !request.params ||
-            !mongoose.Types.ObjectId.isValid(request.params.id)
-        ) {
+        if (!request.params) {
             response.status(400);
             throw new Error("Dados Inválidos");
         }
         let { id } = request.params;
 
-        let wishlistItem = await WishlistItem.findById(id);
+        let wishlistItem = await WishlistItemRepository.getWishlistItem(id);
         if (!wishlistItem) {
             response.status(404);
             throw new Error("Produto não encontrado");
         }
 
-        let user = await User.findById(request.user);
+        let user = await UserRepository.getUser(request.user.id);
         if (!user) {
             response.status(404);
             throw new Error("Usuário não encontrado");
@@ -144,7 +129,7 @@ export const removeWishlistItem = asyncHandler(
             throw new Error("Não autorizado.");
         }
 
-        await WishlistItem.findByIdAndDelete(id);
+        await WishlistItemRepository.deleteWishlistItem(id);
 
         response.status(200).json({ message: "Feito." });
     }
