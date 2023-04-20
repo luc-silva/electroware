@@ -8,9 +8,9 @@ interface ImageData {
 
 class ImageRepository extends Repository {
     /**
-     * Get use image with given userId
+     * Get use image with given user id.
      *
-     * @param objectId - user id
+     * @param objectId - User ObjectId.
      */
     public async getUserImage(objectId: string) {
         this.validateObjectId(objectId);
@@ -21,22 +21,31 @@ class ImageRepository extends Repository {
     }
 
     /**
+     * Get product image with given product id.
+     *
+     * @param objectId - Product ObjectId
+     */
+    public async getProductImage(objectId: string) {
+        return await ImageInstance.findOne({ product: objectId, imageType: "productImage" });
+    }
+
+    /**
      *Create a image with given image buffer, user id and image name.
      *
-     *@param objectId - User id.
+     *@param objectId - User ObjectId.
      *@param imageData - data containg image file buffer and image type. 
      imageType should be productImage or userImage.
      */
     public async createImage(objectId: string, imageData: ImageData) {
         this.validateObjectId(objectId);
-        await ImageInstance.create({...imageData, imageName:`${objectId}`});
+        await ImageInstance.create({ ...imageData, imageName: `${objectId}` });
     }
 
     /**
      * Update or create a user image with given id and image file
-     * 
-     *@param objectId - ImageInstance id.
-     *@param imageData - data containg image file buffer and image type. 
+     *
+     *@param objectId - ImageInstance ObjectId.
+     *@param imageData - data containg image file buffer and image type.
      */
     public async updateImage(objectId: string, imageData: ImageData) {
         await ImageInstance.findByIdAndUpdate(objectId, imageData);
