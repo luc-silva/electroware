@@ -1,14 +1,11 @@
 import asyncHandler from "express-async-handler";
-import mongoose from "mongoose";
-import { connectDB } from "../middleware/db";
 
-import ProductInstance from "../models/ProductInstance";
-import Product from "../models/Product";
-import User from "../models/User";
-import Transaction from "../models/Transaction";
 import { Request, Response } from "express";
 import { IUser } from "../interface";
 import TransactionValidator from "../validators/TransactionValidator";
+import UserRepository from "../repositories/UserRepository";
+import CartItemRepository from "../repositories/CartItemRepository";
+import TransactionRepository from "../repositories/TransactionRepository";
 
 /**
  * POST, AUTH REQUIRED - Create a transaction instance with given data.
@@ -24,7 +21,7 @@ export const createProductTransaction = asyncHandler(
             throw new Error("Dados Inválidos");
         }
 
-        let user = (await User.findById(request.user)) as IUser;
+        let user = await UserRepository.getUser(request.user.id);
         if (!user) {
             response.status(404);
             throw new Error("Usuário não encontrado.");
@@ -33,7 +30,9 @@ export const createProductTransaction = asyncHandler(
         TransactionValidator.validate(response, request.body);
         let { paymentMethod } = request.body;
 
-        let productsBought = await ProductInstance.find({ user: user.id });
+        let productsBought = await CartItemRepository.getCartItemsByUser(
+            user.id
+        );
         if (productsBought.length === 0) {
             response.status(404);
             throw new Error("Não há produtos no carrinhos de compras.");
@@ -52,45 +51,14 @@ export const createProductTransaction = asyncHandler(
             throw new Error("Fundos insuficientes.");
         }
 
-        const session = await mongoose.startSession();
-        await session.withTransaction(async () => {
-            let data = {
-                buyer: user.id,
-                paymentMethod,
-                products: productsBought,
-                totalPrice: getTotal(),
-            };
-            await Transaction.create([data], { session });
+        let data = {
+            paymentMethod,
+            products: productsBought,
+            totalPrice: getTotal(),
+        };
 
-            await User.findByIdAndUpdate(
-                [user.id],
-                { $inc: { funds: -getTotal() } },
-                { session }
-            );
-
-            for (let productInstance of productsBought) {
-                await User.findByIdAndUpdate(
-                    [productInstance.seller],
-                    {
-                        $inc: {
-                            funds: +(
-                                productInstance.price * productInstance.quantity
-                            ),
-                        },
-                    },
-                    { session }
-                );
-                await Product.findByIdAndUpdate([productInstance.product], {
-                    $inc: { quantity: -productInstance.quantity },
-                });
-
-                await ProductInstance.findByIdAndDelete(productInstance.id);
-            }
-
-            await session.commitTransaction();
-            response.status(201).json({message:"Compra Concluida."});
-        });
-        session.endSession();
+        await TransactionRepository.createTransactionItem(user.id, data);
+        response.status(201).json({ message: "Compra Concluida." });
     }
 );
 
@@ -108,7 +76,7 @@ export const getUserTransactions = asyncHandler(
             throw new Error("Dados Inválidos.");
         }
 
-        let user = await User.findById(request.user);
+        let user = await UserRepository.getUser(request.user.id);
         if (!user) {
             response.status(404);
             throw new Error("Usuário não encontrado.");
@@ -119,7 +87,8 @@ export const getUserTransactions = asyncHandler(
             throw new Error("Não autorizado.");
         }
 
-        let transactions = await Transaction.find({ buyer: user._id });
+        let transactions =
+            await TransactionRepository.findTrasactionItemByBuyer(user.id);
         response.status(200).json(transactions);
     }
 );
