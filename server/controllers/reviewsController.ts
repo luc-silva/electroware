@@ -1,15 +1,14 @@
 import asyncHandler from "express-async-handler";
 
-import Review from "../models/Review";
-import User from "../models/User";
-import Product from "../models/Product";
-import { IReview, IUser } from "../interface";
 import { Request, Response } from "express";
 import ReviewValidator from "../validators/ReviewValidator";
 import { Types } from "mongoose";
+import ReviewRepository from "../repositories/ReviewRepository";
+import ProductRepository from "../repositories/ProductRepository";
+import UserRepository from "../repositories/UserRepository";
 
 /**
- * GET - Get a review with given valid ObjectId. 
+ * GET - Get a review with given valid ObjectId.
  *
  * @param {Request} request - The HTTP request object containing the review ID.
  * @param {Response} response - The HTTP response object containing the review info.
@@ -23,12 +22,7 @@ export const getSingleReview = asyncHandler(
         }
 
         let { id } = request.params;
-        if (!Types.ObjectId.isValid(id)) {
-            response.status(400);
-            throw new Error("Dados Inválidos");
-        }
-
-        let review = await Review.findById(id).populate("author", { name: 1 });
+        let review = await ReviewRepository.getReviewAndPopulate(id);
         if (!review) {
             response.status(404);
             throw new Error("Avaliação não encontrada.");
@@ -53,22 +47,13 @@ export const getProductReviews = asyncHandler(
         }
 
         let { id } = request.params;
-        if (!Types.ObjectId.isValid(id)) {
-            response.status(400);
-            throw new Error("Dados Inválidos");
-        }
-
-        let product = await Product.findById(id);
+        let product = await ProductRepository.getProductDetails(id);
         if (!product) {
             response.status(404);
             throw new Error("Produto não encontrado.");
         }
 
-        let reviews = await Review.find({ product: product.id })
-            .select({ id: 1 })
-            .sort({
-                createdAt: -1,
-            });
+        let reviews = await ReviewRepository.getProductReviews(product.id);
         if (!reviews) {
             response
                 .status(404)
@@ -94,18 +79,14 @@ export const getEveryUserReviews = asyncHandler(
         }
 
         let { id } = request.params;
-        if (!Types.ObjectId.isValid(id)) {
-            response.status(400);
-            throw new Error("Dados Inválidos");
-        }
 
-        let user = await User.findById(id);
+        let user = await UserRepository.getUser(id);
         if (!user) {
             response.status(404);
             throw new Error("Usuário não encontrado.");
         }
 
-        let reviews = await Review.find({ author: user.id }).select({ id: 1 });
+        let reviews = await ReviewRepository.getReviewsMadeByUser(user.id);
         if (reviews.length === 0) {
             response.status(200).json({ message: "Sem análises disponíveis." });
         }
@@ -134,19 +115,19 @@ export const getEveryUserProductsReviews = asyncHandler(
             throw new Error("Dados Inválidos");
         }
 
-        let user = await User.findById(id);
+        let user = await UserRepository.getUser(id);
         if (!user) {
             response.status(404);
             throw new Error("Usuário não encontrado.");
         }
-        let reviews = await Review.find({ productOwner: user.id }).select({
+        /* let reviews = await Review.find({ productOwner: user.id }).select({
             score: 1,
         });
         if (reviews.length === 0) {
             response.status(404).json({ message: "Sem análises disponíveis." });
         }
 
-        response.status(200).json(reviews);
+        response.status(200).json(reviews); */
     }
 );
 
@@ -167,16 +148,13 @@ export const submitReview = asyncHandler(
         ReviewValidator.validate(response, request.body);
         let { product, text, score, productOwner } = request.body;
 
-        let reviewer = await User.findById(request.user).select({
-            password: -1,
-        });
+        let reviewer = await UserRepository.getUser(request.user.id);
         if (!reviewer) {
             response.status(404);
             throw new Error("Usuário não encontrado.");
         }
 
-        await Review.create({
-            author: reviewer.id,
+        await ReviewRepository.createReview(reviewer.id, {
             product,
             text,
             score,
@@ -201,18 +179,13 @@ export const deleteReview = asyncHandler(
         }
 
         let { id } = request.params;
-        if (!Types.ObjectId.isValid(id)) {
-            response.status(400);
-            throw new Error("Dados Inválidos");
-        }
-
-        let review = await Review.findById(id);
+        let review = await ReviewRepository.getReview(id);
         if (!review) {
             response.status(404);
             throw new Error("Análise não encontrada.");
         }
 
-        let user = await User.findById(request.user);
+        let user = await UserRepository.getUser(request.user.id);
         if (!user) {
             response.status(404);
             throw new Error("Usuário não encontrado.");
@@ -223,7 +196,7 @@ export const deleteReview = asyncHandler(
             throw new Error("Não autorizado.");
         }
 
-        await Review.findByIdAndDelete(review.id);
+        await ReviewRepository.deleteReview(review.id);
         response.status(200).json({ message: "Análise Excluida." });
     }
 );
@@ -246,13 +219,13 @@ export const updateReview = asyncHandler(
         let { text, score } = request.body;
 
         let { id } = request.params;
-        let review = await Review.findById(id);
+        let review = await ReviewRepository.getReview(id);
         if (!review) {
             response.status(404);
             throw new Error("Análise não encontrada.");
         }
 
-        let user = await User.findById(request.user);
+        let user = await UserRepository.getUser(request.user.id);
         if (!user) {
             response.status(404);
             throw new Error("Usuário não encontrado.");
@@ -263,10 +236,7 @@ export const updateReview = asyncHandler(
             throw new Error("Não autorizado.");
         }
 
-        await Review.findByIdAndUpdate(review.id, {
-            text: text,
-            score: score,
-        });
+        await ReviewRepository.updateReview(review.id, { text, score });
         response.status(200).json({ message: "Análise Atualizada." });
     }
 );
