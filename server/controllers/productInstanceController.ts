@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
-import mongoose, { Types } from "mongoose";
 import { IProductInstance } from "../interface";
-import ImageInstance from "../models/ImageInstance";
-import Product from "../models/Product";
-import ProductInstance from "../models/ProductInstance";
-import User from "../models/User";
+import CartItemRepository from "../repositories/CartItemRepository";
+import ImageRepository from "../repositories/ImageRepository";
+import ProductRepository from "../repositories/ProductRepository";
+import UserRepository from "../repositories/UserRepository";
 import ProductInstanceValidator from "../validators/ProductInstanceValidator";
 
 /**
@@ -22,20 +21,25 @@ export const createInstance = asyncHandler(
             throw new Error("Dados Inválidos.");
         }
 
-        ProductInstanceValidator.validate(response, request.body);
-        let { user, product, price, quantity }: IProductInstance = request.body;
+        let cartItemData = request.body;
 
-        let instanceOwner = await User.findById(request.user);
+        ProductInstanceValidator.validate(response, cartItemData);
+        let { product }: IProductInstance = cartItemData;
+
+        let instanceOwner = await UserRepository.getUser(request.user.id);
         if (!instanceOwner) {
             response.status(404);
             throw new Error("Usuario não encontrado.");
         }
 
-        let instanceProduct = await Product.findById(product);
+        let instanceProduct = await ProductRepository.getProductDetails(
+            product
+        );
         if (!instanceProduct) {
             response.status(400);
             throw new Error("Produto indisponível.");
         }
+
         if (instanceProduct.quantity === 0) {
             response.status(400);
             throw new Error("Produto indisponível.");
@@ -45,28 +49,26 @@ export const createInstance = asyncHandler(
             throw new Error("Você não pode comprar o seu próprio produto.");
         }
 
-        let productImage = await ImageInstance.findOne({
-            product: instanceProduct.id,
-        });
+        let productImage = await ImageRepository.getProductImage(
+            instanceProduct.id
+        );
         if (!productImage) {
             response.status(400);
             throw new Error("O Produto não possui imagem.");
         }
 
-        let instanceAlreadyExist = await ProductInstance.findOne({
-            product: instanceProduct.id,
-            user: instanceOwner.id,
-        });
+        let instanceAlreadyExist =
+            await CartItemRepository.getCartItemByIdAndUser(
+                instanceProduct.id,
+                instanceOwner.id
+            );
         if (instanceAlreadyExist) {
             response.status(400);
             throw new Error("Instância já existente.");
         }
 
-        await ProductInstance.create({
-            user,
-            product,
-            price,
-            quantity,
+        await CartItemRepository.createCartItem({
+            ...cartItemData,
             seller: instanceProduct.owner,
             productImage: productImage.id,
         });
@@ -78,7 +80,7 @@ export const createInstance = asyncHandler(
 );
 
 /**
- * DELETE, AUTH REQUIRED - Delete a shoppingcart instance with a given valid ObjectId. 
+ * DELETE, AUTH REQUIRED - Delete a shoppingcart instance with a given valid ObjectId.
  *
  * @param {Request} request - The HTTP request object containing user and instance id.
  * @param {Response} response - The HTTP response object containing a conclusion message.
@@ -92,29 +94,24 @@ export const removeInstance = asyncHandler(
         }
 
         let { id } = request.params;
-        if (!Types.ObjectId.isValid(id)) {
-            response.status(400);
-            throw new Error("Dados Inválidos");
-        }
-
-        let instance = await ProductInstance.findById(id);
-        if (!instance) {
+        let cartItem = await CartItemRepository.getCartItem(id);
+        if (!cartItem) {
             response.status(404);
-            throw new Error("Produto não encontrado.");
+            throw new Error("Item não encontrado.");
         }
 
-        let user = await User.findById(request.user);
+        let user = await UserRepository.getUser(request.user.id);
         if (!user) {
             response.status(404);
             throw new Error("Usuário não encontrado.");
         }
 
-        if (instance.user.toString() !== user.id) {
+        if (cartItem.user !== user.id) {
             response.status(401);
             throw new Error("Não autorizado.");
         }
 
-        await ProductInstance.findByIdAndDelete(instance.id);
+        await CartItemRepository.deleteCartItem(cartItem.id);
         response.status(200).json({ message: "Produto(s) Removido(s)." });
     }
 );
@@ -133,12 +130,14 @@ export const getInstances = asyncHandler(
             throw new Error("Dados Inválidos");
         }
 
-        let user = await User.findById(request.user);
+        let user = await UserRepository.getUser(request.user.id);
         if (!user) {
             response.status(402);
             throw new Error("Usuario não encontrado.");
         }
-        let cartInstances = await ProductInstance.find({ user: user.id });
+        let cartInstances = await CartItemRepository.getCartItemsByUser(
+            user.id
+        );
         response.status(200).json(cartInstances);
     }
 );
@@ -157,28 +156,19 @@ export const getSingleInstance = asyncHandler(
             throw new Error("Dados Inválidos.");
         }
 
-        let user = await User.findById(request.user.id);
+        let user = await UserRepository.getUser(request.user.id);
         if (!user) {
             response.status(404);
             throw new Error("Usuário Não Encontrado.");
         }
 
         let { id } = request.params;
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            response.status(400);
-            throw new Error("Dados Inválidos.");
-        }
-
-        let instance = await ProductInstance.findById(id)
-            .select({ product: 1, price: 1, quantity: 1 })
-            .populate("seller", { name: 1 })
-            .populate("product", { id: 1, category: 1, name: 1, owner: 1 })
-            .populate("productImage", { data: 1 });
-        if (!instance) {
+        let cartItem = await CartItemRepository.getCartItemAndPopulate(id);
+        if (!cartItem) {
             response.status(400);
             throw new Error("Item Não Encontrado.");
         }
 
-        response.status(200).json(instance);
+        response.status(200).json(cartItem);
     }
 );
