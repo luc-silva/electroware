@@ -87,7 +87,7 @@ export const getUserTransactions = asyncHandler(
             throw new Error("Não autorizado.");
         }
 
-        let transactions =
+        let transactions 
             await TransactionRepository.findTrasactionItemByBuyer(user.id);
         response.status(200).json(transactions);
     }

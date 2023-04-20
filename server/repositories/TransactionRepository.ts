@@ -25,8 +25,8 @@ class TransactionRepository extends Repository {
         const session = await startSession();
         await session.withTransaction(async () => {
             let data = {
+                ...trasactionItemData,
                 buyer: userId,
-                trasactionItemData,
             };
             await Transaction.create([data], { session });
 
@@ -68,7 +68,7 @@ class TransactionRepository extends Repository {
 
     public async findTrasactionItemByBuyer(objectId: string) {
         this.validateObjectId(objectId);
-        await Transaction.find({ buyer: objectId });
+        return await Transaction.find({ buyer: objectId });
     }
 }
 
