@@ -4,12 +4,12 @@ import { Types } from "mongoose";
 
 import { IProduct } from "../interface";
 import mongoose from "mongoose";
-import Product from "../models/Product";
-import User from "../models/User";
-import Category from "../models/Category";
-import Review from "../models/Review";
 import ProductValidator from "../validators/ProductValidator";
 import ImageInstance from "../models/ImageInstance";
+import ProductRepository from "../repositories/ProductRepository";
+import ImageRepository from "../repositories/ImageRepository";
+import CategoryRepository from "../repositories/CategoryRepository";
+import UserRepository from "../repositories/UserRepository";
 
 /**
  * GET - Get twenty most recent products.
@@ -19,11 +19,9 @@ import ImageInstance from "../models/ImageInstance";
  */
 export const getRecentProducts = asyncHandler(
     async (request: Request, response: Response) => {
-        let products = await Product.find()
-            .select({ id: 1 })
-            .limit(12)
-            .sort({ createdAt: -1 });
+        let products = await ProductRepository.getRecentProducts();
         if (products.length === 0) {
+            response.status(400);
             throw new Error("Nenhum produto encontrado.");
         }
         response.status(200).json(products);
@@ -42,17 +40,9 @@ export const getProductAvarageRating = asyncHandler(
             throw new Error("Produto Inválido");
         }
         let { id } = request.params;
-        if (!Types.ObjectId.isValid(id)) {
-            response.status(400);
-            throw new Error("Dados Inválidos");
-        }
 
-        let average = await Review.aggregate([
-            { $group: { _id: "$product", averageScore: { $avg: "$score" } } },
-            { $match: { _id: new Types.ObjectId(id) } },
-            { $limit: 1 },
-        ]);
-        response.json(average);
+        let average = await ProductRepository.getAverageScoreFromProduct(id);
+        response.status(200).json(average);
     }
 );
 
@@ -75,9 +65,9 @@ export const searchProduct = asyncHandler(
             throw new Error("Critérios de busca inválidos.");
         }
 
-        let possibleProducts = await Product.find({
-            name: { $regex: new RegExp(keyword, "i") },
-        });
+        let possibleProducts = await ProductRepository.searchProductWithKeyword(
+            keyword
+        );
 
         if (possibleProducts.length === 0) {
             response
@@ -103,18 +93,14 @@ export const getProductDetails = asyncHandler(
         }
 
         let { id } = request.params;
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            response.status(400);
-            throw new Error("URL Inválida.");
-        }
 
-        let product = await Product.findById(id);
+        let product = await ProductRepository.getProductDetails(id);
         if (!product) {
             response.status(404);
             throw new Error("Produto não encontrado.");
         }
 
-        let image = await ImageInstance.findOne({ product: product.id });
+        let image = await ImageRepository.getProductImage(product.id);
         if (!image) {
             response.status(400);
             throw new Error("Imagem do produto não encontrada.");
@@ -137,20 +123,15 @@ export const getProductFromCategory = asyncHandler(
             throw new Error("Dados Inválidos.");
         }
         let { id } = request.params;
-        if (typeof id !== "string") {
-            response.status(400);
-            throw new Error("Dados Inválidos");
-        }
-
-        let category = await Category.findById(id);
+        let category = await CategoryRepository.getSingleCategory(id);
         if (!category) {
             response.status(404);
             throw new Error("Categoria não encontrada");
         }
 
-        let products = await Product.find({ category: category.id }).select({
-            id: 1,
-        });
+        let products = await CategoryRepository.getCategoryProducts(
+            category.id
+        );
         response.status(200).json(products);
     }
 );
@@ -169,7 +150,7 @@ export const createProduct = asyncHandler(
             throw new Error("Insira os dados restantes.");
         }
 
-        let user = await User.findById(request.user);
+        let user = await UserRepository.getUser(request.user.id);
         if (!user) {
             response.status(404);
             throw new Error("Usuário não encontrado");
@@ -187,28 +168,22 @@ export const createProduct = asyncHandler(
         let { buffer } = request.file;
 
         let productID = "";
+        let productData = {
+            owner: request.user,
+            name,
+            category,
+            brand,
+            description,
+            price: convertedPrice,
+            quantity: convertedQuantity,
+        };
+        let imageData = {
+            user: request.user.id,
+            data: buffer,
+            imageType: "productImage",
+        };
 
-        let session = await mongoose.startSession();
-        await session.withTransaction(async () => {
-            let product = await Product.create({
-                owner: request.user,
-                name,
-                category,
-                brand,
-                description,
-                price: convertedPrice,
-                quantity: convertedQuantity,
-            });
-            await ImageInstance.create({
-                user: request.user,
-                product: product.id,
-                data: buffer,
-                imageType: "productImage",
-                imageName: product.name,
-                imageAlt: `Product ${product.name}`,
-            });
-            productID = product.id;
-        });
+        await ProductRepository.createProduct(productData, imageData);
 
         response.status(201).json({ message: "Anúncio Criado.", productID });
     }
@@ -228,33 +203,25 @@ export const updateProduct = asyncHandler(
             throw new Error("Dados Inválidos");
         }
 
-        let user = await User.findById(request.user);
+        let user = await UserRepository.getUser(request.user.id);
         if (!user) {
             response.status(404);
             throw new Error("Usuário não encontrado");
         }
 
+        let productDataBody = request.body;
+        ProductValidator.validate(response, productDataBody);
+
+        let { price, quantity }: IProduct = productDataBody;
+
+        let updatedProductData = {
+            ...productDataBody,
+            price: Number(price),
+            quantity: Number(quantity),
+        };
+
         let { id } = request.params;
-        if (typeof id !== "string") {
-            response.status(404);
-            throw new Error("Dados Inválidos");
-        }
-
-        ProductValidator.validate(response, request.body);
-        let { name, price, category, quantity, description, brand }: IProduct =
-            request.body;
-
-        let convertedQuantity: number = Number(quantity);
-        let convertedPrice: number = Number(price);
-
-        await Product.findByIdAndUpdate(request.params.id, {
-            name,
-            category,
-            brand,
-            description,
-            price: convertedPrice,
-            quantity: convertedQuantity,
-        });
+        await ProductRepository.updateProduct(id, updatedProductData);
 
         response.status(201).json({ message: "Produto Atualizado." });
     }
@@ -274,19 +241,15 @@ export const deleteProduct = asyncHandler(
             throw new Error("Dados Inválidos");
         }
 
-        let user = await User.findById(request.user);
+        let user = await UserRepository.getUser(request.user.id);
         if (!user) {
             response.status(404);
             throw new Error("Usuário não encontrado.");
         }
 
         let { id } = request.params;
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            response.status(400);
-            throw new Error("Dados Inválidos");
-        }
 
-        let product = await Product.findById(id);
+        let product = await ProductRepository.getProductDetails(id);
         if (!product) {
             response.status(404);
             throw new Error("Produto não encontrado.");
@@ -296,14 +259,7 @@ export const deleteProduct = asyncHandler(
             throw new Error("Não autorizado.");
         }
 
-        const session = await mongoose.startSession();
-        await session.withTransaction(async () => {
-            await Review.deleteMany({ product: product?.id }, { session });
-            await Product.findByIdAndDelete([product?.id], { session });
-            await session.commitTransaction();
-        });
-
-        session.endSession();
+        await ProductRepository.deleteProduct(id);
         response.status(201).json({ message: "Produto excluido" });
     }
 );
