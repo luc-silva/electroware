@@ -1,4 +1,5 @@
 import Category from "../models/Category";
+import Product from "../models/Product";
 import { Repository } from "./Repository";
 
 class CategoryRepository extends Repository {
@@ -35,6 +36,17 @@ class CategoryRepository extends Repository {
     public async getSingleCategory(ObjectId: string) {
         this.validateObjectId(ObjectId);
         return await Category.findById(ObjectId);
+    }
+
+    /**
+     * Get products related to a category.
+     *
+     * @param objectId - Category ObjectId.
+     */
+    public async getCategoryProducts(objectId: string) {
+        return await Product.find({ category: objectId }).select({
+            id: 1,
+        });
     }
 }
 
