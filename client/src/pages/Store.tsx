@@ -2,6 +2,7 @@ import styles from "./Store.module.css";
 import { Truck, Cube, Gauge, Wallet } from "phosphor-react";
 import { HomeRecentProducts } from "../components/Sections/HomeRecentProducts";
 import { HomeBanner } from "../components/Sections/HomeBanner";
+import { CategoriesDisplay } from "../components/Sections/CategoriesDisplay";
 
 export const Store = ({
     user,
@@ -36,7 +37,8 @@ export const Store = ({
                     </div>
                 </div>
             </section>
-            <HomeRecentProducts/>
+            <CategoriesDisplay />
+            <HomeRecentProducts />
         </main>
     );
 };

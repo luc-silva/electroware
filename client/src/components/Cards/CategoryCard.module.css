@@ -1,0 +1,17 @@
+.category-card {
+    width: 100%;
+    padding: 1rem 0.5rem;
+    cursor: pointer;
+    transition: background-color 1s, color 1s;
+    background-color: var(--main-color);
+    color: white;
+    outline: white solid 1px;
+}
+.category-card p {
+    font-size: 0.8rem;
+    font-weight: bolder;
+}
+.category-card:hover {
+    color: var(--main-color);
+    background-color: white;
+}
