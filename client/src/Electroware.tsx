@@ -19,6 +19,7 @@ import { Settings } from "./pages/Settings";
 import { Category } from "./pages/Category";
 import { Wishlist } from "./pages/Wishlist";
 import { Footer } from "./components/Misc/Footer";
+import { HMenu } from "./components/Misc/HMenu";
 
 function Electroware() {
     let initialState = {
@@ -30,9 +31,15 @@ function Electroware() {
         description: "",
     };
     let [user, setUser] = useState(initialState);
+
     let [infoMenuActive, toggleInfoMenu] = useState(false);
     function handleInfoMenu() {
         toggleInfoMenu(!infoMenuActive);
+    }
+
+    let [isHMenuActive, toggleHMenu] = useState(false);
+    function toggleHamburguerMenu() {
+        toggleHMenu(!isHMenuActive);
     }
     return (
         <div className="electroware">
@@ -42,12 +49,18 @@ function Electroware() {
                     setUser={setUser}
                     handleInfoMenu={handleInfoMenu}
                     isMenuActive={infoMenuActive}
+                    toggleHMenu={toggleHamburguerMenu}
                 />
                 <ProfileMenu
                     isActive={infoMenuActive}
                     toggleMenu={toggleInfoMenu}
                     user={user}
                     setUser={setUser}
+                />
+                <HMenu
+                    user={user}
+                    toggleHMenu={toggleHMenu}
+                    isMenuActive={isHMenuActive}
                 />
                 <Routes>
                     <Route

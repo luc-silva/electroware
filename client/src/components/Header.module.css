@@ -1,6 +1,7 @@
 .header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 1rem;
     padding: 0 2rem;
     height: 10vh;
@@ -8,7 +9,6 @@
     background-color: var(--main-color);
 }
 .header__main {
-    width: 50%;
     display: flex;
     flex-direction: row;
 }
@@ -19,7 +19,7 @@
     height: 100%;
 }
 .header__panel{
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
 }
@@ -34,6 +34,12 @@
         display: flex;
         width: 40vw;
     }
+    .header__hmenu{
+        display: none;
+    }
+    .header__panel{
+        display: flex;
+    }
 }
 @media (min-width: 1025px) {
     .header {
@@ -45,5 +51,11 @@
     .header__form {
         display: flex;
         width: 40vw;
+    }
+    .header__hmenu{
+        display: none;
+    }
+    .header__panel{
+        display: flex;
     }
 }
