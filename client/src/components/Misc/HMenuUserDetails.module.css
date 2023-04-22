@@ -1,0 +1,10 @@
+.hmenu__user-picture {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.hmenu__user-info {
+    display: flex;
+    flex-direction: column;
+}

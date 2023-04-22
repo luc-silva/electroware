@@ -1,0 +1,33 @@
+.hmenu__navigation {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    background-color: white;
+    width: 100%;
+    flex-grow: 1;
+}
+.hmenu__navigation__links {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+    gap: 1rem;
+    width: 100%;
+}
+.hmenu__navigation__links li {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1rem;
+    font-size: 1rem;
+    height: 2rem;
+    width: 100%;
+}
+.logout-btn {
+    bottom: 0;
+    font-size: 1rem;
+    font-weight: bolder;
+    width: 100%;
+    padding: 1rem 1rem;
+    color: var(--warning-text-v1);
+    background-color: var(--warning-background-v1);
+}
