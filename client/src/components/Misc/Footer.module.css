@@ -1,16 +1,16 @@
 .footer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     gap: 0.5rem;
     position: relative;
     bottom: 0;
     width: 100%;
 
-    padding: 1rem;
+    padding: 1rem 2rem;
 
     background-color: var(--background-color-faded);
-}
-.footer__navigation {
 }
 .footer__navigation__menu {
     display: flex;
@@ -29,4 +29,18 @@
 .footer__details div > p {
     font-size: 0.6rem;
     color: var(--text-color);
+}
+.footer__logo {
+    display: none;
+    color: var(--text-color-lighter);
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+    .footer__logo {
+        display: block;
+    }
+}
+@media (min-width: 1025px) {
+    .footer__logo {
+        display: block;
+    }
 }

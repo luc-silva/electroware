@@ -1,9 +1,9 @@
 .header-logo {
     display: block;
     align-self: center;
-    font-size: 1.3rem;
+    font-size: inherit;
 }
 .header-logo a {
-    color: var(--background-color);
+    color: inherit;
     font-family: Valorax;
 }
