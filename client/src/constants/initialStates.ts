@@ -41,10 +41,11 @@ export const profileSettingsFormInitalState = {
 export const imageInitialValue = null as null | string;
 export const userSessionInitialState = {
     id: "",
-    saldo: 0,
+    funds: 0,
     username: "",
     token: "",
     logged: false,
+    description:""
 };
 export const productInitialState = {
     product: {

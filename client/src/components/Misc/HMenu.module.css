@@ -9,6 +9,7 @@
     width: 90vw;
     height: 100vh;
     z-index: 2;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.168);
 }
 .hmenu__header {
     background-color: var(--main-color);

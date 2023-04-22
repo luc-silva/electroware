@@ -20,6 +20,7 @@ import { Category } from "./pages/Category";
 import { Wishlist } from "./pages/Wishlist";
 import { Footer } from "./components/Misc/Footer";
 import { HMenu } from "./components/Misc/HMenu";
+import { userSessionInitialState } from "./constants/initialStates";
 
 function Electroware() {
     let initialState = {
@@ -30,7 +31,7 @@ function Electroware() {
         logged: false,
         description: "",
     };
-    let [user, setUser] = useState(initialState);
+    let [user, setUser] = useState(userSessionInitialState);
 
     let [infoMenuActive, toggleInfoMenu] = useState(false);
     function handleInfoMenu() {
@@ -58,6 +59,7 @@ function Electroware() {
                     setUser={setUser}
                 />
                 <HMenu
+                    setUser={setUser}
                     user={user}
                     toggleHMenu={toggleHMenu}
                     isMenuActive={isHMenuActive}
