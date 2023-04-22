@@ -1,22 +1,20 @@
 //important dependencies
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getAverage } from "../utils/operations";
 import { productPageInitialState } from "../constants/initialStates";
 
 //other components
 import { StarsContainer } from "../components/Misc/StarsContainer";
 import { ReviewsContainer } from "../components/Misc/ReviewsContainer";
-import { ReviewForm } from "../components/Forms/ReviewForm";
 
 //styles
 import styles from "./Product.module.css";
 import { ProductAbout } from "../components/Sections/ProductAbout";
 import ProductService from "../services/ProductService";
-import ReviewService from "../services/ReviewService";
 
 export const Product = ({ user }: { user: UserProps }) => {
     let { id } = useParams();
+    const navigate = useNavigate();
 
     let [productDetails, setProductDetails] = useState(productPageInitialState);
     let [infoStatus, toggleInfoStatus] = useState(true);
@@ -24,17 +22,24 @@ export const Product = ({ user }: { user: UserProps }) => {
 
     useEffect(() => {
         if (id) {
-            ProductService.getProductDetails(id).then((data: any) => {
-                toggleInfoStatus(false);
-                setProductDetails(data);
-            });
+            ProductService.getProductDetails(id)
+                .then((data: any) => {
+                    toggleInfoStatus(false);
+                    setProductDetails(data);
+                })
+                .catch(() => {
+                    navigate("/not-found");
+                });
         }
     }, [id]);
     useEffect(() => {
         if (productDetails.product._id) {
             ProductService.getProductScore(productDetails.product._id).then(
                 (data: [{ id: string; averageScore: number }]) => {
-                    setScore(data[0].averageScore);
+                    let score = data[0].averageScore;
+                    if (score) {
+                        setScore(data[0].averageScore);
+                    }
                 }
             );
         }

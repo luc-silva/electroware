@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./CategoryCard.module.css";
 
-export const CategoryCard = ({ _id, name }: { _id: string; name: string }) => {
+export const CategoryCard = ({ id, name }: { id: string; name: string }) => {
     const navigate = useNavigate();
 
     function redirectUser(id: string) {
@@ -11,7 +11,7 @@ export const CategoryCard = ({ _id, name }: { _id: string; name: string }) => {
         <div
             className={styles["category-card"]}
             onClick={() => {
-                redirectUser(_id);
+                redirectUser(id);
             }}
         >
             <p>{name}</p>

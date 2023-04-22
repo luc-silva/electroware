@@ -35,14 +35,18 @@ export const ProductAbout = ({
         );
     }
     function showToast(msg: string) {
-        toggleToast(true)
+        toggleToast(true);
         setToastMessage(msg);
     }
 
     useEffect(() => {
-        UserService.getUserInfo(productDetails.product.owner).then((data) => {
-            setOwner(data.name);
-        });
+        if (productDetails.product.owner) {
+            UserService.getUserInfo(productDetails.product.owner).then(
+                (data) => {
+                    setOwner(data.name);
+                }
+            );
+        }
         CategoryService.getCategory(productDetails.product.category).then(
             (data) => {
                 setCategory(data.name);

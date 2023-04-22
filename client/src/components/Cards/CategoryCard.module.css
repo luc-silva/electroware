@@ -6,9 +6,11 @@
     background-color: var(--main-color);
     color: white;
     outline: white solid 1px;
+    border-radius: 5px;
+
 }
 .category-card p {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: bolder;
 }
 .category-card:hover {

@@ -17,8 +17,13 @@ export const CategoriesDisplay = () => {
             </div>
             <div className={styles["display__container"]}>
                 {categories.map(
-                    ({ _id, name }: { _id: string; name: string }) => {
-                        return <CategoryCard _id={_id} name={name} />;
+                    (
+                        { _id, name }: { _id: string; name: string },
+                        index: React.Key
+                    ) => {
+                        return (
+                            <CategoryCard id={_id} name={name} key={index} />
+                        );
                     }
                 )}
             </div>
