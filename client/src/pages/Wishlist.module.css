@@ -1,5 +1,6 @@
 .wishlist {
     list-style: none;
+    min-height: 90vh;
 }
 .wishlist__main {
     display: flex;

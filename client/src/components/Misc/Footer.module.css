@@ -1,0 +1,32 @@
+.footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+
+    padding: 1rem;
+
+    background-color: var(--background-color-faded);
+}
+.footer__navigation {
+}
+.footer__navigation__menu {
+    display: flex;
+    gap: 1rem;
+}
+.footer__navigation__menu li > a {
+    font-weight: bolder;
+    font-size: 0.8rem;
+    color: var(--title-color);
+}
+.footer__details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.footer__details div > p {
+    font-size: 0.6rem;
+    color: var(--text-color);
+}

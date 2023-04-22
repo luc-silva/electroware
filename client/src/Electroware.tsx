@@ -18,6 +18,7 @@ import { AddFunds } from "./pages/AddFunds";
 import { Settings } from "./pages/Settings";
 import { Category } from "./pages/Category";
 import { Wishlist } from "./pages/Wishlist";
+import { Footer } from "./components/Misc/Footer";
 
 function Electroware() {
     let initialState = {
@@ -64,7 +65,7 @@ function Electroware() {
                     <Route path="/user/:id" element={<UserProfile />} />
                     <Route
                         path="/product/:id"
-                        element={<Product user={user}/>}
+                        element={<Product user={user} />}
                     />
                     <Route path="/search/:search" element={<SearchResults />} />
                     <Route path="/category/:id" element={<Category />} />
@@ -76,7 +77,7 @@ function Electroware() {
                     />
                     <Route
                         path="/wishlist"
-                        element={<Wishlist user={user}/>}
+                        element={<Wishlist user={user} />}
                     />
                     <Route
                         path="/checkout"
@@ -99,6 +100,7 @@ function Electroware() {
                     <Route path="/*" element={<NotFound />} />
                     <Route path="/not-found" element={<NotFound />} />
                 </Routes>
+                <Footer />
             </Router>
         </div>
     );

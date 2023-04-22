@@ -1,6 +1,7 @@
 .category {
     list-style: none;
     padding: 2rem;
+    min-height: 90vh;
 }
 .category__main {
     display: flex;
