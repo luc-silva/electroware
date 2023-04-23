@@ -1,4 +1,4 @@
-import { startSession } from "mongoose";
+import { Types, startSession } from "mongoose";
 import { Repository } from "./Repository";
 
 import Product from "../models/Product";
