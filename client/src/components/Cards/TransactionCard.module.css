@@ -4,7 +4,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    background-color: var(--background-color);
+    background-color: var(--background-color-faded);
     border-radius: 5px;
 }
 .container__item div {

@@ -1,11 +1,16 @@
+import { useEffect, useState } from "react";
+import UserService from "../../services/UserService";
 import { TransactionCard } from "../Cards/TransactionCard";
 import styles from "./SettingsTransaction.module.css";
 
-export const SettingsTransaction = ({
-    userTransactions,
-}: {
-    userTransactions: Transaction[];
-}) => {
+export const SettingsTransaction = ({ user }: { user: UserProps }) => {
+    let [userTransactions, setUserTransactions] = useState([]);
+    useEffect(() => {
+        UserService.getUserTransactions(user.id, user.token).then((data) => {
+            console.log(data);
+            setUserTransactions(data);
+        });
+    }, []);
     return (
         <section className={styles["transactions"]} id="transactions">
             <div className={styles["transactions__title"]}>

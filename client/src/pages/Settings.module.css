@@ -1,22 +1,52 @@
 .settings {
     display: flex;
     flex-direction: column;
+    min-height: 90vh;
     gap: 1rem;
 }
-.edit-profile__title {
-    margin-top: 2rem;
-    font-size: 1.3rem;
-    color: var(--title-color);
+.settings__navigation {
+    overflow-y: scroll;
+    color: var(--text-color);
 }
-.settings__edit-profile {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 0 2rem;
-    min-height: 90vh;
+.settings__panel {
+    padding: 1rem;
+    width: 100%;
+    height: 100%;
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
+    .settings {
+        flex-direction: row;
+        height: 90vh;
+    }
+    .settings__navigation {
+        width: 20vw;
+        height: 100%;
+        overflow: unset;
+        color: var(--text-color);
+    }
+    .settings__panel {
+        width: 80vw;
+        height: 100%;
+        overflow-y: scroll;
+        overflow-x: unset;
+    }
 }
 @media (min-width: 1025px) {
+    .settings {
+        flex-direction: row;
+        height: 90vh;
+    }
+    .settings__navigation {
+        width: 20vw;
+        height: 100%;
+        overflow: unset;
+        color: var(--text-color);
+    }
+    .settings__panel {
+        width: 80vw;
+        height: 100%;
+        overflow-y: scroll;
+        overflow-x: unset;
+    }
 }

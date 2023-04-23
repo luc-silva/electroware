@@ -1,7 +1,9 @@
+import { userSessionInitialState } from "./constants/initialStates";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Header } from "./components/Header";
 import { useState } from "react";
 
+//pages
 import { Store } from "./pages/Store";
 import { Login } from "./pages/Login";
 import { Registration } from "./pages/Registration";
@@ -20,19 +22,14 @@ import { Category } from "./pages/Category";
 import { Wishlist } from "./pages/Wishlist";
 import { Footer } from "./components/Misc/Footer";
 import { HMenu } from "./components/Misc/HMenu";
-import { userSessionInitialState } from "./constants/initialStates";
+
+// subpages
+import { EditProfile } from "./components/Sections/EditProfile";
+import { DeleteAccount } from "./components/Sections/DeleteAccount";
+import { SettingsTransaction } from "./components/Sections/SettingsTransaction";
 
 function Electroware() {
-    let initialState = {
-        id: "",
-        funds: 0,
-        username: "",
-        token: "",
-        logged: false,
-        description: "",
-    };
     let [user, setUser] = useState(userSessionInitialState);
-
     let [infoMenuActive, toggleInfoMenu] = useState(false);
     function handleInfoMenu() {
         toggleInfoMenu(!infoMenuActive);
@@ -52,6 +49,7 @@ function Electroware() {
                     isMenuActive={infoMenuActive}
                     toggleHMenu={toggleHamburguerMenu}
                 />
+                {/* modals/dialogs */}
                 <ProfileMenu
                     isActive={infoMenuActive}
                     toggleMenu={toggleInfoMenu}
@@ -64,6 +62,8 @@ function Electroware() {
                     toggleHMenu={toggleHMenu}
                     isMenuActive={isHMenuActive}
                 />
+
+                {/* pages */}
                 <Routes>
                     <Route
                         path="/"
@@ -107,9 +107,23 @@ function Electroware() {
                         element={<AddFunds user={user} setUser={setUser} />}
                     />
                     <Route
-                        path="/settings"
+                        path="/settings/"
                         element={<Settings user={user} setUser={setUser} />}
-                    />
+                        
+                    >
+                        <Route
+                            path=""
+                            element={<EditProfile user={user} />}
+                        />
+                        <Route
+                            path="delete-account"
+                            element={<DeleteAccount user={user} />}
+                        />
+                        <Route
+                            path="transactions"
+                            element={<SettingsTransaction user={user} />}
+                        />
+                    </Route>
 
                     {/* misc */}
                     <Route path="/*" element={<NotFound />} />

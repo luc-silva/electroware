@@ -1,0 +1,46 @@
+.settings-navigation {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--background-color-faded);
+    color: inherit;
+    flex-shrink: 0;
+    overflow-y: scroll;
+}
+.anchor-btn, .anchor-btn--active {
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+.anchor-btn--active{
+    background-color: white;
+    border-bottom: 1px solid var(--main-color);
+}
+.settings-navigation svg{
+    size: 1rem;
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+    .settings-navigation {
+        flex-direction: column;
+        overflow: unset;
+        height: 100%;
+        width: 100%;
+    }
+    .anchor-btn--active{
+        background-color: white;
+        border: none;
+    }
+}
+@media (min-width: 1025px) {
+    .settings-navigation {
+        flex-direction: column;
+        overflow: unset;
+        height: 100%;
+        width: 100%;
+    }
+    .anchor-btn--active{
+        border: none;
+        background-color: white;
+    }
+}

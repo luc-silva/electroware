@@ -4,7 +4,6 @@
     height: 90vh;
     padding: 2rem 2rem;
     gap: 0.5rem;
-    background-color: var(--background-color-faded);
 }
 .transactions section h3 {
     font-size: 1.4rem;
