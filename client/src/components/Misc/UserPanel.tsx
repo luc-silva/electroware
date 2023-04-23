@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import { Bookmarks, CaretDown, CaretUp, ShoppingCart } from "phosphor-react";
 import styles from "./UserPanel.module.css";
+import { PageIcons } from "./PageIcons";
 
 export const UserPanel = ({
     user,
@@ -19,16 +20,8 @@ export const UserPanel = ({
         <>
             {(user.logged && (
                 <div className={styles["panel__main--logged"]}>
-                    <Link to={"/shopping-cart"}>
-                        <ShoppingCart size={30} color="white" />
-                    </Link>
-                    <Link to={"/wishlist"}>
-                        <Bookmarks size={30} color="white" />
-                    </Link>
-                    <div
-                        className={styles["panel__user"]}
-                        onClick={showModal}
-                    >
+                    <PageIcons />
+                    <div className={styles["panel__user"]} onClick={showModal}>
                         <div>
                             <strong>{`Olá, ${user.username}`}</strong>
                             <p>Ver infos</p>

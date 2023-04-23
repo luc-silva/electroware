@@ -4,6 +4,7 @@ import { X } from "phosphor-react";
 
 import { HMenuNavigation } from "./HMenuNavigation";
 import { HMenuUserDetails } from "./HMenuUserDetails";
+import { PageIcons } from "./PageIcons";
 
 export const HMenu = ({
     user,
@@ -31,6 +32,11 @@ export const HMenu = ({
                     <X size={30} weight="bold" onClick={closeMenu} />
                 </div>
             </div>
+            {user.logged && (
+                <div className={styles["hmenu__icons"]}>
+                    <PageIcons onClick={closeMenu} />
+                </div>
+            )}
             {(user.logged && (
                 <HMenuNavigation closeMenu={closeMenu} setUser={setUser} />
             )) || (
