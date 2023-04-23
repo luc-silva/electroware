@@ -39,23 +39,23 @@ export const ShoppingCart = ({
                 <div className={styles["shopping-cart__main__title"]}>
                     <h2>Carrinho de Compras</h2>
                 </div>
-                <div className={styles["shopping-cart__container"]}>
-                    {items.length === 0 ? (
-                        <p>Não há produtos no carrinho de compras. Comece a comprar! :D</p>
-                    ) : (
-                        items.map(({ _id }: ShoppingCartCardProps, index) => {
-                            return (
-                                <ProductCardSmall
-                                    updateCart={updateCart}
-                                    instanceID={_id}
-                                    userToken={user.token}
-                                    user={user}
-                                    key={index}
-                                />
-                            );
-                        })
-                    )}
-                </div>
+                {(items.length === 0 && <p>Carrinho de compras vazio.</p>) || (
+                    <div className={styles["shopping-cart__container"]}>
+                        {items.map(
+                            ({ _id }: ShoppingCartCardProps, index: any) => {
+                                return (
+                                    <ProductCardSmall
+                                        updateCart={updateCart}
+                                        instanceID={_id}
+                                        userToken={user.token}
+                                        user={user}
+                                        key={index}
+                                    />
+                                );
+                            }
+                        )}
+                    </div>
+                )}
             </section>
             <aside className={styles["shopping-cart__panel"]}>
                 <div className={styles["shopping-cart__panel__display"]}>
