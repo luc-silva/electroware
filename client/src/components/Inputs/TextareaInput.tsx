@@ -33,6 +33,7 @@ export const TextareaInput = ({
                 maxLength={maxLength}
                 required={required}
                 className={styles["textarea-input__input"]}
+                onChange={onChange}
             />
         </>
     );
