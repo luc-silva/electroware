@@ -10,18 +10,18 @@ class ImageService extends Service {
 
     public async uploadImage(body: any, token: string) {
         return await axios.post(
-            this.baseUrl + "upload",
+            this.baseUrl + "user/upload",
             body,
             this.createHeader(token)
         );
     }
     public async getUserImage(userId: string) {
-        return axios.get(this.baseUrl + userId).then(({ data }) => {
+        return axios.get(this.baseUrl + `user/${userId}`).then(({ data }) => {
             return data.data;
         });
     }
     public async getProductImage(productId: string) {
-        return axios.get(this.baseUrl + productId).then(({ data }) => {
+        return axios.get(this.baseUrl + `product/${productId}`).then(({ data }) => {
             return data.data;
         });
     }
