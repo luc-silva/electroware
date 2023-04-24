@@ -1,0 +1,17 @@
+.settings-products{
+    height: 90vh;
+    padding: 2rem;
+}
+.settings-products, .settings-products__title{
+    display: flex;
+    flex-direction: column;
+}
+.settings-products__title h2{
+    font-size: 1.3rem;
+    color: var(--title-color);
+}
+.settings-products__container{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}

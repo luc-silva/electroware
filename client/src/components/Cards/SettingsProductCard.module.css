@@ -1,0 +1,16 @@
+.settings-product {
+    display: flex;
+    align-items: center;
+}
+.settings-product__card {
+    width: 70%;
+}
+.settings-product__buttons {
+    display: flex;
+    align-items: center;
+    width: 30%;
+}
+.settings-product__buttons button{
+    background-color: transparent;
+    color: var(--text-color);
+}
