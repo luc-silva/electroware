@@ -56,9 +56,12 @@ class ProductRepository extends Repository {
      * Create a product and its related image.
      * @param productData - Product data such as name, category and related user.
      * @param imageData - Image data such as buffer, related user and image type.
+     * @returns - Product ID.
      */
     public async createProduct(productData: any, imageData: any) {
         let session = await startSession();
+        let productID = "";
+
         await session.withTransaction(async () => {
             let product = await Product.create(productData);
             await ImageInstance.create({
@@ -68,9 +71,12 @@ class ProductRepository extends Repository {
                 imageAlt: `Product ${product.name}`,
             });
 
+            productID = product.id;
+
             await session.commitTransaction();
         });
         await session.endSession();
+        return productID;
     }
 
     /**

@@ -167,7 +167,6 @@ export const createProduct = asyncHandler(
 
         let { buffer } = request.file;
 
-        let productID = "";
         let productData = {
             owner: request.user,
             name,
@@ -183,7 +182,7 @@ export const createProduct = asyncHandler(
             imageType: "productImage",
         };
 
-        await ProductRepository.createProduct(productData, imageData);
+        let productID = await ProductRepository.createProduct(productData, imageData);
 
         response.status(201).json({ message: "Anúncio Criado.", productID });
     }
