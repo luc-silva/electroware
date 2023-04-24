@@ -9,18 +9,35 @@ import { ImageBox } from "../Misc/ImageBox";
 //style
 import styles from "./UserImageInput.module.css";
 
-export const UserImageInput = ({ user }: { user: UserProps }) => {
+export const UserImageInput = ({
+    user,
+    inputType,
+    productId,
+}: {
+    user: UserProps;
+    productId?: string;
+    inputType: "userImage" | "productImage";
+}) => {
     let [image, setImage] = useState(imageInitialValue);
     let [imageLoading, toggleImageLoading] = useState(true);
 
     useEffect(() => {
-        ImageService.getUserImage(user.id)
-            .then(({ data }) => {
+        if (inputType === "productImage" && productId) {
+            ImageService.getProductImage(productId).then(({ data }) => {
                 setImage(createImage(data));
             })
             .then(() => {
                 toggleImageLoading(false);
             });
+        } else {
+            ImageService.getUserImage(user.id)
+                .then(({ data }) => {
+                    setImage(createImage(data));
+                })
+                .then(() => {
+                    toggleImageLoading(false);
+                });
+        }
     }, []);
 
     async function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -29,6 +46,7 @@ export const UserImageInput = ({ user }: { user: UserProps }) => {
         let files = event.target.files;
         if (event.target && files && files[0] instanceof File) {
             formData.append("imageField", files[0]);
+            formData.append("imageType", inputType);
             await ImageService.uploadImage(formData, user.token);
         }
     }
@@ -37,7 +55,7 @@ export const UserImageInput = ({ user }: { user: UserProps }) => {
         <div className={styles["profile-picture"]}>
             <ImageBox isLoading={imageLoading} imgSrc={image} />
             <input
-                name="userImage"
+                name={inputType}
                 type="file"
                 accept="jpeg jpg"
                 size={1}
