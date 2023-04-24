@@ -12,7 +12,7 @@ export const Settings = ({
     setUser: Function;
 }) => {
     let navigate = useNavigate();
-    if (!user.logged) {
+    if (user.logged === false) {
         navigate("/login");
     }
 

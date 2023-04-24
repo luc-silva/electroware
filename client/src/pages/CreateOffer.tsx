@@ -6,6 +6,7 @@ import ProductService from "../services/ProductService";
 import { ImageBox } from "../components/Misc/ImageBox";
 import { ProductForm } from "../components/Forms/ProductForm";
 import { createrOfferFormInitialValue } from "../constants/initialStates";
+import { ImageInput } from "../components/Inputs/ImageInput";
 
 export const CreateOffer = ({
     user,
@@ -22,9 +23,11 @@ export const CreateOffer = ({
     }, []);
 
     let blobInitialState = null as File | null;
-    let [productBlob, setProductBlob] = useState(blobInitialState);
 
     let [productImage, setProductImage] = useState("");
+    let [productBlob, setProductBlob] = useState(blobInitialState);
+    
+
     function setImage(event: ChangeEvent<HTMLInputElement>) {
         let files = event.target.files;
         if (files && files[0]) {
@@ -58,19 +61,14 @@ export const CreateOffer = ({
             </section>
             <section className={styles["create-offer__main"]}>
                 <div className={styles["create-offer__image-container"]}>
-                    <ImageBox isLoading={false} imgSrc={productImage} />
-                    <div className={styles["input-container"]}>
-                        <input
-                            type="file"
-                            name="productImage"
-                            onChange={setImage}
-                        />
-                    </div>
+                    <ImageInput imageSrc={productImage} onChange={setImage} />
                 </div>
                 <div className={styles["create-offer__form-container"]}>
                     <ProductForm
                         user={user}
                         form={form}
+                        method="POST"
+                        submitBtnText="Criar Anúncio"
                         setForm={setForm}
                         handleSubmit={handleSubmit}
                     />

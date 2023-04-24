@@ -2,18 +2,20 @@ import { ChangeEvent, EventHandler } from "react";
 import styles from "./TextInput.module.css";
 
 export const TextInput = ({
+    onChange,
+    initialValue,
     inputName,
     inputText,
-    onChange,
-    maxLength,
     minLenght = 0,
+    maxLength,
     required = false,
 }: {
     onChange: EventHandler<ChangeEvent>;
+    initialValue: string;
     inputName: string;
     inputText: string;
-    maxLength: number;
     minLenght?: number;
+    maxLength: number;
     required?: boolean;
 }) => {
     return (
@@ -24,6 +26,7 @@ export const TextInput = ({
             <input
                 type="text"
                 name={inputName}
+                value={initialValue}
                 minLength={minLenght}
                 maxLength={maxLength}
                 onChange={onChange}

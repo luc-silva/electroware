@@ -6,13 +6,15 @@ interface SelectData {
     _id: string;
 }
 export const SelectInput = ({
-    arrayOfOptions,
     onChange,
+    arrayOfOptions,
+    initialValue,
     inputName,
     inputText,
 }: {
-    arrayOfOptions: SelectData[];
     onChange: EventHandler<ChangeEvent>;
+    arrayOfOptions: SelectData[];
+    initialValue:string
     inputName: string;
     inputText: string;
 }) => {
@@ -28,6 +30,7 @@ export const SelectInput = ({
                 name={inputName}
                 required
                 onChange={onChange}
+                value={initialValue}
                 className={styles["select-input__input"]}
             >
                 <option selected value="">

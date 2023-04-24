@@ -57,7 +57,7 @@ export const ProfileSettingsForm = ({ user }: { user: UserProps }) => {
         >
             <div className={styles["form__image"]}>
                 <div className={styles["image-input__container"]}>
-                    <UserImageInput user={user} />
+                    <UserImageInput inputType="userImage" user={user} />
                 </div>
             </div>
             <div className={styles["form__main"]}>

@@ -27,6 +27,8 @@ import { HMenu } from "./components/Misc/HMenu";
 import { EditProfile } from "./components/Sections/EditProfile";
 import { DeleteAccount } from "./components/Sections/DeleteAccount";
 import { SettingsTransaction } from "./components/Sections/SettingsTransaction";
+import { SettingsUserProducts } from "./components/Sections/SettingsUserProducts";
+import { EditProduct } from "./components/Sections/EditProduct";
 
 function Electroware() {
     let [user, setUser] = useState(userSessionInitialState);
@@ -109,11 +111,16 @@ function Electroware() {
                     <Route
                         path="/settings/"
                         element={<Settings user={user} setUser={setUser} />}
-                        
                     >
+                        <Route path="" element={<EditProfile user={user} />} />
                         <Route
-                            path=""
-                            element={<EditProfile user={user} />}
+                            path="products"
+                            element={<SettingsUserProducts user={user} />}
+                        />
+
+                        <Route
+                            path="products/:id"
+                            element={<EditProduct user={user} />}
                         />
                         <Route
                             path="delete-account"

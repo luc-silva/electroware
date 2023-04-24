@@ -1,0 +1,31 @@
+.edit-product {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1rem;
+    width: 100%;
+    min-height: 90vh;
+
+}
+.edit-product__title h2{
+    font-size: 1.3rem;
+    color: var(--text-color);
+}
+.edit-product__image-container {
+    height: 200px;
+    width: 250px;
+    position: relative;
+}
+.edit-product__form-container {
+    width: 100%;
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+    .edit-product {
+        height: 90vh;
+    }
+}
+@media (min-width: 1025px) {
+    .edit-product {
+        height: 90vh;
+    }
+}

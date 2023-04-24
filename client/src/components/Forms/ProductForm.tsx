@@ -1,4 +1,10 @@
-import { ChangeEvent, FormEvent, FormEventHandler, useEffect, useState } from "react";
+import {
+    ChangeEvent,
+    FormEvent,
+    FormEventHandler,
+    useEffect,
+    useState,
+} from "react";
 import CategoryService from "../../services/CategoryService";
 import { SubmitBtn } from "../Buttons/SubmitBtn";
 import styles from "./ProductForm.module.css";
@@ -6,6 +12,7 @@ import { SelectInput } from "../Inputs/SelectInput";
 import { TextareaInput } from "../Inputs/TextareaInput";
 import { TextInput } from "../Inputs/TextInput";
 import { NumberInput } from "../Inputs/NumberInput";
+import { createrOfferFormInitialValue } from "../../constants/initialStates";
 
 interface FormDataTypes {
     description: string;
@@ -18,14 +25,18 @@ interface FormDataTypes {
 
 export const ProductForm = ({
     user,
-    form,
+    form = createrOfferFormInitialValue,
+    method,
     setForm,
     handleSubmit,
+    submitBtnText,
 }: {
     user: UserProps;
-    form: FormDataTypes;
+    form?: FormDataTypes;
+    method: "POST" | "PUT";
     setForm: Function;
     handleSubmit: FormEventHandler<HTMLFormElement>;
+    submitBtnText: string;
 }) => {
     let [categories, setCategories] = useState([{ name: "", _id: "" }]);
     useEffect(() => {
@@ -46,9 +57,10 @@ export const ProductForm = ({
     }
 
     return (
-        <form action="POST" onSubmit={handleSubmit}>
+        <form action={method} onSubmit={handleSubmit}>
             <div className={styles["input-container"]}>
                 <TextInput
+                    initialValue={form.name}
                     inputName="name"
                     inputText="Produto"
                     maxLength={30}
@@ -59,6 +71,7 @@ export const ProductForm = ({
             <div className={styles["larger-input-container"]}>
                 <div className={styles["input-container"]}>
                     <NumberInput
+                        initialValue={form.price}
                         inputName="price"
                         inputText="Preço"
                         minValue={1}
@@ -70,6 +83,7 @@ export const ProductForm = ({
                 </div>
                 <div className={styles["input-container"]}>
                     <NumberInput
+                        initialValue={form.quantity}
                         inputName="quantity"
                         inputText="Unidades"
                         maxValue={300}
@@ -82,6 +96,7 @@ export const ProductForm = ({
             <div className={styles["larger-input-container"]}>
                 <div className={styles["input-container"]}>
                     <TextInput
+                        initialValue={form.brand}
                         inputName="brand"
                         inputText="Marca"
                         maxLength={15}
@@ -91,6 +106,7 @@ export const ProductForm = ({
                 </div>
                 <div className={styles["input-container"]}>
                     <SelectInput
+                        initialValue={form.category}
                         arrayOfOptions={categories}
                         inputName="category"
                         inputText="Categoria"
@@ -100,6 +116,7 @@ export const ProductForm = ({
             </div>
             <div className={styles["input-container"]}>
                 <TextareaInput
+                    initialValue={form.description}
                     inputName="description"
                     inputText="Descrição"
                     maxLength={200}
@@ -107,7 +124,7 @@ export const ProductForm = ({
                 />
             </div>
             <div>
-                <SubmitBtn textValue="Anunciar" />
+                <SubmitBtn textValue={submitBtnText} />
             </div>
         </form>
     );

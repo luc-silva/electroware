@@ -2,18 +2,20 @@ import { ChangeEvent, EventHandler } from "react";
 import styles from "./TextareaInput.module.css";
 
 export const TextareaInput = ({
+    onChange,
+    initialValue,
     inputName,
     inputText,
-    onChange,
-    maxLength,
     minLenght = 0,
+    maxLength,
     required = false,
 }: {
     onChange: EventHandler<ChangeEvent>;
+    initialValue: string;
     inputName: string;
     inputText: string;
-    maxLength: number;
     minLenght?: number;
+    maxLength: number;
     required?: boolean;
 }) => {
     return (
@@ -26,6 +28,7 @@ export const TextareaInput = ({
             </label>
             <textarea
                 name={inputName}
+                value={initialValue}
                 minLength={minLenght}
                 maxLength={maxLength}
                 required={required}
