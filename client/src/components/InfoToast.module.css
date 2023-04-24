@@ -5,6 +5,7 @@
 
     padding: 0.5rem;
     position: fixed;
+    z-index: 3;
     bottom: 0;
     width: 100%;
     background-color: rgb(105, 190, 255);
