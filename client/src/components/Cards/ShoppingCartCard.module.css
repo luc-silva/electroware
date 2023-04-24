@@ -15,27 +15,31 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 0.5rem;
-    width: 80%;
+    width: 100%;
     height: 100%;
 }
-.container__details > div {
+.details__main{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 100%;
 }
 .container__pricing {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    /* gap: 1rem; */
 }
 .container__pricing p {
     color: var(--text-color);
     font-size: 0.7rem;
 }
+.container__pricing strong{
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
 .container__footer{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
 }
 .container__footer > p {

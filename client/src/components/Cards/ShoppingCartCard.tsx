@@ -54,9 +54,9 @@ export const ProductCardSmall = ({
                 </div>
             </Link>
             <div className={styles["container__details"]}>
-                <div>
+                <div className={styles["details__main"]}>
                     <p>{instanceData.product.name}</p>
-                    <div className={styles["container__pricing"]}>
+                    <div  className={styles["details__pricing"]}>
                         <strong>{`R$ ${
                             instanceData.quantity * instanceData.price
                         } `}</strong>

@@ -6,20 +6,13 @@
     height: 90vh;
     overflow-y: scroll;
 }
-.shopping-cart__main p {
-    color: var(--text-color);
-    margin-top: 1rem;
-    font-size: 1.2rem;
-    width: 100%;
-    text-align: center;
-}
 .shopping-cart__main__title {
     color: var(--title-color);
     display: none;
 }
 .shopping-cart__main__title h2 {
     color: var(--title-color);
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 .shopping-cart__container {
     display: flex;
