@@ -7,7 +7,6 @@ export const SettingsTransaction = ({ user }: { user: UserProps }) => {
     let [userTransactions, setUserTransactions] = useState([]);
     useEffect(() => {
         UserService.getUserTransactions(user.id, user.token).then((data) => {
-            console.log(data);
             setUserTransactions(data);
         });
     }, []);
