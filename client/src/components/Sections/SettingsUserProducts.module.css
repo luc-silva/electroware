@@ -1,6 +1,5 @@
 .settings-products{
-    height: 90vh;
-    padding: 2rem;
+    min-height: 90vh;
 }
 .settings-products, .settings-products__title{
     display: flex;
@@ -14,4 +13,16 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+    .settings-products{
+        height: 90vh;
+        padding: 2rem;
+    }
+}
+@media (min-width: 1025px) {
+    .settings-products{
+        height: 90vh;
+        padding: 2rem;
+    }
 }

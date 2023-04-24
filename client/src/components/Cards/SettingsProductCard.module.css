@@ -1,16 +1,40 @@
 .settings-product {
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 .settings-product__card {
-    width: 70%;
+    width: 100%;
 }
 .settings-product__buttons {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    width: 30%;
+    height: 100%;
 }
-.settings-product__buttons button{
+.settings-product__buttons button {
     background-color: transparent;
     color: var(--text-color);
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+    .settings-product__card {
+        width: 70%;
+    }
+    .settings-product__buttons {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        width: 30%;
+    }
+}
+@media (min-width: 1025px) {
+    .settings-product__card {
+        width: 70%;
+    }
+    .settings-product__buttons {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        width: 30%;
+    }
 }
