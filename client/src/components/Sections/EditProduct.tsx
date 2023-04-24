@@ -1,11 +1,9 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { ProductForm } from "../Forms/ProductForm";
 import styles from "./EditProduct.module.css";
 import { createrOfferFormInitialValue } from "../../constants/initialStates";
 import ProductService from "../../services/ProductService";
 import { useNavigate, useParams } from "react-router-dom";
-import { ImageInput } from "../Inputs/ImageInput";
-import { createImage } from "../../utils/operations";
 import { UserImageInput } from "../Inputs/UserImageInput";
 
 export const EditProduct = ({ user }: { user: UserProps }) => {

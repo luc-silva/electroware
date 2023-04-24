@@ -1,10 +1,14 @@
+import { ChangeEvent, EventHandler } from "react";
 import styles from "./LocationInput.module.css";
 export const LocationInput = ({
     locationCountry,
     locationState,
+    onChange
 }: {
     locationState: string;
     locationCountry: string;
+    onChange: EventHandler<ChangeEvent>
+
 }) => {
     return (
         <>
@@ -15,6 +19,8 @@ export const LocationInput = ({
                     name="state"
                     maxLength={200}
                     value={locationState}
+                    onChange={onChange}
+
                 />
             </div>
             <div className={styles["input__container"]}>
@@ -24,6 +30,7 @@ export const LocationInput = ({
                     name="country"
                     maxLength={200}
                     value={locationCountry}
+                    onChange={onChange}
                 />
             </div>
         </>

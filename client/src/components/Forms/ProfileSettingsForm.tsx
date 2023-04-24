@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { profileSettingsFormInitalState } from "../../constants/initialStates";
 
 //components & utils
@@ -10,24 +10,26 @@ import { NameInput } from "../Inputs/NameInput";
 
 //style
 import styles from "./ProfileSettingsForm.module.css";
+import { TextareaInput } from "../Inputs/TextareaInput";
+import { AxiosResponse } from "axios";
 
-export const ProfileSettingsForm = ({ user }: { user: UserProps }) => {
-    
+export const ProfileSettingsForm = ({ user, showToast }: { user: UserProps, showToast:Function }) => {
     let [form, setForm] = useState(profileSettingsFormInitalState);
-
-    useEffect(() => {
-        UserService.getUserInfo(user.id).then(setForm);
-    }, []);
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        await UserService.updateAccountDetails(user.id, user.token, form);
+        await UserService.updateAccountDetails(user.id, user.token, form).then(
+            ({data}:AxiosResponse) => {
+                showToast(data.message);
+            }
+        );
     }
 
-    function handleChange(event: FormEvent<HTMLFormElement>) {
+    function handleChange(event: ChangeEvent<HTMLElement>) {
         if (
             event.target instanceof HTMLInputElement ||
-            event.target instanceof HTMLSelectElement
+            event.target instanceof HTMLSelectElement ||
+            event.target instanceof HTMLTextAreaElement
         ) {
             let targetName = event.target.name;
             let targetValue = event.target.value;
@@ -47,13 +49,15 @@ export const ProfileSettingsForm = ({ user }: { user: UserProps }) => {
         }
     }
 
+    useEffect(() => {
+        UserService.getUserInfo(user.id).then(setForm);
+    }, []);
     return (
         <form
             className={styles["edit-profile__form"]}
             action="POST"
             name="edit-form"
             onSubmit={handleSubmit}
-            onChange={handleChange}
         >
             <div className={styles["form__image"]}>
                 <div className={styles["image-input__container"]}>
@@ -62,23 +66,26 @@ export const ProfileSettingsForm = ({ user }: { user: UserProps }) => {
             </div>
             <div className={styles["form__main"]}>
                 <div className={styles["input__container"]}>
-                    <label htmlFor="description">Descrição do Perfil</label>
-                    <textarea
-                        name="description"
+                    <TextareaInput
+                        initialValue={form.description}
+                        inputName="description"
+                        inputText="Descrição do perfil"
                         maxLength={200}
-                        value={form.description}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className={styles["input__larger-container"]}>
                     <NameInput
                         firstNameState={form.name.first}
                         lastNameState={form.name.last}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className={styles["input__larger-container"]}>
                     <LocationInput
                         locationCountry={form.location.country}
                         locationState={form.location.state}
+                        onChange={handleChange}
                     />
                 </div>
 

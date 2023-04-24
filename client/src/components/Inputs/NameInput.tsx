@@ -4,9 +4,11 @@ import styles from "./NameInput.module.css";
 export const NameInput = ({
     firstNameState,
     lastNameState,
+    onChange
 }: {
     firstNameState: string;
     lastNameState: string;
+    onChange: EventHandler<ChangeEvent>;
 }) => {
     return (
         <>
@@ -17,6 +19,7 @@ export const NameInput = ({
                     name="first"
                     maxLength={200}
                     value={firstNameState}
+                    onChange={onChange}
                 />
             </div>
             <div className={styles["input__container"]}>
@@ -26,6 +29,7 @@ export const NameInput = ({
                     name="last"
                     maxLength={200}
                     value={lastNameState}
+                    onChange={onChange}
                 />
             </div>
         </>
