@@ -1,6 +1,15 @@
 import axios from "axios";
 import Service from "./Service";
 
+interface ProductDTO{
+    description: string;
+    name: string;
+    brand: string;
+    category: string;
+    price: number;
+    quantity: number;
+}
+
 class ProductService extends Service {
     private baseUrl = "http://localhost:6060/api/product/";
     constructor() {
@@ -10,6 +19,14 @@ class ProductService extends Service {
     public async createProduct(data: FormData, token: string) {
         return await axios
             .post(this.baseUrl + "create", data, this.createHeader(token))
+            .then(({ data }) => {
+                return data;
+            });
+    }
+
+    public async updateProduct(data: ProductDTO, token: string, productId:string) {
+        return await axios
+            .put(this.baseUrl + productId, data, this.createHeader(token))
             .then(({ data }) => {
                 return data;
             });
