@@ -32,6 +32,31 @@ export const getUserImage = asyncHandler(
 );
 
 /**
+ * GET - Get the image from a product with given valid ObjectId.
+ *
+ * @param {Request} request - The HTTP request object containing the id of product as a parameter.
+ * @param {Response} response - The HTTP response object containing an image data.
+ * @throws throws error if no image has been found or receives a invalid id.
+ */
+export const getProductImage = asyncHandler(
+    async (request: Request, response: Response) => {
+        if (!request.params.id) {
+            response.status(400);
+            throw new Error("URL Inválida.");
+        }
+
+        let { id } = request.params;
+        let userImage = await ImageRepository.getProductImage(id);
+        if (!userImage) {
+            response.status(404);
+            throw new Error("Imagem não encontrada.");
+        }
+
+        response.status(200).json(userImage);
+    }
+);
+
+/**
  * POST, AUTH REQUIRED - Create image instance with given data. Requires a middleware to handle the file.
  *
  * @param {Request} request - The HTTP request object containing the file and user id.
@@ -64,11 +89,17 @@ export const createImage = asyncHandler(
  */
 export const updateImage = asyncHandler(
     async (request: Request, response: Response) => {
-        if (!request.file) {
+        if (!request.file || !request.body) {
             response.status(400);
             throw new Error("Imagem Inválida.");
         }
+
         let { buffer } = request.file;
+        let {imageType} = request.body
+        if(imageType !== "userImage" ||  imageType !== "productImage"){
+            response.status(400)
+            throw new Error("Dados Inválidos.")
+        }
 
         if (!request.user) {
             response.status(401);
@@ -90,12 +121,12 @@ export const updateImage = asyncHandler(
 
             await ImageRepository.updateImage(imageAlreadyExist.id, {
                 buffer,
-                imageType: "userImage",
+                imageType,
             });
         } else {
             await ImageRepository.createImage(user.id, {
                 buffer,
-                imageType: "userImage",
+                imageType,
             });
         }
 

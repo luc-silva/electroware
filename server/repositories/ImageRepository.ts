@@ -26,7 +26,11 @@ class ImageRepository extends Repository {
      * @returns Returns image data object.
      */
     public async getProductImage(objectId: string) {
-        return await ImageInstance.findOne({ product: objectId, imageType: "productImage" });
+        this.validateObjectId(objectId);
+        return await ImageInstance.findOne({
+            product: objectId,
+            imageType: "productImage",
+        });
     }
 
     /**
