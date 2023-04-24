@@ -1,15 +1,26 @@
 import { useEffect, useState } from "react";
 import UserService from "../../services/UserService";
 
-import styles from "./SettingsUserProducts.module.css";
 import { SettingsProductCard } from "../Cards/SettingsProductCard";
+import { InfoToast } from "../InfoToast";
+import styles from "./SettingsUserProducts.module.css";
 
 export const SettingsUserProducts = ({ user }: { user: UserProps }) => {
     let [products, setProducts] = useState([]);
+    let [isToastActive, toggleToast] = useState(false);
+    let [toastMessage, setToastMessage] = useState("");
+
+    function showToast(message: string) {
+        setToastMessage(message);
+        toggleToast(!isToastActive);
+    }
+    async function updateProducts() {
+        await UserService.getUserProducts(user.id).then(setProducts);
+    }
 
     useEffect(() => {
         if (user.id) {
-            UserService.getUserProducts(user.id).then(setProducts);
+            updateProducts();
         }
     }, []);
     return (
@@ -19,9 +30,20 @@ export const SettingsUserProducts = ({ user }: { user: UserProps }) => {
             </div>
             <div className={styles["settings-products__container"]}>
                 {products.map(({ _id }: { _id: string }) => (
-                    <SettingsProductCard id={_id} user={user} />
+                    <SettingsProductCard
+                        id={_id}
+                        user={user}
+                        showToast={showToast}
+                        update={updateProducts}
+                    />
                 ))}
             </div>
+            <InfoToast
+                isActive={isToastActive}
+                message={toastMessage}
+                toggle={toggleToast}
+                type="info"
+            />
         </section>
     );
 };
