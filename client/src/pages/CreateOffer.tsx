@@ -4,7 +4,7 @@ import styles from "./CreateOffer.module.css";
 
 import ProductService from "../services/ProductService";
 import { ImageBox } from "../components/Misc/ImageBox";
-import { CreateOfferForm } from "../components/Forms/CreateOfferForm";
+import { ProductForm } from "../components/Forms/ProductForm";
 import { createrOfferFormInitialValue } from "../constants/initialStates";
 
 export const CreateOffer = ({
@@ -68,7 +68,7 @@ export const CreateOffer = ({
                     </div>
                 </div>
                 <div className={styles["create-offer__form-container"]}>
-                    <CreateOfferForm
+                    <ProductForm
                         user={user}
                         form={form}
                         setForm={setForm}

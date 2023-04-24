@@ -17,7 +17,6 @@
 .input-container select {
     background-color: var(--background-color-faded);
     padding: 0.5rem;
-    width: 100%;
 }
 .input-container textarea {
     resize: none;
