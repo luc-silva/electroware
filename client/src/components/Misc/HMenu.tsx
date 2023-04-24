@@ -5,6 +5,7 @@ import { X } from "phosphor-react";
 import { HMenuNavigation } from "./HMenuNavigation";
 import { HMenuUserDetails } from "./HMenuUserDetails";
 import { PageIcons } from "./PageIcons";
+import { SearchForm } from "../Forms/SearchForm";
 
 export const HMenu = ({
     user,
@@ -32,13 +33,16 @@ export const HMenu = ({
                     <X size={30} weight="bold" onClick={closeMenu} />
                 </div>
             </div>
-            {user.logged && (
-                <div className={styles["hmenu__icons"]}>
-                    <PageIcons onClick={closeMenu} />
-                </div>
-            )}
             {(user.logged && (
-                <HMenuNavigation closeMenu={closeMenu} setUser={setUser} />
+                <>
+                    <div className={styles["hmenu__search"]}>
+                        <SearchForm />
+                    </div>
+                    <div className={styles["hmenu__icons"]}>
+                        <PageIcons onClick={closeMenu} />
+                    </div>
+                    <HMenuNavigation closeMenu={closeMenu} setUser={setUser} />
+                </>
             )) || (
                 <div className={styles["hmenu__login-dialog"]}>
                     <h2>Entre em sua conta.</h2>

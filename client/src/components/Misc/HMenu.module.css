@@ -31,6 +31,9 @@
     width: 100%;
     color: white;
 }
+.hmenu__search{
+    /* padding: 0.5rem 0rem; */
+}
 .hmenu__icons {
     display: flex;
     justify-content: space-evenly;

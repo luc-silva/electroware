@@ -1,7 +1,7 @@
-.search__form{
+.search__form {
     display: flex;
     align-items: center;
-    height: 2rem;
+    height: 2.5rem;
     width: 100%;
 }
 .search__form input {
@@ -9,10 +9,11 @@
     padding: 0.25rem;
 }
 .search__input {
-    width: 100%;
+    width: 80%;
+    background-color: var(--background-color-faded);
 }
-.search__form input[type="submit"] {
-    display: none;
+.search__icon {
+    width: 20%;
 }
 .search__form .search__icon {
     display: flex;
@@ -20,14 +21,34 @@
     justify-content: center;
     background-color: var(--main-color);
     height: 100%;
-    width: 10%;
     border: 1px solid white;
     color: white;
     cursor: pointer;
 }
+.search__form input[type="submit"] {
+    display: none;
+}
 @media (min-width: 769px) and (max-width: 1024px) {
-
+    .search__form {
+        height: 2rem;
+    }
+    .search__input {
+        width: 90%;
+        background-color: white;
+    }
+    .search__icon {
+        width: 10%;
+    }
 }
 @media (min-width: 1025px) {
-
+    .search__form {
+        height: 2rem;
+    }
+    .search__input {
+        width: 90%;
+        background-color: white;
+    }
+    .search__icon {
+        width: 10%;
+    }
 }

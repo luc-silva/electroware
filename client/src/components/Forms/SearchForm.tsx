@@ -28,6 +28,7 @@ export const SearchForm = () => {
                 value={searchInputValue}
                 onChange={handleSearchInput}
                 className={styles["search__input"]}
+                placeholder="Pesquisar"
             />
             <label className={styles["search__icon"]}>
                 <input type="submit" value="Pesquisar" />
