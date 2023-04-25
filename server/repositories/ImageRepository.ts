@@ -39,9 +39,17 @@ class ImageRepository extends Repository {
      *@param imageData - data containg image file buffer and image type. 
      imageType should be productImage or userImage.
      */
-    public async createImage(objectId: string, imageData: ImageData) {
+    public async createImage(
+        objectId: string,
+        { imageType, buffer }: ImageData
+    ) {
         this.validateObjectId(objectId);
-        await ImageInstance.create({ ...imageData, imageName: `${objectId}` });
+        await ImageInstance.create({
+            user: objectId,
+            imageType,
+            data: buffer,
+            imageName: `${objectId}`,
+        });
     }
 
     /**

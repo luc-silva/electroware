@@ -96,7 +96,7 @@ export const updateImage = asyncHandler(
 
         let { buffer } = request.file;
         let {imageType} = request.body
-        if(imageType !== "userImage" ||  imageType !== "productImage"){
+        if(imageType !== "userImage" &&  imageType !== "productImage"){
             response.status(400)
             throw new Error("Dados Inválidos.")
         }
