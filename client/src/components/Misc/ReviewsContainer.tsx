@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ProductService from "../../services/ProductService";
+
 import { ReviewCard } from "../Cards/ReviewCard";
 import { ReviewForm } from "../Forms/ReviewForm";
+import { checkForUser } from "../../utils/operations";
+
 import styles from "./ReviewsContainer.module.css";
 
 export const ReviewsContainer = ({
@@ -14,17 +17,7 @@ export const ReviewsContainer = ({
     let [reviews, setReviews] = useState([{ _id: "", author: "" }]);
     let [userHasNotReviewed, toggleUserHasNotReviewed] = useState(false);
 
-    function checkForUser(
-        arrayOfReviews: { author: string }[],
-        userId: string
-    ) {
-        let commented = arrayOfReviews.every(({ author }) => {
-            console.log(`${userId} ${author}`);
-            return author !== userId;
-        });
-        console.log(commented);
-        return commented;
-    }
+    
     async function updateReviews() {
         ProductService.getProductReviews(product._id).then(setReviews);
     }
@@ -40,7 +33,7 @@ export const ReviewsContainer = ({
         } else {
             toggleUserHasNotReviewed(false);
         }
-    }, [reviews.length]);
+    }, [reviews]);
     return (
         <>
             <div className={styles["reviews__container"]}>

@@ -19,3 +19,14 @@ export function createImage(bufferArr:any) {
     let srcBlob = URL.createObjectURL(blob);
     return (srcBlob)
 }
+export function checkForUser(
+    arrayOfReviews: { author: string }[],
+    userId: string
+) {
+    return arrayOfReviews.every(({ author }) => {
+        if(author){
+            return author !== userId;
+        }
+        return false
+    });
+}

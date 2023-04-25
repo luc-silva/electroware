@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { ChangeEvent, EventHandler, FormEvent, useState } from "react";
 import ReviewService from "../../services/ReviewService";
 import { SubmitBtn } from "../Buttons/SubmitBtn";
 
@@ -17,7 +17,7 @@ export const ReviewForm = ({
     isActive:boolean
 }) => {
     let [reviewForm, setReviewForm] = useState({ text: "", score: 1 });
-    function handleReviewInputs(event: FormEvent<HTMLFormElement>) {
+    function handleChange(event: ChangeEvent<HTMLElement>) {
         let target = event.target;
         if (
             target instanceof HTMLSelectElement ||
@@ -48,20 +48,19 @@ export const ReviewForm = ({
             <form
                 action="POST"
                 onSubmit={handleReviewSubmit}
-                onChange={handleReviewInputs}
             >
                 <TextareaInput
                     initialValue={reviewForm.text}
                     inputName="text"
                     maxLength={200}
                     inputText="Análise:"
-                    onChange={() => {}}
+                    onChange={handleChange}
 
                 />
                 <div>
                     <label htmlFor="score">
                         <p>Nota:</p>
-                        <select name="score" value={reviewForm.score}>
+                        <select name="score" value={reviewForm.score} onChange={handleChange}>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
