@@ -36,9 +36,11 @@ export const Product = ({ user }: { user: UserProps }) => {
         if (productDetails.product._id) {
             ProductService.getProductScore(productDetails.product._id).then(
                 (data: [{ id: string; averageScore: number }]) => {
-                    let score = data[0].averageScore;
-                    if (score) {
-                        setScore(data[0].averageScore);
+                    if (data.length > 0) {
+                        let score = data[0].averageScore;
+                        setScore(score);
+                    } else {
+                        setScore(0)
                     }
                 }
             );

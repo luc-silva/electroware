@@ -24,11 +24,13 @@ class ProductRepository extends Repository {
     public async getAverageScoreFromProduct(objectId: string) {
         this.validateObjectId(objectId);
 
-        return await Review.aggregate([
+        let score = await Review.aggregate([
             { $group: { _id: "$product", averageScore: { $avg: "$score" } } },
             { $match: { _id: new Types.ObjectId(objectId) } },
             { $limit: 1 },
         ]);
+
+        return score
     }
 
     /**
