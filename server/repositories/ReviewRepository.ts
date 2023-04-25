@@ -46,7 +46,18 @@ class ReviewRepository extends Repository {
         return await Review.find({ author: objectId }).select({ id: 1 });
     }
 
-    public async getEveryReviewFromUserProducts() {}
+    /**
+     * Get every reviews on products of a user.
+     * @param objectId User ID.
+     * @returns Returns a array of reviews score.
+     */
+    public async getEveryReviewFromUserProducts(objectId: string) {
+        this.validateObjectId(objectId)
+        return  Review.find({ productOwner: objectId }).select({
+            score: 1,
+        });
+
+    }
 
     /**
      *Create a new review with given author id and data.

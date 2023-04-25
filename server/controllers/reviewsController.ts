@@ -102,7 +102,7 @@ export const getEveryUserReviews = asyncHandler(
  * @param {Response} response - The HTTP response object containing the review ids or a message.
  * @throws throws error if user id isn't valid or if the user has not been found.
  */
-export const getEveryUserProductsReviews = asyncHandler(
+export const getReviewsFromUserProducts = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params) {
             response.status(400);
@@ -120,14 +120,13 @@ export const getEveryUserProductsReviews = asyncHandler(
             response.status(404);
             throw new Error("Usuário não encontrado.");
         }
-        /* let reviews = await Review.find({ productOwner: user.id }).select({
-            score: 1,
-        });
+        let reviews = await ReviewRepository.getEveryReviewFromUserProducts(user.id)
+       
         if (reviews.length === 0) {
             response.status(404).json({ message: "Sem análises disponíveis." });
         }
 
-        response.status(200).json(reviews); */
+        response.status(200).json(reviews);
     }
 );
 
