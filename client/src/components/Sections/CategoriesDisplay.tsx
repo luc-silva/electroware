@@ -9,7 +9,7 @@ export const CategoriesDisplay = () => {
 
     useEffect(() => {
         CategoryService.getCategories().then(setCategories);
-    });
+    }, []);
     return (
         <section className={styles["categories-display"]}>
             <div className={styles["display__title"]}>
