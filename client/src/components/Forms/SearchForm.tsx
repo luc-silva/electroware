@@ -4,7 +4,7 @@ import { MagnifyingGlass } from "phosphor-react";
 import styles from "./SearchForm.module.css";
 import { useNavigate } from "react-router-dom";
 
-export const SearchForm = () => {
+export const SearchForm = ({ closeModal }: { closeModal?: Function }) => {
     let [searchInputValue, setSearchInputValue] = useState("");
     const handleSearchInput = (event: ChangeEvent<HTMLInputElement>) => {
         let target = event.target;
@@ -19,10 +19,18 @@ export const SearchForm = () => {
         if (searchInputValue) {
             navigate(`/search/${searchInputValue}`);
         }
+        if (closeModal) {
+            closeModal();
+        }
     };
 
     return (
-        <form action="POST" name="search-input" onSubmit={handleSubmit} className={styles["search__form"]}>
+        <form
+            action="POST"
+            name="search-input"
+            onSubmit={handleSubmit}
+            className={styles["search__form"]}
+        >
             <input
                 type="text"
                 value={searchInputValue}

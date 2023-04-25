@@ -36,7 +36,7 @@ export const HMenu = ({
             {(user.logged && (
                 <>
                     <div className={styles["hmenu__search"]}>
-                        <SearchForm />
+                        <SearchForm closeModal={closeMenu}/>
                     </div>
                     <div className={styles["hmenu__icons"]}>
                         <PageIcons onClick={closeMenu} />
