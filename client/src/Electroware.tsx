@@ -111,12 +111,12 @@ function Electroware() {
                         element={<AddFunds user={user} setUser={setUser} />}
                     />
                     <Route
-                        path="/settings/"
+                        path="/settings"
                         element={<Settings user={user} setUser={setUser} />}
                     >
                         <Route path="" element={<EditProfile user={user} />} />
                         <Route
-                            path="products"
+                            path="products/"
                             element={<SettingsUserProducts user={user} />}
                         />
 

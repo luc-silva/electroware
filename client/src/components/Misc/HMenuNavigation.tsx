@@ -18,7 +18,7 @@ export const HMenuNavigation = ({
         <nav className={styles["hmenu__navigation"]}>
             <ul className={styles["hmenu__navigation__links"]}>
                 <li onClick={closeMenu}>
-                    <Link to={"/settings"}>Configurações</Link>
+                    <Link to={"/settings/"}>Configurações</Link>
                 </li>
                 <li onClick={closeMenu}>
                     <Link to={"/create-offer"}>Anunciar Produto</Link>

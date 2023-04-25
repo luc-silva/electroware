@@ -34,7 +34,7 @@ export const ProfileMenu = ({
                     <Note  size={20} color="var(--text-color)" />
                     <p>Anunciar Produto</p>
                 </Link>
-                <Link to={"/settings"}>
+                <Link to={"/settings/"}>
                     <Sliders size={20} color="var(--text-color)"/>
                     <p>Configurações</p>
                 </Link>
