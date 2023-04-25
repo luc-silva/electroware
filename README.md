@@ -17,6 +17,14 @@ Provavelmente é o projeto que mais venho me dedicando. Nele, tentei reunir recu
 - Alguma sugestão de melhoria, erro notado, ou ideias, por favor, abra um [issue](https://github.com/luc-silva/electroware/issues).
 
 ## Fotos do Projeto
+![electroware (1)](https://user-images.githubusercontent.com/100732316/234309814-7e2b9aae-4a41-463d-ab5d-45ba1e016f5a.png)
+![electroware (2)](https://user-images.githubusercontent.com/100732316/234309859-ff7ddb2c-8728-4882-a296-a109be9f9e6b.png)
+![electroware (3)](https://user-images.githubusercontent.com/100732316/234309891-df85c401-c88f-463c-bc6d-1842fd70a0ac.png)
+![electroware (4)](https://user-images.githubusercontent.com/100732316/234309916-c6a7460f-df87-430e-af11-c0d9a9da10bb.png)
+![electroware (5)](https://user-images.githubusercontent.com/100732316/234309948-c30b82f0-cdf6-45d4-9c9d-4e0869a00480.png)
+![electroware (6)](https://user-images.githubusercontent.com/100732316/234309978-337a4567-be52-4fa8-a7c6-a102706d1ade.png)
+![electroware (7)](https://user-images.githubusercontent.com/100732316/234310008-e1eaae21-3586-40b5-a021-13dec2cfc0b9.png)
+![electroware (8)](https://user-images.githubusercontent.com/100732316/234310041-abd4cf30-a3f2-466d-817c-43190226ebc7.png)
 
 ## Como Testar (NodeJS necessário)
 
