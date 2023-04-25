@@ -6,6 +6,12 @@
     height: 90vh;
     overflow-y: scroll;
 }
+.shopping-cart__main > p{
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+    color: var(--text-color);
+}
 .shopping-cart__main__title {
     color: var(--title-color);
     display: none;
