@@ -4,13 +4,9 @@ import Service from "./Service";
 class ImageService extends Service {
     private baseUrl = "http://localhost:6060/api/image/";
 
-    constructor() {
-        super();
-    }
-
     public async uploadImage(body: any, token: string) {
         return await axios.post(
-            this.baseUrl + "user/upload",
+            this.baseUrl + "upload",
             body,
             this.createHeader(token)
         );
