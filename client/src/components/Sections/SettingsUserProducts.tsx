@@ -2,18 +2,10 @@ import { useEffect, useState } from "react";
 import UserService from "../../services/UserService";
 
 import { SettingsProductCard } from "../Cards/SettingsProductCard";
-import { InfoToast } from "../InfoToast";
 import styles from "./SettingsUserProducts.module.css";
 
-export const SettingsUserProducts = ({ user }: { user: UserProps }) => {
+export const SettingsUserProducts = ({ user, showToast }: { user: UserProps, showToast:Function }) => {
     let [products, setProducts] = useState([]);
-    let [isToastActive, toggleToast] = useState(false);
-    let [toastMessage, setToastMessage] = useState("");
-
-    function showToast(message: string) {
-        setToastMessage(message);
-        toggleToast(!isToastActive);
-    }
     async function updateProducts() {
         await UserService.getUserProducts(user.id).then(setProducts);
     }
@@ -38,12 +30,6 @@ export const SettingsUserProducts = ({ user }: { user: UserProps }) => {
                     />
                 ))}
             </div>
-            <InfoToast
-                isActive={isToastActive}
-                message={toastMessage}
-                toggle={toggleToast}
-                type="info"
-            />
         </section>
     );
 };

@@ -8,7 +8,7 @@ import { SubmitBtn } from "../components/Buttons/SubmitBtn";
 import UserService from "../services/UserService";
 import { registrationFormInitialValues } from "../constants/initialStates";
 
-export const Registration = () => {
+export const Registration = ({ showToast }: { showToast: Function }) => {
     let [form, setForm] = useState(registrationFormInitialValues);
     const navigate = useNavigate();
 
@@ -19,8 +19,6 @@ export const Registration = () => {
         }
     }
 
-    let [toastMessage, setMessage] = useState("");
-    let [isToastActive, toggleToast] = useState(false);
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
@@ -40,22 +38,13 @@ export const Registration = () => {
             .then(() => {
                 navigate("/login");
             })
-            .catch(({ response }: AxiosError) => {
-                if (response && typeof response.data === "string") {
-                    toggleToast(!isToastActive);
-                    setMessage(response.data);
-                }
+            .catch(({ response }) => {
+                showToast(response.data, "warning");
             });
     }
 
     return (
         <main role={"main"} className={styles["registration"]}>
-            <InfoToast
-                type="warning"
-                message={toastMessage}
-                isActive={isToastActive}
-                toggle={toggleToast}
-            />
             <section className={styles["registration__title"]}>
                 <h1>Crie uma conta</h1>
                 <p>Não gaste o seu dinheiro em outros sites!</p>

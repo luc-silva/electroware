@@ -20,7 +20,7 @@ export const ProfileSettingsForm = ({ user, showToast }: { user: UserProps, show
         event.preventDefault();
         await UserService.updateAccountDetails(user.id, user.token, form).then(
             ({data}:AxiosResponse) => {
-                showToast(data.message);
+                showToast(data.message,"info");
             }
         );
     }

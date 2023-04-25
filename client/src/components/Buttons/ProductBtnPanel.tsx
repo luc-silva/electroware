@@ -10,9 +10,11 @@ import styles from "./ProductBtnPanel.module.css";
 export const ProductBtnPanel = ({
     user,
     product,
+    showToast
 }: {
     product: Product;
     user: UserProps;
+    showToast:Function
 }) => {
     let [quantity, setQuantity] = useState(1);
     let navigate = useNavigate();
@@ -29,7 +31,9 @@ export const ProductBtnPanel = ({
             () => {
                 navigate("/shopping-cart");
             }
-        );
+        ).catch(({response}) => {
+            showToast(response.data,"warning")
+        });
     }
 
     async function removeProduct() {

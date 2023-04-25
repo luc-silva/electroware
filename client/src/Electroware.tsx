@@ -22,6 +22,7 @@ import { Category } from "./pages/Category";
 import { Wishlist } from "./pages/Wishlist";
 import { Footer } from "./components/Misc/Footer";
 import { HMenu } from "./components/Misc/HMenu";
+import { InfoToast } from "./components/InfoToast";
 
 // subpages
 import { EditProfile } from "./components/Sections/EditProfile";
@@ -42,6 +43,16 @@ function Electroware() {
     function toggleHamburguerMenu() {
         toggleHMenu(!isHMenuActive);
     }
+
+    let [isToastActive, toggleToast] = useState(false);
+    let [toastMessage, setToastMessage] = useState("");
+    let [toastType, setToastType] = useState("info" as "info" | "warning");
+    function showToast(message:string, toastType:"info" | "warning" = "info") {
+        setToastType(toastType)
+        setToastMessage(message)
+        toggleToast(true)
+    }
+
     return (
         <div className="electroware">
             <Router>
@@ -65,6 +76,12 @@ function Electroware() {
                     toggleHMenu={toggleHMenu}
                     isMenuActive={isHMenuActive}
                 />
+                <InfoToast
+                    isActive={isToastActive}
+                    toggle={toggleToast}
+                    message={toastMessage}
+                    type={toastType}
+                />
 
                 {/* pages */}
                 <Routes>
@@ -74,9 +91,9 @@ function Electroware() {
                     />
                     <Route
                         path="/login"
-                        element={<Login user={user} setUser={setUser} />}
+                        element={<Login user={user} setUser={setUser} showToast={showToast}/>}
                     />
-                    <Route path="/registration" element={<Registration />} />
+                    <Route path="/registration" element={<Registration showToast={showToast}/>} />
                     <Route path="/privacy" element={<PrivacyPolicy />} />
                     <Route path="/faq" element={<Faq />} />
 
@@ -84,7 +101,7 @@ function Electroware() {
                     <Route path="/user/:id" element={<UserProfile />} />
                     <Route
                         path="/product/:id"
-                        element={<Product user={user} />}
+                        element={<Product user={user} showToast={showToast}/>}
                     />
                     <Route path="/search/:search" element={<SearchResults />} />
                     <Route path="/category/:id" element={<Category />} />
@@ -114,15 +131,15 @@ function Electroware() {
                         path="/settings"
                         element={<Settings user={user} setUser={setUser} />}
                     >
-                        <Route path="" element={<EditProfile user={user} />} />
+                        <Route path="" element={<EditProfile user={user} showToast={showToast}/>} />
                         <Route
                             path="products/"
-                            element={<SettingsUserProducts user={user} />}
+                            element={<SettingsUserProducts user={user} showToast={showToast} />}
                         />
 
                         <Route
                             path="products/:id"
-                            element={<EditProduct user={user} />}
+                            element={<EditProduct user={user} showToast={showToast} />}
                         />
                         <Route
                             path="delete-account"

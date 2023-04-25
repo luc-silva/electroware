@@ -6,7 +6,7 @@ import ProductService from "../../services/ProductService";
 import { useNavigate, useParams } from "react-router-dom";
 import { UserImageInput } from "../Inputs/UserImageInput";
 
-export const EditProduct = ({ user }: { user: UserProps }) => {
+export const EditProduct = ({ user, showToast }: { user: UserProps, showToast:Function }) => {
     const navigate = useNavigate();
     let { id } = useParams();
 
@@ -16,7 +16,9 @@ export const EditProduct = ({ user }: { user: UserProps }) => {
         event.preventDefault();
 
         if (id) {
-            ProductService.updateProduct(form, user.token, id).then(() => {
+            ProductService.updateProduct(form, user.token, id).then((data) => {
+            showToast(data.message,"info");
+
                 navigate(`/product/${id}`);
             });
         }

@@ -12,7 +12,13 @@ import styles from "./Product.module.css";
 import { ProductAbout } from "../components/Sections/ProductAbout";
 import ProductService from "../services/ProductService";
 
-export const Product = ({ user }: { user: UserProps }) => {
+export const Product = ({
+    user,
+    showToast,
+}: {
+    user: UserProps;
+    showToast: Function;
+}) => {
     let { id } = useParams();
     const navigate = useNavigate();
 
@@ -57,6 +63,7 @@ export const Product = ({ user }: { user: UserProps }) => {
                 user={user}
                 productDetails={productDetails}
                 status={infoStatus}
+                showToast={showToast}
             />
             <section className={styles["product__ratings"]}>
                 <div className={styles["ratings-main"]}>

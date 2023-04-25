@@ -14,15 +14,15 @@ export const ProductAbout = ({
     productDetails,
     user,
     status,
+    showToast,
 }: {
     productDetails: ProductData;
     user: UserProps;
     status: boolean;
+    showToast: Function;
 }) => {
     let [owner, setOwner] = useState({ first: "", last: "" });
     let [category, setCategory] = useState("");
-    let [toastMsg, setToastMessage] = useState("");
-    let [isToastActive, toggleToast] = useState(false);
 
     async function handleWishlist() {
         let data = {
@@ -33,10 +33,6 @@ export const ProductAbout = ({
                 showToast(message);
             }
         );
-    }
-    function showToast(msg: string) {
-        toggleToast(true);
-        setToastMessage(msg);
     }
 
     useEffect(() => {
@@ -127,15 +123,10 @@ export const ProductAbout = ({
                     <ProductBtnPanel
                         user={user}
                         product={productDetails.product}
+                        showToast={showToast}
                     />
                 </div>
             </div>
-            <InfoToast
-                isActive={isToastActive}
-                message={toastMsg}
-                toggle={toggleToast}
-                type="info"
-            />
         </section>
     );
 };

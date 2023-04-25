@@ -7,9 +7,9 @@ import styles from "./LoginForm.module.css";
 
 export const LoginForm = ({
     setUser,
-    showErrorToast,
+    showToast,
 }: {
-    showErrorToast: Function;
+    showToast: Function;
     setUser: Function;
 }) => {
     let [form, setForm] = useState(loginFormInitialValue);
@@ -36,7 +36,7 @@ export const LoginForm = ({
                 navigate("/");
             })
             .catch(({ response }) => {
-                showErrorToast(response.data);
+                showToast(response.data, "warning");
             });
     }
     return (

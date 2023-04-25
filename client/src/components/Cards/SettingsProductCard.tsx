@@ -20,7 +20,7 @@ export const SettingsProductCard = ({
 
     async function deleteProduct() {
         await ProductService.removeProduct(id, user.token).then(({ data }) => {
-            showToast(data.message);
+            showToast(data.message,"info");
             update();
         });
     }

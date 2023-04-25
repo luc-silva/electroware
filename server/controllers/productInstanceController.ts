@@ -64,7 +64,7 @@ export const createInstance = asyncHandler(
             );
         if (instanceAlreadyExist) {
             response.status(400);
-            throw new Error("Instância já existente.");
+            throw new Error("Item já adicionado ao carrinho de compras.");
         }
 
         await CartItemRepository.createCartItem({
