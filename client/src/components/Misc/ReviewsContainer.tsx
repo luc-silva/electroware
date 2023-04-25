@@ -10,16 +10,21 @@ import styles from "./ReviewsContainer.module.css";
 export const ReviewsContainer = ({
     product,
     user,
+    updateScore,
 }: {
     product: Product;
     user: UserProps;
+    updateScore: Function;
 }) => {
     let [reviews, setReviews] = useState([{ _id: "", author: "" }]);
     let [userHasNotReviewed, toggleUserHasNotReviewed] = useState(false);
 
-    
     async function updateReviews() {
-        ProductService.getProductReviews(product._id).then(setReviews);
+        ProductService.getProductReviews(product._id)
+            .then(setReviews)
+            .then(() => {
+                updateScore();
+            });
     }
 
     useEffect(() => {

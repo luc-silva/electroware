@@ -20,6 +20,19 @@ export const Product = ({ user }: { user: UserProps }) => {
     let [infoStatus, toggleInfoStatus] = useState(true);
     let [score, setScore] = useState(0);
 
+    function updateProductScore() {
+        ProductService.getProductScore(productDetails.product._id).then(
+            (data: [{ id: string; averageScore: number }]) => {
+                if (data.length > 0) {
+                    let score = data[0].averageScore;
+                    setScore(score);
+                } else {
+                    setScore(0);
+                }
+            }
+        );
+    }
+
     useEffect(() => {
         if (id) {
             ProductService.getProductDetails(id)
@@ -34,16 +47,7 @@ export const Product = ({ user }: { user: UserProps }) => {
     }, [id]);
     useEffect(() => {
         if (productDetails.product._id) {
-            ProductService.getProductScore(productDetails.product._id).then(
-                (data: [{ id: string; averageScore: number }]) => {
-                    if (data.length > 0) {
-                        let score = data[0].averageScore;
-                        setScore(score);
-                    } else {
-                        setScore(0)
-                    }
-                }
-            );
+            updateProductScore();
         }
     }, [productDetails]);
 
@@ -69,6 +73,7 @@ export const Product = ({ user }: { user: UserProps }) => {
                 <ReviewsContainer
                     user={user}
                     product={productDetails.product}
+                    updateScore={updateProductScore}
                 />
             </section>
         </main>
