@@ -23,15 +23,17 @@ class ReviewRepository extends Repository {
     }
 
     /**
-     * Get reviews IDs from a product with given id and sort by the most recent.
+     * Get reviews IDs and its author IDs from a product with given id and sort by the most recent.
      * @param objectId - Product ObjectId.
-     * @returns Returns IDs of reviews.
+     * @returns Returns reviews and reviews authors IDs.
      */
     public async getProductReviews(objectId: string) {
         this.validateObjectId(objectId);
-        return await Review.find({ product: objectId }).select({ id: 1 }).sort({
-            createdAt: -1,
-        });
+        return await Review.find({ product: objectId })
+            .select({ id: 1, author: 1 })
+            .sort({
+                createdAt: -1,
+            });
     }
 
     /**
