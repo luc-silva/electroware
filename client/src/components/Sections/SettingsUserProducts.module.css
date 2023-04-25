@@ -1,5 +1,6 @@
 .settings-products{
     min-height: 90vh;
+    position: relative;
 }
 .settings-products, .settings-products__title{
     display: flex;

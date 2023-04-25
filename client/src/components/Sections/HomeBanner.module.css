@@ -1,15 +1,16 @@
 .active-promos {
     display: flex;
     align-items: center;
+    justify-content: center;
     position: relative;
+    z-index: 0;
     width: 100%;
-    height: 50vh;
-    background-color: white;
+    background-color: black;
     overflow: hidden;
 }
 .active-promos img {
-    object-fit: contain;
-    object-position: -15rem;
+    object-fit: cover;
+    object-position: center;
 }
 .control-panel{
     display: flex;
@@ -20,6 +21,9 @@
     bottom: 0;
     width: 100%;
     padding: 0.5rem;
+}
+.control-panel svg {
+    cursor: pointer;
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
