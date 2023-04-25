@@ -1,0 +1,73 @@
+.privacy {
+    padding: 2rem 2rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.privacy__main {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.privacy__title {
+    display: flex;
+}
+.privacy__title h2 {
+    color: var(--title-color);
+    font-size: 1.3rem;
+}
+.privacy__user-commitment,
+.privacy__user-commitment__text {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.privacy__user-commitment__title h3 {
+    font-size: 1.2rem;
+    color: var(--title-color);
+}
+.privacy__user-commitment__text {
+    color: var(--title-color);
+}
+.privacy__user-commitment__text ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.privacy__user-commitment__text li {
+    margin-left: 1rem;
+    color: var(--text-color);
+}
+.privacy__misc{
+    color: var(--text-color);
+}
+.privacy__misc,
+.privacy__misc__text {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.privacy__misc__title h3 {
+    font-size: 1.2rem;
+    color: var(--title-color);
+}
+.privacy__misc__extra{
+    font-size: 0.8;
+}
+.privacy__misc__extra a{
+    text-decoration: underline;
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+    .privacy {
+        padding: 2rem 4rem;
+        width: 85%;
+    }
+}
+
+@media (min-width: 1025px) {
+    .privacy {
+        padding: 2rem 4rem;
+        width: 85%;
+    }
+}

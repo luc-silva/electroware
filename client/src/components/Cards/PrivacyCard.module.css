@@ -1,0 +1,21 @@
+.privacy-card{
+    padding: 1rem;
+    border-radius: 5px;
+    background-color: inherit;
+}
+.privacy-card, .privacy-card__title{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.privacy-card__title h3{
+    font-size: 1.2rem;
+    color: var(--title-color);
+}
+.privacy-card__main{
+    display: flex;
+    color: var(--text-color);
+}
+.privacy-card__main a{
+    text-decoration: underline;
+}

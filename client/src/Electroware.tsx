@@ -29,6 +29,7 @@ import { DeleteAccount } from "./components/Sections/DeleteAccount";
 import { SettingsTransaction } from "./components/Sections/SettingsTransaction";
 import { SettingsUserProducts } from "./components/Sections/SettingsUserProducts";
 import { EditProduct } from "./components/Sections/EditProduct";
+import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 
 function Electroware() {
     let [user, setUser] = useState(userSessionInitialState);
@@ -76,6 +77,7 @@ function Electroware() {
                         element={<Login user={user} setUser={setUser} />}
                     />
                     <Route path="/registration" element={<Registration />} />
+                    <Route path="/privacy" element={<PrivacyPolicy />} />
                     <Route path="/faq" element={<Faq />} />
 
                     {/* need params */}

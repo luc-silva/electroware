@@ -1,0 +1,29 @@
+.policy-text{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.policy-text p{
+    font-size: 1.1rem;
+    color: var(--text-color);
+    text-align: justify;
+}
+.policy-text a{
+    text-decoration: underline;
+}
+.policy-text ul{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.policy-text li{
+    margin-left: 1rem;
+    list-style: square;
+    list-style-position: inside;
+    color: var(--text-color);
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+    
+}
+
+@media (min-width: 1025px) {}

@@ -1,4 +1,5 @@
 import { FaqCard } from "../components/Cards/FaqCard";
+import { PrivacyCard } from "../components/Cards/PrivacyCard";
 
 import { questions } from "../testData";
 import styles from "./Faq.module.css";
@@ -11,9 +12,15 @@ export const Faq = () => {
                 <div className={styles["faq-container"]}>
                     {questions.map(({ faqQuestion, faqAnswer }) => {
                         return (
-                            <FaqCard faqAnswer={faqAnswer} faqQuestion={faqQuestion}/>
+                            <FaqCard
+                                faqAnswer={faqAnswer}
+                                faqQuestion={faqQuestion}
+                            />
                         );
                     })}
+                </div>
+                <div className={styles["faq__extra"]}>
+                    <PrivacyCard />
                 </div>
             </section>
         </main>

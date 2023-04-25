@@ -1,5 +1,7 @@
 import { Warning } from "phosphor-react";
 import UserService from "../../services/UserService";
+import { PrivacyCard } from "../Cards/PrivacyCard";
+
 import styles from "./DeleteAccount.module.css";
 
 export const DeleteAccount = ({ user }: { user: UserProps }) => {
@@ -26,6 +28,9 @@ export const DeleteAccount = ({ user }: { user: UserProps }) => {
                         Excluir conta.
                     </button>
                 </div>
+            </div>
+            <div className={styles["delete-account__extra"]}>
+                <PrivacyCard />
             </div>
         </section>
     );

@@ -37,7 +37,10 @@
 .warning-info > svg {
     width: 50%;
 }
-
+.delete-account__extra{
+    border:  1px solid var(--background-color-faded);
+    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.168);
+}
 @media (min-width: 769px) and (max-width: 1024px) {
     .delete-account {
         padding: 2rem;
