@@ -29,8 +29,7 @@ class ProductRepository extends Repository {
             { $match: { _id: new Types.ObjectId(objectId) } },
             { $limit: 1 },
         ]);
-
-        return score
+        return score.length === 0 ? 0 : score;
     }
 
     /**
