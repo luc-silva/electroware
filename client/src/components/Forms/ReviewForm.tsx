@@ -3,15 +3,18 @@ import ReviewService from "../../services/ReviewService";
 import { SubmitBtn } from "../Buttons/SubmitBtn";
 
 import styles from "./ReviewForm.module.css";
+import { TextareaInput } from "../Inputs/TextareaInput";
 
 export const ReviewForm = ({
     user,
     product,
     updateReviews,
+    isActive
 }: {
     updateReviews: Function;
     user: UserProps;
     product: Product;
+    isActive:boolean
 }) => {
     let [reviewForm, setReviewForm] = useState({ text: "", score: 1 });
     function handleReviewInputs(event: FormEvent<HTMLFormElement>) {
@@ -39,7 +42,7 @@ export const ReviewForm = ({
         });
     }
 
-    if (!user.logged || user.id === product.owner) return null;
+    if (!user.logged || user.id === product.owner || !isActive) return null;
     return (
         <div className={styles["ratings__form"]}>
             <form
@@ -47,7 +50,14 @@ export const ReviewForm = ({
                 onSubmit={handleReviewSubmit}
                 onChange={handleReviewInputs}
             >
-                <textarea name="text" defaultValue={reviewForm.text} />
+                <TextareaInput
+                    initialValue={reviewForm.text}
+                    inputName="text"
+                    maxLength={200}
+                    inputText="Análise:"
+                    onChange={() => {}}
+
+                />
                 <div>
                     <label htmlFor="score">
                         <p>Nota:</p>

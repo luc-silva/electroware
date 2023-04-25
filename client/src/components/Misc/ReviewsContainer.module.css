@@ -1,10 +1,13 @@
-.ratings-container{
+.reviews__container{
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
-.ratings-container > p {
+.reviews__container > p {
     color: var(--text-color);
     font-size: 1.5rem;
     text-align: center;
+}
+.reviews__form{
+    display: flex;
 }
