@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import styles from "./PrivacyCard.module.css";
-import { ArrowSquareOut } from "phosphor-react";
 
 export const PrivacyCard = () => {
     return (
@@ -11,7 +10,7 @@ export const PrivacyCard = () => {
             <div className={styles["privacy-card__main"]}>
                 <p>
                     Veja as políticas de privacidade{" "}
-                    <Link to="privacy" target="_self">
+                    <Link to="/privacy" target="_self">
                         aqui.
                     </Link>
                 </p>
