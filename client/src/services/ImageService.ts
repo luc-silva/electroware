@@ -12,14 +12,18 @@ class ImageService extends Service {
         );
     }
     public async getUserImage(userId: string) {
-        return axios.get(this.baseUrl + `user/${userId}`).then(({ data }) => {
-            return data.data;
-        });
+        return axios
+            .get(this.baseUrl + `user/${userId}`)
+            .then(({ data }) => {
+                return data.data;
+            })
     }
     public async getProductImage(productId: string) {
-        return axios.get(this.baseUrl + `product/${productId}`).then(({ data }) => {
-            return data.data;
-        });
+        return axios
+            .get(this.baseUrl + `product/${productId}`)
+            .then(({ data }) => {
+                return data.data;
+            });
     }
 }
 

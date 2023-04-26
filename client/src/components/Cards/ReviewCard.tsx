@@ -14,6 +14,7 @@ import { ImageBox } from "../Misc/ImageBox";
 import { StarsContainer } from "../Misc/StarsContainer";
 
 import styles from "./ReviewCard.module.css";
+import picture from "../../assets/images/missing-profile-picture.jpg";
 
 export const ReviewCard = ({
     reviewId,
@@ -39,7 +40,10 @@ export const ReviewCard = ({
                 .then(({ data }) => {
                     setUserImage(data);
                 })
-                .then(() => {
+                .catch(() => {
+                    setUserImage("");
+                })
+                .finally(() => {
                     toggleLoading(false);
                 });
         }
@@ -51,14 +55,15 @@ export const ReviewCard = ({
         });
     }
 
+    function setImageSource() {
+        return userImage ? createImage(userImage) : picture;
+    }
+
     return (
         <div className={styles["rating-card"]}>
             <div className={styles["card-userinfo"]}>
                 <div className={styles["user-photo"]}>
-                    <ImageBox
-                        isLoading={isLoading}
-                        imgSrc={createImage(userImage)}
-                    />
+                    <ImageBox isLoading={isLoading} imgSrc={setImageSource()} />
                 </div>
             </div>
             <div className={styles["user-review"]}>

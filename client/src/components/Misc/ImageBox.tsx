@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styles from "./ImageBox.module.css";
 
 export const ImageBox = ({
@@ -9,7 +10,7 @@ export const ImageBox = ({
     imgSrc?: string | null;
     alt?: string;
 }) => {
-    //let image = require("")
+    
     return (
         <div className={styles["image-container"]}>
             {(isLoading && <div className={styles["loading-thumb"]} />) ||
