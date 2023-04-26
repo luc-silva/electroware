@@ -60,20 +60,21 @@ export const ProductForm = ({
         <form action={method} onSubmit={handleSubmit}>
             <div className={styles["input-container"]}>
                 <TextInput
-                    initialValue={form.name}
+                    inputState={form.name}
                     inputName="name"
-                    inputText="Produto"
+                    labelText="Produto"
                     maxLength={30}
                     onChange={handleChange}
                     required
+                    label
                 />
             </div>
             <div className={styles["larger-input-container"]}>
                 <div className={styles["input-container"]}>
                     <NumberInput
-                        initialValue={form.price}
+                        inputState={form.price}
                         inputName="price"
-                        inputText="Preço"
+                        labelText="Preço"
                         minValue={1}
                         maxValue={10000}
                         required
@@ -83,9 +84,9 @@ export const ProductForm = ({
                 </div>
                 <div className={styles["input-container"]}>
                     <NumberInput
-                        initialValue={form.quantity}
+                        inputState={form.quantity}
                         inputName="quantity"
-                        inputText="Unidades"
+                        labelText="Unidades"
                         maxValue={300}
                         minValue={0}
                         required
@@ -96,12 +97,13 @@ export const ProductForm = ({
             <div className={styles["larger-input-container"]}>
                 <div className={styles["input-container"]}>
                     <TextInput
-                        initialValue={form.brand}
+                        inputState={form.brand}
                         inputName="brand"
-                        inputText="Marca"
+                        labelText="Marca"
                         maxLength={15}
                         onChange={handleChange}
                         required
+                        label
                     />
                 </div>
                 <div className={styles["input-container"]}>

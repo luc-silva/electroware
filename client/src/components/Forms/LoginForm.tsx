@@ -1,10 +1,12 @@
-import { FormEvent, useState } from "react";
+import UserService from "../../services/UserService";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginFormInitialValue } from "../../constants/initialStates";
-import UserService from "../../services/UserService";
 import { SubmitBtn } from "../Buttons/SubmitBtn";
-import styles from "./LoginForm.module.css";
+import { EmailInput } from "../Inputs/EmailInput";
+import { PasswordInput } from "../Inputs/PasswordInput";
 
+import styles from "./LoginForm.module.css";
 export const LoginForm = ({
     setUser,
     showToast,
@@ -20,7 +22,7 @@ export const LoginForm = ({
             return { ...data, logged: true };
         });
     }
-    function handleChange(event: FormEvent<HTMLFormElement>) {
+    function handleChange(event: ChangeEvent<HTMLElement>) {
         let target = event.target;
         if (target instanceof HTMLInputElement) {
             setForm({ ...form, [target.name]: target.value });
@@ -40,15 +42,34 @@ export const LoginForm = ({
             });
     }
     return (
-        <form action="POST" onChange={handleChange} onSubmit={handleSubmit}>
-            <input name="email" type="email" placeholder="Email" required />
-            <input
-                name="password"
-                type="password"
-                placeholder="Senha"
+        <form
+            action="POST"
+            onSubmit={handleSubmit}
+            className={styles["login__form"]}
+        >
+            <div className={styles["input__container"]}>
+                <EmailInput 
+                    inputState={form.email}
+                    onChange={handleChange}
+                    inputName="email"
+                    inputPlaceholder="Email"
+                    required
+                    label
+                />
+            </div>
+            <div className={styles["input__container"]}>
+                <PasswordInput 
+                inputState={form.password}
+                inputPlaceholder="Senha"
+                maxLength={50}
+                onChange={handleChange}
                 required
-            />
-            <SubmitBtn textValue="Entrar" />
+
+                /> 
+            </div>
+            <div className={styles["input__container"]}>
+                <SubmitBtn textValue="Entrar" />
+            </div>
         </form>
     );
 };

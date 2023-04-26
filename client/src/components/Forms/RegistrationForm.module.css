@@ -1,0 +1,36 @@
+.registration__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+.input__container {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+}
+.input__container input {
+    padding: 1rem;
+    border: none;
+    border-bottom: 1px solid var(--text-color);
+    outline: none;
+    width: 100%;
+}
+.input__container input:focus {
+    border: none;
+    outline: var(--main-color) solid 1px;
+    color: var(--main-color);
+}
+.input__container input::placeholder {
+    color: var(--text-color);
+}
+.input__container input:focus::placeholder {
+    color: var(--main-color);
+}  
+
+@media (min-width: 769px) and (max-width: 1024px) {
+ 
+}
+@media (min-width: 1025px) {
+ 
+}
