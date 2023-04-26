@@ -34,7 +34,7 @@ export const Category = () => {
                 <div className={styles["products__container"]}>
                     {products.map(
                         ({ _id }: { _id: string }, index: React.Key) => (
-                            <ProductCard id={_id} />
+                            <ProductCard id={_id} key={index} />
                         )
                     )}
                 </div>
