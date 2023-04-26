@@ -38,7 +38,7 @@ export const UserImageInput = ({
                     toggleImageLoading(false);
                 });
         }
-    }, []);
+    }, [inputType, productId, user.id]);
 
     async function handleChange(event: ChangeEvent<HTMLInputElement>) {
         let formData = new FormData();

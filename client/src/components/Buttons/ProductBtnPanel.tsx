@@ -45,7 +45,7 @@ export const ProductBtnPanel = ({
     return (
         <div className={styles["btn-panel"]}>
             {(user.logged &&
-                ((user.id != product.owner &&
+                ((user.id !== product.owner &&
                     ((product.quantity > 0 && (
                         <div className={styles["panel-container"]}>
                             <QuantityCounter

@@ -1,4 +1,4 @@
-import { EventHandler, MouseEventHandler } from "react";
+import { MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
 import { userSessionInitialState } from "../../constants/initialStates";
 import styles from "./HMenuNavigation.module.css";

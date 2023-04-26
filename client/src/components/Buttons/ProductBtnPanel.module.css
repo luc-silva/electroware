@@ -1,6 +1,6 @@
 .btn-panel a{
     color: white;
-    background-color: rgb(90, 131, 253);
+    background-color: var(--sub-color);
     font-size: 0.8rem;
     text-align: center;
     padding: 1rem 0.5rem;

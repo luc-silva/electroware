@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import styles from "./ImageBox.module.css";
 
 export const ImageBox = ({

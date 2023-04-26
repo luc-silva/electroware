@@ -8,7 +8,7 @@
     z-index: 3;
     bottom: 0;
     width: 100%;
-    background-color: rgb(105, 190, 255);
+    background-color: var(--sub-color);
 }
 .warning-toast {
     display: flex;

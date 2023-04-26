@@ -51,7 +51,7 @@ export const ProfileSettingsForm = ({ user, showToast }: { user: UserProps, show
 
     useEffect(() => {
         UserService.getUserInfo(user.id).then(setForm);
-    }, []);
+    }, [user.id]);
     return (
         <form
             className={styles["edit-profile__form"]}

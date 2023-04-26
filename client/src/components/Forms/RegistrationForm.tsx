@@ -14,18 +14,6 @@ import { PasswordInput } from "../Inputs/PasswordInput";
 export const RegistrationForm = ({ showToast }: { showToast: Function }) => {
     let [form, setForm] = useState(registrationFormInitialValues);
     const navigate = useNavigate();
-    let blobInitialState = null as File | null;
-
-    let [productImage, setProductImage] = useState("");
-    let [productBlob, setProductBlob] = useState(blobInitialState);
-
-    function setImage(event: ChangeEvent<HTMLInputElement>) {
-        let files = event.target.files;
-        if (files && files[0]) {
-            setProductBlob(files[0]);
-            setProductImage(URL.createObjectURL(files[0]));
-        }
-    }
 
     function handleChange(event: ChangeEvent<HTMLInputElement>) {
         let target = event.target;

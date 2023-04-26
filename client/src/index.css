@@ -68,6 +68,7 @@ a {
 
 :root {
     --main-color: #f3bd1c;
+    --sub-color:#69beff;
 
     --submit-btn: #f3bd1c;
     --submit-btn-pressed: #dfaa0a;

@@ -1,18 +1,19 @@
 import {
     ChangeEvent,
-    FormEvent,
     FormEventHandler,
     useEffect,
     useState,
 } from "react";
 import CategoryService from "../../services/CategoryService";
+
 import { SubmitBtn } from "../Buttons/SubmitBtn";
-import styles from "./ProductForm.module.css";
 import { SelectInput } from "../Inputs/SelectInput";
 import { TextareaInput } from "../Inputs/TextareaInput";
 import { TextInput } from "../Inputs/TextInput";
 import { NumberInput } from "../Inputs/NumberInput";
 import { createrOfferFormInitialValue } from "../../constants/initialStates";
+
+import styles from "./ProductForm.module.css";
 
 interface FormDataTypes {
     description: string;

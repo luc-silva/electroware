@@ -8,8 +8,8 @@ export const UserProducts = ({ products }: { products: Product[] }) => {
                 <h2>Produtos a venda</h2>
             </div>
             <div className={styles["user-profile__products__container"]}>
-                {products.map(({ _id }) => (
-                    <UserProductCard id={_id} />
+                {products.map(({ _id }: { _id: string }, index: React.Key) => (
+                    <UserProductCard id={_id} key={index} />
                 ))}
             </div>
         </section>

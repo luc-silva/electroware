@@ -1,4 +1,4 @@
-import { ChangeEvent, EventHandler, FormEvent, useState } from "react";
+import { ChangeEvent,  FormEvent, useState } from "react";
 import ReviewService from "../../services/ReviewService";
 import { SubmitBtn } from "../Buttons/SubmitBtn";
 

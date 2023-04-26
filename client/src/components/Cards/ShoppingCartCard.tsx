@@ -30,7 +30,7 @@ export const ProductCardSmall = ({
             .then(() => {
                 toggleLoading(false);
             });
-    }, []);
+    }, [instanceID, userToken]);
 
     async function removeItem() {
         await ShoppingCartService.deleteCartInstance(
