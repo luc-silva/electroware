@@ -1,0 +1,7 @@
+.email-input{
+    background-color: inherit;
+}
+.email-input::placeholder{
+    color: inherit;
+    font-size: inherit;
+}

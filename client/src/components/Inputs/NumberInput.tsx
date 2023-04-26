@@ -3,40 +3,47 @@ import styles from "./NumberInput.module.css";
 
 export const NumberInput = ({
     onChange,
-    initialValue,
     inputName,
-    inputText,
-    maxValue,
     minValue = 0,
+    maxValue,
+    labelText,
+    inputPlaceholder = "",
+    inputState,
+    label = false,
     required = false,
     stepAny = false,
 }: {
     onChange: EventHandler<ChangeEvent>;
-    initialValue: number;
     inputName: string;
-    inputText: string;
     minValue?: number;
     maxValue: number;
-    required?: boolean;
+    labelText?: string;
+    inputPlaceholder?: string;
+    inputState: number;
+    label?: boolean;
     stepAny?: boolean;
+    required?: boolean;
 }) => {
     return (
         <>
+        {label &&
             <label
-                htmlFor={inputName}
-                className={styles["input-number__label"]}
+            htmlFor={inputName}
+            className={styles["input-number__label"]}
             >
-                {inputText}
+                {labelText}
             </label>
+            }
             <input
                 step={stepAny ? "any" : "1"}
                 type="number"
                 name={inputName}
                 min={minValue}
                 max={maxValue}
-                value={initialValue}
+                value={inputState}
                 onChange={onChange}
                 required={required}
+                placeholder={inputPlaceholder}
                 className={styles["input-number__input"]}
             />
         </>

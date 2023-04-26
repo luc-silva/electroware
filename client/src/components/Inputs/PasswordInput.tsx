@@ -1,22 +1,22 @@
 import { ChangeEvent, EventHandler } from "react";
-import styles from "./TextInput.module.css";
+import styles from "./PasswordInput.module.css";
 
-export const TextInput = ({
+export const PasswordInput = ({
     onChange,
-    inputName,
-    labelText = "",
     inputState,
+    inputName = "password",
     inputPlaceholder = "",
+    labelText,
     minLenght = 0,
     maxLength,
     label = false,
     required = false,
 }: {
     onChange: EventHandler<ChangeEvent>;
+    inputState: string;
     inputName?: string;
     labelText?: string;
-    inputPlaceholder?: string;
-    inputState: string;
+    inputPlaceholder: string;
     minLenght?: number;
     maxLength: number;
     label?: boolean;
@@ -24,16 +24,9 @@ export const TextInput = ({
 }) => {
     return (
         <>
-            {label && (
-                <label
-                    htmlFor={inputName}
-                    className={styles["text-input__label"]}
-                >
-                    {labelText}
-                </label>
-            )}
+            {label && <label htmlFor={inputName}>{labelText}</label>}
             <input
-                type="text"
+                type="password"
                 name={inputName}
                 value={inputState}
                 minLength={minLenght}
