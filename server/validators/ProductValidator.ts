@@ -7,6 +7,8 @@ interface ProductBody {
     quantity: number;
     description: string;
     brand: string;
+    on_sale: boolean;
+    discount: number;
 }
 
 class ProductValidator {
@@ -17,8 +19,16 @@ class ProductValidator {
     private MAX_QUANTITY = 3000;
 
     public validate(response: Response, productBody: ProductBody) {
-        let { name, price, category, quantity, description, brand } =
-            productBody;
+        let {
+            name,
+            price,
+            category,
+            quantity,
+            description,
+            brand,
+            discount,
+            on_sale,
+        } = productBody;
         let convertedQuantity: number = Number(quantity);
         let convertedPrice: number = Number(price);
 
@@ -58,6 +68,10 @@ class ProductValidator {
         ) {
             response.status(400);
             throw new Error("Campo quantidade Inválido.");
+        }
+        if (isNaN(discount)) {
+            response.status(400);
+            throw new Error("Campo disconto inválido");
         }
     }
 }

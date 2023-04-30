@@ -13,6 +13,8 @@ const ProductSchema = new Schema(
         quantity: { type: Number, required: true, max: 300 },
         brand: { type: String, maxLength: 15, required: true },
         description: { type: String, maxLength: 200 },
+        on_sale: { type: Boolean, default: false },
+        discount: { type: Number, max: 100, min: 0 },
     },
     { timestamps: true }
 );
