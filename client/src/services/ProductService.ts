@@ -38,6 +38,12 @@ class ProductService extends Service {
         });
     }
 
+    public async getDiscountedProducts() {
+        return await axios.get(this.baseUrl + "discount").then(({ data }) => {
+            return data;
+        });
+    }
+
     public async getProductDetails(productId: string) {
         return await axios
             .get(this.baseUrl + `${productId}`)

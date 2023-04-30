@@ -6,6 +6,9 @@
     display: flex;
     justify-content: space-between;
 }
+.promo-box__main p label{
+    font-size: 0.8rem;
+}
 .promo-box__checkbox, .promo-box__discount{
     display: flex;
     justify-content: center;
@@ -13,9 +16,8 @@
 }
 .promo-box__checkbox{
     line-height: 1rem;
-    gap: 1rem;
+    gap: 0.5rem;
     color: var(--text-color);
-
 }
 .checkbox{
     width: 20px;
@@ -23,9 +25,33 @@
     background-color: var(--background-color-faded);
 }
 .promo-box__discount{
-    gap: 1rem;
+    gap: 0.5rem;
 }
 .promo-box__discount input{
     background-color: var(--background-color-faded);
     width: 3rem;
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+    .promo-box__main p label{
+        font-size: 1rem;
+    }
+    .promo-box__checkbox{
+        gap: 1rem;
+    }
+
+    .promo-box__discount{
+        gap: 1rem;
+    }
+}
+@media (min-width: 1025px) {
+    .promo-box__main p label{
+        font-size: 1rem;
+    }
+    .promo-box__checkbox{
+        gap: 1rem;
+    }
+
+    .promo-box__discount{
+        gap: 1rem;
+    }
 }

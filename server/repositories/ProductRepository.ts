@@ -6,7 +6,7 @@ import { Repository } from "./Repository";
 
 class ProductRepository extends Repository {
     /**
-     * Get id of the most recent created products.
+     * Get ids of the most recent created products.
      * @returns Returns IDs of products.
      */
     public async getRecentProducts() {
@@ -14,6 +14,16 @@ class ProductRepository extends Repository {
             .select({ id: 1 })
             .limit(12)
             .sort({ createdAt: -1 });
+    }
+
+    /**
+     * Get ids of product with active discount.
+     * @returns Returns IDs of products.
+     */
+    public async getDiscountedProducts() {
+        return await Product.find({ on_sale: true })
+            .select({ id: 1 })
+            .sort({ updatedAt: -1 });
     }
 
     /**

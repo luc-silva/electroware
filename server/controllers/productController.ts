@@ -12,7 +12,7 @@ import CategoryRepository from "../repositories/CategoryRepository";
 import UserRepository from "../repositories/UserRepository";
 
 /**
- * GET - Get twenty most recent products.
+ * GET - Get twelve most recent products.
  * @param {Request} request - HTTP request doesn't need any parameters.
  * @param {Response} response - The HTTP response object containing products IDs.
  * @throws throws error if any product has been found.
@@ -24,6 +24,18 @@ export const getRecentProducts = asyncHandler(
             response.status(400);
             throw new Error("Nenhum produto encontrado.");
         }
+        response.status(200).json(products);
+    }
+);
+
+/**
+ * GET - Get every products that have an active discount.
+ * @param {Request} request - HTTP request doesn't need any parameters.
+ * @param {Response} response - The HTTP response object containing products IDs.
+ */
+export const getDiscountedProducts = asyncHandler(
+    async (request: Request, response: Response) => {
+        let products = await ProductRepository.getDiscountedProducts();
         response.status(200).json(products);
     }
 );
@@ -182,7 +194,10 @@ export const createProduct = asyncHandler(
             imageType: "productImage",
         };
 
-        let productID = await ProductRepository.createProduct(productData, imageData);
+        let productID = await ProductRepository.createProduct(
+            productData,
+            imageData
+        );
 
         response.status(201).json({ message: "Anúncio Criado.", productID });
     }

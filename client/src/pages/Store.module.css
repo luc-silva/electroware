@@ -1,10 +1,6 @@
 .index {
     font-family: Arial, Helvetica, sans-serif;
 }
-.index h2,
-.index strong {
-    color: var(--title-color);
-}
 
 .featured {
     display: flex;
@@ -49,7 +45,11 @@
     height: 20vh;
     padding: 1rem;
 }
-
+.on-sale__container,
+.categories__container,
+.recent-products__container {
+    width: 100%;
+}
 @media (min-width: 769px) and (max-width: 1024px) {
     .featured__container {
         display: flex;
@@ -67,7 +67,6 @@
         width: 20%;
         padding: 1rem;
     }
-    
 }
 @media (min-width: 1025px) {
     .featured {
@@ -86,5 +85,4 @@
         height: 20vh;
         padding: 1rem;
     }
-    
 }

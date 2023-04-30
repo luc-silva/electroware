@@ -38,6 +38,7 @@ export const PromoBox = ({
                         placeholder="0"
                         value={form.discount}
                         onChange={handleChange}
+                        disabled={form.on_sale ? false : true}
                     />
                 </div>
             </div>

@@ -1,8 +1,10 @@
-import styles from "./Store.module.css";
-import { Truck, Cube, Gauge, Wallet } from "phosphor-react";
 import { HomeRecentProducts } from "../components/Sections/HomeRecentProducts";
 import { HomeBanner } from "../components/Sections/HomeBanner";
 import { CategoriesDisplay } from "../components/Sections/CategoriesDisplay";
+
+import { Truck, Cube, Gauge, Wallet } from "phosphor-react";
+import styles from "./Store.module.css";
+import { DiscountedProductsDisplay } from "../components/Displays/DiscountedProductsDisplay";
 
 export const Store = ({
     user,
@@ -37,8 +39,15 @@ export const Store = ({
                     </div>
                 </div>
             </section>
-            <CategoriesDisplay />
-            <HomeRecentProducts />
+            <div className={styles["on-sale__container"]}>
+                <DiscountedProductsDisplay />
+            </div>
+            <div className={styles["categories__container"]}>
+                <CategoriesDisplay />
+            </div>
+            <div className={styles["recent-products__container"]}>
+                <HomeRecentProducts />
+            </div>
         </main>
     );
 };
