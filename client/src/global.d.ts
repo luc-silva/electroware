@@ -34,13 +34,16 @@ interface UserData {
     description: string;
 }
 interface Product {
-    name: string;
-    owner: string;
-    category: string;
-    description: string;
     _id: string;
+    category: string;
+    name: string;
+    description: string;
+    owner: string;
+    brand: string;
     price: number;
     quantity: number;
+    discount: number;
+    on_sale: boolean;
 }
 
 interface WishlistItem {
@@ -80,6 +83,16 @@ interface ProductInstance {
 
 interface ServiceInterface {
     baseUrl: string;
+}
+interface IProductForm {
+    description: string;
+    name: string;
+    brand: string;
+    category: string;
+    price: number;
+    quantity: number;
+    discount: number;
+    on_sale: boolean;
 }
 
 declare module "*.module.css" {

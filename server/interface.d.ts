@@ -1,6 +1,4 @@
 import { Request, Response } from "express";
-import { JsonWebTokenError } from "jsonwebtoken";
-import { Schema } from "mongoose";
 
 interface IDecodedUserToken {
     id: string;
@@ -19,7 +17,7 @@ interface IUser {
     funds: number;
     description: string;
 }
-interface IProduct {
+export interface IProduct {
     id: string;
     owner: string;
     category: string;
@@ -28,6 +26,8 @@ interface IProduct {
     quantity: number;
     brand?: string;
     description: string;
+    on_sale: boolean;
+    discount: number;
 }
 interface IProductInstance {
     user: string;

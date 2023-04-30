@@ -1,0 +1,9 @@
+.price {
+    font-size: 1.5rem;
+    color: var(--title-color);
+}
+.full-price {
+    font-size: 0.8rem;
+    color: var(--text-color);
+    text-decoration: line-through;
+}

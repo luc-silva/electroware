@@ -12,6 +12,8 @@ export const cardInitialState = {
         owner: "",
         category: "",
         name: "",
+        discount: 0,
+        on_sale: false,
     },
     productImage: {
         data: { data: "" },
@@ -45,11 +47,13 @@ export const userSessionInitialState = {
     username: "",
     token: "",
     logged: false,
-    description:""
+    description: "",
 };
 export const productInitialState = {
     product: {
         price: 0,
+        discount: 0,
+        on_sale:false,
         name: "",
         owner: "",
         _id: "",
@@ -64,6 +68,8 @@ export const createrOfferFormInitialValue = {
     category: "",
     price: 0,
     quantity: 0,
+    discount: 0,
+    on_sale: false,
 };
 export const loginFormInitialValue = {
     email: "",
@@ -84,9 +90,12 @@ export const productPageInitialState = {
         category: "",
         name: "",
         description: "",
+        brand:"",
         owner: "",
         price: 0,
         quantity: 0,
+        discount: 0,
+        on_sale: false,
     },
 };
 export const userProfileInitialValues = {

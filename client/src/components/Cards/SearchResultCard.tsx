@@ -7,6 +7,7 @@ import { createImage } from "../../utils/operations";
 import { ImageBox } from "../Misc/ImageBox";
 
 import styles from "./SearchResultCard.module.css";
+import { CardPriceDisplay } from "../Misc/CardPriceDisplay";
 
 export const SearchResultItem = ({ productId }: { productId: string }) => {
     let [isLoading, toggleLoading] = useState(true);
@@ -63,7 +64,11 @@ export const SearchResultItem = ({ productId }: { productId: string }) => {
                         {(isLoading && (
                             <div className={styles["loading-line"]} />
                         )) || (
-                            <strong>{`R$ ${productData.product.price}`}</strong>
+                            <CardPriceDisplay
+                                discount={productData.product.discount}
+                                on_sale={productData.product.on_sale}
+                                price={productData.product.price}
+                            />
                         )}
                     </div>
                 </div>

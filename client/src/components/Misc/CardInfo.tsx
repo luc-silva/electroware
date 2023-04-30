@@ -1,4 +1,5 @@
 import styles from "./CardInfo.module.css";
+import { CardPriceDisplay } from "./CardPriceDisplay";
 
 export const CardInfo = ({
     product,
@@ -11,7 +12,11 @@ export const CardInfo = ({
         <div className={styles["card-info"]}>
             <div className={styles["card-info-price"]}>
                 {(isLoading && <div className={styles["loading-line"]} />) || (
-                    <strong>{`R$ ${product.price}`}</strong>
+                    <CardPriceDisplay
+                        price={product.price}
+                        discount={product.discount}
+                        on_sale={product.on_sale}
+                    />
                 )}
             </div>
             <div className={styles["card-details"]}>

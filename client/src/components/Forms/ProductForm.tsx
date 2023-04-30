@@ -15,14 +15,7 @@ import { createrOfferFormInitialValue } from "../../constants/initialStates";
 
 import styles from "./ProductForm.module.css";
 
-interface FormDataTypes {
-    description: string;
-    name: string;
-    brand: string;
-    category: string;
-    price: number;
-    quantity: number;
-}
+
 
 export const ProductForm = ({
     user,
@@ -32,8 +25,8 @@ export const ProductForm = ({
     handleSubmit,
     submitBtnText,
 }: {
-    user: UserProps;
-    form?: FormDataTypes;
+    user: IUserSession;
+    form?: IProductForm;
     method: "POST" | "PUT";
     setForm: Function;
     handleSubmit: FormEventHandler<HTMLFormElement>;
@@ -79,6 +72,7 @@ export const ProductForm = ({
                         minValue={1}
                         maxValue={10000}
                         required
+                        label
                         onChange={handleChange}
                         stepAny
                     />
@@ -91,6 +85,7 @@ export const ProductForm = ({
                         maxValue={300}
                         minValue={0}
                         required
+                        label
                         onChange={handleChange}
                     />
                 </div>

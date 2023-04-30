@@ -1,0 +1,31 @@
+.promo-box{
+    padding: 1rem;
+    outline: whitesmoke solid 1px;
+}
+.promo-box__main{
+    display: flex;
+    justify-content: space-between;
+}
+.promo-box__checkbox, .promo-box__discount{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.promo-box__checkbox{
+    line-height: 1rem;
+    gap: 1rem;
+    color: var(--text-color);
+
+}
+.checkbox{
+    width: 20px;
+    height: 20px;
+    background-color: var(--background-color-faded);
+}
+.promo-box__discount{
+    gap: 1rem;
+}
+.promo-box__discount input{
+    background-color: var(--background-color-faded);
+    width: 3rem;
+}

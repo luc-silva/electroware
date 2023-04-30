@@ -57,6 +57,10 @@
     display: flex;
     width: 50%;
 }
+.details-price{
+    flex-direction: column;
+    align-items: flex-end;
+}
 .details-seller {
     justify-content: flex-start;
 }

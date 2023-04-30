@@ -14,7 +14,7 @@ const ProductSchema = new Schema(
         brand: { type: String, maxLength: 15, required: true },
         description: { type: String, maxLength: 200 },
         on_sale: { type: Boolean, default: false },
-        discount: { type: Number, max: 100, min: 0 },
+        discount: { type: Number, max: 100, min: 0, required: true },
     },
     { timestamps: true }
 );

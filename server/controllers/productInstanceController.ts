@@ -6,6 +6,7 @@ import ImageRepository from "../repositories/ImageRepository";
 import ProductRepository from "../repositories/ProductRepository";
 import UserRepository from "../repositories/UserRepository";
 import ProductInstanceValidator from "../validators/ProductInstanceValidator";
+import { calculateDiscountedValue } from "../utils/operations";
 
 /**
  * POST, AUTH REQUIRED - Create a shoppingcart instance for checkout.
@@ -67,10 +68,18 @@ export const createInstance = asyncHandler(
             throw new Error("Item já adicionado ao carrinho de compras.");
         }
 
+        let price = instanceProduct?.on_sale
+            ? calculateDiscountedValue(
+                  instanceProduct.price,
+                  instanceProduct.discount
+              )
+            : instanceProduct?.price;
+            
         await CartItemRepository.createCartItem({
             ...cartItemData,
             seller: instanceProduct.owner,
             productImage: productImage.id,
+            price,
         });
 
         response

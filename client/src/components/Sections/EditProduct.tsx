@@ -1,12 +1,21 @@
-import { FormEvent, useEffect, useState } from "react";
-import { ProductForm } from "../Forms/ProductForm";
-import styles from "./EditProduct.module.css";
-import { createrOfferFormInitialValue } from "../../constants/initialStates";
 import ProductService from "../../services/ProductService";
+import { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { createrOfferFormInitialValue } from "../../constants/initialStates";
 import { UserImageInput } from "../Inputs/UserImageInput";
 
-export const EditProduct = ({ user, showToast }: { user: UserProps, showToast:Function }) => {
+import { ProductForm } from "../Forms/ProductForm";
+
+import styles from "./EditProduct.module.css";
+import { PromoBox } from "../Misc/PromoBox";
+
+export const EditProduct = ({
+    user,
+    showToast,
+}: {
+    user: IUserSession;
+    showToast: Function;
+}) => {
     const navigate = useNavigate();
     let { id } = useParams();
 
@@ -17,7 +26,7 @@ export const EditProduct = ({ user, showToast }: { user: UserProps, showToast:Fu
 
         if (id) {
             ProductService.updateProduct(form, user.token, id).then((data) => {
-            showToast(data.message,"info");
+                showToast(data.message, "info");
 
                 navigate(`/product/${id}`);
             });
@@ -42,6 +51,9 @@ export const EditProduct = ({ user, showToast }: { user: UserProps, showToast:Fu
                     user={user}
                     productId={id}
                 />
+            </div>
+            <div className={styles["edit-product__promo_container"]}>
+                <PromoBox form={form} setForm={setForm}/>
             </div>
             <div className={styles["edit-product__form-container"]}>
                 <ProductForm

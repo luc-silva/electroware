@@ -19,6 +19,15 @@
 .edit-product__form-container {
     width: 100%;
 }
+.edit-product__form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.edit-product__promo_container{
+    width: 50%;
+    margin-bottom: 1rem;
+}
 @media (min-width: 769px) and (max-width: 1024px) {
     .edit-product {
         height: 90vh;

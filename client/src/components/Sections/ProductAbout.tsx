@@ -1,14 +1,16 @@
 import { Bookmark } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { createImage } from "../../utils/operations";
+import { ProductBtnPanel } from "../Buttons/ProductBtnPanel";
+import { ImageBox } from "../Misc/ImageBox";
+
 import CategoryService from "../../services/CategoryService";
 import UserService from "../../services/UserService";
 import WishlistService from "../../services/WishlistService";
-import { createImage } from "../../utils/operations";
-import { ProductBtnPanel } from "../Buttons/ProductBtnPanel";
-import { InfoToast } from "../InfoToast";
-import { ImageBox } from "../Misc/ImageBox";
+
 import styles from "./ProductAbout.module.css";
+import { CardPriceDisplay } from "../Misc/CardPriceDisplay";
 
 export const ProductAbout = ({
     productDetails,
@@ -107,7 +109,13 @@ export const ProductAbout = ({
                         <div className={styles["details-price"]}>
                             {(status && (
                                 <div className={styles["loading-line"]} />
-                            )) || <h2>{`${productDetails.product.price}$`}</h2>}
+                            )) || (
+                                <CardPriceDisplay
+                                    discount={productDetails.product.discount}
+                                    on_sale={productDetails.product.on_sale}
+                                    price={productDetails.product.price}
+                                />
+                            )}
                         </div>
                     </div>
                     <div className={styles["details-description"]}>

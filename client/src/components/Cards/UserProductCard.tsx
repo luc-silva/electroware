@@ -5,6 +5,7 @@ import ProductService from "../../services/ProductService";
 import { createImage } from "../../utils/operations";
 import { ImageBox } from "../Misc/ImageBox";
 import styles from "./UserProductCard.module.css";
+import { CardPriceDisplay } from "../Misc/CardPriceDisplay";
 
 export const UserProductCard = ({ id }: { id: string }) => {
     let [productDetails, setProductDetails] = useState(productInitialState);
@@ -38,7 +39,11 @@ export const UserProductCard = ({ id }: { id: string }) => {
                         {(isLoading && (
                             <div className={styles["loading-line"]} />
                         )) || (
-                            <strong>{`${productDetails.product.price} R$`}</strong>
+                            <CardPriceDisplay
+                                discount={productDetails.product.discount}
+                                on_sale={productDetails.product.on_sale}
+                                price={productDetails.product.price}
+                            />
                         )}
                     </div>
                 </div>
