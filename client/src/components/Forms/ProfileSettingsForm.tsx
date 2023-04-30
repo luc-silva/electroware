@@ -13,7 +13,7 @@ import styles from "./ProfileSettingsForm.module.css";
 import { TextareaInput } from "../Inputs/TextareaInput";
 import { AxiosResponse } from "axios";
 
-export const ProfileSettingsForm = ({ user, showToast }: { user: UserProps, showToast:Function }) => {
+export const ProfileSettingsForm = ({ user, showToast }: { user: IUserSession, showToast:Function }) => {
     let [form, setForm] = useState(profileSettingsFormInitalState);
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {

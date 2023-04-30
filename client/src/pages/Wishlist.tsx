@@ -4,7 +4,7 @@ import { ProductCard } from "../components/Cards/ProductCard";
 import WishlistService from "../services/WishlistService";
 import styles from "./Wishlist.module.css";
 
-export const Wishlist = ({ user }: { user: UserProps }) => {
+export const Wishlist = ({ user }: { user: IUserSession }) => {
     let { id } = useParams();
     let [products, setProducts] = useState([]);
     const navigate = useNavigate();

@@ -16,7 +16,7 @@ export const Product = ({
     user,
     showToast,
 }: {
-    user: UserProps;
+    user: IUserSession;
     showToast: Function;
 }) => {
     let { id } = useParams();

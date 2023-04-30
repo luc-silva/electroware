@@ -12,7 +12,7 @@ export const Header = ({
     isMenuActive,
     toggleHMenu
 }: {
-    user: UserProps;
+    user: IUserSession;
     setUser: Function;
     handleInfoMenu: Function;
     isMenuActive: boolean;

@@ -12,7 +12,7 @@ export const CreateOffer = ({
     user,
     setUser,
 }: {
-    user: UserProps;
+    user: IUserSession;
     setUser: Function;
 }) => {
     const navigate = useNavigate();

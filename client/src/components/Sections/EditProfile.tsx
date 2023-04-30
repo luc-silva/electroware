@@ -3,7 +3,7 @@ import { ProfileSettingsForm } from "../Forms/ProfileSettingsForm";
 import styles from "./EditProfile.module.css";
 import { InfoToast } from "../InfoToast";
 
-export const EditProfile = ({ user, showToast }: { user: UserProps, showToast:Function }) => {
+export const EditProfile = ({ user, showToast }: { user: IUserSession, showToast:Function }) => {
     return (
         <section className={styles["settings__edit-profile"]}>
             <div className={styles["edit-profile__title"]}>

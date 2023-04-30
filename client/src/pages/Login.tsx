@@ -7,7 +7,7 @@ export const Login = ({
     setUser,
     showToast,
 }: {
-    user: UserProps;
+    user: IUserSession;
     setUser: Function;
     showToast: Function;
 }) => {

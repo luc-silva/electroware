@@ -3,7 +3,7 @@ import UserService from "../../services/UserService";
 import { TransactionCard } from "../Cards/TransactionCard";
 import styles from "./SettingsTransaction.module.css";
 
-export const SettingsTransaction = ({ user }: { user: UserProps }) => {
+export const SettingsTransaction = ({ user }: { user: IUserSession }) => {
     let [userTransactions, setUserTransactions] = useState([]);
     useEffect(() => {
         UserService.getUserTransactions(user.id, user.token).then((data) => {

@@ -5,7 +5,7 @@ import { createImage } from "../../utils/operations";
 import styles from "./HMenuUserDetails.module.css";
 import { ImageBox } from "./ImageBox";
 
-export const HMenuUserDetails = ({ user }: { user: UserProps }) => {
+export const HMenuUserDetails = ({ user }: { user: IUserSession }) => {
     let [userImage, setUserImage] = useState(imageInitialValue);
     let [isLoading, toggleLoading] = useState(true);
     useEffect(() => {

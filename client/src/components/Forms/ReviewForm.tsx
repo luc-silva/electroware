@@ -12,7 +12,7 @@ export const ReviewForm = ({
     isActive
 }: {
     updateReviews: Function;
-    user: UserProps;
+    user: IUserSession;
     product: Product;
     isActive:boolean
 }) => {

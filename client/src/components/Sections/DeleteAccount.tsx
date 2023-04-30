@@ -4,7 +4,7 @@ import { PrivacyCard } from "../Cards/PrivacyCard";
 
 import styles from "./DeleteAccount.module.css";
 
-export const DeleteAccount = ({ user }: { user: UserProps }) => {
+export const DeleteAccount = ({ user }: { user: IUserSession }) => {
     async function handleDeleteAccountBtn() {
         await UserService.deleteAccount(user.id, user.token);
     }

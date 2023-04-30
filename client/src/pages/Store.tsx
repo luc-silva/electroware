@@ -8,7 +8,7 @@ export const Store = ({
     user,
     setUser,
 }: {
-    user: UserProps;
+    user: IUserSession;
     setUser: Function;
 }) => {
     return (

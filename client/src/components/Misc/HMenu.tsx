@@ -13,7 +13,7 @@ export const HMenu = ({
     isMenuActive,
     toggleHMenu,
 }: {
-    user: UserProps;
+    user: IUserSession;
     setUser: Function;
     isMenuActive: boolean;
     toggleHMenu: Function;

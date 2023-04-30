@@ -13,7 +13,7 @@ export const ReviewsContainer = ({
     updateScore,
 }: {
     product: Product;
-    user: UserProps;
+    user: IUserSession;
     updateScore: Function;
 }) => {
     let [reviews, setReviews] = useState([{ _id: "", author: "" }]);

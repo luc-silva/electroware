@@ -14,7 +14,7 @@ export const UserImageInput = ({
     inputType,
     productId,
 }: {
-    user: UserProps;
+    user: IUserSession;
     productId?: string;
     inputType: "userImage" | "productImage";
 }) => {

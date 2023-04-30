@@ -4,7 +4,7 @@ import UserService from "../../services/UserService";
 import { SettingsProductCard } from "../Cards/SettingsProductCard";
 import styles from "./SettingsUserProducts.module.css";
 
-export const SettingsUserProducts = ({ user, showToast }: { user: UserProps, showToast:Function }) => {
+export const SettingsUserProducts = ({ user, showToast }: { user: IUserSession, showToast:Function }) => {
     let [products, setProducts] = useState([]);
     async function updateProducts() {
         await UserService.getUserProducts(user.id).then(setProducts);

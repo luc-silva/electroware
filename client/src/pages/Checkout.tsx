@@ -15,7 +15,7 @@ export const Checkout = ({
     user,
     setUser,
 }: {
-    user: UserProps;
+    user: IUserSession;
     setUser: Function;
 }) => {
     let [items, setItems] = useState([]);

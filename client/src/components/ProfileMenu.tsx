@@ -11,7 +11,7 @@ export const ProfileMenu = ({
     toggleMenu,
     setUser
 }: {
-    user: UserProps;
+    user: IUserSession;
     setUser: Function;
     isActive: Boolean;
     toggleMenu: Function;

@@ -17,7 +17,7 @@ export const ProductAbout = ({
     showToast,
 }: {
     productDetails: ProductData;
-    user: UserProps;
+    user: IUserSession;
     status: boolean;
     showToast: Function;
 }) => {

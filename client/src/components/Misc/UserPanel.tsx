@@ -9,7 +9,7 @@ export const UserPanel = ({
     handleInfoMenu,
     isMenuActive,
 }: {
-    user: UserProps;
+    user: IUserSession;
     handleInfoMenu: Function;
     isMenuActive: boolean;
 }) => {

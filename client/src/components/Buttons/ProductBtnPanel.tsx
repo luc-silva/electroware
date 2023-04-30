@@ -13,7 +13,7 @@ export const ProductBtnPanel = ({
     showToast
 }: {
     product: Product;
-    user: UserProps;
+    user: IUserSession;
     showToast:Function
 }) => {
     let [quantity, setQuantity] = useState(1);

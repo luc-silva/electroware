@@ -12,7 +12,7 @@ export const SettingsProductCard = ({
     update,
 }: {
     id: string;
-    user: UserProps;
+    user: IUserSession;
     showToast: Function;
     update: Function;
 }) => {
