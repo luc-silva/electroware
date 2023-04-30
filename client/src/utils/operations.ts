@@ -1,3 +1,8 @@
+/**
+ * Return the average score of a product iwth given array of product reviews.
+ * @param reviews - Array of review objects.
+ * @returns String containing the average product score.
+ */
 export function getAverage(reviews: Review[]): number {
     let total = 0;
     reviews.forEach((review: Review) => {
@@ -5,6 +10,12 @@ export function getAverage(reviews: Review[]): number {
     });
     return total === 0 ? 0 : Number((total / reviews.length).toFixed(1));
 }
+
+/**
+ * Return the total price of the shopping cart with given array of cart instances.
+ * @param items - Array of product objects.
+ * @returns Total price in number.
+ */
 export function getTotalValue(items:ShoppingCartCardProps[]) {
     let total = 0;
     items.forEach(({ price, quantity }: ShoppingCartCardProps) => {
@@ -12,6 +23,12 @@ export function getTotalValue(items:ShoppingCartCardProps[]) {
     });
     return total;
 }
+
+/**
+ * Create an image and returns its path with given buffer array.
+ * @param bufferArr Image buffer.
+ * @returns Image path
+ */
 export function createImage(bufferArr:any) {
     let blob = new Blob([new Uint8Array(bufferArr)], {
         type: "image/jpeg",
@@ -19,6 +36,12 @@ export function createImage(bufferArr:any) {
     let srcBlob = URL.createObjectURL(blob);
     return (srcBlob)
 }
+/**
+ * Check if user has already made a review in a product by checking its reviews.
+ * @param arrayOfReviews Array of review objects.
+ * @param userId User ObjectId.
+ * @returns true if user has been found, false if not.
+ */
 export function checkForUser(
     arrayOfReviews: { author: string }[],
     userId: string
