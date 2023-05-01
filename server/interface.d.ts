@@ -53,6 +53,14 @@ interface Validator {
     public validate(response: Response, requestBody: any): void;
 }
 
+//Request Body Interfaces
+interface ICollectionData {
+    name: string;
+    user: string;
+    privated: boolean;
+}
+
+//misc
 declare global {
     namespace Express {
         interface Request {
