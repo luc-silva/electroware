@@ -21,11 +21,6 @@ export const createCollection = asyncHandler(
         let collectionData: ICollectionData = request.body;
         WishlistCollectionValidator.validate(response, collectionData);
 
-        if (collectionData.user !== request.user.id) {
-            response.status(401);
-            throw new Error("Não Autorizado.");
-        }
-
         let user = await UserRepository.getUser(request.user.id);
         if (!user) {
             response.status(404);
@@ -43,7 +38,10 @@ export const createCollection = asyncHandler(
             throw new Error("Já existe uma coleção com esse nome.");
         }
 
-        await WishlistCollectionRepository.createCollection(collectionData);
+        await WishlistCollectionRepository.createCollection({
+            ...collectionData,
+            user: user.id,
+        });
         response.status(200).json({ message: "Coleção Criada." });
     }
 );

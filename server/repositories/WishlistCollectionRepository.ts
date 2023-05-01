@@ -82,7 +82,7 @@ class WishlistCollectionRepository extends Repository {
     public async getCollectionByNameFromUser(userId: string, name: string) {
         this.validateObjectId(userId);
 
-        return await WishlistCollection.find({
+        return await WishlistCollection.findOne({
             user: new Types.ObjectId(userId),
             name,
         });

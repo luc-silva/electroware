@@ -10,10 +10,10 @@ class WishlistCollectionValidator implements Validator {
             throw new Error("Campo nome inválido.");
         }
 
-        if (!Types.ObjectId.isValid(user)) {
+/*         if (!Types.ObjectId.isValid(user)) {
             response.status(400);
             throw new Error("Usuário Inválido.");
-        }
+        } */
 
         if (typeof privated !== "boolean") {
             response.status(400);
