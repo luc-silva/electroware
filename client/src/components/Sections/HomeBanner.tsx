@@ -14,7 +14,7 @@ export const HomeBanner = () => {
     let [seconds, setSeconds] = useState(4000);
 
     useEffect(() => {
-        setInterval(() => {
+        let interval = setInterval(() => {
             setCounter((prev: number) => {
                 if (prev < images.length - 1) {
                     return prev + 1;
@@ -23,7 +23,7 @@ export const HomeBanner = () => {
             });
         }, seconds);
 
-        return () => {};
+        return () => clearInterval(interval);
     }, []);
     useEffect(() => {
         setCurrentImage(images[counter]);
