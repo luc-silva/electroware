@@ -15,6 +15,8 @@ import {
     getProfileInfo,
     getUserPrivateInfo,
     deleteAccount,
+    getUserPublicCollections,
+    getEveryUserCollectionOwned,
 } from "../controllers/userController";
 
 export const userRouter = Router();
@@ -25,10 +27,12 @@ userRouter.get("/user/:id", getProfileInfo);
 userRouter.get("/user/:id/products", getUserProducts);
 userRouter.get("/user/:id/reviews", getEveryUserReviews);
 userRouter.get("/user/:id/products/reviews", getReviewsFromUserProducts);
+userRouter.get("/user/:id/collections", getUserPublicCollections);
 
 //protected
-userRouter.post("/user/billings/add", protectedRoute, addFunds);
 userRouter.get("/user/private/:id", protectedRoute, getUserPrivateInfo);
 userRouter.get("/user/:id/transactions", protectedRoute, getUserTransactions);
+userRouter.get("/user/:id/private/collections", protectedRoute, getEveryUserCollectionOwned);
 userRouter.delete("/user/:id", protectedRoute, deleteAccount);
+userRouter.post("/user/billings/add", protectedRoute, addFunds);
 userRouter.patch("/user/:id", protectedRoute, updateUserInfo);

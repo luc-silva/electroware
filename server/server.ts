@@ -11,6 +11,7 @@ import { shoppingCartRouter } from "./routes/shoppingCart.routes";
 import { transactionRouter } from "./routes/transaction.routes";
 import { errorMiddleware } from "./middleware/error";
 import { imageRouter } from "./routes/image.routes"; 
+import { wishlistCollectionRouter } from "./routes/wishlistCollection.routes";
 
 function main() {
     let app = express();
@@ -38,6 +39,7 @@ function main() {
     app.use("/api/wishlist", wishlistRouter);
     app.use("/api/transaction", transactionRouter);
     app.use("/api/image", imageRouter);
+    app.use("/api/collection", wishlistCollectionRouter);
     app.use(errorMiddleware);
 }
  

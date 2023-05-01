@@ -6,6 +6,7 @@ import { IUser } from "../interface";
 import { Request, Response } from "express";
 import UserValidator from "../validators/UserValidator";
 import UserRepository from "../repositories/UserRepository";
+import WishlistCollectionRepository from "../repositories/WishlistCollectionRepository";
 
 function generateToken(id: string) {
     return sign({ id }, "123", {
@@ -263,5 +264,51 @@ export const updateUserInfo = asyncHandler(
         await UserRepository.findUserAndUpdateDetails(id, updatedUserData);
 
         response.status(200).json({ message: "Feito." });
+    }
+);
+
+/**
+ * GET, AUTH REQUIRED - Get every collection from a user.
+ * @param  {Request} request The HTTP request object containing the user ID.
+ * @param {Response} response - The HTTP response object containing collection ids.
+ * @throws throws error if the user has not been found.
+ */
+export const getEveryUserCollectionOwned = asyncHandler(
+    async (request: Request, response: Response) => {
+        let { id } = request.params;
+
+        let user = await UserRepository.getUser(id);
+        if (!user) {
+            response.status(404);
+            throw new Error("Usuário Não Encontrado.");
+        }
+
+        let collections =
+            await WishlistCollectionRepository.getCollectionsFromUser(user.id);
+
+        response.status(200).json(collections);
+    }
+);
+
+/**
+ * GET - Get every public collection from a user.
+ * @param  {Request} request The HTTP request object containing the user ID.
+ * @param {Response} response - The HTTP response object containing collection ids.
+ * @throws throws error if the user has not been found.
+ */
+export const getUserPublicCollections = asyncHandler(
+    async (request: Request, response: Response) => {
+        let { id } = request.params;
+
+        let user = await UserRepository.getUser(id);
+        if (!user) {
+            response.status(404);
+            throw new Error("Usuário Não Encontrado.");
+        }
+
+        let collections =
+            await WishlistCollectionRepository.getPublicCollectionsFromUser(user.id);
+
+        response.status(200).json(collections);
     }
 );
