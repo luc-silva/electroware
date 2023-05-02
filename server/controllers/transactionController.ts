@@ -1,7 +1,6 @@
 import asyncHandler from "express-async-handler";
 
 import { Request, Response } from "express";
-import { IUser } from "../interface";
 import TransactionValidator from "../validators/TransactionValidator";
 import UserRepository from "../repositories/UserRepository";
 import CartItemRepository from "../repositories/CartItemRepository";

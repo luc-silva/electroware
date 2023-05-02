@@ -51,7 +51,10 @@ class TransactionRepository extends Repository {
                 await Product.findByIdAndUpdate(
                     [productInstance.product],
                     {
-                        $inc: { quantity: -productInstance.quantity },
+                        $inc: {
+                            quantity: -productInstance.quantity,
+                            sales: productInstance.quantity,
+                        },
                     },
                     { session }
                 );
