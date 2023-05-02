@@ -23,7 +23,6 @@ export const CollectionCard = ({
         <div
             onClick={() => {
                 setChosenCollection(data._id);
-                console.log(`this: ${data._id}. Setted: ${selectedCollection}`)
             }}
             className={actualClass}
         >
