@@ -4,6 +4,7 @@ import asyncHandler from "express-async-handler";
 import ProductRepository from "../repositories/ProductRepository";
 import UserRepository from "../repositories/UserRepository";
 import WishlistItemRepository from "../repositories/WishlistItemRepository";
+import WishlistCollectionRepository from "../repositories/WishlistCollectionRepository";
 
 /**
  * GET, AUTH REQUIRED - Get wishlist items of a user with given valid ObjectId.
@@ -25,7 +26,9 @@ export const getWishlistItems = asyncHandler(
             throw new Error("Usuário não encontrado");
         }
 
-        let items = await WishlistItemRepository.getWishlistItemsByUser(user.id);
+        let items = await WishlistItemRepository.getWishlistItemsByUser(
+            user.id
+        );
 
         response.status(200).json(items);
     }
@@ -36,19 +39,16 @@ export const getWishlistItems = asyncHandler(
  *
  * @param {Request} request - The HTTP request object containing product info and user.
  * @param {Response} response - The HTTP response object containing a conclusion message.
- * @throws throws error if receives a invalid id, invalid body data, or if a use has not been found.
+ * @throws throws error if receives a invalid id, invalid body data, or if a user or collection has not been found.
  */
 export const createWishlistItem = asyncHandler(
     async (request: Request, response: Response) => {
-        if (!request.user) {
+        if (!request.user || !request.body) {
             response.status(400);
             throw new Error("Dados Inválidos.");
         }
-        if (!request.body) {
-            response.status(400);
-            throw new Error("Dados Inválidos.");
-        }
-        let { product } = request.body;
+        let { product, group } = request.body;
+        //add validator
 
         let user = await UserRepository.getUser(request.user.id);
         if (!user) {
@@ -67,34 +67,36 @@ export const createWishlistItem = asyncHandler(
             throw new Error("Não é possivel adicionar o próprio produto.");
         }
 
-        let alreadyWishlisted =
-            await WishlistItemRepository.getWishlistItemByUserAndProduct(
-                user.id,
-                productFound.id
-            );
-
-        if (alreadyWishlisted) {
-            await WishlistItemRepository.deleteWishlistItem(
-                alreadyWishlisted.id
-            );
-            response
-                .status(201)
-                .json({ message: "Produto removido da lista de desejos." });
-        } else {
-            await WishlistItemRepository.createWishlistItem(user.id, {
-                product: productFound.id,
-                group: "Favoritos",
-            });
-            response
-                .status(201)
-                .json({ message: "Adicionado à lista de desejos." });
+        let collection = await WishlistCollectionRepository.getCollection(
+            group
+        );
+        if (!collection) {
+            response.status(404);
+            throw new Error("Coleção não encontrada.");
         }
+
+        let alreadyAddedToCollection =
+            await WishlistItemRepository.getWishlistItemByUserProductAndCollection(
+                user.id,
+                product,
+                collection.id
+            );
+        if (alreadyAddedToCollection) {
+            response.status(400);
+            throw new Error("Produto já adicionado à coleção selecionada.");
+        }
+
+        await WishlistItemRepository.createWishlistItem(user.id, {
+            product: productFound.id,
+            group: collection.id,
+        });
+
+        response.status(201).json({ message: "Adicionado à lista." });
     }
 );
 
 /**
  * DELETE, AUTH REQUIRED - Delete a wishlist instance with given valid ObjectID.
- *
  * @param {Request} request - The HTTP request object containing the id of the instance as a parameter.
  * @param {Response} response - The HTTP response object containing a conclusion message.
  * @throws throws error if receives a invalid id, invalid body data, or if a use has not been found.

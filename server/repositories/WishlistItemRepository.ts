@@ -23,20 +23,33 @@ class WishlistItemRepository extends Repository {
     }
 
     /**
-     * Get wishlist item with given product and user ids.
-     * @param userId - User ObjectId.
-     * @param productId - Product ObjectId.
+     * Get wishlist items with given collection id.
+     * @param objectId - Collection ObjectId.
      * @returns Returns wishlist item details object.
      */
-    public async getWishlistItemByUserAndProduct(
+    public async getWishlistItemsByCollection(objectId: string) {
+        this.validateObjectId(objectId);
+        return await WishlistItem.find({ group: objectId });
+    }
+
+    /**
+     * Get wishlist item with given collection, product and user ids.
+     * @param userId - User ObjectId.
+     * @param productId - Product ObjectId.
+     * @param collectionId - Product ObjectId.
+     * @returns Returns wishlist item details object.
+     */
+    public async getWishlistItemByUserProductAndCollection(
         userId: string,
-        productId: string
+        productId: string,
+        collectionId: string
     ) {
         this.validateObjectId(userId);
-        this.validateObjectId(productId);
+        this.validateObjectId(collectionId);
         return await WishlistItem.findOne({
             user: userId,
             product: productId,
+            group: collectionId,
         });
     }
 

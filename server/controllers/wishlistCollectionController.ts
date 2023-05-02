@@ -4,6 +4,29 @@ import WishlistCollectionValidator from "../validators/WishlistCollectionValidat
 import WishlistCollectionRepository from "../repositories/WishlistCollectionRepository";
 import { ICollectionData } from "../interface";
 import UserRepository from "../repositories/UserRepository";
+import WishlistItemRepository from "../repositories/WishlistItemRepository";
+
+/**
+ * GET - Get itens from a collection with given id.
+ * @param  {Request} request The HTTP request object containing the data.
+ * @param {Response} response - The HTTP response object containing an conclusion message.
+ * @throws throws error if the data is not valid.
+ */
+export const getWishlistItensFromCollection = asyncHandler(
+    async (request: Request, response: Response) => {
+        if (!request.params) {
+            response.status(400);
+            throw new Error("Dados Inválidos.");
+        }
+
+        let { id } = request.params;
+
+        let itens =
+            await WishlistItemRepository.getWishlistItemsByCollection(id);
+
+        response.status(200).json(itens);
+    }
+);
 
 /**
  * POST, AUTH REQUIRED - Create a collection with given data.
