@@ -1,3 +1,4 @@
+import { SessionOption } from "mongoose";
 import WishlistItem from "../models/WishlistItem";
 import { Repository } from "./Repository";
 
@@ -60,6 +61,21 @@ class WishlistItemRepository extends Repository {
     public async deleteWishlistItem(objectId: string) {
         this.validateObjectId(objectId);
         await WishlistItem.findByIdAndDelete(objectId);
+    }
+    
+    /**
+     * Delete wishlist item with given collection id.
+     * @param objectId Collection ObjectId.
+     */
+    public async deleteWishlistItemByCollection(
+        objectId: string,
+        session: SessionOption
+    ) {
+        this.validateObjectId(objectId);
+        await WishlistItem.deleteMany(
+            { group: objectId },
+            session ? session : undefined
+        );
     }
 
     /**
