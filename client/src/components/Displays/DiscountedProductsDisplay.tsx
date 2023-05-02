@@ -18,10 +18,10 @@ export const DiscountedProductsDisplay = () => {
                         <h2>Produtos em Desconto</h2>
                     </div>
                     <div className={styles["discounted-products__container"]}>
-                        {products.map(({ _id }: { _id: string }) => {
+                        {products.map(({ _id }: { _id: string }, index:React.Key) => {
                             return (
                                 <span className={styles["container__item"]}>
-                                    <ProductCard id={_id} />
+                                    <ProductCard id={_id} key={index}/>
                                 </span>
                             );
                         })}

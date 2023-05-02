@@ -7,6 +7,7 @@
 .collection-container__header{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid var(--background-color-faded);
 }
 .collection-container__title{
@@ -29,7 +30,6 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(45%, 50%));
     grid-template-rows: repeat(auto, 200px);
-    padding: 1rem;
     gap: 0.5rem;
     width: 100%;
 }
@@ -43,11 +43,13 @@
 }
 @media (min-width: 769px) and (max-width: 1024px) {
     .collection-container__itens {
-        grid-template-columns: repeat(3, minmax(30%, 33%));
+    padding: 1rem;
+    grid-template-columns: repeat(3, minmax(30%, 33%));
     }
 }
 @media (min-width: 1025px) {
     .collection-container__itens {
-        grid-template-columns: repeat(3, minmax(30%, 33%));
+    padding: 1rem;
+    grid-template-columns: repeat(3, minmax(30%, 33%));
     }
 }
