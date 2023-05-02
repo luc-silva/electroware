@@ -8,8 +8,8 @@ interface WishlistBody {
 class WishlistService extends Service {
     private baseUrl = "http://localhost:6060/api/wishlist/";
 
-    constructor() {
-        super();
+    public async deleteWishlistInstance(token:string, instanceId:string){
+        return axios.delete(this.baseUrl + instanceId, this.createHeader(token))
     }
 
     public async getWishlistItems(token: string) {

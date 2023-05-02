@@ -5,6 +5,7 @@
     justify-content: space-between;
     border-top: 1px solid var(--background-color-faded);
     height: 40%;
+    padding: inherit;
     padding: 1rem;
 }
 

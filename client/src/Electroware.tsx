@@ -148,7 +148,7 @@ function Electroware() {
                     />
                     <Route
                         path="/wishlist"
-                        element={<Wishlist user={user} />}
+                        element={<Wishlist user={user} showToast={showToast}/>}
                     />
                     <Route
                         path="/checkout"

@@ -16,7 +16,7 @@ export function getAverage(reviews: Review[]): number {
  * @param items - Array of product objects.
  * @returns Total price in number.
  */
-export function getTotalValue(items:ShoppingCartCardProps[]) {
+export function getTotalValue(items: ShoppingCartCardProps[]) {
     let total = 0;
     items.forEach(({ price, quantity }: ShoppingCartCardProps) => {
         total += price * quantity;
@@ -29,12 +29,12 @@ export function getTotalValue(items:ShoppingCartCardProps[]) {
  * @param bufferArr Image buffer.
  * @returns Image path
  */
-export function createImage(bufferArr:any) {
+export function createImage(bufferArr: any) {
     let blob = new Blob([new Uint8Array(bufferArr)], {
         type: "image/jpeg",
     });
     let srcBlob = URL.createObjectURL(blob);
-    return (srcBlob)
+    return srcBlob;
 }
 /**
  * Check if user has already made a review in a product by checking its reviews.
@@ -47,10 +47,10 @@ export function checkForUser(
     userId: string
 ) {
     return arrayOfReviews.every(({ author }) => {
-        if(author){
+        if (author) {
             return author !== userId;
         }
-        return false
+        return false;
     });
 }
 
@@ -68,6 +68,14 @@ export function calculateDiscountedValue(total: number, percent: number) {
  * Stops the propagation of a mouse event.
  * @param event MouseEvent.
  */
-export function stopEventPropagation(event:React.MouseEvent){
+export function stopEventPropagation(event: React.MouseEvent) {
     event.stopPropagation();
 }
+
+/* export function sortarray<T>(arr: Array<T>): Array<T>{
+    let arrCopy = [...arr]
+    arr.forEach((item) => {
+    })
+    return []
+}
+ */

@@ -22,11 +22,12 @@
 }
 @media (min-width: 769px) and (max-width: 1024px) {
     .products__container {
-        grid-template-columns: repeat(4, minmax(20%, 25%));
+        grid-template-columns: repeat(2, minmax(45%, 50%));
     }
 }
 @media (min-width: 1025px) {
     .products__container {
-        grid-template-columns: repeat(5, minmax(15%, 20%));
+        grid-template-columns: repeat(2, minmax(45%, 50%));
+        grid-template-rows: repeat(auto, auto);
     }
 }
