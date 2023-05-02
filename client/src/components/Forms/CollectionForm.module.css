@@ -1,0 +1,41 @@
+.collection-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.form__container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.input-container input {
+    font-size: 1rem;
+    padding: 0.5rem;
+    background-color: var(--background-color-faded);
+}
+.submit-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 20%;
+}
+.checkbox-container {
+    display: flex;
+    gap: 0.5rem;
+}
+.checkbox {
+    width: 15px;
+    height: 15px;
+    background-color: var(--background-color-faded);
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+
+}
+@media (min-width: 1025px) {
+
+}

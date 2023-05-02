@@ -1,0 +1,10 @@
+.collection-card,
+.collection-card--active {
+    padding: 1rem 0.5rem;
+}
+.collection-card {
+    background-color: white;
+}
+.collection-card--active {
+    background-color: var(--background-color-faded);
+}

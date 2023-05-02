@@ -1,55 +1,53 @@
-.info-toast {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-    padding: 0.5rem;
-    position: fixed;
-    z-index: 3;
-    bottom: 0;
-    width: 100%;
-    background-color: var(--sub-color);
-}
+.info-toast,
 .warning-toast {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
     padding: 0.5rem;
     position: fixed;
+    z-index: 5;
     bottom: 0;
     width: 100%;
+}
+.info-toast {
+    background-color: var(--sub-color);
+}
+.warning-toast {
     background-color: rgb(255, 105, 105);
 }
-
-.info-toast div, 
+.info-toast div,
 .warning-toast div {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-.info-toast__message, .warning-toast__message {
+.info-toast__message,
+.warning-toast__message {
     line-height: 1rem;
     gap: 1rem;
     cursor: default;
 }
-.info-toast__message p, .warning-toast__message p  {
+.info-toast__message p,
+.warning-toast__message p {
     color: white;
     font-size: 0.8rem;
 }
-.info-toast__btn, .warning-toast__btn {
+.info-toast__btn,
+.warning-toast__btn {
     cursor: pointer;
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
-    .info-toast, .warning-toast {
+    .info-toast,
+    .warning-toast {
         width: 40%;
         margin: 1rem;
         right: 0;
     }
 }
 @media (min-width: 1025px) {
-    .info-toast, .warning-toast  {
+    .info-toast,
+    .warning-toast {
         width: 30%;
         margin: 1rem;
         right: 0;

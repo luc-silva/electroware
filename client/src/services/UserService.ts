@@ -15,8 +15,8 @@ interface LogInBody {
     password: string;
 }
 
-class UserService extends Service {
-    private baseUrl = "http://localhost:6060/api/user/";
+class UserService extends Service implements IService {
+    readonly baseUrl = "http://localhost:6060/api/user/";
 
     constructor() {
         super();
@@ -76,6 +76,21 @@ class UserService extends Service {
             });
     }
 
+    public async getUserPublicCollections(userId: string, token: string) {
+        return await axios
+            .get(this.baseUrl + `${userId}/collections`)
+            .then(({ data }) => {
+                return data;
+            });
+    }
+    public async getUserCollections(userId: string, token: string) {
+        return await axios
+            .get(this.baseUrl + `${userId}/private/collections`, this.createHeader(token))
+            .then(({ data }) => {
+                return data;
+            });
+    }
+
     public async addFunds(amount: number, token: string) {
         return await axios
             .post(
@@ -89,7 +104,10 @@ class UserService extends Service {
     }
 
     public async deleteAccount(userId: string, token: string) {
-        return await axios.delete(this.baseUrl + userId, this.createHeader(token));
+        return await axios.delete(
+            this.baseUrl + userId,
+            this.createHeader(token)
+        );
     }
 
     public async updateAccountDetails(
@@ -97,7 +115,11 @@ class UserService extends Service {
         token: string,
         body: any
     ) {
-        return await axios.patch(this.baseUrl + userId, body, this.createHeader(token));
+        return await axios.patch(
+            this.baseUrl + userId,
+            body,
+            this.createHeader(token)
+        );
     }
 }
 

@@ -63,3 +63,11 @@ export function checkForUser(
 export function calculateDiscountedValue(total: number, percent: number) {
     return total - (percent * total) / 100;
 }
+
+/**
+ * Stops the propagation of a mouse event.
+ * @param event MouseEvent.
+ */
+export function stopEventPropagation(event:React.MouseEvent){
+    event.stopPropagation();
+}

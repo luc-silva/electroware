@@ -15,9 +15,11 @@ import ProductService from "../services/ProductService";
 export const Product = ({
     user,
     showToast,
+    toggleCollectionModal
 }: {
     user: IUserSession;
     showToast: Function;
+    toggleCollectionModal:Function
 }) => {
     let { id } = useParams();
     const navigate = useNavigate();
@@ -64,6 +66,7 @@ export const Product = ({
                 productDetails={productDetails}
                 status={infoStatus}
                 showToast={showToast}
+                toggleCollectionModal={toggleCollectionModal}
             />
             <section className={styles["product__ratings"]}>
                 <div className={styles["ratings-main"]}>

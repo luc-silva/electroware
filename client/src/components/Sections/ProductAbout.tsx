@@ -1,40 +1,35 @@
-import { Bookmark } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { createImage } from "../../utils/operations";
 import { ProductBtnPanel } from "../Buttons/ProductBtnPanel";
 import { ImageBox } from "../Misc/ImageBox";
+import { CardPriceDisplay } from "../Misc/CardPriceDisplay";
+import { BookmarkBtn } from "../Buttons/BookmarkBtn";
 
 import CategoryService from "../../services/CategoryService";
 import UserService from "../../services/UserService";
 import WishlistService from "../../services/WishlistService";
 
 import styles from "./ProductAbout.module.css";
-import { CardPriceDisplay } from "../Misc/CardPriceDisplay";
 
 export const ProductAbout = ({
     productDetails,
     user,
     status,
     showToast,
+    toggleCollectionModal,
 }: {
     productDetails: ProductData;
     user: IUserSession;
     status: boolean;
     showToast: Function;
+    toggleCollectionModal: Function;
 }) => {
     let [owner, setOwner] = useState({ first: "", last: "" });
     let [category, setCategory] = useState("");
 
     async function handleWishlist() {
-        let data = {
-            product: productDetails.product._id,
-        };
-        await WishlistService.createWishlistInstance(data, user.token).then(
-            ({ message }) => {
-                showToast(message);
-            }
-        );
+        toggleCollectionModal(true, productDetails.product._id);
     }
 
     useEffect(() => {
@@ -85,12 +80,7 @@ export const ProductAbout = ({
                         </div>
                         {user.logged &&
                             user.id !== productDetails.product.owner && (
-                                <div onClick={handleWishlist}>
-                                    <Bookmark
-                                        size={35}
-                                        color="var(--main-color)"
-                                    />
-                                </div>
+                                <BookmarkBtn onClick={handleWishlist} />
                             )}
                     </div>
                     <div className={styles["details-pricing"]}>

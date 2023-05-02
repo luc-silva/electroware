@@ -65,7 +65,9 @@ a {
     font-family: "Valorax";
     src: url("./assets/valorax.otf");
 }
-
+.electroware{
+    position: relative;
+}
 :root {
     --main-color: #f3bd1c;
     --sub-color:#69beff;
@@ -88,7 +90,7 @@ a {
     --warning-background-v1:#fff2f2;
     --warning-text-v1: #dc3545;
 
-    --modal-background: #000000bc;
+    --modal-background: #00000086;
     --btn-disabled: #d2d2d2;
 
 }

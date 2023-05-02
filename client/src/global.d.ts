@@ -95,6 +95,10 @@ interface IProductForm {
     on_sale: boolean;
 }
 
+//Misc
+interface IService {
+    readonly baseUrl: string;
+}
 declare module "*.module.css" {
     const classes: { [key: string]: string };
     export default classes;

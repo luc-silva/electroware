@@ -31,6 +31,7 @@ import { SettingsTransaction } from "./components/Sections/SettingsTransaction";
 import { SettingsUserProducts } from "./components/Sections/SettingsUserProducts";
 import { EditProduct } from "./components/Sections/EditProduct";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
+import { CreateCollectionModal } from "./components/Modals/CreateCollectionModal";
 
 function Electroware() {
     let [user, setUser] = useState(userSessionInitialState);
@@ -47,15 +48,41 @@ function Electroware() {
     let [isToastActive, toggleToast] = useState(false);
     let [toastMessage, setToastMessage] = useState("");
     let [toastType, setToastType] = useState("info" as "info" | "warning");
-    function showToast(message:string, toastType:"info" | "warning" = "info") {
-        setToastType(toastType)
-        setToastMessage(message)
-        toggleToast(true)
+    function showToast(
+        message: string,
+        toastType: "info" | "warning" = "info"
+    ) {
+        setToastType(toastType);
+        setToastMessage(message);
+        toggleToast(true);
+    }
+
+    let [isCollectionModalActive, toggleCollectionModal] = useState(false);
+    let [product, setProduct] = useState("")
+    function showCollectionModal(activate:boolean = true, productId:string){
+        setProduct(productId)
+        toggleCollectionModal(activate)
     }
 
     return (
         <div className="electroware">
             <Router>
+                {/* modals/toasts */}
+                <InfoToast
+                    isActive={isToastActive}
+                    toggle={toggleToast}
+                    message={toastMessage}
+                    type={toastType}
+                />
+                <CreateCollectionModal
+                    user={user}
+                    toggleModal={toggleCollectionModal}
+                    isActive={isCollectionModalActive}
+                    showToast={showToast}
+                    product={product}
+                />
+
+                {/* heading/menus */}
                 <Header
                     user={user}
                     setUser={setUser}
@@ -63,7 +90,6 @@ function Electroware() {
                     isMenuActive={infoMenuActive}
                     toggleHMenu={toggleHamburguerMenu}
                 />
-                {/* modals/dialogs */}
                 <ProfileMenu
                     isActive={infoMenuActive}
                     toggleMenu={toggleInfoMenu}
@@ -76,12 +102,6 @@ function Electroware() {
                     toggleHMenu={toggleHMenu}
                     isMenuActive={isHMenuActive}
                 />
-                <InfoToast
-                    isActive={isToastActive}
-                    toggle={toggleToast}
-                    message={toastMessage}
-                    type={toastType}
-                />
 
                 {/* pages */}
                 <Routes>
@@ -91,9 +111,18 @@ function Electroware() {
                     />
                     <Route
                         path="/login"
-                        element={<Login user={user} setUser={setUser} showToast={showToast}/>}
+                        element={
+                            <Login
+                                user={user}
+                                setUser={setUser}
+                                showToast={showToast}
+                            />
+                        }
                     />
-                    <Route path="/registration" element={<Registration showToast={showToast}/>} />
+                    <Route
+                        path="/registration"
+                        element={<Registration showToast={showToast} />}
+                    />
                     <Route path="/privacy" element={<PrivacyPolicy />} />
                     <Route path="/faq" element={<Faq />} />
 
@@ -101,7 +130,13 @@ function Electroware() {
                     <Route path="/user/:id" element={<UserProfile />} />
                     <Route
                         path="/product/:id"
-                        element={<Product user={user} showToast={showToast}/>}
+                        element={
+                            <Product
+                                user={user}
+                                showToast={showToast}
+                                toggleCollectionModal={showCollectionModal}
+                            />
+                        }
                     />
                     <Route path="/search/:search" element={<SearchResults />} />
                     <Route path="/category/:id" element={<Category />} />
@@ -131,15 +166,33 @@ function Electroware() {
                         path="/settings"
                         element={<Settings user={user} setUser={setUser} />}
                     >
-                        <Route path="" element={<EditProfile user={user} showToast={showToast}/>} />
+                        <Route
+                            path=""
+                            element={
+                                <EditProfile
+                                    user={user}
+                                    showToast={showToast}
+                                />
+                            }
+                        />
                         <Route
                             path="products/"
-                            element={<SettingsUserProducts user={user} showToast={showToast} />}
+                            element={
+                                <SettingsUserProducts
+                                    user={user}
+                                    showToast={showToast}
+                                />
+                            }
                         />
 
                         <Route
                             path="products/:id"
-                            element={<EditProduct user={user} showToast={showToast} />}
+                            element={
+                                <EditProduct
+                                    user={user}
+                                    showToast={showToast}
+                                />
+                            }
                         />
                         <Route
                             path="delete-account"
