@@ -15,6 +15,7 @@ const ProductSchema = new Schema(
         description: { type: String, maxLength: 200 },
         on_sale: { type: Boolean, default: false },
         discount: { type: Number, max: 100, min: 0, required: true },
+        sales: {type:Number, default: 0}
     },
     { timestamps: true }
 );
