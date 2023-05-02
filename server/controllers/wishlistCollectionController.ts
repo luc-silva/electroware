@@ -5,6 +5,7 @@ import WishlistCollectionRepository from "../repositories/WishlistCollectionRepo
 import { ICollectionData } from "../interface";
 import UserRepository from "../repositories/UserRepository";
 import WishlistItemRepository from "../repositories/WishlistItemRepository";
+import { startSession } from "mongoose";
 
 /**
  * GET - Get itens from a collection with given id.
@@ -118,25 +119,32 @@ export const updateCollection = asyncHandler(
  */
 export const deleteCollection = asyncHandler(
     async (request: Request, response: Response) => {
-        if (!request.user || request.params) {
+        if (!request.user || !request.params) {
             response.status(400);
             throw new Error("Dados Inválidos.");
         }
 
         let { id } = request.params;
         let collection = await WishlistCollectionRepository.getCollection(id);
-        if (!collection) {
-            response.status(404);
-            throw new Error("Coleção não encontrada.");
-        }
 
-        if (collection.user.toString() !== request.user.id) {
-            response.status(401);
-            throw new Error("Não Autorizado.");
-        }
+        let session = await startSession()
+        await session.withTransaction(async () => {
 
-        await WishlistCollectionRepository.deleteCollection(id);
-
+            if (!collection) {
+                response.status(404);
+                throw new Error("Coleção não encontrada.");
+            }
+            
+            if (collection.user.toString() !== request.user.id) {
+                response.status(401);
+                throw new Error("Não Autorizado.");
+            }
+            
+            await WishlistItemRepository.deleteWishlistItemByCollection(id, {session})
+            await WishlistCollectionRepository.deleteCollection(id, {session});
+            session.commitTransaction()
+        })
+        await session.endSession()
         response.status(200).json({ message: "Coleção Excluida." });
     }
 );

@@ -69,7 +69,7 @@ class WishlistItemRepository extends Repository {
      */
     public async deleteWishlistItemByCollection(
         objectId: string,
-        session: SessionOption
+        session?: SessionOption
     ) {
         this.validateObjectId(objectId);
         await WishlistItem.deleteMany(

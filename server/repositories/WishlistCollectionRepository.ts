@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+import { SessionOption, Types } from "mongoose";
 import { ICollectionData } from "../interface";
 import WishlistCollection from "../models/WishlistCollection";
 import { Repository } from "./Repository";
@@ -32,9 +32,15 @@ class WishlistCollectionRepository extends Repository {
      * Delete a collection with given collection id.
      * @param collectionId Valid collection ObjectId.
      */
-    public async deleteCollection(collectionId: string) {
+    public async deleteCollection(
+        collectionId: string,
+        session?: SessionOption
+    ) {
         this.validateObjectId(collectionId);
-        await WishlistCollection.findByIdAndDelete(collectionId);
+        await WishlistCollection.findByIdAndDelete(
+            collectionId,
+            session ? session : undefined
+        );
     }
 
     /**
