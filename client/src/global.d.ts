@@ -1,3 +1,10 @@
+interface IWishlistCollection {
+    _id: string;
+    name: string;
+    createdAt: string;
+    privated: boolean;
+}
+
 interface IUserSession {
     username: string;
     id: string;
@@ -46,8 +53,9 @@ interface Product {
     on_sale: boolean;
 }
 
+
 interface WishlistItem {
-    id: string;
+    _id: string;
     product: string;
 }
 interface Review {
@@ -98,6 +106,11 @@ interface IProductForm {
 //Misc
 interface IService {
     readonly baseUrl: string;
+}
+interface ISVGButtonComponentProps {
+    sizing?: number;
+    onClick: React.MouseEventHandler;
+    weight?: IconWeight;
 }
 declare module "*.module.css" {
     const classes: { [key: string]: string };
