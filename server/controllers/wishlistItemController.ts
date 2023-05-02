@@ -103,12 +103,7 @@ export const createWishlistItem = asyncHandler(
  */
 export const removeWishlistItem = asyncHandler(
     async (request: Request, response: Response) => {
-        if (!request.user) {
-            response.status(400);
-            throw new Error("Dados Inválidos");
-        }
-
-        if (!request.params) {
+        if (!request.user|| !request.params) {
             response.status(400);
             throw new Error("Dados Inválidos");
         }
@@ -126,7 +121,7 @@ export const removeWishlistItem = asyncHandler(
             throw new Error("Usuário não encontrado");
         }
 
-        if (user.id !== wishlistItem.user) {
+        if (user.id !== wishlistItem.user.toString()) {
             response.status(401);
             throw new Error("Não autorizado.");
         }
