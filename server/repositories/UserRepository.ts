@@ -7,9 +7,11 @@ import WishlistItem from "../models/WishlistItem";
 import ProductInstance from "../models/ProductInstance";
 
 interface UpdatedUserData {
-    name: { first: string; last: string };
-    location: { state: string; country: string };
-    description: string;
+    name?: { first: string; last: string };
+    location?: { state: string; country: string };
+    description?: string;
+    email?: string;
+    password?: string;
 }
 
 class UserRepository extends Repository {
@@ -21,6 +23,16 @@ class UserRepository extends Repository {
     public async getUser(objectId: string) {
         this.validateObjectId(objectId);
         return await User.findById(objectId).select({ password: 0, funds: 0 });
+    }
+
+    /**
+     * Get user password and email.
+     * @param objectId - User ObjectId.
+     * @returns Returns user details object.
+     */
+    public async getUserPrivateDetails(objectId: string) {
+        this.validateObjectId(objectId);
+        return await User.findById(objectId).select({ password: 1, email: 1 });
     }
 
     /**
@@ -46,7 +58,7 @@ class UserRepository extends Repository {
     }
 
     /**
-     * Get user information with given email.
+     * Get user products with given product id.
      * @param objectId - User id.
      * @returns Returns user products IDs.
      */

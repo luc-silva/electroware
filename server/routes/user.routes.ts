@@ -17,6 +17,7 @@ import {
     deleteAccount,
     getUserPublicCollections,
     getEveryUserCollectionOwned,
+    updateUserPassword,
 } from "../controllers/userController";
 
 export const userRouter = Router();
@@ -36,3 +37,4 @@ userRouter.get("/user/:id/private/collections", protectedRoute, getEveryUserColl
 userRouter.delete("/user/:id", protectedRoute, deleteAccount);
 userRouter.post("/user/billings/add", protectedRoute, addFunds);
 userRouter.patch("/user/:id", protectedRoute, updateUserInfo);
+userRouter.put("/user/private/details", protectedRoute, updateUserPassword);

@@ -93,8 +93,44 @@ export const registerUser = asyncHandler(
 );
 
 /**
+ * PUT, AUTH REQUIRED - Updates the user password with given password.
+ * @param {Request} request - The HTTP request object containing the passwords.
+ * @param {Response} response - The HTTP response object containing conclusion message.
+ * @throws throws error if no user has been found or if the given password isn't valid.
+ */
+export const updateUserPassword = asyncHandler(
+    async (request: Request, response: Response) => {
+        if (!request.user || !request.body) {
+            response.status(400);
+            throw new Error("Dados Inválidos.");
+        }
+
+        let user = await UserRepository.getUserPrivateDetails(request.user.id);
+        if (!user) {
+            response.status(404);
+            throw new Error("Usuário não encontrado.");
+        }
+
+        let { password, new_password } = request.body;
+        UserValidator.validatePasswordChange(response, request.body)
+
+        if (!(await bcrypt.compare(password, user.password))) {
+            response.status(401);
+            throw new Error("Senha Inválida.");
+        }
+
+        let salt = await bcrypt.genSalt(10);
+        let hashedPassword = await bcrypt.hash(new_password, salt);
+
+        await UserRepository.findUserAndUpdateDetails(user.id, {
+            password: hashedPassword,
+        });
+        response.status(200).json({message:"Senha Atualizada."})
+    }
+);
+
+/**
  * GET - Get user profile information with given valid ObjectId.
- *
  * @param {Request} request - The HTTP request object containing the user ID.
  * @param {Response} response - The HTTP response object containing user info.
  * @throws throws error if no user has been found or if the user id isn't valid.
@@ -307,7 +343,9 @@ export const getUserPublicCollections = asyncHandler(
         }
 
         let collections =
-            await WishlistCollectionRepository.getPublicCollectionsFromUser(user.id);
+            await WishlistCollectionRepository.getPublicCollectionsFromUser(
+                user.id
+            );
 
         response.status(200).json(collections);
     }
