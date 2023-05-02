@@ -18,10 +18,6 @@ interface LogInBody {
 class UserService extends Service implements IService {
     readonly baseUrl = "http://localhost:6060/api/user/";
 
-    constructor() {
-        super();
-    }
-
     public async registerUser(data: RegistrationBody) {
         return await axios.post(this.baseUrl + "register", data);
     }
@@ -34,11 +30,29 @@ class UserService extends Service implements IService {
             });
     }
 
+    public async updateUserPassword(
+        token: string,
+        data: { password: string; new_password: string }
+    ) {
+        return axios.patch(
+            this.baseUrl + "private/details/password",
+            data,
+            this.createHeader(token)
+        );
+    }
+
+    public async updateUserEmail(token: string, data: { email: string }) {
+        return axios.patch(
+            this.baseUrl + "private/details/email",
+            data,
+            this.createHeader(token)
+        );
+    }
+
     public async getUserInfo(userId: string) {
         return await axios.get(this.baseUrl + `${userId}`).then(({ data }) => {
             return data;
         });
-        //.then(({ data }) => {return data;});
     }
 
     public async getUserProducts(userId: string) {
@@ -83,9 +97,13 @@ class UserService extends Service implements IService {
                 return data;
             });
     }
+    
     public async getUserCollections(userId: string, token: string) {
         return await axios
-            .get(this.baseUrl + `${userId}/private/collections`, this.createHeader(token))
+            .get(
+                this.baseUrl + `${userId}/private/collections`,
+                this.createHeader(token)
+            )
             .then(({ data }) => {
                 return data;
             });
@@ -93,7 +111,7 @@ class UserService extends Service implements IService {
 
     public async addFunds(amount: number, token: string) {
         return await axios
-            .post(
+            .patch(
                 this.baseUrl + "billings/add",
                 { amount },
                 this.createHeader(token)
@@ -115,7 +133,7 @@ class UserService extends Service implements IService {
         token: string,
         body: any
     ) {
-        return await axios.patch(
+        return await axios.put(
             this.baseUrl + userId,
             body,
             this.createHeader(token)

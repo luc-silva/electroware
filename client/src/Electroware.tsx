@@ -32,6 +32,7 @@ import { SettingsUserProducts } from "./components/Sections/SettingsUserProducts
 import { EditProduct } from "./components/Sections/EditProduct";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { CreateCollectionModal } from "./components/Modals/CreateCollectionModal";
+import { SettingsCredentials } from "./components/Sections/SettingsCredentials";
 
 function Electroware() {
     let [user, setUser] = useState(userSessionInitialState);
@@ -201,6 +202,10 @@ function Electroware() {
                         <Route
                             path="transactions"
                             element={<SettingsTransaction user={user} />}
+                        />
+                        <Route
+                            path="credentials"
+                            element={<SettingsCredentials user={user} showToast={showToast} />}
                         />
                     </Route>
 

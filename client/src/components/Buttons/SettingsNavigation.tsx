@@ -4,6 +4,7 @@ import {
     CurrencyCircleDollar,
     Eraser,
     IdentificationCard,
+    Key,
     Package,
 } from "phosphor-react";
 
@@ -29,6 +30,10 @@ export const SettingsNavigation = () => {
             <NavLink to={"delete-account"} className={setClass}>
                 <Eraser size={25} />
                 Excluir dados
+            </NavLink>
+            <NavLink to={"credentials"} className={setClass}>
+                <Key size={25} />
+                Acesso
             </NavLink>
         </nav>
     );

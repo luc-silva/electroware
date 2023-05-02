@@ -18,6 +18,7 @@ import {
     getUserPublicCollections,
     getEveryUserCollectionOwned,
     updateUserPassword,
+    updateUserEmail,
 } from "../controllers/userController";
 
 export const userRouter = Router();
@@ -34,7 +35,8 @@ userRouter.get("/user/:id/collections", getUserPublicCollections);
 userRouter.get("/user/private/:id", protectedRoute, getUserPrivateInfo);
 userRouter.get("/user/:id/transactions", protectedRoute, getUserTransactions);
 userRouter.get("/user/:id/private/collections", protectedRoute, getEveryUserCollectionOwned);
+userRouter.put("/user/:id", protectedRoute, updateUserInfo);
+userRouter.patch("/user/billings/add", protectedRoute, addFunds);
+userRouter.patch("/user/private/details/password", protectedRoute, updateUserPassword);
+userRouter.patch("/user/private/details/email", protectedRoute, updateUserEmail);
 userRouter.delete("/user/:id", protectedRoute, deleteAccount);
-userRouter.post("/user/billings/add", protectedRoute, addFunds);
-userRouter.patch("/user/:id", protectedRoute, updateUserInfo);
-userRouter.put("/user/private/details", protectedRoute, updateUserPassword);

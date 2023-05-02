@@ -37,8 +37,12 @@ class UserValidator implements Validator {
 
     public validatePasswordChange(response: Response, requestBody: UserBody) {
         let { new_password } = requestBody;
-        console.log(new_password)
         this.validatePassword(response, new_password);
+    }
+    
+    public validateEmailChange(response: Response, requestBody: UserBody) {
+        let { email } = requestBody;
+        this.validateEmail(response, email);
     }
 
     public validateRegistration(response: Response, requestBody: UserBody) {

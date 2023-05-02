@@ -93,7 +93,7 @@ export const registerUser = asyncHandler(
 );
 
 /**
- * PUT, AUTH REQUIRED - Updates the user password with given password.
+ * PATCH, AUTH REQUIRED - Updates the user password with given password.
  * @param {Request} request - The HTTP request object containing the passwords.
  * @param {Response} response - The HTTP response object containing conclusion message.
  * @throws throws error if no user has been found or if the given password isn't valid.
@@ -112,7 +112,7 @@ export const updateUserPassword = asyncHandler(
         }
 
         let { password, new_password } = request.body;
-        UserValidator.validatePasswordChange(response, request.body)
+        UserValidator.validatePasswordChange(response, request.body);
 
         if (!(await bcrypt.compare(password, user.password))) {
             response.status(401);
@@ -125,7 +125,36 @@ export const updateUserPassword = asyncHandler(
         await UserRepository.findUserAndUpdateDetails(user.id, {
             password: hashedPassword,
         });
-        response.status(200).json({message:"Senha Atualizada."})
+        response.status(200).json({ message: "Senha Atualizada." });
+    }
+);
+
+/**
+ * PATCH, AUTH REQUIRED - Updates the user email with given data.
+ * @param {Request} request - The HTTP request object containing the email.
+ * @param {Response} response - The HTTP response object containing conclusion message.
+ * @throws throws error if no user has been found or if the given email isn't valid.
+ */
+export const updateUserEmail = asyncHandler(
+    async (request: Request, response: Response) => {
+        if (!request.user || !request.body) {
+            response.status(400);
+            throw new Error("Dados Inválidos.");
+        }
+
+        let user = await UserRepository.getUserPrivateDetails(request.user.id);
+        if (!user) {
+            response.status(404);
+            throw new Error("Usuário não encontrado.");
+        }
+
+        let { email } = request.body;
+        UserValidator.validateEmailChange(response, request.body);
+
+        await UserRepository.findUserAndUpdateDetails(user.id, {
+            email,
+        });
+        response.status(200).json({ message: "Email Atualizado." });
     }
 );
 
