@@ -5,6 +5,8 @@ import Product from "../models/Product";
 import Review from "../models/Review";
 import WishlistItem from "../models/WishlistItem";
 import ProductInstance from "../models/ProductInstance";
+import WishlistCollectionRepository from "./WishlistCollectionRepository";
+import WishlistCollection from "../models/WishlistCollection";
 
 interface UpdatedUserData {
     name?: { first: string; last: string };
@@ -115,6 +117,10 @@ class UserRepository extends Repository {
                 );
                 await Review.deleteMany({ productOwner: user.id }, { session });
                 await WishlistItem.deleteMany({ user: user.id }, { session });
+                await WishlistCollection.deleteMany(
+                    { iser: user.id },
+                    { session }
+                );
 
                 await ProductInstance.deleteMany(
                     { user: user.id },
