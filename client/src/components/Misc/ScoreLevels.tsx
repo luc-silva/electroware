@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { ScoreLevelCard } from "../Cards/ScoreLevelCard";
 import styles from "./ScoreLevels.module.css";
-import { productRatingInitialState } from "../../constants/initialStates";
 
 export const ScoreLevels = ({ data }: { data: IProductScoreMetrics }) => {
     return (

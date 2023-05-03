@@ -13,7 +13,6 @@ export const ScoreLevelCard = ({
     useEffect(() => {
         data.scoreMetrics.forEach((item) => {
             if (index === item._id) {
-                console.log(item._id === index);
                 setLevel((item.quant * 100) / data.scoreMetrics.length);
             }
         });
