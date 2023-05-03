@@ -1,0 +1,6 @@
+.score-levels{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 300px;
+}

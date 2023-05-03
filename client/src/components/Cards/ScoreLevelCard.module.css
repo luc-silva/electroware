@@ -1,0 +1,32 @@
+.score__card,
+.score {
+    display: flex;
+    flex-direction: row;
+}
+.score__card {
+    height: 1rem;
+    align-items: center;
+    gap: 0.5rem;
+}
+.score {
+    align-items: flex-end;
+    width: 2rem;
+}
+.score p {
+    color: var(--text-color);
+}
+.score svg{
+    color: var(--title-color);
+}
+.level-bar {
+    display: flex;
+    flex-grow: 1;
+    height: 100%;
+    width: auto;
+    background-color: var(--main-color-faded);
+    border-radius: 5px;
+    overflow: hidden;
+}
+.level {
+    background-color: var(--main-color);
+}

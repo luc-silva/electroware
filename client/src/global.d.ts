@@ -12,7 +12,20 @@ interface IUserSession {
     funds: number;
     logged: boolean;
 }
+interface IScore {
+    _id: number;
+    quant: number;
+}
+interface IProductScoreMetrics {
+    average: {
+        _id: string;
+        score: string;
+        total_reviews: number;
+    };
+    scoreMetrics: IScore[];
+}
 
+//to rename
 interface HeaderProps {
     isLoading: Boolean;
     isLogged: Boolean;
@@ -52,7 +65,6 @@ interface Product {
     discount: number;
     on_sale: boolean;
 }
-
 
 interface WishlistItem {
     _id: string;

@@ -22,6 +22,40 @@ export const cardInitialState = {
     quantity: 0,
 };
 
+export const productRatingInitialState = {
+    average: {
+        _id: "",
+        score: "0",
+        total_reviews:0
+    },
+    scoreMetrics: [
+        {
+            _id: 5,
+            quant: 0,
+        },
+        {
+            _id: 4,
+            quant: 0,
+        },
+        {
+            _id: 3,
+            quant: 0,
+        },
+        {
+            _id: 2,
+            quant: 0,
+        },
+        {
+            _id: 1,
+            quant: 0,
+        },
+        {
+            _id: 0,
+            quant: 0,
+        },
+    ],
+};
+
 export const productCardInitialState = {
     product: {
         price: 0,
@@ -53,7 +87,7 @@ export const productInitialState = {
     product: {
         price: 0,
         discount: 0,
-        on_sale:false,
+        on_sale: false,
         name: "",
         owner: "",
         _id: "",
@@ -90,7 +124,7 @@ export const productPageInitialState = {
         category: "",
         name: "",
         description: "",
-        brand:"",
+        brand: "",
         owner: "",
         price: 0,
         quantity: 0,

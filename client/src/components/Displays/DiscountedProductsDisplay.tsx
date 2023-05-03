@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import styles from "./DiscountedProductsDisplay.module.css";
 import ProductService from "../../services/ProductService";
 import { ProductCard } from "../Cards/ProductCard";
+import styles from "./DiscountedProductsDisplay.module.css";
 
 export const DiscountedProductsDisplay = () => {
     let [products, setProducts] = useState([]);
