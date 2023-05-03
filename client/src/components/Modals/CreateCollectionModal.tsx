@@ -7,7 +7,6 @@ import WishlistService from "../../services/WishlistService";
 
 import { CollectionCard } from "../Cards/CollectionCard";
 import { stopEventPropagation } from "../../utils/operations";
-import { useParams } from "react-router-dom";
 import { ActionBtn } from "../Buttons/ActionBtn";
 
 import styles from "./CreateCollectionModal.module.css";
@@ -57,7 +56,7 @@ export const CreateCollectionModal = ({
         if (user.id) {
             getUserCollections();
         }
-    }, [user.id]);
+    }, [user.id, isActive]);
     if (!isActive) return null;
     return (
         <div
