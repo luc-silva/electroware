@@ -1,4 +1,4 @@
-# Electroware (Atualmente em desenvolvimento)
+# Electroware
 
 Electroware é um projeto pessoal baseado em um marketplace, criado com Javascript (no backend), ReactJS, Typescript e Node (Express) + MongoDB. Também utilizei UML para tentar estruturar a relação entre dados e objetos o máximo possível.
 
