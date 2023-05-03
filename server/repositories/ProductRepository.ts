@@ -35,11 +35,19 @@ class ProductRepository extends Repository {
         this.validateObjectId(objectId);
 
         let score = await Review.aggregate([
-            { $group: { _id: "$product", avg_score: { $avg: "$score" } } },
+            {
+                $group: {
+                    _id: "$product",
+                    score: { $avg: "$score" },
+                    total_reviews: { $sum: 1 },
+                },
+            },
             { $match: { _id: new Types.ObjectId(objectId) } },
             { $limit: 1 },
         ]);
-        return score.length === 0 ? {avg_score:0} : score[0];
+        return score.length === 0
+            ? { score: 0 }
+            : { ...score[0], score: score[0].score.toFixed(1) };
     }
 
     /**
@@ -49,7 +57,8 @@ class ProductRepository extends Repository {
      */
     public async getRatingsMetrics(objectId: string) {
         this.validateObjectId(objectId);
-        return await Review.aggregate([
+
+        let results = await Review.aggregate([
             { $match: { product: new Types.ObjectId(objectId) } },
             {
                 $group: {
@@ -63,6 +72,20 @@ class ProductRepository extends Repository {
                 },
             },
         ]);
+
+        const possibleStars = [0,1,2,3,4,5]
+        results.forEach((item:{_id:number, quant:number}) => {
+            if(possibleStars.includes(item._id)){
+                let index = possibleStars.lastIndexOf(item._id)
+                possibleStars.splice(index, 1)
+            }
+        })
+
+        possibleStars.forEach((number) => {
+            results.push({_id:number, quant: 0})
+        })
+
+        return results
     }
 
     /**

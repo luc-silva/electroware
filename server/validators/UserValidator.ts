@@ -81,7 +81,7 @@ class UserValidator implements Validator {
     }
 
     private validateDescription(response: Response, description: string) {
-        if (description.length > 250) {
+        if (description && description.length > 250) {
             response.status(400);
             throw new Error("Campo descrição Inválido.");
         }

@@ -54,12 +54,9 @@ export const getProductRating = asyncHandler(
         let { id } = request.params;
 
         let average = await ProductRepository.getAverageScoreFromProduct(id);
+        let scoreMetrics = await ProductRepository.getRatingsMetrics(id);
 
-        let scoreMetrics = await ProductRepository.getRatingsMetrics(id)
-
-        response.status(200).json({average, scoreMetrics});
-
-
+        response.status(200).json({ average, scoreMetrics });
     }
 );
 
