@@ -7,7 +7,7 @@ import {
     createProduct,
     updateProduct,
     deleteProduct,
-    getProductAvarageRating,
+    getProductRating,
     getDiscountedProducts,
 } from "../controllers/productController";
 import { getProductReviews } from "../controllers/reviewsController";
@@ -19,7 +19,7 @@ productRouter.get("/", getRecentProducts)
 productRouter.get("/discount", getDiscountedProducts)
 productRouter.get("/:id", getProductDetails); //get a specific product
 productRouter.get("/:id/reviews", getProductReviews);
-productRouter.get("/:id/reviews/score", getProductAvarageRating);
+productRouter.get("/:id/reviews/score", getProductRating);
 
 productRouter.put("/:id", protectedRoute, updateProduct);
 productRouter.delete("/:id", protectedRoute, deleteProduct);

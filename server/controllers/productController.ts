@@ -46,7 +46,7 @@ export const getDiscountedProducts = asyncHandler(
  * @param {Response} response - The HTTP response object containing product score.
  * @throws throws error if any product has been found.
  */
-export const getProductAvarageRating = asyncHandler(
+export const getProductRating = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.params) {
             throw new Error("Produto Inválido");
@@ -54,7 +54,12 @@ export const getProductAvarageRating = asyncHandler(
         let { id } = request.params;
 
         let average = await ProductRepository.getAverageScoreFromProduct(id);
-        response.status(200).json(average);
+
+        let scoreMetrics = await ProductRepository.getRatingsMetrics(id)
+
+        response.status(200).json({average, scoreMetrics});
+
+
     }
 );
 

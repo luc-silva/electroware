@@ -35,11 +35,34 @@ class ProductRepository extends Repository {
         this.validateObjectId(objectId);
 
         let score = await Review.aggregate([
-            { $group: { _id: "$product", averageScore: { $avg: "$score" } } },
+            { $group: { _id: "$product", avg_score: { $avg: "$score" } } },
             { $match: { _id: new Types.ObjectId(objectId) } },
             { $limit: 1 },
         ]);
-        return score.length === 0 ? 0 : score;
+        return score.length === 0 ? {avg_score:0} : score[0];
+    }
+
+    /**
+     * Get the score from a given product id and group by the stars.
+     * @param objectId - Product ObjectId.
+     * @returns Returns product score groups.
+     */
+    public async getRatingsMetrics(objectId: string) {
+        this.validateObjectId(objectId);
+        return await Review.aggregate([
+            { $match: { product: new Types.ObjectId(objectId) } },
+            {
+                $group: {
+                    _id: "$score",
+                    quant: { $sum: 1 },
+                },
+            },
+            {
+                $sort: {
+                    _id: -1,
+                },
+            },
+        ]);
     }
 
     /**
