@@ -4,6 +4,7 @@ import { SubmitBtn } from "../Buttons/SubmitBtn";
 import styles from "./SettingsCredentials.module.css";
 import { CredentialsPasswordForm } from "../Forms/CredintialsPasswordForm";
 import { CredentialsEmailForm } from "../Forms/CredentialsEmailForm";
+import { useNavigate } from "react-router-dom";
 
 export const SettingsCredentials = ({
     showToast,
@@ -12,8 +13,6 @@ export const SettingsCredentials = ({
     user: IUserSession;
     showToast: Function;
 }) => {
-
-
     return (
         <section className={styles["settings-credentials"]}>
             <div className={styles["settings-credentials__title"]}>

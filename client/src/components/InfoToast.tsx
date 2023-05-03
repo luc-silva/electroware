@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 //style
 import styles from "./InfoToast.module.css";
@@ -17,43 +17,42 @@ export const InfoToast = ({
     isActive: boolean;
     toggle: Function;
 }) => {
+    let [actualStyle, setActualStyle] = useState("")
+
     function toggleToast() {
         toggle(!isActive);
     }
+
+    function setClass() {
+        return type === "info"
+            ? [styles["toast"], styles["info"]].join(" ")
+            : [styles["toast"], styles["warning"]].join(" ");
+    }
+
     useEffect(() => {
-        if(isActive){
-            setTimeout(() => {
-              toggleToast()  
-            }, 3000)
+        if (isActive) {
+            setActualStyle(setClass())
+            let timeout = setTimeout(() => {
+                toggleToast();
+            }, 3000);
+
+            return () => clearTimeout(timeout);
         }
-        return () => {}
-    })
+    }, [type, isActive, message]);
 
     if (!isActive) return null;
     return (
-        (type === "info" && (
-            <div className={styles["info-toast"]}>
-                <div className={styles["info-toast__message"]}>
-                    <Info size={25} color={"white"} weight="bold" />
-                    <p>{message}</p>
-                </div>
-                <div className={styles["info-toast__btn"]}>
-                    <X size={30} color={"white"} weight="bold" />
-                </div>
-            </div>
-        )) || (
-            <div className={styles["warning-toast"]}>
-                <div className={styles["warning-toast__message"]}>
+        <div className={actualStyle}>
+            <div className={styles["toast__message"]}>
+                {(type === "warning" && (
                     <WarningCircle size={25} color={"white"} weight="bold" />
-                    <p>{message}</p>
-                </div>
-                <div
-                    className={styles["warning-toast__btn"]}
-                    onClick={toggleToast}
-                >
-                    <X size={30} color={"white"} weight="bold" />
-                </div>
+                )) || <Info size={25} color={"white"} weight="bold" />}
+                <p>{message}</p>
             </div>
-        )
+            <div className={styles["toast__btn"]} onClick={toggleToast}>
+                <X size={30} color={"white"} weight="bold" />
+            </div>
+            <div className={styles["timer-bar"]}/>
+        </div>
     );
 };

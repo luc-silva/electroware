@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { SettingsNavigation } from "../components/Buttons/SettingsNavigation";
 import styles from "./Settings.module.css";
+import { useEffect } from "react";
 
 export const Settings = ({
     user,
@@ -12,9 +13,11 @@ export const Settings = ({
     setUser: Function;
 }) => {
     let navigate = useNavigate();
-    if (user.logged === false) {
-        navigate("/login");
-    }
+    useEffect(() => {
+        if (!user.logged) {
+            navigate("/login");
+        }
+    }, [user])
 
 
     return (
