@@ -150,6 +150,11 @@ export const updateUserEmail = asyncHandler(
 
         let { email } = request.body;
         UserValidator.validateEmailChange(response, request.body);
+        let userWithEmail = await UserRepository.getUserInfoWithEmail(email)
+        if(userWithEmail){
+            response.status(400)
+            throw new Error("Email sendo usado no momento.")
+        }
 
         await UserRepository.findUserAndUpdateDetails(user.id, {
             email,

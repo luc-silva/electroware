@@ -13,26 +13,28 @@ import { SearchResults } from "./pages/SearchResults";
 import { NotFound } from "./pages/NotFound";
 import { ShoppingCart } from "./pages/ShoppingCart";
 import { UserProfile } from "./pages/UserProfile";
-import { ProfileMenu } from "./components/ProfileMenu";
 import { Checkout } from "./pages/Checkout";
 import { CreateOffer } from "./pages/CreateOffer";
 import { AddFunds } from "./pages/AddFunds";
 import { Settings } from "./pages/Settings";
 import { Category } from "./pages/Category";
 import { Wishlist } from "./pages/Wishlist";
+
+//
+import { ProfileMenu } from "./components/ProfileMenu";
+import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { Footer } from "./components/Misc/Footer";
 import { HMenu } from "./components/Misc/HMenu";
 import { InfoToast } from "./components/InfoToast";
+import { CreateCollectionModal } from "./components/Modals/CreateCollectionModal";
 
 // subpages
-import { EditProfile } from "./components/Sections/EditProfile";
-import { DeleteAccount } from "./components/Sections/DeleteAccount";
-import { SettingsTransaction } from "./components/Sections/SettingsTransaction";
-import { SettingsUserProducts } from "./components/Sections/SettingsUserProducts";
-import { EditProduct } from "./components/Sections/EditProduct";
-import { PrivacyPolicy } from "./pages/PrivacyPolicy";
-import { CreateCollectionModal } from "./components/Modals/CreateCollectionModal";
-import { SettingsCredentials } from "./components/Sections/SettingsCredentials";
+import { EditProfile } from "./components/Subpages/EditProfile";
+import { DeleteAccount } from "./components/Subpages/DeleteAccount";
+import { SettingsTransaction } from "./components/Subpages/SettingsTransaction";
+import { SettingsUserProducts } from "./components/Subpages/SettingsUserProducts";
+import { EditProduct } from "./components/Subpages/EditProduct";
+import { SettingsCredentials } from "./components/Subpages/SettingsCredentials";
 
 function Electroware() {
     let [user, setUser] = useState(userSessionInitialState);
