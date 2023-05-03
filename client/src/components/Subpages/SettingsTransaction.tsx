@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import UserService from "../../services/UserService";
 import { TransactionCard } from "../Cards/TransactionCard";
 import styles from "./SettingsTransaction.module.css";
+import { NothingAvailableDialog } from "../Misc/NothingAvailableDialog";
 
 export const SettingsTransaction = ({ user }: { user: IUserSession }) => {
     let [userTransactions, setUserTransactions] = useState([]);
@@ -15,11 +16,9 @@ export const SettingsTransaction = ({ user }: { user: IUserSession }) => {
             <div className={styles["transactions__title"]}>
                 <h3>Compras Realizadas</h3>
             </div>
-            <div className={styles["transactions__container"]}>
-                {(userTransactions.length === 0 && (
-                    <p>Nenhuma compra realizada</p>
-                )) ||
-                    userTransactions.map(
+            {(userTransactions.length > 0 && (
+                <div className={styles["transactions__container"]}>
+                    {userTransactions.map(
                         (transaction: Transaction, index: React.Key) => {
                             return (
                                 <TransactionCard
@@ -29,7 +28,8 @@ export const SettingsTransaction = ({ user }: { user: IUserSession }) => {
                             );
                         }
                     )}
-            </div>
+                </div>
+            )) || <NothingAvailableDialog text="Nenhuma compra realizada." />}
         </section>
     );
 };

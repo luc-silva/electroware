@@ -1,4 +1,7 @@
 .settings-products{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     min-height: 90vh;
     position: relative;
 }
