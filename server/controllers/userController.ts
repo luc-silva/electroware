@@ -25,19 +25,19 @@ export const loginUser = asyncHandler(
     async (request: Request, response: Response) => {
         if (!request.body) {
             response.status(400);
-            throw new Error("Dados Inválidos");
+            throw new Error("Dados Inválidos.");
         }
 
         let { email, password } = request.body;
         let user = await UserRepository.getUserInfoWithEmail(email);
         if (!user) {
             response.status(404);
-            throw new Error("Usuario não encontrado");
+            throw new Error("Usuário não encontrado.");
         }
 
         if (user && !(await bcrypt.compare(password, user.password))) {
             response.status(401);
-            throw new Error("Senha invalida");
+            throw new Error("Senha inválida.");
         }
 
         //generate token to use in a protected route

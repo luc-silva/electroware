@@ -35,6 +35,7 @@ import { SettingsTransaction } from "./components/Subpages/SettingsTransaction";
 import { SettingsUserProducts } from "./components/Subpages/SettingsUserProducts";
 import { EditProduct } from "./components/Subpages/EditProduct";
 import { SettingsCredentials } from "./components/Subpages/SettingsCredentials";
+import { ScrollToTop } from "./components/Misc/ScrollToTop";
 
 function Electroware() {
     let [user, setUser] = useState(userSessionInitialState);
@@ -70,6 +71,9 @@ function Electroware() {
     return (
         <div className="electroware">
             <Router>
+                {/* misc */}
+                <ScrollToTop />
+
                 {/* modals/toasts */}
                 <InfoToast
                     isActive={isToastActive}
