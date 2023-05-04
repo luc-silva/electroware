@@ -1,13 +1,12 @@
 # Electroware
 
-Electroware é um projeto pessoal baseado em um marketplace, criado com Javascript (no backend), ReactJS, Typescript e Node (Express) + MongoDB. Também utilizei UML para tentar estruturar a relação entre dados e objetos o máximo possível.
+Electroware é um projeto pessoal baseado em um marketplace, criado com ReactJS, Typescript, Express e MongoDB. Também utilizei UML para tentar estruturar a relação entre dados e objetos o máximo possível e Insomnia para testar os endpoints.
 
 Backend foi implementado seguindo a arquitetura REST, utilizando uma biblioteca ODM (Mongoose) para realizar a interação no banco de dados.
 
-Provavelmente é o projeto que mais venho me dedicando. Nele, tentei reunir recursos comuns os quais um e-commerce possui: criação de contas, anúncios de produtos, histórico de compras, lista de desejos, carrinhos de compras, etc.
+Provavelmente é o projeto que mais venho me dedicando. Nele, tentei reunir recursos comuns os quais um e-commerce possui: criação de contas, anúncios de produtos, histórico de compras, lista de desejos, carrinhos de compras, descontos, etc.
 
-![Screenshot_1](https://user-images.githubusercontent.com/100732316/235808401-05b26b4c-4041-478b-85fb-f0a371d0439b.png)
-
+![uml](https://user-images.githubusercontent.com/100732316/236323368-001722af-33f8-4a4c-a4b5-ec29db36678c.png)
 
 ## Observações
 
@@ -28,7 +27,9 @@ Provavelmente é o projeto que mais venho me dedicando. Nele, tentei reunir recu
 ## Como Testar (NodeJS necessário)
 
 1 - Clone o repositório:
-``` git clone https://github.com/luc-silva/electroware ```
+```bash
+ git clone https://github.com/luc-silva/electroware 
+```
 
 2 - Vá para o diretório o qual o repositório foi baixado
 
@@ -37,6 +38,7 @@ Provavelmente é o projeto que mais venho me dedicando. Nele, tentei reunir recu
 ```bash
 cd electroware
 npm install
+cd ..
 cd server
 npm install
 cd ..
@@ -50,7 +52,7 @@ npm install
 cd ..
 ```
 
-5 - Inicie o servidor
+5 - Inicie a API
 
 ```bash
 npm run server
@@ -66,7 +68,9 @@ Após os passos, o website deve abrir em seu navegador padrão. Dúvidas, entre 
 
 ## Planos
 
-- Hospedar o servidor e client do projeto
+- Refatorar
+- Terminar de documentar a API
+- Criar uma versão em Java da API
 
 ### Créditos
 
