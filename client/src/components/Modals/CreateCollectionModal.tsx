@@ -10,6 +10,7 @@ import { stopEventPropagation } from "../../utils/operations";
 import { ActionBtn } from "../Buttons/ActionBtn";
 
 import styles from "./CreateCollectionModal.module.css";
+import { NothingAvailableDialog } from "../Misc/NothingAvailableDialog";
 
 export const CreateCollectionModal = ({
     user,
@@ -95,7 +96,7 @@ export const CreateCollectionModal = ({
                                 styles["create-collection__card__container"]
                             }
                         >
-                            {collections.map((collection, index) => {
+                            {collections.length >0 && collections.map((collection, index) => {
                                 return (
                                     <CollectionCard
                                         data={collection}
@@ -108,7 +109,7 @@ export const CreateCollectionModal = ({
                                         key={index}
                                     />
                                 );
-                            })}
+                            })|| <NothingAvailableDialog text="Você precisar criar uma lista"/> }
                         </div>
                     </div>
                     <div className={styles["create-collection__action-btn"]}>
