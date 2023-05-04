@@ -69,10 +69,11 @@ Após os passos, o website deve abrir em seu navegador padrão. Dúvidas, entre 
 ## Planos
 
 - Refatorar
+- Criar feature de compartilhamento de coleções
 - Terminar de documentar a API
 - Criar uma versão em Java da API
 
-### Créditos
+## Créditos
 
 - [CSS Reset](https://meyerweb.com/eric/tools/css/reset/)
 - [Valorax Font (Fonte usada no logo)](https://befonts.com/valorax-font.html)
