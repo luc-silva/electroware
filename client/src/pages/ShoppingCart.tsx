@@ -42,7 +42,7 @@ export const ShoppingCart = ({
                 {(items.length === 0 && <p>Carrinho de compras vazio.</p>) || (
                     <div className={styles["shopping-cart__container"]}>
                         {items.map(
-                            ({ _id }: ShoppingCartCardProps, index: any) => {
+                            ({ _id }: ICartItem, index: any) => {
                                 return (
                                     <ProductCardSmall
                                         updateCart={updateCart}

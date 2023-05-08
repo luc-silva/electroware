@@ -71,7 +71,7 @@ export const CollectionContainer = ({
             </div>
             {(items.length > 0 && (
                 <div className={styles["collection-container__itens"]}>
-                    {items.map((item: WishlistItem, index: React.Key) => {
+                    {items.map((item: IWishlistItem, index: React.Key) => {
                         return (
                             <CollectionProductCard
                                 data={item}

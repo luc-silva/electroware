@@ -12,7 +12,7 @@ export const ProductBtnPanel = ({
     product,
     showToast
 }: {
-    product: Product;
+    product: IProductDetails;
     user: IUserSession;
     showToast:Function
 }) => {

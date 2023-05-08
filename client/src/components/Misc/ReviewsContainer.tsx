@@ -12,7 +12,7 @@ export const ReviewsContainer = ({
     user,
     updateScore,
 }: {
-    product: Product;
+    product: IProductDetails;
     user: IUserSession;
     updateScore: Function;
 }) => {

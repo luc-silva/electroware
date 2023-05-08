@@ -5,7 +5,7 @@ export const CardInfo = ({
     product,
     isLoading,
 }: {
-    product: Product;
+    product: IProductDetails;
     isLoading: boolean;
 }) => {
     return (

@@ -13,7 +13,7 @@ export const ReviewForm = ({
 }: {
     updateReviews: Function;
     user: IUserSession;
-    product: Product;
+    product: IProductDetails;
     isActive:boolean
 }) => {
     let [reviewForm, setReviewForm] = useState({ text: "", score: 1 });

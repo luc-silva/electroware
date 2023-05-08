@@ -19,7 +19,7 @@ export const SettingsTransaction = ({ user }: { user: IUserSession }) => {
             {(userTransactions.length > 0 && (
                 <div className={styles["transactions__container"]}>
                     {userTransactions.map(
-                        (transaction: Transaction, index: React.Key) => {
+                        (transaction: ITransaction, index: React.Key) => {
                             return (
                                 <TransactionCard
                                     transaction={transaction}

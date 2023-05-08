@@ -19,7 +19,7 @@ export const ProductAbout = ({
     showToast,
     toggleCollectionModal,
 }: {
-    productDetails: ProductData;
+    productDetails: IProductData;
     user: IUserSession;
     status: boolean;
     showToast: Function;

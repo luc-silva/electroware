@@ -35,7 +35,7 @@ export const ProductCard = ({ id }: { id: string }) => {
                     imgSrc={createImage(productData.image.data)}
                 />
             </div>
-            <CardInfo product={productData.product as Product} isLoading={cardStatus.loading} />
+            <CardInfo product={productData.product as IProductDetails} isLoading={cardStatus.loading} />
         </Link>
     );
 };

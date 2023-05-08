@@ -3,9 +3,9 @@
  * @param reviews - Array of review objects.
  * @returns String containing the average product score.
  */
-export function getAverage(reviews: Review[]): number {
+export function getAverage(reviews: IReview[]): number {
     let total = 0;
-    reviews.forEach((review: Review) => {
+    reviews.forEach((review: IReview) => {
         total += review.score;
     });
     return total === 0 ? 0 : Number((total / reviews.length).toFixed(1));
@@ -16,9 +16,9 @@ export function getAverage(reviews: Review[]): number {
  * @param items - Array of product objects.
  * @returns Total price in number.
  */
-export function getTotalValue(items: ShoppingCartCardProps[]) {
+export function getTotalValue(items: ICartItem[]) {
     let total = 0;
-    items.forEach(({ price, quantity }: ShoppingCartCardProps) => {
+    items.forEach(({ price, quantity }: ICartItem) => {
         total += price * quantity;
     });
     return total;

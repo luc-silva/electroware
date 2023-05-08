@@ -1,3 +1,24 @@
+interface IService {
+    readonly baseUrl: string;
+}
+
+interface ISVGButtonComponentProps {
+    sizing?: number;
+    onClick: React.MouseEventHandler;
+    weight?: IconWeight;
+}
+
+declare module "*.module.css" {
+    const classes: { [key: string]: string };
+    export default classes;
+}
+
+declare module "*.jpg" {
+    const value: any;
+    export default value;
+}
+
+
 interface IWishlistCollection {
     _id: string;
     name: string;
@@ -12,10 +33,12 @@ interface IUserSession {
     funds: number;
     logged: boolean;
 }
+
 interface IScore {
     _id: number;
     quant: number;
 }
+
 interface IProductScoreMetrics {
     average: {
         _id: string;
@@ -25,24 +48,7 @@ interface IProductScoreMetrics {
     scoreMetrics: IScore[];
 }
 
-//to rename
-interface HeaderProps {
-    isLoading: Boolean;
-    isLogged: Boolean;
-    user: UserProps | null;
-}
-interface PageProps {
-    user: UserProps | null;
-    isLogged: Boolean;
-}
-
-interface ProductData {
-    image: {
-        data: string;
-    };
-    product: Product;
-}
-interface UserData {
+interface IUserDetails {
     name: {
         first: string;
         last: string;
@@ -53,7 +59,15 @@ interface UserData {
     };
     description: string;
 }
-interface Product {
+
+interface IProductData {
+    image: {
+        data: string;
+    };
+    product: IProductDetails;
+}
+
+interface IProductDetails {
     _id: string;
     category: string;
     name: string;
@@ -66,11 +80,12 @@ interface Product {
     on_sale: boolean;
 }
 
-interface WishlistItem {
+interface IWishlistItem {
     _id: string;
     product: string;
 }
-interface Review {
+
+interface IReview {
     author: string;
     product: string;
     productOwner: string;
@@ -78,7 +93,8 @@ interface Review {
     text: string;
     createdAt: string;
 }
-interface ShoppingCartCardProps {
+
+interface ICartItem {
     _id: string;
     owner: string;
     product: string;
@@ -86,24 +102,15 @@ interface ShoppingCartCardProps {
     price: number;
     quantity: number;
 }
-interface Transaction {
+
+interface ITransaction {
     buyer: string;
-    products: ProductInstance[];
+    products: string[];
     paymentMethod: string;
     totalPrice: number;
     createdAt: Date;
 }
-interface ProductInstance {
-    user: string;
-    seller: string;
-    product: string;
-    price: number;
-    quantity: number;
-}
 
-interface ServiceInterface {
-    baseUrl: string;
-}
 interface IProductForm {
     description: string;
     name: string;
@@ -113,22 +120,4 @@ interface IProductForm {
     quantity: number;
     discount: number;
     on_sale: boolean;
-}
-
-//Misc
-interface IService {
-    readonly baseUrl: string;
-}
-interface ISVGButtonComponentProps {
-    sizing?: number;
-    onClick: React.MouseEventHandler;
-    weight?: IconWeight;
-}
-declare module "*.module.css" {
-    const classes: { [key: string]: string };
-    export default classes;
-}
-declare module "*.jpg" {
-    const value: any;
-    export default value;
 }

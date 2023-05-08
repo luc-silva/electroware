@@ -31,7 +31,7 @@ export const Checkout = ({
 
     function getTotalValue() {
         let total = 0;
-        items.forEach(({ price, quantity }: ShoppingCartCardProps) => {
+        items.forEach(({ price, quantity }: ICartItem) => {
             total += price * quantity;
         });
         return total;
