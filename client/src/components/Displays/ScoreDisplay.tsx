@@ -1,4 +1,4 @@
-import { StarsContainer } from "../Misc/StarsContainer";
+import { StarsContainer } from "../Containers/StarsContainer";
 import { ScoreLevels } from "../Misc/ScoreLevels";
 import styles from "./ScoreDisplay.module.css";
 

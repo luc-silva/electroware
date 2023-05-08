@@ -11,7 +11,7 @@ import ImageService from "../../services/ImageService";
 import ReviewService from "../../services/ReviewService";
 import { createImage } from "../../utils/operations";
 import { ImageBox } from "../Misc/ImageBox";
-import { StarsContainer } from "../Misc/StarsContainer";
+import { StarsContainer } from "../Containers/StarsContainer";
 
 import styles from "./ReviewCard.module.css";
 import picture from "../../assets/images/missing-profile-picture.jpg";
