@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { createImage } from "../../utils/operations";
 import { ProductBtnPanel } from "../Buttons/ProductBtnPanel";
 import { ImageBox } from "../Misc/ImageBox";
-import { CardPriceDisplay } from "../Misc/CardPriceDisplay";
+import { CardPriceDisplay } from "../Displays/CardPriceDisplay";
 import { BookmarkBtn } from "../Buttons/BookmarkBtn";
 
 import CategoryService from "../../services/CategoryService";

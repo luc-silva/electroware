@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { productInitialState } from "../../constants/initialStates";
 import ProductService from "../../services/ProductService";
+
+import { productInitialState } from "../../constants/initialStates";
 import { createImage } from "../../utils/operations";
 import { ImageBox } from "../Misc/ImageBox";
+import { CardPriceDisplay } from "../Displays/CardPriceDisplay";
+
 import styles from "./UserProductCard.module.css";
-import { CardPriceDisplay } from "../Misc/CardPriceDisplay";
 
 export const UserProductCard = ({ id }: { id: string }) => {
     let [productDetails, setProductDetails] = useState(productInitialState);

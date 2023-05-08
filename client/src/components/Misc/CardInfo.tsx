@@ -1,5 +1,5 @@
 import styles from "./CardInfo.module.css";
-import { CardPriceDisplay } from "./CardPriceDisplay";
+import { CardPriceDisplay } from "../Displays/CardPriceDisplay";
 
 export const CardInfo = ({
     product,

@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { productInitialState } from "../../constants/initialStates";
-import ProductService from "../../services/ProductService";
 import UserService from "../../services/UserService";
+import { useEffect, useState } from "react";
+import ProductService from "../../services/ProductService";
+import { Link } from "react-router-dom";
+
+import { productInitialState } from "../../constants/initialStates";
 import { createImage } from "../../utils/operations";
 import { ImageBox } from "../Misc/ImageBox";
 
+import { CardPriceDisplay } from "../Displays/CardPriceDisplay";
 import styles from "./SearchResultCard.module.css";
-import { CardPriceDisplay } from "../Misc/CardPriceDisplay";
 
 export const SearchResultItem = ({ productId }: { productId: string }) => {
     let [isLoading, toggleLoading] = useState(true);
