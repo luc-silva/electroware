@@ -1,7 +1,7 @@
 import axios from "axios";
 import Service from "./Service";
 
-interface ProductDTO{
+interface ProductDTO {
     description: string;
     name: string;
     brand: string;
@@ -12,9 +12,6 @@ interface ProductDTO{
 
 class ProductService extends Service {
     private baseUrl = "http://localhost:6060/api/product/";
-    constructor() {
-        super();
-    }
 
     public async createProduct(data: FormData, token: string) {
         return await axios
@@ -24,7 +21,11 @@ class ProductService extends Service {
             });
     }
 
-    public async updateProduct(data: ProductDTO, token: string, productId:string) {
+    public async updateProduct(
+        data: ProductDTO,
+        token: string,
+        productId: string
+    ) {
         return await axios
             .put(this.baseUrl + productId, data, this.createHeader(token))
             .then(({ data }) => {
@@ -72,10 +73,12 @@ class ProductService extends Service {
         return axios.delete(this.baseUrl + productId, this.createHeader(token));
     }
 
-    public async getProductScore(productId: string){
-        return axios.get(this.baseUrl + `${productId}/reviews/score`).then(({data})=> {
-            return data
-        })
+    public async getProductScore(productId: string) {
+        return axios
+            .get(this.baseUrl + `${productId}/reviews/score`)
+            .then(({ data }) => {
+                return data;
+            });
     }
 }
 

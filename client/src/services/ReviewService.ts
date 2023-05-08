@@ -13,10 +13,6 @@ interface ReviewBody {
 class ReviewService extends Service {
     private baseUrl = "http://localhost:6060/api/review/";
 
-    constructor() {
-        super();
-    }
-
     public async getReview(reviewId: string) {
         return await axios.get(this.baseUrl + reviewId).then(({ data }) => {
             return data;
@@ -28,7 +24,10 @@ class ReviewService extends Service {
     }
 
     public async deleteReview(reviewId: string, token: string) {
-        return await axios.delete(this.baseUrl + reviewId, this.createHeader(token));
+        return await axios.delete(
+            this.baseUrl + reviewId,
+            this.createHeader(token)
+        );
     }
 }
 

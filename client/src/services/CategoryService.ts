@@ -1,11 +1,8 @@
 import axios from "axios";
 import Service from "./Service";
 
-class CategoryService extends Service{
+class CategoryService extends Service {
     private baseUrl = "http://localhost:6060/api/category/";
-    constructor() {
-        super();
-    }
 
     public async getCategory(categoryId: string) {
         return await axios.get(this.baseUrl + categoryId).then(({ data }) => {

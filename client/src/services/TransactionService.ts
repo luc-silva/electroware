@@ -7,10 +7,6 @@ interface TransactionBody {
 
 class TransactioService extends Service {
     private baseUrl = "http://localhost:6060/api/transaction";
-    
-    constructor() {
-        super();
-    }
 
     public async createTransaction(body: TransactionBody, token: string) {
         return axios.post(this.baseUrl, body, this.createHeader(token));
