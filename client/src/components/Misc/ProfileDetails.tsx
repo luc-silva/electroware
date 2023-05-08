@@ -1,4 +1,4 @@
-import { ReputationDisplay } from "./ReputationDisplay";
+import { ReputationDisplay } from "../Displays/ReputationDisplay";
 
 import styles from "./ProfileDetails.module.css";
 

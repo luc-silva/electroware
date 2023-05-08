@@ -1,6 +1,6 @@
 import { getAverage } from "../../utils/operations";
+import { StarsContainer } from "../Containers/StarsContainer";
 import styles from "./ReputationDisplay.module.css";
-import { StarsContainer } from "./StarsContainer";
 
 export const ReputationDisplay = ({ reviews }: { reviews: IReview[] }) => {
     return (
