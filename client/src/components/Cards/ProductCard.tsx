@@ -25,7 +25,7 @@ export const ProductCard = ({ id }: { id: string }) => {
             .catch(() => {
                 setCardStatus({ loading: false, error: true });
             });
-    }, []);
+    }, [id]);
 
     return (
         <Link className={styles["card-wrapper"]} to={`/product/${id}`}>

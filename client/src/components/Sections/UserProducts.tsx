@@ -9,11 +9,14 @@ export const UserProducts = ({ products }: { products: IProductDetails[] }) => {
                 <h2>Produtos à venda</h2>
             </div>
             <div className={styles["user-profile__products__container"]}>
-                {products.length > 0 && products.map(({ _id }: { _id: string }, index: React.Key) => (
-                    <UserProductCard id={_id} key={index} />
-                ))||
-                    <NothingAvailableDialog text="Esse usuário não possui itens à venda."/>
-                }
+                {(products.length > 0 &&
+                    products.map(
+                        ({ _id }: { _id: string }, index: React.Key) => (
+                            <UserProductCard id={_id} key={index} />
+                        )
+                    )) || (
+                    <NothingAvailableDialog text="Esse usuário não possui itens à venda." />
+                )}
             </div>
         </section>
     );

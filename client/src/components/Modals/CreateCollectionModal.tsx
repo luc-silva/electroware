@@ -35,14 +35,14 @@ export const CreateCollectionModal = ({
                 product,
                 group: selectedCollectionId,
             };
-            await WishlistService.createWishlistInstance(data, user.token).then(
-                ({ message }) => {
+            await WishlistService.createWishlistInstance(data, user.token)
+                .then(({ message }) => {
                     showToast(message);
-                    toggleModal(false)
-                }
-            ).catch(({response}) => {
-                showToast(response.data, "warning")
-            });
+                    toggleModal(false);
+                })
+                .catch(({ response }) => {
+                    showToast(response.data, "warning");
+                });
         }
     }
 
@@ -96,20 +96,23 @@ export const CreateCollectionModal = ({
                                 styles["create-collection__card__container"]
                             }
                         >
-                            {collections.length >0 && collections.map((collection, index) => {
-                                return (
-                                    <CollectionCard
-                                        data={collection}
-                                        setChosenCollection={
-                                            setSelectedCollectionId
-                                        }
-                                        selectedCollection={
-                                            selectedCollectionId
-                                        }
-                                        key={index}
-                                    />
-                                );
-                            })|| <NothingAvailableDialog text="Você precisar criar uma lista"/> }
+                            {(collections.length > 0 &&
+                                collections.map((collection, index) => {
+                                    return (
+                                        <CollectionCard
+                                            data={collection}
+                                            setChosenCollection={
+                                                setSelectedCollectionId
+                                            }
+                                            selectedCollection={
+                                                selectedCollectionId
+                                            }
+                                            key={index}
+                                        />
+                                    );
+                                })) || (
+                                <NothingAvailableDialog text="Você precisar criar uma lista" />
+                            )}
                         </div>
                     </div>
                     <div className={styles["create-collection__action-btn"]}>

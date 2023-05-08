@@ -25,7 +25,7 @@ export const SearchResultItem = ({ productId }: { productId: string }) => {
                     toggleLoading(false);
                 });
         }
-    }, []);
+    }, [productId]);
     useEffect(() => {
         if (productData.product._id) {
             UserService.getUserInfo(productData.product.owner).then(
@@ -34,7 +34,7 @@ export const SearchResultItem = ({ productId }: { productId: string }) => {
                 }
             );
         }
-    }, [productData.product._id]);
+    }, [productData.product._id, productData.product.owner]);
 
     return (
         <div className={styles["product-card"]}>
