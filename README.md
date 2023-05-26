@@ -4,6 +4,8 @@ Electroware é um projeto pessoal baseado em um marketplace, criado com ReactJS,
 
 O projeto iniciou-se em um único repositório, mas decidi separar em submodulos para ter maior controle sobre versões diferentes da API e do client, bem como a integração da apllicação como um todo com difrentes ferramentas.
 
+Ao instalar todas as depêndencias, você pode subir containers da API e client com o docker compose!
+
 Backend foi implementado seguindo a arquitetura REST, utilizando uma biblioteca ODM (Mongoose) para realizar a interação no banco de dados.
 
 Provavelmente é o projeto que mais venho me dedicando. Nele, tentei reunir recursos comuns os quais um e-commerce possui: criação de contas, anúncios de produtos, histórico de compras, lista de desejos, carrinhos de compras, descontos, etc.
