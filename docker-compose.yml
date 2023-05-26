@@ -1,0 +1,31 @@
+version: '3'
+services:
+  client:
+    image: node:lts
+
+    volumes: 
+      - ./client-react:/app
+
+    working_dir: /app
+
+    command: bash -c 'npm install && npm start'
+
+    ports:
+      - 3000:3000
+  
+  API:
+    image: node:lts
+
+    volumes:
+      - ./API-typescript:/server
+
+    working_dir: /server
+
+    command: bash -c 'npm install && npm run dev'
+
+    ports:
+      - 6060:6060
+
+    environment:
+      - DB_KEY=none
+  
