@@ -16,6 +16,7 @@ Provavelmente é o projeto que mais venho me dedicando. Nele, tentei reunir recu
 - Alguma sugestão de melhoria, erro notado, ou ideias, por favor, abra um [issue](https://github.com/luc-silva/electroware/issues).
 
 ## Fotos do Projeto
+
 ![electroware (1)](https://user-images.githubusercontent.com/100732316/234309814-7e2b9aae-4a41-463d-ab5d-45ba1e016f5a.png)
 ![electroware (2)](https://user-images.githubusercontent.com/100732316/234309859-ff7ddb2c-8728-4882-a296-a109be9f9e6b.png)
 ![electroware (3)](https://user-images.githubusercontent.com/100732316/234309891-df85c401-c88f-463c-bc6d-1842fd70a0ac.png)
@@ -28,29 +29,29 @@ Provavelmente é o projeto que mais venho me dedicando. Nele, tentei reunir recu
 ## Como Testar (NodeJS necessário)
 
 1 - Clone o repositório:
+
 ```bash
- git clone https://github.com/luc-silva/electroware 
+git clone https://github.com/luc-silva/electroware --recursive
 ```
 
-2 - Vá para o diretório o qual o repositório foi baixado
+2 - Vá para a pasta do repositório
 
-3 - Baixe as dependências do repositório, server e client
+3 - Baixe as dependências do server e client
 
 ```bash
-cd electroware
-npm install
-cd ..
-cd server
-npm install
-cd ..
-cd client
-npm install
+cd ./client-react; npm install  && cd .. && cd ./API-typescript; npm install
 ```
 
-4 - Volte para a raiz do repositório (electroware/)
+3.1 - Caso falhe, talvez a flag recursive não tenha sido usado ao clonar o repositório. nesse caso, utilize esse comando dentro do repositório principal:
 
 ```bash
-cd ..
+git submodule init && git submodule update
+```
+
+4 - Inicialize o servidor client e a API
+
+```bash
+npm start 
 ```
 
 5 - Inicie a API
