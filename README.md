@@ -2,6 +2,8 @@
 
 Electroware é um projeto pessoal baseado em um marketplace, criado com ReactJS, Typescript, Express e MongoDB. Também utilizei UML para tentar estruturar a relação entre dados e objetos o máximo possível e Insomnia para testar os endpoints.
 
+O projeto iniciou-se em um único repositório, mas decidi separar em submodulos para ter maior controle sobre versões diferentes da API e do client, bem como a integração da apllicação como um todo com difrentes ferramentas.
+
 Backend foi implementado seguindo a arquitetura REST, utilizando uma biblioteca ODM (Mongoose) para realizar a interação no banco de dados.
 
 Provavelmente é o projeto que mais venho me dedicando. Nele, tentei reunir recursos comuns os quais um e-commerce possui: criação de contas, anúncios de produtos, histórico de compras, lista de desejos, carrinhos de compras, descontos, etc.
@@ -10,7 +12,6 @@ Provavelmente é o projeto que mais venho me dedicando. Nele, tentei reunir recu
 
 ## Observações
 
-- Tanto a API quanto a interface estão inclusas nesse repositório.
 - Creio que devido a sua complexidade, esse projeto irá se tornar bem interessante para refatorar, portanto, pretendo manter e atualiza-lo de acordo com a experiência que eu obter no futuro.
 - Alguma sugestão de melhoria, erro notado, ou ideias, por favor, abra um [issue](https://github.com/luc-silva/electroware/issues).
 

@@ -1,0 +1,6 @@
+[submodule "API-typescript"]
+	path = API-typescript
+	url = git@github.com:luc-silva/electroware-api-typescript.git
+[submodule "client-react"]
+	path = client-react
+	url = git@github.com:luc-silva/electroware-client.git
