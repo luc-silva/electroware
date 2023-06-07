@@ -10,7 +10,7 @@ Backend foi implementado seguindo a arquitetura REST, utilizando uma biblioteca 
 
 Provavelmente é o projeto que mais venho me dedicando. Nele, tentei reunir recursos comuns os quais um e-commerce possui: criação de contas, anúncios de produtos, histórico de compras, lista de desejos, carrinhos de compras, descontos, etc.
 
-![uml](https://github.com/luc-silva/electroware/assets/100732316/61976b07-173b-4be5-b27f-f7b240b04ef1)
+![electroware](https://github.com/luc-silva/electroware/assets/100732316/cfb01756-c2e8-4cb8-8e93-add14a625741)
 
 ## Observações
 
