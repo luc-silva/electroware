@@ -26,6 +26,15 @@ services:
     ports:
       - 6060:6060
 
+  mongodb:
+    image: mongo:latest
+
+    ports:
+      - 27017:27017
+
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+
     environment:
-      - DB_KEY=none
-  
+      MONGO_INITDB_ROOT_USERNAME: lucasAdmin
+      MONGO_INITDB_ROOT_PASSWORD: lucas1353
