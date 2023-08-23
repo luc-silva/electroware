@@ -16,6 +16,9 @@ services:
   API:
     image: node:lts
 
+    networks:
+      - mongo-database
+
     volumes:
       - ./API-typescript:/server
 
@@ -32,9 +35,15 @@ services:
     ports:
       - 27017:27017
 
+    networks:
+      - mongo-database
+
     volumes:
       - ./database:/docker-entrypoint-initdb.d
 
     environment:
       MONGO_INITDB_ROOT_USERNAME: lucasAdmin
       MONGO_INITDB_ROOT_PASSWORD: lucas1353
+
+networks:
+  mongo-database:
