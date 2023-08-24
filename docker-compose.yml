@@ -28,9 +28,12 @@ services:
 
     ports:
       - 6060:6060
+    
+    depends_on:
+      - mongodb1
 
-  mongodb:
-    image: mongo:latest
+  mongodb1:
+    image: mongo:5
 
     ports:
       - 27017:27017
@@ -40,10 +43,35 @@ services:
 
     volumes:
       - ./database:/docker-entrypoint-initdb.d
+      - ./database/mongod.conf:/etc/mongod.conf
+      - ./database/security.keyFile:/security.keyFile
 
     environment:
       MONGO_INITDB_ROOT_USERNAME: lucasAdmin
       MONGO_INITDB_ROOT_PASSWORD: lucas1353
 
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "mongo-cluster" ]
+  
+  mongodb2:
+    image: mongo:5
+
+    ports:
+      - 27018:27017
+
+    networks:
+      - mongo-database
+
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+      - ./database/mongod.conf:/etc/mongod.conf
+      - ./database/security.keyFile:/security.keyFile
+
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: lucasAdmin
+      MONGO_INITDB_ROOT_PASSWORD: lucas1353
+
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "mongo-cluster" ]
+
 networks:
   mongo-database:
+
