@@ -1,54 +1,75 @@
 version: '3'
 services:
-  # client:
-  #   image: node:lts
+  client:
+    image: node:lts
 
-  #   volumes: 
-  #     - ./client-react:/app
+    volumes: 
+      - ./client-react:/app
 
-  #   working_dir: /app
+    working_dir: /app
 
-  #   command: bash -c 'npm install && npm run server'
-
-  #   ports:
-  #     - 3000:3000
-  
-  # API:
-  #   image: node:lts
-
-  #   networks:
-  #     - mongo-database
-
-  #   volumes:
-  #     - ./API-typescript:/server
-
-  #   working_dir: /server
-
-  #   command: bash -c 'npm install && npm run server'
-
-  #   ports:
-  #     - 6060:6060
-    
-  #   depends_on:
-  #     - mongodb1
-
-  mongodb1:
-    image: mongo:latest
+    command: bash -c 'npm install && npm run server'
 
     ports:
-      - 27017:27017
+      - 3000:3000
+  
+  API:
+    image: node:lts
 
     networks:
       - mongo-database
 
     volumes:
-      - ./database:/docker-entrypoint-initdb.d
-      - ./database/mongod.conf:/etc/mongod.conf
-      - ./database/security.keyFile:/security.keyFile
+      - ./API-typescript:/server
 
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: lucasAdmin
-      MONGO_INITDB_ROOT_PASSWORD: lucas1353
+    working_dir: /server
+
+    command: bash -c 'npm install && npm run server'
+
+    ports:
+      - 6060:6060
+    
+    depends_on:
+      - mongodb1
+
+    
+  ## Requires local replica set config
+
+  # mongodb1:
+  #   image: mongo:latest
+
+  #   ports:
+  #     - 27017:27017
+
+  #   networks:
+  #     - mongo-database
+
+  #   volumes:
+  #     - ./database:/docker-entrypoint-initdb.d
+  #     - ./database/mongod.conf:/etc/mongod.conf
+  #     - ./database/security.keyFile:/security.keyFile
+
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: lucasAdmin
+  #     MONGO_INITDB_ROOT_PASSWORD: lucas1353
+
+  # mongodb2:
+  #   image: mongo:latest
+
+  #   ports:
+  #     - 27018:27017
+
+  #   networks:
+  #     - mongo-database
+
+  #   volumes:
+  #     - ./database:/docker-entrypoint-initdb.d
+  #     - ./database/mongod.conf:/etc/mongod.conf
+  #     - ./database/security.keyFile:/security.keyFile
+
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: lucasAdmin
+  #     MONGO_INITDB_ROOT_PASSWORD: lucas1353
 
 networks:
   mongo-database:
