@@ -29,8 +29,9 @@ services:
     ports:
       - 6060:6060
     
-    depends_on:
-      - mongodb1
+    # depends_on:
+    #   - mongodb1
+    #   - mongodb2
 
     
   ## Requires local replica set config
