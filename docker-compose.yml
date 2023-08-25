@@ -28,6 +28,9 @@ services:
 
     ports:
       - 6060:6060
+
+    environment:
+      - MONGO_CONNECTION_STRING=mongodb+srv://lucasAdmin:lucas1353@cluster0.oximzo5.mongodb.net/project_electroware?retryWrites=true&w=majority
     
     # depends_on:
     #   - mongodb1
